@@ -19,7 +19,6 @@ async function createWard(req, res) {
     let name = req.query.name;
     // TODO: validate name
 
-    await wardService.create(name);
     await Ward.create({ name: name });
     res.status(200).json({ ok: true, msg: "Ward created successfully" });
 }
@@ -41,7 +40,7 @@ async function renameWard(req, res) {
         return;
     }
 
-    ward.name = newName;
+    ward.name = name;
     await ward.save();
     res.status(200).json({ ok: true, msg: "Ward renamed successfully" });
 }
