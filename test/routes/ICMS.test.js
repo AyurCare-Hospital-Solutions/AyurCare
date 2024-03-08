@@ -2,6 +2,9 @@
 const server = require('../../server.js');
 const supertest = require('supertest');
 const request = supertest(server);
+const db = require("../../model");
+
+beforeAll(db.createAll)
 
 describe('ICMS Endpoints', () => {
     it("POST /icms/ward creates a new ward", async () => {

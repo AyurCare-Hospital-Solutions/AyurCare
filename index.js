@@ -6,7 +6,7 @@ const db = require("./model");
 db.createAll().then(() => {
     const app = require("./server");
 
-    const server = app.listen(process.env.PORT || 5000, () => {
+    const server = app.listen(process.env.PORT, () => {
         console.log(`Server is running on ${app.address().port}`);
     });
 
