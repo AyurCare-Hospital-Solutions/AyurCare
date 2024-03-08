@@ -7,7 +7,7 @@ const express = require("express");
  * @param {express.Response} res 
  */
 async function getWards(req, res) {
-    res.status(200).json(await Ward.findAll());
+    res.status(200).json({ ok: true, data: await Ward.findAll() });
 }
 
 /**
@@ -16,11 +16,11 @@ async function getWards(req, res) {
  * @param {express.Response} res 
  */
 async function createWard(req, res) {
-    let name = req.query.name;
+    let name = req.body.name;
     // TODO: validate name
 
-    await Ward.create({ name: name });
-    res.status(200).json({ ok: true, msg: "Ward created successfully" });
+    let ward = await Ward.create({ name: name });
+    res.status(200).json({ ok: true, msg: "Ward created successfully", data: ward });
 }
 
 /**
@@ -42,7 +42,7 @@ async function renameWard(req, res) {
 
     ward.name = name;
     await ward.save();
-    res.status(200).json({ ok: true, msg: "Ward renamed successfully" });
+    res.status(200).json({ ok: true, msg: "Ward renamed successfully", data: ward });
 }
 
 /**
@@ -61,7 +61,7 @@ async function deleteWard(req, res) {
     }
 
     await ward.destroy();
-    res.status(200).json({ ok: true, msg: "Ward deleted successfully" });
+    res.status(200).json({ ok: true, msg: "Ward deleted successfully", ward });
 }
 
-module.exports = { create: createWard, get: getWards, renameWard: renameWard, delete: deleteWard }
+module.exports = { createWard, getWards, renameWard, deleteWard }
