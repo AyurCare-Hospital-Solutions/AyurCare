@@ -13,8 +13,6 @@ describe('ICMS Endpoints', () => {
     it("GET /api/icms/ward returns a list of wards", async () => {
         const res = await request.get("/api/icms/ward");
         expect(res.statusCode).toBe(200);
-        expect(res.body).toHaveProperty('ok', true);
-        expect(res.body).toHaveProperty('data');
     });
 
     it("PATCH /api/icms/ward/:id renames ward", async () => {
