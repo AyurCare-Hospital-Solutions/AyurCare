@@ -6,8 +6,12 @@ require('express-async-errors');
 const app = express();
 const errorhandler = require('./middleware/errorhandler')
 
+const cors = require("cors");
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+app.use(cors());
 
 
 // register all routes
