@@ -9,6 +9,7 @@
   },
   "jest": {
     "testEnvironment": "node",
+    "globalSetup": "./test/setup.js",
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ]
@@ -23,7 +24,8 @@
     "mysql2": "^3.9.2",
     "nodemon": "^3.0.3",
     "sequelize": "^6.37.1",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
