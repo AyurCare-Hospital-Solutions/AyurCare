@@ -7,42 +7,42 @@ const db = require("../../model");
 beforeAll(db.createAll)
 
 describe('ICMS Endpoints', () => {
-    it("POST /icms/ward creates a new ward", async () => {
-        const res = (await request.post('/icms/ward')
+    it("POST /api/icms/ward creates a new ward", async () => {
+        const res = (await request.post('/api/icms/ward')
             .send({ "name": "test" }));
         expect(res.statusCode).toBe(200);
-        expect(res.body).toHaveProperty('ok', true);
         expect(res.body).toHaveProperty('data.name', "test");
     });
 
-    it("GET /icms/ward returns a list of wards", async () => {
-        const res = await request.get("/icms/ward");
+    it("GET /api/icms/ward returns a list of wards", async () => {
+        const res = await request.get("/api/icms/ward");
         expect(res.statusCode).toBe(200);
         expect(res.body).toHaveProperty('ok', true);
         expect(res.body).toHaveProperty('data');
     });
 
-    it("PATCH /icms/ward/:id renames ward", async () => {
-        let res = await request.post('/icms/ward').send({ name: "test 1234" });
+    it("PATCH /api/icms/ward/:id renames ward", async () => {
+        let res = await request.post('/api/icms/ward').send({ name: "test 1234" });
         expect(res.body).toHaveProperty('data.id');
         expect(res.body).toHaveProperty('data.name', "test 1234");
 
         let id = res.body.data.id;
-        res = await request.patch(`/icms/ward/${id}`).send({ name: "new name" });
+        res = await request.patch(`/api/icms/ward/${id}`).send({ name: "new name" });
 
-        expect(res.statusCode).toBe(200);
-        expect(res.body).toHaveProperty("data.name", "new name");
+        expect(res.statusCode).toBe(204);
     });
 
-    it("DELETE /icms/ward/:id deletes the ward", async () => {
-        let res = await request.post('/icms/ward').send({ name: "delete test" });
+    it("DELETE /api/icms/ward/:id deletes the ward", async () => {
+        let res = await request.post('/api/icms/ward').send({ name: "delete test" });
         expect(res.body).toHaveProperty('data.id');
         expect(res.body).toHaveProperty('data.name', "delete test");
 
         let id = res.body.data.id;
-        res = await request.delete(`/icms/ward/${id}`);
+        res = await request.delete(`/api/icms/ward/${id}`);
+        expect(res.statusCode).toBe(204);
 
-        expect(res.statusCode).toBe(200);
+        res = await request.delete(`/api/icms/ward/${id}`);
+        expect(res.statusCode).toBe(404);
 
     });
 })

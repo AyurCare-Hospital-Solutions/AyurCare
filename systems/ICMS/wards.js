@@ -20,7 +20,7 @@ async function createWard(req, res) {
     // TODO: validate name
 
     let ward = await Ward.create({ name: name });
-    res.status(200).json({ ok: true, msg: "Ward created successfully", data: ward });
+    res.status(200).json({ data: ward });
 }
 
 /**
@@ -36,13 +36,13 @@ async function renameWard(req, res) {
 
     let ward = await Ward.findByPk(id);
     if (ward === null) {
-        res.status(404).json({ ok: false, msg: "The ward does not exist" })
+        res.status(404).json({ msg: "The ward does not exist" })
         return;
     }
 
     ward.name = name;
     await ward.save();
-    res.status(200).json({ ok: true, msg: "Ward renamed successfully", data: ward });
+    res.sendStatus(204);
 }
 
 /**
@@ -56,12 +56,12 @@ async function deleteWard(req, res) {
 
     let ward = await Ward.findByPk(id);
     if (ward === null) {
-        res.status(404).json({ ok: false, msg: "The ward does not exist" })
+        res.status(404).json({ msg: "The ward does not exist" })
         return;
     }
 
     await ward.destroy();
-    res.status(200).json({ ok: true, msg: "Ward deleted successfully", ward });
+    res.sendStatus(204);
 }
 
 module.exports = { createWard, getWards, renameWard, deleteWard }

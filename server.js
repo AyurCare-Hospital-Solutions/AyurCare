@@ -11,12 +11,9 @@ app.use(express.json());
 
 
 // register all routes
-const routes = require('./routes');
-let registerOk = routes.register(app);
-if (!registerOk) {
-    console.error("One or more errors were encountered while registering routes. Exiting...")
-    process.exit(1);
-}
+const routes = require('./routes/router');
+
+app.use("/api", routes);
 
 // add the error handler middleware last.
 app.use(errorhandler());
