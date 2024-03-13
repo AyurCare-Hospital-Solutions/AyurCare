@@ -11,7 +11,7 @@ const PrescriptionMedicine = sequelize.define("PrescriptionMedicines", {
             max: 1000,
         }
     },
-});
+}, { timestamps: false });
 
 
 PrescriptionMedicine.belongsTo(Prescription);
