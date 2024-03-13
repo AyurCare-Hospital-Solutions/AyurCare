@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
 const Medicine = require("./Medicine");
 
-const ManufactureRequest = sequelize.define("Manufacture_Request",
+const ManufactureRequest = sequelize.define("ManufactureRequest",
     {
         reqID: {
             type: DataTypes.INTEGER,

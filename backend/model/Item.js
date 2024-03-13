@@ -7,21 +7,14 @@ const Item = sequelize.define("Items",
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
-        }
-    },
-    {
-        name :{
+        },
+        name: {
             type: DataTypes.STRING
-        }
-    },
-    {
-        reOrderbuffer : {
-            type : DataTypes.INTEGER
-        }
-    },
-    {
-        unit : DataTypes.STRING
-    },
-);
+        },
+        reOrderbuffer: {
+            type: DataTypes.INTEGER
+        },
+        unit: DataTypes.STRING
+    });
 
-module.exports  = Item;
+module.exports = Item;
