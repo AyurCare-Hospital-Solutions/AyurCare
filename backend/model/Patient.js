@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
 
-const Patient = sequelize.define("patients", {
+const Patient = sequelize.define("Patients", {
     name: DataTypes.STRING(100),
     nic: DataTypes.STRING(15),
     phone: DataTypes.STRING(14),

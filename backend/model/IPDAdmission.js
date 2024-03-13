@@ -3,7 +3,7 @@ const { sequelize } = require(".");
 const Patient = require("./Patient");
 const Bed = require("./Bed");
 
-const IPDAdmission = sequelize.define("IPD_admission", {
+const IPDAdmission = sequelize.define("IPDAdmission", {
 
 });
 

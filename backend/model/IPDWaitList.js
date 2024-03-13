@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
 const Patient = require("./Patient");
 
-const IPDWaitList = sequelize.define("ipd_wait_list", {
+const IPDWaitList = sequelize.define("IPDWaitList", {
     is_priority: DataTypes.BOOLEAN,
     reason: DataTypes.STRING
 });
