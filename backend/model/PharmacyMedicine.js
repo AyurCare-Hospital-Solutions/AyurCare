@@ -2,23 +2,23 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
 const Medicine = require("./Medicine");
 
-const PharmacyMedicine = sequelize.define("Pharmacy_Medicine",
+const PharmacyMedicine = sequelize.define("PharmacyMedicine",
     {
-        itemID:{
+        itemID: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-        amount:{
+        amount: {
             type: DataTypes.INTEGER,
         },
-        expire_date:{
+        expire_date: {
             type: DataTypes.DATEONLY
         }
     }
 )
 
-PharmacyMedicine.hasOne(Medicine,{
+PharmacyMedicine.hasOne(Medicine, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     foreignKey: { allowNull: false }
