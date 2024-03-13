@@ -7,10 +7,10 @@ const IPDWaitList = sequelize.define("ipd_wait_list", {
     reason: DataTypes.STRING
 });
 
-IPDWaitList.belongsTo(Patient);
-Patient.hasOne(IPDWaitList, {
+IPDWaitList.belongsTo(Patient, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
 });
+Patient.hasOne(IPDWaitList,);
 
 module.exports = IPDWaitList;
