@@ -1,4 +1,4 @@
-const Ward = require("../../model/ward");
+const Ward = require("../../model/Ward");
 const express = require("express");
 const yup = require("yup");
 
