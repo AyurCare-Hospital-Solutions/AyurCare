@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
 const Prescription = require("./Prescription");
-const Medicine = require("./Medicine");
+const { number } = require("yup");
 
 const PrescriptionMedicine = sequelize.define("PrescriptionMedicines", {
     amount: {
@@ -11,13 +11,13 @@ const PrescriptionMedicine = sequelize.define("PrescriptionMedicines", {
             max: 1000,
         }
     },
-}, { timestamps: false });
+});
+
 
 
 PrescriptionMedicine.belongsTo(Prescription);
 Prescription.hasMany(PrescriptionMedicine);
 
-Medicine.hasOne(PrescriptionMedicine, { onDelete: "CASCADE", foreignKey: { allowNull: false } });
-
+// TODO: medicine
 
 module.exports = PrescriptionMedicine;
