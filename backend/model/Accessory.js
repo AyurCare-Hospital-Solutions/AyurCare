@@ -12,7 +12,8 @@ const Accessory = sequelize.define("Accessories",
 
 Item.hasOne(Accessory, {
     onDelete: 'CASCADE',
-    onUpdate: 'CASCADE'
+    onUpdate: 'CASCADE',
+    foreignKey: { allowNull: false }
 });
 Accessory.belongsTo(Item);
 

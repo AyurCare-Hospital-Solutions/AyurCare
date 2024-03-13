@@ -12,7 +12,8 @@ const Medicine = sequelize.define("Medicine",
 
 Item.hasOne(Medicine, {
     onDelete: 'CASCADE',
-    onUpdate: 'CASCADE'
+    onUpdate: 'CASCADE',
+    foreignKey: { allowNull: false }
 });
 Medicine.belongsTo(Item);
 
