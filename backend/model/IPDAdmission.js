@@ -5,12 +5,19 @@ const Bed = require("./Bed");
 
 const IPDAdmission = sequelize.define("IPDAdmission", {
 
+},);
+
+
+IPDAdmission.belongsTo(Patient, {
+    foreignKey: {
+        allowNull: false,
+    },
+    onDelete: 'CASCADE',
 });
 
-IPDAdmission.belongsTo(Patient);
 Patient.hasMany(IPDAdmission);
 
-IPDAdmission.belongsTo(Bed);
-Bed.hasOne(IPDAdmission);
+IPDAdmission.belongsTo(Bed, { foreignKey: { allowNull: false }, onDelete: 'RESTRICT' });
+Bed.hasOne(IPDAdmission,);
 
 module.exports = IPDAdmission;
