@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
 const Item = require("./Item");
 
-const TenderRequest = sequelize.define("TenderRequests",
+const InventoryRequest = sequelize.define("InventoryRequests",
     {
         reqID: {
             type: DataTypes.INTEGER,
@@ -10,7 +10,7 @@ const TenderRequest = sequelize.define("TenderRequests",
             autoIncrement: true
         },
         amount: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.INTEGER
         },
         status: {
             type: DataTypes.STRING,
@@ -18,15 +18,7 @@ const TenderRequest = sequelize.define("TenderRequests",
             validate: {
                 isIn: [["Succcess", "Pending", "Reject"]]
             }
-        }
-    }
-);
+        },
 
-Item.hasMany(TenderRequest, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-    foreignKey: { allowNull: false }
-});
-TenderRequest.belongsTo(Item);
-
-module.exports = TenderRequest;
+        // TODO ==>>> add user ID
+    })

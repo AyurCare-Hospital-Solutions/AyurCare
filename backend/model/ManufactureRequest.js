@@ -15,10 +15,10 @@ const ManufactureRequest = sequelize.define("Manufacture_Request",
         isPriority: {
             type: DataTypes.BOOLEAN
         },
-        req_date: {
+        reqDate: {
             type: DataTypes.DATEONLY
         },
-        mf_date: {
+        mfDate: {
             type: DataTypes.DATEONLY
         },
         progress: {
