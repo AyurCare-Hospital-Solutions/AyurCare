@@ -6,7 +6,8 @@ const MedicineLot = sequelize.define("MedicineLot",
     {
         lotID: {
             type: DataTypes.INTEGER,
-            primaryKey: true
+            primaryKey: true,
+            autoIncrement : true
         },
         manufacturer: {
             type: DataTypes.STRING
@@ -20,7 +21,7 @@ const MedicineLot = sequelize.define("MedicineLot",
     }
 );
 
-Medicine.hasOne(MedicineLot, {
+Medicine.hasMany(MedicineLot, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     foreignKey: { allowNull: false }

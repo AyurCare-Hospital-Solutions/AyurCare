@@ -5,7 +5,8 @@ const Item = sequelize.define("Items",
     {
         itemID: {
             type: DataTypes.INTEGER,
-            primaryKey: true
+            primaryKey: true,
+            autoIncrement: true
         }
     },
     {
