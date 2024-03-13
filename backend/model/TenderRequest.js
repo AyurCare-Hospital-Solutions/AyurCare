@@ -14,6 +14,7 @@ const TenderRequest = sequelize.define("Tender_Requests",
         },
         status: {
             type: DataTypes.STRING,
+            defaultValue : "Pending",
             validate: {
                 isIn: [["Succcess", "Pending", "Reject"]]
             }
