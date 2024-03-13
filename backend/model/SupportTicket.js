@@ -23,6 +23,7 @@ const SupportTicket = sequelize.define("SupportTickets",
         },
 
         // TODO ===>>> need to include senderID and  receiveID
+        
     }
 );
 
