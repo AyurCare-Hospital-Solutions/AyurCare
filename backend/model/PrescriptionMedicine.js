@@ -14,6 +14,7 @@ const PrescriptionMedicine = sequelize.define("PrescriptionMedicines", {
 });
 
 
+
 PrescriptionMedicine.belongsTo(Prescription);
 Prescription.hasMany(PrescriptionMedicine);
 
