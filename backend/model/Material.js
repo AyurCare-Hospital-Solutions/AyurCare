@@ -12,7 +12,8 @@ const Material = sequelize.define("Meterials",
 
 Item.hasOne(Material, {
     onDelete: 'CASCADE',
-    onUpdate: 'CASCADE'
+    onUpdate: 'CASCADE',
+    foreignKey: { allowNull: false }
 });
 Material.belongsTo(Item);
 
