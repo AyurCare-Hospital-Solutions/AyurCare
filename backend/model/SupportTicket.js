@@ -15,7 +15,7 @@ const SupportTicket = sequelize.define("SupportTickets",
             type : DataTypes.STRING
         },
         timeStamp :{
-            type: DataTypes.DATETIME,
+            type: DataTypes.DATE,
             defaultValue: DataTypes.NOW
         },
         type:{
