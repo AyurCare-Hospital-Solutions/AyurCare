@@ -20,5 +20,5 @@ const InventoryRequest = sequelize.define("InventoryRequests",
             }
         },
 
-        // TODO ==>>> add user ID
+        // TODO ===>>> add user ID
     })
