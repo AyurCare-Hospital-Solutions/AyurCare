@@ -48,7 +48,7 @@ async function createAll() {
         require(path.resolve(file));
     });
 
-    await sequelize.sync({ force: true }); // FIXME: remove force=true after writing models.
+    await sequelize.sync();
     console.log("Finished creating tables.")
 }
 

@@ -1,5 +1,5 @@
 const dotenv = require('dotenv');
-dotenv.config();
+dotenv.config({ path: ['.env.local', '.env'] });
 
 // connect to db and create all tables
 const db = require("./model");
