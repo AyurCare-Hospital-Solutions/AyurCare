@@ -3,9 +3,9 @@ const { sequelize } = require(".");
 const IPDAdmission = require("./IPDAdmission");
 
 const CarePlan = sequelize.define("CarePlan", {
-    condition: DataTypes.TEXT(500),
-    diagnosis: DataTypes.TEXT(500),
-    treatmentPlan: DataTypes.TEXT(1000),
+    condition: DataTypes.TEXT,
+    diagnosis: DataTypes.TEXT,
+    treatmentPlan: DataTypes.TEXT,
 }, { paranoid: true });
 
 CarePlan.belongsTo(IPDAdmission, {

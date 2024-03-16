@@ -1,31 +1,26 @@
 const { DataTypes, Model } = require("sequelize");
 const { sequelize } = require(".");
+const Staff = require("./Staff");
 
-const SupportTicket = sequelize.define("SupportTickets",
-    {
-        msgID:{
-            type:DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        content : {
-            type: DataTypes.STRING
-        },
-        status :{
-            type : DataTypes.STRING
-        },
-        timeStamp :{
-            type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW
-        },
-        type:{
-            type: DataTypes.STRING
-        },
+const SupportTicket = sequelize.define("SupportTickets", {
+    content: {
+        type: DataTypes.STRING
+    },
+    status: {
+        type: DataTypes.STRING
+    },
+    timeStamp: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW
+    },
+    type: {
+        type: DataTypes.STRING
+    },
+});
 
-        // TODO ===>>> need to include senderID and  receiveID
-        
-    }
-);
+SupportTicket.belongsTo(Staff, { as: "sender", onDelete: "CASCADE", onUpdate: "CASCADE" })
+Staff.hasMany(SupportTicket, { as: "SupportTickets" })
+SupportTicket.belongsTo(Staff, { as: "receiver", onDelete: "CASCADE", onUpdate: "CASCADE" })
 
 
 module.exports = SupportTicket;

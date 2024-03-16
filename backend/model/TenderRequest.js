@@ -2,31 +2,24 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
 const Item = require("./Item");
 
-const TenderRequest = sequelize.define("TenderRequests",
-    {
-        reqID: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        amount: {
-            type: DataTypes.INTEGER,
-        },
-        status: {
-            type: DataTypes.STRING,
-            defaultValue: "Pending",
-            validate: {
-                isIn: [["Succcess", "Pending", "Reject"]]
-            }
+const TenderRequest = sequelize.define("TenderRequest", {
+    amount: {
+        type: DataTypes.INTEGER,
+    },
+    status: {
+        type: DataTypes.STRING,
+        defaultValue: "Pending",
+        validate: {
+            isIn: [["Success", "Pending", "Reject"]]
         }
     }
+}
 );
 
-Item.hasMany(TenderRequest, {
+TenderRequest.belongsTo(Item, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     foreignKey: { allowNull: false }
 });
-TenderRequest.belongsTo(Item);
 
 module.exports = TenderRequest;

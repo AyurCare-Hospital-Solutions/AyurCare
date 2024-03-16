@@ -48,7 +48,7 @@ async function createAll() {
         require(path.resolve(file));
     });
 
-    await sequelize.sync();
+    await sequelize.sync({ force: true, logging: () => { } });
     console.log("Finished creating tables.")
 }
 
