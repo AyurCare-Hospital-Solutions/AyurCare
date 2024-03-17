@@ -2,30 +2,25 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
 const Medicine = require("./Medicine");
 
-const MedicineLot = sequelize.define("MedicineLot",
-    {
-        lotID: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement : true
-        },
-        manufacturer: {
-            type: DataTypes.STRING
-        },
-        amount: {
-            type: DataTypes.INTEGER
-        },
-        expire_date: {
-            type: DataTypes.DATEONLY
-        }
+const MedicineLot = sequelize.define("MedicineLot", {
+    manufacturer: {
+        type: DataTypes.STRING
+    },
+    amount: {
+        type: DataTypes.INTEGER
+    },
+    expire_date: {
+        type: DataTypes.DATEONLY
     }
+}
 );
 
-Medicine.hasMany(MedicineLot, {
+MedicineLot.belongsTo(Medicine, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     foreignKey: { allowNull: false }
 });
-Medicine.belongsTo(Medicine);
+Medicine.hasMany(MedicineLot);
+
 
 module.exports = Medicine;

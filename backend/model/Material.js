@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
 const Item = require("./Item");
 
-const Material = sequelize.define("Meterials",
+const Material = sequelize.define("Material",
     {
         amount: {
             type: DataTypes.STRING
@@ -10,11 +10,10 @@ const Material = sequelize.define("Meterials",
     }
 );
 
-Item.hasOne(Material, {
+Material.belongsTo(Item, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     foreignKey: { allowNull: false }
 });
-Material.belongsTo(Item);
 
 module.exports = Material;
