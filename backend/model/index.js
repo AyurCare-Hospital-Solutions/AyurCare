@@ -47,6 +47,7 @@ async function createAll() {
     glob.sync('./model/*.js').forEach(function (file) {
         require(path.resolve(file));
     });
+    console.log("loaded")
 
     await sequelize.sync({ logging: () => { } });
     console.log("Finished creating tables.")

@@ -5,13 +5,13 @@ const Medicine = require("./Medicine");
 
 const PrescriptionMedicine = sequelize.define("PrescriptionMedicines", {
     amount: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         validate: {
             min: 0,
             max: 1000,
         }
     },
-});
+}, { timestamps: false });
 
 PrescriptionMedicine.belongsTo(Prescription);
 Prescription.hasMany(PrescriptionMedicine);
