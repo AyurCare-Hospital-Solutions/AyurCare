@@ -1,5 +1,6 @@
 const { DataTypes, Model } = require("sequelize");
 const { sequelize } = require(".");
+const Designation = require("./Designation");
 
 const Staff = sequelize.define("Staff", {
     name: {
@@ -30,6 +31,6 @@ const Staff = sequelize.define("Staff", {
 
 Staff.belongsTo(Staff, { foreignKey: { name: "SuperID" }, as: "Supervisor", onDelete: "SET NULL", onUpdate: "CASCADE" })
 Staff.hasMany(Staff, { foreignKey: { name: "SuperID" }, as: "Supervisee" });
-
+Staff.belongsTo(Designation);
 
 module.exports = Staff;
