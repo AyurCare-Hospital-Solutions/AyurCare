@@ -49,6 +49,7 @@ async function createAll() {
     glob.sync('./model/*.js').forEach(function (file) {
         require(path.resolve(file));
     });
+    console.log("loaded")
 
     let syncConfig = { force: false };
     if (Number.parseInt(process.env.SQL_SYNC_FORCE)) {
