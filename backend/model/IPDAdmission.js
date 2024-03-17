@@ -4,7 +4,6 @@ const Patient = require("./Patient");
 const Bed = require("./Bed");
 
 const IPDAdmission = sequelize.define("IPDAdmission", {
-
 },);
 
 

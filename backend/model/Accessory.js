@@ -10,11 +10,11 @@ const Accessory = sequelize.define("Accessories",
     }
 );
 
-Item.hasOne(Accessory, {
+Accessory.belongsTo(Item, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     foreignKey: { allowNull: false }
 });
-Accessory.belongsTo(Item);
+
 
 module.exports = Accessory;
