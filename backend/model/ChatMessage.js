@@ -2,7 +2,7 @@ const { DataTypes, Model } = require("sequelize");
 const { sequelize } = require(".");
 const Staff = require("./Staff");
 
-const SupportTicket = sequelize.define("SupportTicket", {
+const ChatMessage = sequelize.define("ChatMessage", {
     content: {
         type: DataTypes.STRING
     },
@@ -18,9 +18,9 @@ const SupportTicket = sequelize.define("SupportTicket", {
     },
 });
 
-SupportTicket.belongsTo(Staff, { as: "sender", onDelete: "CASCADE", onUpdate: "CASCADE", })
-Staff.hasMany(SupportTicket, { as: "SupportTickets", })
-SupportTicket.belongsTo(Staff, { as: "receiver", onDelete: "CASCADE", onUpdate: "CASCADE" })
+ChatMessage.belongsTo(Staff, { as: "sender", onDelete: "CASCADE", onUpdate: "CASCADE" })
+Staff.hasMany(ChatMessage, { as: "ChatMessages" })
+ChatMessage.belongsTo(Staff, { as: "receiver", onDelete: "CASCADE", onUpdate: "CASCADE" })
 
 
-module.exports = SupportTicket;
+module.exports = ChatMessage;

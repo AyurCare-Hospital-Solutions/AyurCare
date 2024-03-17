@@ -2,7 +2,7 @@ const { Sequelize } = require("sequelize");
 
 function connect() {
     let config;
-    if (process.env.USE_SQLITE) {
+    if (Number.parseInt(process.env.USE_SQLITE)) {
         // config for a local sqlite db
         config = {
             dialect: "sqlite",
@@ -24,10 +24,12 @@ function connect() {
             password: process.env.MYSQL_PASSWORD,
         };
 
+        let emptyOk = ["password", "port"];
+
         // validate config
         for (const k in config) {
-            if (!config[k]) {
-                throw new Error(`MYSQL_${k.toUpperCase()} is not set in env`)
+            if (emptyOk.indexOf(k) != -1 && !config[k]) {
+                console.error(`MYSQL_${k.toUpperCase()} is not set in env`)
             }
         }
 
@@ -40,7 +42,7 @@ function connect() {
 const sequelize = connect();
 
 async function createAll() {
-    console.log("Creating tables for all defined models.")
+    console.log("Loading all defined models...")
     let glob = require('glob')
     let path = require('path');
 
@@ -48,8 +50,21 @@ async function createAll() {
         require(path.resolve(file));
     });
 
-    await sequelize.sync();
-    console.log("Finished creating tables.")
+    console.log("Loaded all models.")
+
+    let syncConfig = { force: false };
+    if (Number.parseInt(process.env.SQL_SYNC_FORCE)) {
+        console.log("Dropping existing tables")
+        syncConfig.force = true;
+    }
+
+    if (!Number.parseInt(process.env.SQL_SYNC_DEBUG)) {
+        syncConfig.logging = () => { }
+    }
+
+    console.log("Synchronizing database with models...");
+    await sequelize.sync(syncConfig);
+    console.log("Finished synchronizing database.")
 }
 
 

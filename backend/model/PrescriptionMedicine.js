@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
 const Prescription = require("./Prescription");
-const { number } = require("yup");
+const Medicine = require("./Medicine");
 
 const PrescriptionMedicine = sequelize.define("PrescriptionMedicines", {
     amount: {
@@ -13,11 +13,9 @@ const PrescriptionMedicine = sequelize.define("PrescriptionMedicines", {
     },
 }, { timestamps: false });
 
-
-
 PrescriptionMedicine.belongsTo(Prescription);
 Prescription.hasMany(PrescriptionMedicine);
 
-// TODO: medicine
+PrescriptionMedicine.belongsTo(Medicine);
 
 module.exports = PrescriptionMedicine;
