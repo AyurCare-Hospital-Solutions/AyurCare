@@ -4,7 +4,7 @@ const IPDAdmission = require("./IPDAdmission");
 
 
 const NursingLog = sequelize.define("NursingLogs", {
-    note: DataTypes.TEXT(1000),
+    note: DataTypes.TEXT,
 }, { paranoid: true });
 
 NursingLog.belongsTo(IPDAdmission, {
