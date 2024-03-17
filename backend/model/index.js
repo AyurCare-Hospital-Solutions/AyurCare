@@ -2,7 +2,7 @@ const { Sequelize } = require("sequelize");
 
 function connect() {
     let config;
-    if (process.env.USE_SQLITE) {
+    if (Number.parseInt(process.env.USE_SQLITE)) {
         // config for a local sqlite db
         config = {
             dialect: "sqlite",
@@ -24,10 +24,12 @@ function connect() {
             password: process.env.MYSQL_PASSWORD,
         };
 
+        let emptyOk = ["password", "port"];
+
         // validate config
         for (const k in config) {
-            if (!config[k]) {
-                throw new Error(`MYSQL_${k.toUpperCase()} is not set in env`)
+            if (emptyOk.indexOf(k) != -1 && !config[k]) {
+                console.error(`MYSQL_${k.toUpperCase()} is not set in env`)
             }
         }
 
@@ -49,7 +51,18 @@ async function createAll() {
     });
     console.log("loaded")
 
-    await sequelize.sync({ logging: () => { } });
+    let syncConfig = { force: false };
+    if (Number.parseInt(process.env.SQL_SYNC_FORCE)) {
+        console.log("Dropping existing tables")
+        syncConfig.force = true;
+    }
+
+    if (!Number.parseInt(process.env.SQL_SYNC_DEBUG)) {
+        syncConfig.logging = () => { }
+    }
+
+    await sequelize.sync(syncConfig);
+
     console.log("Finished creating tables.")
 }
 
