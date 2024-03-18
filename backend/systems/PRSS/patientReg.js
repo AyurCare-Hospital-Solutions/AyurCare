@@ -53,4 +53,6 @@ async function getPatients(req, res) {
     res.status(200).json(await Patient.findAll());
 }
 
+//csjdvjwsjdvbjdf
+
 module.exports = {test, createNewPatient}
