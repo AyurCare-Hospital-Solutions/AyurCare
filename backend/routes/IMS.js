@@ -24,6 +24,7 @@ router.get('/accessory',accessoryService.getAccessory);
 router.post('/accessory/addAccessory',accessoryService.addAccessory);
 router.put('/accessory/updateAccessory/:id',accessoryService.updateAccessory);
 router.post('/accessory/deleteAccessory',accessoryService.deleteAccessory);
+
 // Request
 
 
