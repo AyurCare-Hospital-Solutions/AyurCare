@@ -42,7 +42,7 @@ function connect() {
 const sequelize = connect();
 
 async function createAll() {
-    console.log("Creating tables for all defined models.")
+    console.log("Loading all defined models...")
     let glob = require('glob')
     let path = require('path');
 
@@ -50,6 +50,8 @@ async function createAll() {
         require(path.resolve(file));
     });
     console.log("loaded")
+
+    console.log("Loaded all models.")
 
     let syncConfig = { force: false };
     if (Number.parseInt(process.env.SQL_SYNC_FORCE)) {
@@ -62,7 +64,7 @@ async function createAll() {
     }
 
     console.log("Synchronizing database with models...");
-    await sequelize.sync(syncConfig);
+    //await sequelize.sync(syncConfig);
     console.log("Finished synchronizing database.")
 }
 

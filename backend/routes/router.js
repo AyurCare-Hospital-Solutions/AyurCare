@@ -22,7 +22,7 @@ const register = (systemName, path) => {
 }
 
 register("/acs", "./ACS");
-register("/dms", "./DMS");
+register("/dmms", "./DMMS");
 register("/hrms", "./HRMS");
 register("/icms", "./ICMS");
 register("/ims", "./IMS");
