@@ -12,6 +12,18 @@ const accessoryValidator = yup.object(
     }
 )
 
+// get accessory
+/**
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
+
+const getAccessory = async (req, res) => {
+    const accessory = await Accessory.findAll({
+        include: Item
+    });
+    res.status(200).json(accessory);
+}
 
 /**
  * @param {express.Request} req 
@@ -40,7 +52,7 @@ const updateAccessory = async (req, res) => {
 
     // check if accessory id is valid
     if (!Number.isInteger(id)) {
-        res.status(400).json({ msg: "Invalid accessory d" });
+        res.status(400).json({ msg: "Invalid accessory id (format)" });
         return;
     }
 
@@ -61,7 +73,38 @@ const updateAccessory = async (req, res) => {
     var item = await Item.findByPk(accessory.ItemId)
     // update
     item = await item.update({ name: accessoryValidator.accessoryName, reOrderbuffer: accessoryValidator.buffer, unit: accessoryValidator.unit });
-    accessory = await accessory({amount : accessoryValidator.amount});
+    accessory = await accessory({ amount: accessoryValidator.amount });
 
-    res.status(200).json(accessory,item);
+    res.status(200).json(accessory, item);
 }
+
+// delete accessory
+/**
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
+const deleteAccessory = async (req, res) => {
+    const id = req.body.id;
+    // check if accessory id is valid
+    if (!Number.isInteger(id)) {
+        res.status(400).json({ msg: "Invalid accessory id (format)" });
+    }
+
+    // check existance of accessory
+    let accessory = await Accessory.findByPk(id);
+    if (accessory === null) {
+        res.status(404).json({ msg: "The accessory does not exist" });
+        return;
+    }
+    var item = await Item.findByPk(accessory.ItemId)
+    // delete
+    await item.destroy();
+    res.sendStatus(204);
+}
+
+module.exports = {
+    getAccessory,
+    addAccessory,
+    updateAccessory,
+    deleteAccessory,
+};
