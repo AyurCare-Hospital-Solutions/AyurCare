@@ -28,6 +28,6 @@ register("/icms", "./ICMS");
 register("/ims", "./IMS");
 register("/ocms", "./OCMS");
 register("/pms", "./PMS");
-register("/prs", "./PRS");
+register("/prss", "./PRSS");
 
 module.exports = router;
