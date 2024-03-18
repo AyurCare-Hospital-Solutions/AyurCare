@@ -24,8 +24,8 @@ const PrescriptionMedicine = sequelize.define("PrescriptionMedicines", {
 
 Prescription.belongsToMany(ConditionType, { through: PrescriptionConditions });
 Prescription.belongsToMany(Medicine, { through: PrescriptionMedicine });
+Prescription.belongsTo(Staff, { as: "DispensedBy" });
+Prescription.belongsTo(Staff, { as: "Doctor" });
 
-// TODO: doctor
-// TODO: pharmacist
 
 module.exports = Prescription;
