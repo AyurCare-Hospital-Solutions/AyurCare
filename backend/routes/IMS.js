@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const accessoryService = require('../systems/IMS/accessory')
 
+const accessoryService = require('../systems/IMS/accessory');
 const materialService = require('../systems/IMS/material');
 const medicineService = require('../systems/IMS/medicine');
 
@@ -19,14 +19,13 @@ router.put('/medicine/updateMedicine/:id', medicineService.updateMedicine);
 router.post('/medicine/deleteMedicine', medicineService.deleteMedicine);
 
 
-
 // Accessories
-
-// Request
-
 router.get('/accessory',accessoryService.getAccessory);
 router.post('/accessory/addAccessory',accessoryService.addAccessory);
 router.put('/accessory/updateAccessory/:id',accessoryService.updateAccessory);
 router.post('/accessory/deleteAccessory',accessoryService.deleteAccessory);
+// Request
+
+
 
 module.exports = router;
