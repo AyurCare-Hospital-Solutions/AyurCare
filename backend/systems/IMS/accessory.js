@@ -31,13 +31,13 @@ const getAccessory = async (req, res) => {
  */
 const addAccessory = async (req, res) => {
     try {
-        const accessoryData = await accessoryValidator.validate(req.body);
+        var accessoryData = await accessoryValidator.validate(req.body);
     }
     catch (validationError) {
         res.status(400).json({ msg: validationError.errors[0] })
     }
-    let item = await Item.create({ name: accessoryValidator.accessoryName, reOrderbuffer: accessoryValidator.buffer, unit: accessoryValidator.unit })
-    let accessory = await Accessory.create({ amout: accessoryValidator.amount, ItemID: item.id });
+    let item = await Item.create({ name: accessoryData.accessoryName, reOrderBuffer: accessoryData.buffer, unit: accessoryData.unit });
+    let accessory = await Accessory.create({ amount: accessoryData.amount, ItemId: item.id });
 
     res.status(200).json({ accessory, item });
 }
@@ -58,7 +58,7 @@ const updateAccessory = async (req, res) => {
 
     // validate request body
     try {
-        const accessoryData = await accessoryValidator.validate(req.body);
+        var accessoryData = await accessoryValidator.validate(req.body);
     }
     catch (validationError) {
         res.status(400).json({ msg: validationError.errors[0] })
@@ -72,10 +72,10 @@ const updateAccessory = async (req, res) => {
     }
     var item = await Item.findByPk(accessory.ItemId)
     // update
-    item = await item.update({ name: accessoryValidator.accessoryName, reOrderbuffer: accessoryValidator.buffer, unit: accessoryValidator.unit });
-    accessory = await accessory({ amount: accessoryValidator.amount });
+    item = await item.update({ name: accessoryData.accessoryName, reOrderbuffer: accessoryData.buffer, unit: accessoryData.unit });
+    accessory = await accessory.update({ amount: (accessory.amount + accessoryData.amount) }); // need to recheck
 
-    res.status(200).json(accessory, item);
+    res.status(200).json({accessory, item});
 }
 
 // delete accessory
