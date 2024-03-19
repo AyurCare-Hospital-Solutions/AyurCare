@@ -22,6 +22,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <ThemeProvider theme={theme}>
       <Nav></Nav>
       <App></App>
+      test
     </ThemeProvider>
   </React.StrictMode>,
 )
