@@ -4,8 +4,9 @@ const ShiftType = require("./ShiftType");
 
 const Shift = sequelize.define("Shift", {
     date: DataTypes.DATEONLY
-}, { timestamps: false })
+}, { timestamps: false });
+
+
 
 Shift.belongsTo(ShiftType);
-
 module.exports = Shift;

@@ -1,35 +1,48 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { ReactElement } from "react";
+import { Link, RouteObject, RouterProvider, createBrowserRouter } from "react-router-dom";
+
+import acs from "./systems/ACS";
+import dmms from "./systems/DMMS";
+import hrms from "./systems/HRMS";
+import icms from "./systems/ICMS";
+import ims from "./systems/IMS";
+import ocms from "./systems/OCMS";
+import pms from "./systems/PMS";
+import prs from "./systems/PRS";
+
+
+let routes: Map<String, RouteObject> = new Map();
+
+const impotedRoutes = [acs, dmms, hrms, icms, ims, ocms, pms, prs];
+impotedRoutes.forEach((route) => {
+  routes.set(route.name, {
+    path: "/" + route.name.toLowerCase(),
+    element: route.root,
+    children: route.routes
+  })
+});
+
+function TempMain() {
+  let links: ReactElement[] = [];
+  routes.forEach((v, k) => {
+    links.push(<div><Link to={v.path!}>{k}</Link></div>)
+  })
+
+  return links;
+}
+
+const domRouter = createBrowserRouter([{
+  path: "/",
+  element: <TempMain />
+}, ...routes.values()])
+
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <RouterProvider router={domRouter} />
     </>
   )
 }
 
-export default App
+export default App;

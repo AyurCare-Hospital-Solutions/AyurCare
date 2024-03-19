@@ -1,6 +1,8 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
 const ConditionType = require("./ConditionType");
+const Medicine = require("./Medicine");
+const Staff = require("./Staff");
 
 const Prescription = sequelize.define("Prescriptions", {
     diagnosis: DataTypes.STRING,
@@ -8,28 +10,23 @@ const Prescription = sequelize.define("Prescriptions", {
     dispensed_date: DataTypes.DATE
 }, { paranoid: true });
 
-const PrescriptionConditions = sequelize.define('PrescriptionConditions', {
-    PrescriptionId: {
+const PrescriptionConditions = sequelize.define('PrescriptionConditions', {}, { timestamps: false });
+
+const PrescriptionMedicine = sequelize.define("PrescriptionMedicines", {
+    amount: {
         type: DataTypes.INTEGER,
-        references: {
-            model: Prescription,
-            key: 'id'
+        validate: {
+            min: 0,
+            max: 1000,
         }
     },
-    ConditionTypeId: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: ConditionType,
-            key: 'id'
-        }
-    }
-}, { timestamps: false });
+});
 
 
 Prescription.belongsToMany(ConditionType, { through: PrescriptionConditions });
-ConditionType.belongsToMany(Prescription, { through: PrescriptionConditions });
+Prescription.belongsToMany(Medicine, { through: PrescriptionMedicine });
+Prescription.belongsTo(Staff, { as: "DispensedBy" });
+Prescription.belongsTo(Staff, { as: "Doctor" });
 
-// TODO: doctor
-// TODO: pharmacist
 
 module.exports = Prescription;
