@@ -13,8 +13,8 @@ import prs from "./systems/PRS";
 
 let routes: Map<String, RouteObject> = new Map();
 
-const impotedRoutes = [acs, dmms, hrms, icms, ims, ocms, pms, prs];
-impotedRoutes.forEach((route) => {
+const importedRoutes = [acs, dmms, hrms, icms, ims, ocms, pms, prs];
+importedRoutes.forEach((route) => {
   routes.set(route.name, {
     path: "/" + route.name.toLowerCase(),
     element: route.root,
