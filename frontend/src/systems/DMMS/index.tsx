@@ -1,15 +1,12 @@
 import { RouteObject } from "react-router-dom";
 
+const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
 
-
-export default function (): { name: String, root: React.ReactNode, routes: RouteObject[] } {
-    return {
-        name: "DMMS",
-        root: <p>DMMS</p>, // replace with main element
-        routes: [
-            // Register routes here
-
-        ],
-    }
-
+    name: "DMMS",
+    root: <p>DMMS</p>, // replace with main element
+    routes: [
+        // Register routes here
+    ],
 }
+
+export default routes;
