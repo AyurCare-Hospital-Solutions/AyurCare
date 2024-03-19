@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { Link, RouteObject, RouterProvider, createBrowserRouter } from "react-router-dom";
 
 let routes: Map<String, RouteObject> = new Map();
@@ -20,7 +20,6 @@ const loadRoutes = async () => {
 
 }
 
-await loadRoutes()
 
 function TempMain() {
   let links: ReactElement[] = [];
@@ -31,15 +30,25 @@ function TempMain() {
   return links;
 }
 
-const router = createBrowserRouter([{
-  path: "/",
-  element: <TempMain />
-}, ...routes.values()]);
 
 
 
 
+export default () => {
+  let [router, setRouter] = useState<any>(null);
 
-export default () => <>
-  <RouterProvider router={router} />
-</>
+  useEffect(() => {
+    loadRoutes().then(() => {
+      setRouter(createBrowserRouter([{
+        path: "/",
+        element: <TempMain />
+      }, ...routes.values()]))
+    })
+  }, [])
+
+
+
+  return <>
+    {router ? <RouterProvider router={router} /> : ""}
+  </>
+}
