@@ -4,7 +4,7 @@
   "description": "backend for HMS",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "nodemon --ext js,mjs,cjs,json,env,local app.js",
     "test": "cross-env NODE_ENV=test USE_SQLITE=1 jest --testTimeout=10000"
   },
   "jest": {

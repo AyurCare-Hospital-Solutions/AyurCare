@@ -1,35 +1,54 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { ReactElement, useEffect, useState } from "react";
+import { Link, RouteObject, RouterProvider, createBrowserRouter } from "react-router-dom";
 
-function App() {
-  const [count, setCount] = useState(0)
+let routes: Map<String, RouteObject> = new Map();
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+const loadRoutes = async () => {
+  const load = async (name: String, module: any) => {
+    let route = (await module).default();
+    routes.set(route.name, { path: "/" + name, element: route.root, children: route.routes })
+  }
+
+  await load("acs", import("./systems/ACS"));
+  await load("dmms", import("./systems/DMMS"));
+  await load("hrms", import("./systems/HRMS"));
+  await load("icms", import("./systems/ICMS"));
+  await load("ims", import("./systems/IMS"));
+  await load("ocms", import("./systems/OCMS"));
+  await load("pms", import("./systems/PMS"));
+  await load("prs", import("./systems/PRS"));
+
 }
 
-export default App
+
+function TempMain() {
+  let links: ReactElement[] = [];
+  routes.forEach((v, k) => {
+    links.push(<div><Link to={v.path!}>{k}</Link></div>)
+  })
+
+  return links;
+}
+
+
+
+
+
+export default () => {
+  let [router, setRouter] = useState<any>(null);
+
+  useEffect(() => {
+    loadRoutes().then(() => {
+      setRouter(createBrowserRouter([{
+        path: "/",
+        element: <TempMain />
+      }, ...routes.values()]))
+    })
+  }, [])
+
+
+
+  return <>
+    {router ? <RouterProvider router={router} /> : ""}
+  </>
+}
