@@ -28,3 +28,12 @@ body {
     min-height: 100%;
     background-color: rgba(0, 0, 0, 0.24);
 }
+
+.sidebar>a {
+    text-decoration: none;
+    color: initial
+}
+
+.sidebar>a>li:hover {
+    background-color: rgba(0, 0, 0, 0.24);
+}
