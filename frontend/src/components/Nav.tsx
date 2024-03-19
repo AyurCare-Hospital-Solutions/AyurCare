@@ -7,8 +7,8 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
 import MenuItem from '@mui/material/MenuItem';
-import { AccountCircle, ConfirmationNumber, Event, Logout } from '@mui/icons-material';
-import { Divider, ListItemIcon } from '@mui/material';
+import { AccountCircle, ConfirmationNumber, Event, Logout, Mail } from '@mui/icons-material';
+import { ListItemIcon } from '@mui/material';
 
 
 function TopNavBar() {
@@ -31,8 +31,13 @@ function TopNavBar() {
                         <img src="/assets/logo.png" alt="AyurCare Logo" style={{ height: "50px" }} />
                     </Box>
                     <Box sx={{ flexGrow: 1 }}></Box>
+                    <Box>
+                        <IconButton sx={{ p: 0 }}>
+                            <Mail sx={{ color: "#ffffff", fontSize: "24px", mx: 2 }}></Mail>
+                        </IconButton>
+                    </Box>
                     <Box sx={{ flexGrow: 0 }}>
-                        <Box onClick={handleOpenUserMenu} sx={{ display: "flex" }}>
+                        <Box onClick={handleOpenUserMenu} sx={{ display: "flex" }} id="menu-opener">
                             <IconButton sx={{ p: 0 }}>
                                 <AccountCircle sx={{ color: "#ffffff", fontSize: "40px" }}></AccountCircle>
                             </IconButton>
@@ -59,25 +64,25 @@ function TopNavBar() {
                                     <AccountCircle></AccountCircle>
                                 </ListItemIcon>
 
-                                <Typography ml={2}>Profile</Typography>
+                                <Typography>Profile</Typography>
                             </MenuItem>
                             <MenuItem>
                                 <ListItemIcon>
                                     <Event></Event>
                                 </ListItemIcon>
-                                <Typography ml={2}>Leave Requests</Typography>
+                                <Typography>Leave Requests</Typography>
                             </MenuItem>
                             <MenuItem>
                                 <ListItemIcon>
                                     <ConfirmationNumber></ConfirmationNumber>
                                 </ListItemIcon>
-                                <Typography ml={2}>Support Tickets</Typography>
+                                <Typography>Support Tickets</Typography>
                             </MenuItem>
                             <MenuItem>
                                 <ListItemIcon>
                                     <Logout></Logout>
                                 </ListItemIcon>
-                                <Typography ml={2}>Logout</Typography>
+                                <Typography>Logout</Typography>
                             </MenuItem>
                         </Menu>
                     </Box>
