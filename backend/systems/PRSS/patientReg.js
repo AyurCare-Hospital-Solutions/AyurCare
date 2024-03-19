@@ -87,7 +87,4 @@ async function updatePatientDetails(req, res) {
     res.status(204).json({  msg: "Patient details updated successfully" });
 }
 
-//csjdvjwsjdvbjdf
-//I add this comment to get an idea
-
 module.exports = {test, createNewPatient, getPatients, updatePatientDetails}
