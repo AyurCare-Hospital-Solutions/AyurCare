@@ -53,6 +53,40 @@ async function getPatients(req, res) {
     res.status(200).json(await Patient.findAll());
 }
 
+/**
+ * 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
+
+// update patient details
+async function updatePatientDetails(req, res) {
+    try {
+        var data = await validatePatientDetails.validate(req.body);
+    }catch(validationError){
+        res.status(400).send({msg: validationError.errors[0]});
+        return;
+    }
+
+    // check the patient id is null
+    if(req.params.id === null){
+        res.status(400).json({msg: "Invalid patient id"});
+        return;
+    }
+
+    // find the patient by id
+    const patient = await Patient.findByPk(req.params.id);
+    if(patient === null){
+        res.status(404).json({msg: "The patient does not exist"});
+        return;
+    }
+    
+    // send the update data
+    patient.toJSON() = data.toJSON();
+    await patient.save();
+    res.status(204).json({  msg: "Patient details updated successfully" });
+}
+
 //csjdvjwsjdvbjdf
 
-module.exports = {test, createNewPatient}
+module.exports = {test, createNewPatient, getPatients, updatePatientDetails}
