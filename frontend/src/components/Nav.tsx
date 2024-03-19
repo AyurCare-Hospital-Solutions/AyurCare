@@ -6,12 +6,10 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { AccountCircle } from '@mui/icons-material';
+import { AccountCircle, ConfirmationNumber, Event, Logout } from '@mui/icons-material';
+import { Divider, ListItemIcon } from '@mui/material';
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function TopNavBar() {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -29,18 +27,19 @@ function TopNavBar() {
         <AppBar position="static">
             <Container maxWidth={false}>
                 <Toolbar>
-                    <Box>
+                    <Box sx={{ flexGrow: 0 }}>
                         <img src="/assets/logo.png" alt="AyurCare Logo" style={{ height: "50px" }} />
                     </Box>
                     <Box sx={{ flexGrow: 1 }}></Box>
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <AccountCircle fontSize='32px' style={{ color: "#ffffff" }}></AccountCircle>
+                        <Box onClick={handleOpenUserMenu} sx={{ display: "flex" }}>
+                            <IconButton sx={{ p: 0 }}>
+                                <AccountCircle sx={{ color: "#ffffff", fontSize: "40px" }}></AccountCircle>
                             </IconButton>
-                        </Tooltip>
+                            <Typography sx={{ color: "#ffffff", my: "auto", mx: 2 }}>User Name</Typography>
+                        </Box>
                         <Menu
-                            sx={{ mt: '45px' }}
+                            sx={{ mt: '45px', mx: '16px' }}
                             id="menu-appbar"
                             anchorEl={anchorElUser}
                             anchorOrigin={{
@@ -55,11 +54,31 @@ function TopNavBar() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))}
+                            <MenuItem onClick={handleCloseUserMenu}>
+                                <ListItemIcon>
+                                    <AccountCircle></AccountCircle>
+                                </ListItemIcon>
+
+                                <Typography ml={2}>Profile</Typography>
+                            </MenuItem>
+                            <MenuItem>
+                                <ListItemIcon>
+                                    <Event></Event>
+                                </ListItemIcon>
+                                <Typography ml={2}>Leave Requests</Typography>
+                            </MenuItem>
+                            <MenuItem>
+                                <ListItemIcon>
+                                    <ConfirmationNumber></ConfirmationNumber>
+                                </ListItemIcon>
+                                <Typography ml={2}>Support Tickets</Typography>
+                            </MenuItem>
+                            <MenuItem>
+                                <ListItemIcon>
+                                    <Logout></Logout>
+                                </ListItemIcon>
+                                <Typography ml={2}>Logout</Typography>
+                            </MenuItem>
                         </Menu>
                     </Box>
                 </Toolbar>
