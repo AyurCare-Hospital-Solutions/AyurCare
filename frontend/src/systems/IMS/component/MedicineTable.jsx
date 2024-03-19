@@ -60,7 +60,7 @@ const rows = [
 
 function MedicineTable() {
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(30);
+    const [rowsPerPage, setRowsPerPage] = React.useState(20);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -73,7 +73,7 @@ function MedicineTable() {
 
     return (
         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-            <TableContainer sx={{ maxHeight: 1000 }}>
+            <TableContainer sx={{ height: '100%' }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                         <TableRow>
