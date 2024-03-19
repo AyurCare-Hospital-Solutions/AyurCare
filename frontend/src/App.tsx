@@ -1,25 +1,26 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement } from "react";
 import { Link, RouteObject, RouterProvider, createBrowserRouter } from "react-router-dom";
+
+import acs from "./systems/ACS";
+import dmms from "./systems/DMMS";
+import hrms from "./systems/HRMS";
+import icms from "./systems/ICMS";
+import ims from "./systems/IMS";
+import ocms from "./systems/OCMS";
+import pms from "./systems/PMS";
+import prs from "./systems/PRS";
+
 
 let routes: Map<String, RouteObject> = new Map();
 
-const loadRoutes = async () => {
-  const load = async (name: String, module: any) => {
-    let route = (await module).default();
-    routes.set(route.name, { path: "/" + name, element: route.root, children: route.routes })
-  }
-
-  await load("acs", import("./systems/ACS"));
-  await load("dmms", import("./systems/DMMS"));
-  await load("hrms", import("./systems/HRMS"));
-  await load("icms", import("./systems/ICMS"));
-  await load("ims", import("./systems/IMS"));
-  await load("ocms", import("./systems/OCMS"));
-  await load("pms", import("./systems/PMS"));
-  await load("prs", import("./systems/PRS"));
-
-}
-
+const impotedRoutes = [acs, dmms, hrms, icms, ims, ocms, pms, prs];
+impotedRoutes.forEach((route) => {
+  routes.set(route.name, {
+    path: "/" + route.name.toLowerCase(),
+    element: route.root,
+    children: route.routes
+  })
+});
 
 function TempMain() {
   let links: ReactElement[] = [];
@@ -30,25 +31,18 @@ function TempMain() {
   return links;
 }
 
+const domRouter = createBrowserRouter([{
+  path: "/",
+  element: <TempMain />
+}, ...routes.values()])
 
 
-
-
-export default () => {
-  let [router, setRouter] = useState<any>(null);
-
-  useEffect(() => {
-    loadRoutes().then(() => {
-      setRouter(createBrowserRouter([{
-        path: "/",
-        element: <TempMain />
-      }, ...routes.values()]))
-    })
-  }, [])
-
-
-
-  return <>
-    {router ? <RouterProvider router={router} /> : ""}
-  </>
+function App() {
+  return (
+    <>
+      <RouterProvider router={domRouter} />
+    </>
+  )
 }
+
+export default App;
