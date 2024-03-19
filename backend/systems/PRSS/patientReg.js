@@ -88,5 +88,6 @@ async function updatePatientDetails(req, res) {
 }
 
 //csjdvjwsjdvbjdf
+//I add this comment to get an idea
 
 module.exports = {test, createNewPatient, getPatients, updatePatientDetails}
