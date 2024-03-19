@@ -1,5 +1,10 @@
 body {
     margin: 0;
+    background-color: #E5E5E5;
+}
+
+#root {
+    height: 100vh;
 }
 
 #menu-appbar .MuiMenuItem-root:hover {

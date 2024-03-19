@@ -1,6 +1,6 @@
 
 import { Inbox, Mail } from '@mui/icons-material';
-import { Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Box, Card, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { Link, Outlet } from 'react-router-dom'
 
 
@@ -8,8 +8,8 @@ const drawerWidth = 240;
 function ImsMain() {
 
     return (
-        <div>
-            <Box sx={{ display: 'flex', flexDirection: 'row', minHeight: '100%' }}>
+        <>
+            <Box sx={{ display: 'flex', flexDirection: 'row' }} >
                 <Drawer variant="permanent"
                     elevation={0}
                     sx={{
@@ -34,12 +34,19 @@ function ImsMain() {
                         ))}
                     </List>
                 </Drawer>
-                <Box sx={{ ml: "16px", mt: "16px" }}>
-                    <Outlet />
-                </Box>
+                <Card variant="outlined" sx={{
+                    m: "6px",
+                    p: "16px",
+                    width: "100%",
+                }}>
+
+                    <Box sx={{}}>
+                        <Outlet />
+                    </Box>
+                </Card>
             </Box >
 
-        </div >
+        </ >
     )
 }
 
