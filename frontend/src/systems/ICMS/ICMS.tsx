@@ -103,7 +103,7 @@ function ICMS() {
                     </List>
                 </Drawer>
                 <Card variant="outlined" sx={{
-                    m: "6px",
+                    m: "24px",
                     p: "16px",
                     width: "100%",
                 }}>
