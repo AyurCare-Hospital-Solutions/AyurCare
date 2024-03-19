@@ -73,7 +73,7 @@ function MedicineTable() {
 
     return (
         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-            <TableContainer sx={{ height: '100%' }}>
+            <TableContainer sx={{ maxHeight: 500 }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                         <TableRow>
