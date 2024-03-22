@@ -24,7 +24,7 @@ function TopNavBar() {
     };
 
     return (
-        <AppBar position="static">
+        <AppBar position="sticky">
             <Container maxWidth={false}>
                 <Toolbar>
                     <Box sx={{ flexGrow: 0 }}>
