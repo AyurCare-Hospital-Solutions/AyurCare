@@ -5,7 +5,7 @@ const wardService = require("../systems/ICMS/wards");
 
 router.post("/ward", wardService.createWard);
 router.get("/ward", wardService.getWards);
-router.patch("/ward/:id", wardService.renameWard);
+router.put("/ward/:id", wardService.renameWard);
 router.delete("/ward/:id", wardService.deleteWard);
 
 module.exports = router;

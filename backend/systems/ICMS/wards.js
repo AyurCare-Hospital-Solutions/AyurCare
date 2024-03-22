@@ -61,8 +61,7 @@ async function renameWard(req, res) {
         return;
     }
 
-    ward.name = data.name;
-    await ward.save();
+    await ward.update({ name: data.name });
     res.sendStatus(204);
 }
 
