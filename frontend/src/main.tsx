@@ -5,6 +5,9 @@ import Nav from "./components/Nav.tsx";
 import "./index.css";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { SnackbarProvider } from 'notistack';
+import axios from 'axios';
+
+axios.defaults.baseURL = 'http://localhost:5000/';
 
 const theme = createTheme({
   palette: {
