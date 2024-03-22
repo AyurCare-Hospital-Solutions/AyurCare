@@ -29,7 +29,7 @@ async function createWard(req, res) {
     }
 
     let ward = await Ward.create({ name: data.name });
-    res.status(200).json({ data: ward });
+    res.status(200).json(ward.toJSON());
 }
 
 /**
