@@ -4,7 +4,7 @@ import Ward from "./Ward";
 
 const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
     name: "ICMS",
-    root: <ICMS />, // replace with main element
+    root: <ICMS />,
     routes: [
         {
             path: "wards",

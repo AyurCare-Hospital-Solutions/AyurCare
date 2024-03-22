@@ -16,7 +16,7 @@ export default ({ data }: { data: format[] | undefined }) => {
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell>ID</TableCell>
+                        <TableCell size="small">ID</TableCell>
                         <TableCell>Name</TableCell>
                     </TableRow>
                 </TableHead>
@@ -29,6 +29,13 @@ export default ({ data }: { data: format[] | undefined }) => {
                             </TableRow>
                         }) : <TableLoader columns={2} />
                     }
+
+                    {
+                        data && data.length == 0 ? <TableRow>
+                            <TableCell colSpan={2}>No records found</TableCell>
+                        </TableRow> : undefined
+                    }
+
                 </TableBody>
             </Table>
         </TableContainer>
