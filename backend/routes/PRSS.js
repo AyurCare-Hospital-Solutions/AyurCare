@@ -8,6 +8,8 @@ const Patient = require("../systems/PRSS/patientReg");
 router.get("/test-patient", Patient.test);
 router.post("/create-patient", Patient.createNewPatient);
 router.get("/get-patients", Patient.getPatients);
-router.patch("/update-patient/:id", Patient.updatePatientDetails);
+router.get("/get-patient/:id", Patient.getPatientDetails);
+router.put("/update-patient/:id", Patient.updatePatientDetails);
+router.delete("/delete-patient/:id", Patient.deletePatient);
 
 module.exports = router;

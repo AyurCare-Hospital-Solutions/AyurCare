@@ -54,13 +54,35 @@ async function getPatients(req, res) {
 }
 
 /**
- * 
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+
+// get patient details by id
+async function getPatientDetails(req, res) {
+    
+    // check the patient id is null
+    if (!Number.isInteger(Number.parseInt(req.params.id))) {
+        res.status(400).json({msg: "Invalid patient id"});
+        return;
+    }
+
+    const patient = await Patient.findByPk(req.params.id);
+    if(patient === null){
+        res.status(404).json({msg: "The patient does not exist"});
+        return;
+    }
+    res.status(200).json(patient);
+}
+
+/**
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
 
 // update patient details
 async function updatePatientDetails(req, res) {
+
     try {
         var data = await validatePatientDetails.validate(req.body);
     }catch(validationError){
@@ -74,6 +96,12 @@ async function updatePatientDetails(req, res) {
         return;
     }
 
+    //check the id is an integer
+    if (!Number.isInteger(Number.parseInt(req.params.id))) {
+        res.status(400).json({msg: "Invalid patient id"});
+        return;        
+    }
+
     // find the patient by id
     const patient = await Patient.findByPk(req.params.id);
     if(patient === null){
@@ -82,9 +110,33 @@ async function updatePatientDetails(req, res) {
     }
     
     // send the update data
-    patient.toJSON() = data.toJSON();
-    await patient.save();
-    res.status(204).json({  msg: "Patient details updated successfully" });
+    await patient.update(data);
+    res.status(200).json({  msg: "Patient details updated successfully" });
 }
 
-module.exports = {test, createNewPatient, getPatients, updatePatientDetails}
+/**
+ * 
+ * @param {express.Request} req 
+ * @param {express.Response} res  
+ */
+
+// get the patient details by id
+async function deletePatient(req, res) {
+
+    // checking the patient id is null
+    if(req.params.id === null){
+        res.status(400).json({msg: "Invalid patient id"});
+        return;
+    }
+
+    // Getting the patient id
+    const patient = await Patient.findByPk(req.params.id);
+    if(patient === null){
+        res.status(404).json({msg: "The patient does not exist"});
+        return;
+    }
+    await patient.destroy();
+    res.status(200).json({msg: "Patient deleted successfully"});
+}
+
+module.exports = {test, createNewPatient, getPatients, getPatientDetails, updatePatientDetails, deletePatient}
