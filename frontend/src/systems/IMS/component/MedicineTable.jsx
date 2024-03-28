@@ -8,31 +8,6 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 
-const columns = [
-    { id: 'name', label: 'Name', minWidth: 170 },
-    { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
-    {
-        id: 'population',
-        label: 'Population',
-        minWidth: 170,
-        align: 'right',
-        format: (value) => value.toLocaleString('en-US'),
-    },
-    {
-        id: 'size',
-        label: 'Size\u00a0(km\u00b2)',
-        minWidth: 170,
-        align: 'right',
-        format: (value) => value.toLocaleString('en-US'),
-    },
-    {
-        id: 'density',
-        label: 'Density',
-        minWidth: 170,
-        align: 'right',
-        format: (value) => value.toFixed(2),
-    },
-];
 
 function createData(name, code, population, size) {
     const density = population / size;
@@ -57,10 +32,9 @@ const rows = [
     createData('Brazil', 'BR', 210147125, 8515767),
 ];
 
-
-function MedicineTable() {
+function MedicineTable(props) {
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(20);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -73,19 +47,16 @@ function MedicineTable() {
 
     return (
         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-            <TableContainer sx={{ maxHeight: 500 }}>
+            <TableContainer sx={{ maxHeight: 440 }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                         <TableRow>
-                            {columns.map((column) => (
-                                <TableCell
-                                    key={column.id}
-                                    align={column.align}
-                                    style={{ minWidth: column.minWidth }}
-                                >
-                                    {column.label}
-                                </TableCell>
-                            ))}
+                            <TableCell size="small">ID</TableCell>
+                            <TableCell>Name</TableCell>
+                            <TableCell>Re-Order Buffer</TableCell>
+                            <TableCell>Unit</TableCell>
+                            <TableCell>In-House</TableCell>
+                            <TableCell size="small"></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -93,17 +64,8 @@ function MedicineTable() {
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row) => {
                                 return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code} sx={{ bgcolor: row.name === 'Germany' ? 'primary.main' : 'warning.main' }}>
-                                        {columns.map((column) => {
-                                            const value = row[column.id];
-                                            return (
-                                                <TableCell key={column.id} align={column.align}>
-                                                    {column.format && typeof value === 'number'
-                                                        ? column.format(value)
-                                                        : value}
-                                                </TableCell>
-                                            );
-                                        })}
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                                        
                                     </TableRow>
                                 );
                             })}
@@ -111,7 +73,7 @@ function MedicineTable() {
                 </Table>
             </TableContainer>
             <TablePagination
-                rowsPerPageOptions={[20, 30, 50]}
+                rowsPerPageOptions={[10, 25, 100]}
                 component="div"
                 count={rows.length}
                 rowsPerPage={rowsPerPage}
@@ -122,5 +84,4 @@ function MedicineTable() {
         </Paper>
     );
 }
-
 export default MedicineTable;

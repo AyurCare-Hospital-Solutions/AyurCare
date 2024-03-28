@@ -64,7 +64,7 @@ async function createAll() {
     }
 
     console.log("Synchronizing database with models...");
-    await sequelize.sync(syncConfig);
+    //await sequelize.sync(syncConfig);
     console.log("Finished synchronizing database.")
 }
 

@@ -24,11 +24,8 @@ function TopNavBar() {
     };
 
     return (
-<<<<<<< HEAD
+
         <AppBar position="sticky" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-=======
-        <AppBar position="sticky">
->>>>>>> 2d03c8a0d56a370e7d3c9390068499b6c369070c
             <Container maxWidth={false}>
                 <Toolbar>
                     <Box sx={{ flexGrow: 0 }}>

@@ -1,44 +1,38 @@
 
-import { Inbox, Mail } from '@mui/icons-material';
+import { Dashboard, Inbox, Mail } from '@mui/icons-material';
+import VaccinesIcon from '@mui/icons-material/Vaccines';
 import { Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { Link, Outlet } from 'react-router-dom'
+import DashboardPage from '../../components/DashboardPage';
 
 
-const drawerWidth = 240;
 function ImsMain() {
 
     return (
         <div>
-            <Box sx={{ display: 'flex', flexDirection: 'row', minHeight: '100%' }}>
-                <Drawer variant="permanent"
-                    elevation={0}
-                    sx={{
-                        width: drawerWidth,
-                        flexShrink: 0,
-                        [`& .MuiDrawer-paper`]: {
-                            width: drawerWidth, boxSizing: 'border-box',
-                            mt: "64px", position: "fixed"
-                        },
-                        mb: 'auto'
-                    }}>
-                    <List>
-                        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                            <ListItem key={text} disablePadding>
-                                <ListItemButton>
-                                    <ListItemIcon>
-                                        {index % 2 === 0 ? <Inbox /> : <Mail />}
-                                    </ListItemIcon>
-                                    <ListItemText primary={text} />
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
-                    </List>
-                </Drawer>
-                <Box sx={{ ml: "16px", mt: "16px" }}>
-                    <Outlet />
-                </Box>
-            </Box >
+            <DashboardPage>
+                <Link to="/ims/dashboard">
+                    <ListItem disablePadding>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <Dashboard />
+                            </ListItemIcon>
+                            <ListItemText primary="Dashboard" />
+                        </ListItemButton>
+                    </ListItem>
+                </Link>
 
+                <Link to="/ims/medicine">
+                    <ListItem disablePadding>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <VaccinesIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Medicine" />
+                        </ListItemButton>
+                    </ListItem>
+                </Link>
+            </DashboardPage>
         </div >
     )
 }
