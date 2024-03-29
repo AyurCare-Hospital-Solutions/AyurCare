@@ -35,7 +35,7 @@ function Medicine() {
   // Fetch Medicine Data
   const getMedicineData = async () => {
     await axios.get('/api/ims/medicine').then((res) => {
-      setTimeout(() => setMedicineData(res.data), 1000);
+      setTimeout(() => setMedicineData(res.data), 2000);
       console.log(res.data);
     })
   }

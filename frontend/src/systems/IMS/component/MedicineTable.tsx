@@ -9,8 +9,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
-import { Box, CircularProgress, IconButton } from '@mui/material';
-import TableLoader from '../../../components/TableLoader';
+import {  CircularProgress, IconButton } from '@mui/material';
 
 
 function MedicineTable(props: { data: any, query: String, deleteMedicine: any, handleUpdateModalOpen: () => any, setUpdatedmedicine: (p: any) => any }) {
@@ -89,7 +88,27 @@ function MedicineTable(props: { data: any, query: String, deleteMedicine: any, h
                                         </TableCell>
                                     </TableRow>
                                 );
-                            }) : <TableLoader columns={6} />}
+                            }) : <TableRow>
+                                <TableCell>
+                                    <CircularProgress />
+                                </TableCell>
+                                <TableCell>
+                                    <CircularProgress />
+                                </TableCell>
+                                <TableCell>
+                                    <CircularProgress />
+                                </TableCell>
+                                <TableCell>
+                                    <CircularProgress />
+                                </TableCell>
+                                <TableCell>
+                                    <CircularProgress />
+                                </TableCell>
+                                <TableCell>
+                                    <CircularProgress sx={{mx:'auto'}} />
+                                </TableCell>
+                            
+                        </TableRow>}
                     </TableBody>
                 </Table>
             </TableContainer>
