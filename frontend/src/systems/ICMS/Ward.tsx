@@ -44,7 +44,7 @@ const Ward = () => {
         }
 
         try {
-            let resp = await axios.put(`/api/icms/ward/${editWard.id}`, { name: name });
+            await axios.put(`/api/icms/ward/${editWard.id}`, { name: name });
             editWard.name = name;
             setWards([...wards])
             enqueueSnackbar("Ward renamed successfully", { variant: "success" });

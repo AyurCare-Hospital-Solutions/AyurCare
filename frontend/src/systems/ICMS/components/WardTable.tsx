@@ -1,7 +1,7 @@
 import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import TableLoader from "../../../components/TableLoader";
 import { useMemo } from "react";
-import { Delete, Edit } from "@mui/icons-material";
+import { DeleteForever, Edit } from "@mui/icons-material";
 import { ward } from "../types";
 
 
@@ -52,7 +52,7 @@ const WardTable = ({ data, search, onRename, onDelete }: {
                                         sx={{ py: 0, my: 0 }}
                                         color="secondary" size="small"
                                         onClick={() => { onDelete(v) }}>
-                                        <Delete sx={{ fontSize: "1.2em" }} />
+                                        <DeleteForever sx={{ fontSize: "1.2em" }} />
                                     </IconButton>
                                 </TableCell>
                             </TableRow>
