@@ -17,7 +17,7 @@ export default ({ open, data, action, onClose, onSubmit }: { open: boolean, acti
 
     useEffect(() => {
         if (data) {
-            updateWardValue(data ? data.name : "");
+            updateWardValue(data.name);
         } else {
             setCanSubmit(false);
             setWardError('');
