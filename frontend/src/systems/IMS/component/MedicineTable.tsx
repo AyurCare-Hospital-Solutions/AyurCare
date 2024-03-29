@@ -10,6 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, CircularProgress, IconButton } from '@mui/material';
+import TableLoader from '../../../components/TableLoader';
 
 
 function MedicineTable(props: { data: any, query: String, deleteMedicine: any, handleUpdateModalOpen: () => any, setUpdatedmedicine: (p: any) => any }) {
@@ -45,7 +46,7 @@ function MedicineTable(props: { data: any, query: String, deleteMedicine: any, h
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {props.data
+                        {props.data ? props.data
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .filter((row: any) => {
                                 if (props.query) {
@@ -88,14 +89,14 @@ function MedicineTable(props: { data: any, query: String, deleteMedicine: any, h
                                         </TableCell>
                                     </TableRow>
                                 );
-                            })}
+                            }) : <TableLoader columns={6} />}
                     </TableBody>
                 </Table>
             </TableContainer>
             <TablePagination
                 rowsPerPageOptions={[10, 25, 100]}
                 component="div"
-                count={props.data.length}
+                count={props.data ? props.data.length : 0}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
