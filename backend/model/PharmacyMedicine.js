@@ -2,20 +2,30 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
 const Medicine = require("./Medicine");
 
+// (table name, )
 const PharmacyMedicine = sequelize.define("PharmacyMedicine", {
-    amount: {
-        type: DataTypes.INTEGER,
-    },
-    expire_date: {
-        type: DataTypes.DATEONLY
-    }
-}
-)
+  // column name
+  amount: {
+    // Have to mention the data type
+    type: DataTypes.INTEGER,
+  },
 
+  // same shit
+  expire_date: {
+    type: DataTypes.DATEONLY,
+  },
+
+  cost: {
+    type: DataTypes.REAL,
+  },
+});
+
+//FOREIGN KEY STUFFS
 PharmacyMedicine.belongsTo(Medicine, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-    foreignKey: { allowNull: false }
+  //this one is for if the medicine get deleted on the Medicine table it will be deleted ƒrom Pharmacy Medicince table
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+  foreignKey: { allowNull: false },
 });
 
 module.exports = PharmacyMedicine;
