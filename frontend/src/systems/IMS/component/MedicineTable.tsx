@@ -9,10 +9,10 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
-import { IconButton } from '@mui/material';
+import { Box, CircularProgress, IconButton } from '@mui/material';
 
 
-function MedicineTable(props: { data: any, query: String, deleteMedicine: any }) {
+function MedicineTable(props: { data: any, query: String, deleteMedicine: any, handleUpdateModalOpen: () => any, setUpdatedmedicine: (p: any) => any }) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -20,7 +20,7 @@ function MedicineTable(props: { data: any, query: String, deleteMedicine: any })
         // setData(props.data);
     }, []);
 
-    const handleChangePage = (event: any, newPage: any) => {
+    const handleChangePage = (newPage: any) => {
         setPage(newPage);
     };
 
@@ -31,6 +31,7 @@ function MedicineTable(props: { data: any, query: String, deleteMedicine: any })
 
     return (
         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+
             <TableContainer sx={{ maxHeight: "80vh" }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
@@ -67,6 +68,10 @@ function MedicineTable(props: { data: any, query: String, deleteMedicine: any })
                                             <IconButton
                                                 color='primary'
                                                 size='small'
+                                                onClick={() => {
+                                                    props.setUpdatedmedicine(row);
+                                                    props.handleUpdateModalOpen();
+                                                }}
                                             >
                                                 <EditIcon />
                                             </IconButton>
@@ -74,7 +79,7 @@ function MedicineTable(props: { data: any, query: String, deleteMedicine: any })
                                                 color='secondary'
                                                 size='small'
                                                 onClick={() => {
-                                                    props.deleteMedicine(row)
+                                                    props.deleteMedicine(row);
                                                 }}
                                             >
                                                 <DeleteForeverIcon />

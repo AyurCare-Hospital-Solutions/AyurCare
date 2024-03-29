@@ -4,6 +4,7 @@ import MedicineTable from "./component/MedicineTable"
 import axios from 'axios';
 import { Box, Button } from '@mui/material';
 import AddMedicineModal from './component/AddMedicineModal';
+import UpdateMedicineModalOpen from './component/UpdateMedicineModal'
 import MedicineSearchBar from './component/MedicineSearchBar';
 import { Add } from '@mui/icons-material';
 import { useConfirm } from 'material-ui-confirm';
@@ -19,9 +20,12 @@ function Medicine() {
   const handleAddModalClose = () => setAddModalOpen(false);
 
   // Update medicine modal
-  const [UpdateModalOpen, setUpdateModalOpen] = React.useState(false);
+  const [updateModalOpen, setUpdateModalOpen] = React.useState(false);
   const handleUpdateModalOpen = () => setUpdateModalOpen(true);
   const handleUpdateModalClose = () => setUpdateModalOpen(false);
+
+  // Update details object
+  const [updatedMedicine, setUpdatedmedicine] = useState({ Item: {} });
 
   // Search
   const search = (str: String) => {
@@ -42,18 +46,21 @@ function Medicine() {
 
   // Add new medicine
   const addMedicine = (data: any) => {
-    console.log(data);
     axios.post("api/ims//medicine/addMedicine", {
       medicineName: data.name,
-      inHouse: data.origin === 'inHouse' ? true : false,
+      inHouse: data.origin === 'inHouse',
       buffer: data.buffer,
       unit: data.unit,
     })
       .then((res) => {
+        enqueueSnackbar("Medicine Added Successfuly...", { variant: "success" });
         console.log(res);
         getMedicineData();
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        enqueueSnackbar("Can't added Deleted Successfuly...", { variant: "error" });
+        console.log(err)
+      })
   }
 
   // confirm handle
@@ -61,8 +68,6 @@ function Medicine() {
 
   // Delete medicine
   const deleteConfirmation = (row: any) => {
-    console.log(row.id);
-
     confirm({ description: `This will permanently delete Medicine ${row.Item.name}` })
       .then(async () => {
         try {
@@ -78,6 +83,23 @@ function Medicine() {
       })
   };
 
+  // Update medicine
+  const updateMedicine = (data: any) => {
+    confirm({ description: "Confirm Update Medicine Details" })
+      .then(async () => {
+        try {
+          console.log(data);
+          await axios.put(`api/ims/medicine/updateMedicine/${data.updateId}`, { medicineName: data.updateName, inHouse: data.updateOrigin, buffer: data.updateBuffer, unit: data.updateUnit });
+          enqueueSnackbar(`Medicine ${data.updateName} Updated Successfuly...`, { variant: "success" });
+          getMedicineData();
+        }
+        catch (e) {
+          enqueueSnackbar("Failed to Delete medicine...", { variant: "error" });
+          console.error(e);
+        }
+      })
+  }
+
   return (
     <div>
       <Box sx={{ display: "flex" }} my={2} mx={2} >
@@ -87,8 +109,9 @@ function Medicine() {
           Add Medicine
         </Button>
       </Box>
-      <MedicineTable data={medicineData} query={searchQuery} deleteMedicine={deleteConfirmation} />
+      <MedicineTable data={medicineData} query={searchQuery} deleteMedicine={deleteConfirmation} handleUpdateModalOpen={handleUpdateModalOpen} setUpdatedmedicine={setUpdatedmedicine} />
       <AddMedicineModal open={AddModalOpen} onClose={handleAddModalClose} addMedicine={addMedicine} />
+      <UpdateMedicineModalOpen open={updateModalOpen} onClose={handleUpdateModalClose} updatedMedicine={updatedMedicine} setupdatetedMedicine={setUpdatedmedicine} updateMedicine={updateMedicine} />
     </div>
   )
 }
