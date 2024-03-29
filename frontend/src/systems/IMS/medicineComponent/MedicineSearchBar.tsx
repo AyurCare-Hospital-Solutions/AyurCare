@@ -1,6 +1,5 @@
 import { Search } from '@mui/icons-material'
 import { InputAdornment, TextField } from '@mui/material'
-import React from 'react'
 
 function MedicineSearchBar({ onSearch }: { onSearch: (str: String) => any }) {
     return (

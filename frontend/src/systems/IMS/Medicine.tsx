@@ -11,8 +11,8 @@ import { useConfirm } from 'material-ui-confirm';
 import { enqueueSnackbar } from 'notistack';
 
 function Medicine() {
-  const [medicineData, setMedicineData] = useState();
-  const [searchQuery, setSearchQuery] = useState<String>("");
+  const [medicineData, setMedicineData] = useState<any>();
+  const [searchQuery, setSearchQuery] = useState<String>("");  // for search query
 
   //Add medicine modal
   const [AddModalOpen, setAddModalOpen] = React.useState(false);

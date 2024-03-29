@@ -1,5 +1,5 @@
 import { Box, Button, MenuItem, Modal, Stack, TextField, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const style = {
     position: 'absolute',

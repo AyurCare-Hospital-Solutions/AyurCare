@@ -9,7 +9,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
-import {  CircularProgress, IconButton } from '@mui/material';
+import { CircularProgress, IconButton } from '@mui/material';
 
 
 function MedicineTable(props: { data: any, query: String, deleteMedicine: any, handleUpdateModalOpen: () => any, setUpdatedmedicine: (p: any) => any }) {
@@ -88,27 +88,28 @@ function MedicineTable(props: { data: any, query: String, deleteMedicine: any, h
                                         </TableCell>
                                     </TableRow>
                                 );
-                            }) : <TableRow>
+                            }) :
+                            <TableRow>
                                 <TableCell>
-                                    <CircularProgress />
+                                    <CircularProgress sx={{ mx: 'auto' }} />
                                 </TableCell>
                                 <TableCell>
-                                    <CircularProgress />
+                                    <CircularProgress sx={{ mx: 'auto' }} />
                                 </TableCell>
                                 <TableCell>
-                                    <CircularProgress />
+                                    <CircularProgress sx={{ mx: 'auto' }} />
                                 </TableCell>
                                 <TableCell>
-                                    <CircularProgress />
+                                    <CircularProgress sx={{ mx: 'auto' }} />
                                 </TableCell>
                                 <TableCell>
-                                    <CircularProgress />
+                                    <CircularProgress sx={{ mx: 'auto' }} />
                                 </TableCell>
                                 <TableCell>
-                                    <CircularProgress sx={{mx:'auto'}} />
+                                    <CircularProgress sx={{ mx: 'auto' }} />
                                 </TableCell>
-                            
-                        </TableRow>}
+                            </TableRow>
+                        }
                     </TableBody>
                 </Table>
             </TableContainer>
