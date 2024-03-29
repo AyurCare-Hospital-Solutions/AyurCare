@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 //@ts-ignore
-import MedicineTable from "./component/MedicineTable"
+import MedicineTable from "./medicineComponent/MedicineTable"
 import axios from 'axios';
 import { Box, Button } from '@mui/material';
-import AddMedicineModal from './component/AddMedicineModal';
-import UpdateMedicineModalOpen from './component/UpdateMedicineModal'
-import MedicineSearchBar from './component/MedicineSearchBar';
+import AddMedicineModal from './medicineComponent/AddMedicineModal';
+import UpdateMedicineModalOpen from './medicineComponent/UpdateMedicineModal'
+import MedicineSearchBar from './medicineComponent/MedicineSearchBar';
 import { Add } from '@mui/icons-material';
 import { useConfirm } from 'material-ui-confirm';
 import { enqueueSnackbar } from 'notistack';
