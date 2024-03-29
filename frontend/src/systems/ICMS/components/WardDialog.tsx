@@ -5,26 +5,29 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { FormEvent, useEffect, useState } from 'react';
+import { ward } from '../types';
 
 
-export default ({ open, onClose, onSubmit }: { open: boolean, onClose: () => any, onSubmit: (v: any) => any }) => {
+export default ({ open, data, action, onClose, onSubmit }: { open: boolean, action: string, data?: ward, onClose: () => any, onSubmit: (name: string) => any }) => {
 
     const [wardValue, setWardValue] = useState('')
     const [wardError, setWardError] = useState('');
 
     const [canSubmit, setCanSubmit] = useState(false);
 
-
+    useEffect(() => {
+        if (data) {
+            updateWardValue(data ? data.name : "");
+        } else {
+            setCanSubmit(false);
+            setWardError('');
+            setWardValue('');
+        }
+    }, [open, data])
 
     useEffect(() => {
         setCanSubmit(wardError === '');
-    }, [wardError]);
-
-    useEffect(() => {
-        setCanSubmit(false);
-        setWardError('');
-        setWardValue('')
-    }, [open])
+    }, [wardError])
 
     const updateWardValue = (v: string) => {
         if (v.length < 3) {
@@ -49,13 +52,12 @@ export default ({ open, onClose, onSubmit }: { open: boolean, onClose: () => any
                     onSubmit: (event: FormEvent<HTMLFormElement>) => {
                         event.preventDefault();
                         const formData = new FormData(event.currentTarget);
-                        const formJson = Object.fromEntries((formData as any).entries());
-                        onSubmit(formJson);
+                        onSubmit(formData.get("name") as string);
                         onClose()
                     }
                 }}
             >
-                <DialogTitle>Create Ward</DialogTitle>
+                <DialogTitle>{action} Ward</DialogTitle>
                 <DialogContent>
                     <br />
                     <TextField
@@ -72,7 +74,7 @@ export default ({ open, onClose, onSubmit }: { open: boolean, onClose: () => any
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={onClose}>Cancel</Button>
-                    <Button type="submit" disabled={!canSubmit}>Create</Button>
+                    <Button type="submit" disabled={!canSubmit}>{action}</Button>
                 </DialogActions>
             </Dialog>
         </>

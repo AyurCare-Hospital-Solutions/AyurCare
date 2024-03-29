@@ -2,18 +2,16 @@ import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHe
 import TableLoader from "../../../components/TableLoader";
 import { useMemo } from "react";
 import { Delete, Edit } from "@mui/icons-material";
+import { ward } from "../types";
 
-interface format {
-    id: number,
-    name: string,
-}
+
 
 
 const WardTable = ({ data, search, onRename, onDelete }: {
-    data: format[] | undefined,
+    data: ward[] | undefined,
     search: string | undefined,
-    onDelete: (v: format) => unknown
-    onRename: (v: format) => unknown
+    onDelete: (v: ward) => unknown
+    onRename: (v: ward) => unknown
 }) => {
     const rows = useMemo(() => {
         if (search) {
