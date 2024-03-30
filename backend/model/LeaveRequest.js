@@ -1,11 +1,9 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
 const Staff = require("./Staff");
+const LeaveType = require("./LeaveType");
 
 const LeaveRequest = sequelize.define("LeaveRequests", {
-    type: {
-        type: DataTypes.STRING
-    },
     reason: {
         type: DataTypes.STRING
     },
@@ -13,7 +11,11 @@ const LeaveRequest = sequelize.define("LeaveRequests", {
         type: DataTypes.DATEONLY
     },
     registration: {
-        type: DataTypes.STRING // TODO: check value type
+        type: DataTypes.STRING,
+        defaultValue: "pending",
+        validate: {
+            isIn: [["Full Day", "Part Day", "Multiple Day"]]
+        }
     },
     hours: {
         type: DataTypes.REAL // possible to add decimals
@@ -29,5 +31,6 @@ const LeaveRequest = sequelize.define("LeaveRequests", {
 
 LeaveRequest.belongsTo(Staff);
 Staff.hasMany(LeaveRequest);
+LeaveRequest.belongsTo(LeaveType);
 
 module.exports = LeaveRequest;
