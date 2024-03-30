@@ -1,12 +1,12 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { MenuItem, Stack, TextField } from '@mui/material';
+import { useState } from 'react';
 
 const style = {
-    position: 'absolute',
+    position: 'absolute' as 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
@@ -17,14 +17,16 @@ const style = {
     p: 4,
 };
 
-export default function AddMedicineModal({ open, onClose, addMedicine }: { open: boolean, onClose: () => any, addMedicine: (data: any) => any }) {
-    const [name, setName] = React.useState("");
-    const [buffer, setBuffer] = React.useState(0);
-    const [unit, setUnit] = React.useState("");
-    const [origin, setOrigin] = React.useState("");
+
+function AddMaterialModal({ onClose, addMaterialModalOpen }: { onClose: () => any, addMaterialModalOpen: boolean }) {
+    const [materialName, setMaterialName] = useState<String>("");
+    const [materialAmount, setMaterialAmount] = useState<number>(0);
+    const [materialReOredrBuffer, setMaterialReOredrBuffer] = useState<number>(0);
+    const [materialUnit, setMaterialUnit] = useState<String>("");
+
     return (
         <Modal
-            open={open}
+            open={addMaterialModalOpen}
             onClose={onClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
@@ -42,18 +44,23 @@ export default function AddMedicineModal({ open, onClose, addMedicine }: { open:
                         autoComplete="off"
                         onSubmit={(e) => {
                             e.preventDefault();
-                            addMedicine({ name, buffer, unit, origin });
+
                             onClose();
                         }}
                     >
                         <Box>
-                            <TextField required id="outlined-basic1" label="Medicine Name" variant="outlined" name="name" onChange={(e) => {
-                                setName(e.target.value);
+                            <TextField required id="outlined-basic1" label="Material Name" variant="outlined" name="name" onChange={(e) => {
+
+                            }} />
+                        </Box>
+                        <Box>
+                            <TextField required type="number" id="outlined-basic2" label="Amount" variant="outlined" name="amount" onChange={(e) => {
+
                             }} />
                         </Box>
                         <Box>
                             <TextField required type="number" id="outlined-basic2" label="Re-Order Buffer" variant="outlined" name="reOrderBuffer" onChange={(e) => {
-                                setBuffer(Number.parseInt(e.target.value));
+
                             }} />
                         </Box>
                         <Box>
@@ -65,7 +72,7 @@ export default function AddMedicineModal({ open, onClose, addMedicine }: { open:
                                 defaultValue=""
                                 helperText="Please select mesurement unit of medine"
                                 onChange={(e) => {
-                                    setUnit(e.target.value);
+
                                 }}
                             >
                                 <MenuItem value="liter">
@@ -79,26 +86,6 @@ export default function AddMedicineModal({ open, onClose, addMedicine }: { open:
                                 </MenuItem>
                             </TextField>
                         </Box>
-                        <Box>
-                            <TextField
-                                id="outlined-select"
-                                select
-                                label="Origin"
-                                defaultValue=""
-                                required
-                                helperText="Please select origin of medicine"
-                                onChange={(e) => {
-                                    setOrigin(e.target.value);
-                                }}
-                            >
-                                <MenuItem value="inHouse">
-                                    In-House
-                                </MenuItem>
-                                <MenuItem value="OutSource">
-                                    Out-Source
-                                </MenuItem>
-                            </TextField>
-                        </Box>
                         <Stack direction="row" spacing={2}>
                             <Button variant="outlined" color="success" type='submit'>Create</Button>
                             <Button variant="outlined" color="error" onClick={onClose} >Cancel</Button>
@@ -107,5 +94,7 @@ export default function AddMedicineModal({ open, onClose, addMedicine }: { open:
                 </Box>
             </Box>
         </Modal>
-    );
+    )
 }
+
+export default AddMaterialModal

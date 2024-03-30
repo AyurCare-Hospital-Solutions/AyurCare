@@ -9,7 +9,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
-import { CircularProgress, IconButton } from '@mui/material';
+import { Box, CircularProgress, IconButton } from '@mui/material';
 
 
 function MedicineTable(props: { data: any, query: String, deleteMedicine: any, handleUpdateModalOpen: () => any, setUpdatedmedicine: (p: any) => any }) {
@@ -90,23 +90,10 @@ function MedicineTable(props: { data: any, query: String, deleteMedicine: any, h
                                 );
                             }) :
                             <TableRow>
-                                <TableCell>
-                                    <CircularProgress sx={{ mx: 'auto' }} />
-                                </TableCell>
-                                <TableCell>
-                                    <CircularProgress sx={{ mx: 'auto' }} />
-                                </TableCell>
-                                <TableCell>
-                                    <CircularProgress sx={{ mx: 'auto' }} />
-                                </TableCell>
-                                <TableCell>
-                                    <CircularProgress sx={{ mx: 'auto' }} />
-                                </TableCell>
-                                <TableCell>
-                                    <CircularProgress sx={{ mx: 'auto' }} />
-                                </TableCell>
-                                <TableCell>
-                                    <CircularProgress sx={{ mx: 'auto' }} />
+                                <TableCell rowSpan={2} colSpan={6}>
+                                    <Box width={"100%"} display={"flex"} flexDirection={"column"} sx={{ alignItems: "center" }}>
+                                        <CircularProgress />
+                                    </Box>
                                 </TableCell>
                             </TableRow>
                         }
