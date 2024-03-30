@@ -9,9 +9,9 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
-import { CircularProgress, IconButton } from '@mui/material';
+import { Box, CircularProgress, IconButton } from '@mui/material';
 
-function MaterialsTable({ data, query, deleteMaterial }: { data: any, query: String, deleteMaterial: (p:any) => any }) {
+function MaterialsTable({ data, query, deleteMaterial }: { data: any, query: String, deleteMaterial: (p: any) => any }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -36,6 +36,7 @@ function MaterialsTable({ data, query, deleteMaterial }: { data: any, query: Str
             <TableRow>
               <TableCell size="small">ID</TableCell>
               <TableCell>Name</TableCell>
+              <TableCell>Amount</TableCell>
               <TableCell>Re-Order Buffer</TableCell>
               <TableCell>Unit</TableCell>
               <TableCell size="small">Action</TableCell>
@@ -58,6 +59,7 @@ function MaterialsTable({ data, query, deleteMaterial }: { data: any, query: Str
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                     <TableCell size="small">{row.id}</TableCell>
                     <TableCell>{row.Item.name}</TableCell>
+                    <TableCell>{row.amount}</TableCell>
                     <TableCell>{row.Item.reOrderBuffer}</TableCell>
                     <TableCell>{row.Item.unit}</TableCell>
                     <TableCell size="small">
@@ -85,20 +87,10 @@ function MaterialsTable({ data, query, deleteMaterial }: { data: any, query: Str
                 );
               }) :
               <TableRow>
-                <TableCell>
-                  <CircularProgress sx={{ mx: 'auto' }} />
-                </TableCell>
-                <TableCell>
-                  <CircularProgress sx={{ mx: 'auto' }} />
-                </TableCell>
-                <TableCell>
-                  <CircularProgress sx={{ mx: 'auto' }} />
-                </TableCell>
-                <TableCell>
-                  <CircularProgress sx={{ mx: 'auto' }} />
-                </TableCell>
-                <TableCell>
-                  <CircularProgress sx={{ mx: 'auto' }} />
+                <TableCell rowSpan={2} colSpan={5}>
+                  <Box width={"100%"} display={"flex"} flexDirection={"column"} sx={{ alignItems: "center" }}>
+                    <CircularProgress />
+                  </Box>
                 </TableCell>
               </TableRow>
             }

@@ -6,10 +6,16 @@ import MaterialSearchBar from './materialComponent/MaterialSearchBar';
 import { Add } from '@mui/icons-material';
 import { confirm } from 'material-ui-confirm';
 import { enqueueSnackbar } from 'notistack';
+import AddMaterialModal from './materialComponent/AddMaterialModal';
 
 function Material() {
   const [materialData, setMaterialData] = useState<any>();
   const [searchQuery, setSearchQuery] = useState<String>("");  // search query
+
+  // Add material modal 
+  const [addMaterialModalOpen, setAddMaterialModalOpen] = useState(false);
+  const handleAddModalOpen = () => setAddMaterialModalOpen(true);
+  const handleAddModalClose = () => setAddMaterialModalOpen(false);
 
   // Fetch material data 
   const getMaterialData = async () => {
@@ -44,11 +50,12 @@ function Material() {
       <Box sx={{ display: "flex" }} my={2} mx={2} >
         <MaterialSearchBar setSearchQuery={setSearchQuery} />
         <Box flexGrow={1}></Box>
-        <Button variant="outlined" startIcon={<Add />} >
+        <Button variant="outlined" startIcon={<Add />} onClick={handleAddModalOpen} >
           Add Material
         </Button>
       </Box>
-      <MaterialsTable data={materialData} query={searchQuery} deleteMaterial={deleteMaterial}/>
+      <MaterialsTable data={materialData} query={searchQuery} deleteMaterial={deleteMaterial} />
+      <AddMaterialModal onClose={handleAddModalClose} addMaterialModalOpen={addMaterialModalOpen} />
     </div>
   )
 }

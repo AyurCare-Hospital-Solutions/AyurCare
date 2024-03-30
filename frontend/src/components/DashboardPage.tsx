@@ -23,7 +23,7 @@ export default (props: { children: ReactElement[] }) => {
                     {props.children}
                 </List>
             </Drawer>
-            <Card variant="outlined" sx={{
+            <Card variant="outlined" sx={{                                                  
                 m: "24px",
                 mb: "0px",
                 px: "20px",
