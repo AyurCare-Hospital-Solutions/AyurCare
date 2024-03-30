@@ -1,10 +1,15 @@
 import { RouteObject } from "react-router-dom";
+import HRMS from "./HRMS";
+import Leave from "./components/Leave";
 
-const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
+const routes: { name: string, root: React.ReactNode, routes: RouteObject[] } = {
     name: "HRMS",
-    root: <p>HRMS</p>, // replace with main element
+    root: <HRMS/>, // replace with main element
     routes: [
-        // Register routes here
+        {
+            path: "leave",
+            element: <Leave/>,
+        }
 
     ],
 }

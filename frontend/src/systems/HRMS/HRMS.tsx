@@ -22,7 +22,7 @@ const HRMS = () => {
         </ListItem>
       </Link>
 
-      <Link to="/HRMS/Dashboard">
+      <Link to="leave">
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
