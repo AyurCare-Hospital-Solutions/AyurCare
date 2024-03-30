@@ -37,7 +37,7 @@ function UpdateMedicineModal(props: any) {
         >
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
-                    Add New Medicine
+                    Update Medicine Details
                 </Typography>
                 <Box id="modal-modal-description" sx={{ mt: 2 }}>
                     <Box
