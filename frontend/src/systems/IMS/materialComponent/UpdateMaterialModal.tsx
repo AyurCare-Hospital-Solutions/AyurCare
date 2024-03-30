@@ -30,7 +30,7 @@ function UpdateMaterialModal({ open, onClose, updatedMaterial, updateMaterial }:
 
 
     const [operation, setOperation] = useState<string | null>("add");
-    const[advanced,setAdvanced] = useState(true);
+    const [advanced, setAdvanced] = useState(true);
 
     const handleAlignment = (
         _event: React.MouseEvent<HTMLElement>,
@@ -87,8 +87,8 @@ function UpdateMaterialModal({ open, onClose, updatedMaterial, updateMaterial }:
 
                         <FormControlLabel control={<Switch />} label="Other changes"
                             labelPlacement="start"
-                            onClick={()=> setAdvanced(!advanced)}
-                            />
+                            onClick={() => setAdvanced(!advanced)}
+                        />
 
                         <Box>
                             <TextField required id="outlined-basic1" value={updateName} disabled={advanced} label="Material Name" variant="outlined" name="name" onChange={(e) => {
@@ -130,7 +130,6 @@ function UpdateMaterialModal({ open, onClose, updatedMaterial, updateMaterial }:
                             <Button variant="outlined" color="error" onClick={onClose} >Cancel</Button>
                         </Stack>
                     </Box>
-                    Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
                 </Box>
             </Box>
         </Modal>

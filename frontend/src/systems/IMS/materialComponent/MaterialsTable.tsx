@@ -9,9 +9,9 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
-import { Box, CircularProgress, IconButton } from '@mui/material';
+import { Box, CircularProgress, IconButton, Typography } from '@mui/material';
 
-function MaterialsTable({ data, query, deleteMaterial, hadelUpdateModalOpen, setUpdatedMaterial }: { data: any, query: String, deleteMaterial: (p: any) => any, hadelUpdateModalOpen: () => any, setUpdatedMaterial:(p:any)=> any }) {
+function MaterialsTable({ data, query, deleteMaterial, hadelUpdateModalOpen, setUpdatedMaterial }: { data: any, query: String, deleteMaterial: (p: any) => any, hadelUpdateModalOpen: () => any, setUpdatedMaterial: (p: any) => any }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -27,6 +27,18 @@ function MaterialsTable({ data, query, deleteMaterial, hadelUpdateModalOpen, set
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const indicationColor = (amount: number, buffer: number) => {
+    if (amount == 0) {
+      return '#ff7979';
+    }
+    else if (amount <= buffer + 5) {
+      return '#f9ff49db';
+    }
+    else {
+      return '';
+    }
+  }
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -56,7 +68,7 @@ function MaterialsTable({ data, query, deleteMaterial, hadelUpdateModalOpen, set
               })
               .map((row: any) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id} sx={{ backgroundColor: indicationColor(row.amount, row.Item.reOrderBuffer), ':hover': { backgroundColor: indicationColor(row.amount, row.Item.reOrderBuffer) } }}>
                     <TableCell size="small">{row.id}</TableCell>
                     <TableCell>{row.Item.name}</TableCell>
                     <TableCell>{row.amount}</TableCell>
@@ -107,6 +119,13 @@ function MaterialsTable({ data, query, deleteMaterial, hadelUpdateModalOpen, set
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+      <Box mx={10} mt={3} display='flex'>
+        <Box height='15px' width='15px' mx={1} sx={{ backgroundColor: '#ff7979' }}></Box> <Typography>Materials getting out-of-stock</Typography>
+      </Box>
+      <Box mx={10} my={1} display='flex'>
+        <Box height='15px' width='15px' mx={1} sx={{ backgroundColor: '#f9ff49db' }}></Box> <Typography>Material out-of-stock</Typography>
+      </Box>
+
     </Paper>
   );
 }
