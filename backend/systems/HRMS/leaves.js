@@ -1,4 +1,4 @@
-const LeaveRequest = require("../HRMS/LeaveRequest");
+const LeaveRequest = require("../../model/LeaveRequest");
 const express = require("express");
 const yup = require("yup");
 
@@ -20,7 +20,7 @@ const leaveRequestValidator = yup
  */
 
 //Get all leave requests
-const getAllLeaveReequests = async (req, res) => {
+const getAllLeaveRequests = async (req, res) => {
   res.status(200).json(await LeaveRequest.findAll());
 };
 
@@ -128,7 +128,7 @@ const deleteLeaveRequest = async (req, res) => {
 
 module.exports = {
   getAllLeaveRequests,
-  getLeaveRequest,
+  getLeaveRequestById,
   createLeaveRequest,
   updateLeaveRequest,
   deleteLeaveRequest,
