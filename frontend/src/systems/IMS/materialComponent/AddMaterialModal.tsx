@@ -18,7 +18,7 @@ const style = {
 };
 
 
-function AddMaterialModal({ onClose, addMaterialModalOpen }: { onClose: () => any, addMaterialModalOpen: boolean }) {
+function AddMaterialModal({ onClose, addMaterialModalOpen, addNewMaterial }: { onClose: () => any, addMaterialModalOpen: boolean, addNewMaterial :(p:any)=> any }) {
     const [materialName, setMaterialName] = useState<String>("");
     const [materialAmount, setMaterialAmount] = useState<number>(0);
     const [materialReOredrBuffer, setMaterialReOredrBuffer] = useState<number>(0);
@@ -33,7 +33,7 @@ function AddMaterialModal({ onClose, addMaterialModalOpen }: { onClose: () => an
         >
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
-                    Add New Medicine
+                    Add New Material
                 </Typography>
                 <Box id="modal-modal-description" sx={{ mt: 2 }}>
                     <Box
@@ -44,23 +44,23 @@ function AddMaterialModal({ onClose, addMaterialModalOpen }: { onClose: () => an
                         autoComplete="off"
                         onSubmit={(e) => {
                             e.preventDefault();
-
+                            addNewMaterial({ materialName, materialAmount, materialReOredrBuffer, materialUnit })
                             onClose();
                         }}
                     >
                         <Box>
                             <TextField required id="outlined-basic1" label="Material Name" variant="outlined" name="name" onChange={(e) => {
-
+                                setMaterialName(e.target.value);
                             }} />
                         </Box>
                         <Box>
                             <TextField required type="number" id="outlined-basic2" label="Amount" variant="outlined" name="amount" onChange={(e) => {
-
+                                setMaterialAmount(Number(e.target.value));
                             }} />
                         </Box>
                         <Box>
                             <TextField required type="number" id="outlined-basic2" label="Re-Order Buffer" variant="outlined" name="reOrderBuffer" onChange={(e) => {
-
+                                setMaterialReOredrBuffer(Number(e.target.value));
                             }} />
                         </Box>
                         <Box>
@@ -72,7 +72,7 @@ function AddMaterialModal({ onClose, addMaterialModalOpen }: { onClose: () => an
                                 defaultValue=""
                                 helperText="Please select mesurement unit of medine"
                                 onChange={(e) => {
-
+                                    setMaterialUnit(e.target.value);
                                 }}
                             >
                                 <MenuItem value="liter">
