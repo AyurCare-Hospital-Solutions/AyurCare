@@ -11,7 +11,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, CircularProgress, IconButton } from '@mui/material';
 
-function MaterialsTable({ data, query, deleteMaterial }: { data: any, query: String, deleteMaterial: (p: any) => any }) {
+function MaterialsTable({ data, query, deleteMaterial, hadelUpdateModalOpen, setUpdatedMaterial }: { data: any, query: String, deleteMaterial: (p: any) => any, hadelUpdateModalOpen: () => any, setUpdatedMaterial:(p:any)=> any }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -67,7 +67,8 @@ function MaterialsTable({ data, query, deleteMaterial }: { data: any, query: Str
                         color='primary'
                         size='small'
                         onClick={() => {
-
+                          setUpdatedMaterial(row);
+                          hadelUpdateModalOpen();
                         }}
                       >
                         <EditIcon />

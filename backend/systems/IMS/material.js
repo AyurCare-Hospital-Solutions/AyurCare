@@ -77,7 +77,7 @@ const updateMaterial = async (req, res) => {
     let item = await Item.findByPk(material.ItemId);
 
     await item.update({ name: materialData.materialName, reOrderBuffer: materialData.buffer, unit: materialData.unit });
-    await material.update({ amount: (material.amount + materialData.amount) }); //need to recheck
+    await material.update({ amount: (Number(material.amount) + Number(materialData.amount)) }); //need to recheck
     res.status(200).json({ item, material });
 }
 

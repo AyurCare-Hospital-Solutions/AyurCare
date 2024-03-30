@@ -58,7 +58,7 @@ function Medicine() {
         getMedicineData();
       })
       .catch((err) => {
-        enqueueSnackbar("Can't added Deleted Successfuly...", { variant: "error" });
+        enqueueSnackbar("Failed to add Medicine...", { variant: "error" });
         console.log(err)
       })
   }
@@ -94,7 +94,7 @@ function Medicine() {
           getMedicineData();
         }
         catch (e) {
-          enqueueSnackbar("Failed to Delete medicine...", { variant: "error" });
+          enqueueSnackbar("Failed to Update Material...", { variant: "error" });
           console.error(e);
         }
       })
