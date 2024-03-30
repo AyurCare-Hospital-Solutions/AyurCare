@@ -6,6 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import MedicineList from './MedicinceList';
 
 export default function MedicineDialog({open, handleClose} :{open:  boolean, handleClose: () => any},) {
   
@@ -26,27 +27,42 @@ export default function MedicineDialog({open, handleClose} :{open:  boolean, han
           },
         }}
       >
-        <DialogTitle>Subscribe</DialogTitle>
+        <DialogTitle>Add A New Medicine </DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here. We
-            will send updates occasionally.
-          </DialogContentText>
+          
+          <MedicineList />
+        
           <TextField
             autoFocus
             required
             margin="dense"
             id="name"
             name="email"
-            label="Email Address"
-            type="email"
+            label="Quantity"
+            type="number"
+            fullWidth
+            variant="standard"
+            InputLabelProps={{shrink: true}}
+          />
+
+          <TextField
+            autoFocus
+            required
+            margin="dense"
+            id="name"
+            name="expirydate"
+            label="Expriry Date"
+            type="date"
+            InputLabelProps={{shrink: true}}
             fullWidth
             variant="standard"
           />
+          
         </DialogContent>
+
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">Subscribe</Button>
+          <Button type="submit">Add</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>

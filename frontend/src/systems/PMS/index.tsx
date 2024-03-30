@@ -3,9 +3,6 @@ import Pms from "./Pms";
 import Dashboard from "./Dashboard";
 import Medicine from "./Medicine";
 
-
-
-
 const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
     name: "PMS",
     root: <Pms /> ,

@@ -7,13 +7,11 @@ import SearchInput from './Components/SearchBar'
 import MedicineDialog from './Components/MedicineDialog'
 import { enqueueSnackbar } from 'notistack'
 
-
-
-
 const Medicine = () => {
     
     const [data, setData] = useState()
     const [modalOpen, setModalOpen] = useState(false)
+    const [query, setQuery] = useState("")
 
 
     useEffect(
@@ -24,16 +22,9 @@ const Medicine = () => {
         },[]
     )
 
-    
-
-
-const setSearch = (query : String) => {
-enqueueSnackbar('I am an exception', {
-  variant:"success"
-})
+const setSearch = (query : string) => {
+    setQuery(query)
 }
-
-    
     return (
     <>
          <Box sx={{ display: "flex" }} mt={4} mx={2}>
@@ -43,7 +34,7 @@ enqueueSnackbar('I am an exception', {
                 Add Medicine
             </Button>
         </Box>
-        <MedicineTable medicine = {data}/>
+        <MedicineTable query = {query} medicine = {data}/>
         <MedicineDialog open = {modalOpen} handleClose = {() => {setModalOpen(false)}} />
     </>
   )

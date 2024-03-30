@@ -10,7 +10,7 @@ import TableLoader from '../../../components/TableLoader';
 
 
 
-export default function MedicineTable({medicine} : {medicine: any}) {
+export default function MedicineTable({medicine, query} : {medicine: any, query: string}) {
 
 return (
     <TableContainer component={Paper}>
@@ -25,7 +25,12 @@ return (
         </TableHead>
         <TableBody>
             {
-                medicine? medicine.map((row: any) => {
+                medicine? medicine.filter((e : any) => {
+                  if(query){
+                   return e.Medicine.Item.name.search(query) !== -1
+                  }
+                  return true;
+                }).map((row: any) => {
                     return <TableRow>
                         <TableCell> {row.id} </TableCell>
                         <TableCell> {row.Medicine.Item.name} </TableCell>
@@ -33,12 +38,6 @@ return (
                         <TableCell> {row.id} </TableCell>
                     </TableRow>
                 })
-                
-                
-                
-                
-                
-                
                 : <TableLoader columns={5} />
             }
         </TableBody>
