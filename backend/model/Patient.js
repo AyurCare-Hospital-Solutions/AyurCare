@@ -7,8 +7,7 @@ const Patient = sequelize.define("Patients", {
     phone: DataTypes.STRING(14),
     email: { type: DataTypes.STRING(50), validate: { isEmail: true, notEmpty: true } },
     address: DataTypes.STRING(255),
-    tracking_no: DataTypes.STRING(15),
-    last_visit: DataTypes.DATEONLY
+    tracking_no: DataTypes.STRING(15), // TODO: check 
 });
 
 module.exports = Patient;
