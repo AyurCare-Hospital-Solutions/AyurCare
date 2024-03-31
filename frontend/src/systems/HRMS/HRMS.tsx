@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
 import DashboardPage from "../../components/DashboardPage";
 import {
+  Divider,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Typography,
 } from "@mui/material";
-import { Assessment, Dashboard, Event, Groups } from "@mui/icons-material";
+import { Assessment, Category, Dashboard, Event, Groups } from "@mui/icons-material";
 
 const HRMS = () => {
   return (
@@ -21,18 +23,30 @@ const HRMS = () => {
           </ListItemButton>
         </ListItem>
       </Link>
-
-      <Link to="leave">
+      <Divider sx={{mt: 2, mb:1}}/>
+      <Typography color="textSecondary" sx={{ fontWeight: 550, ml:-2, fontSize:"0.99rem", textAlign: "center"}}>Leave Management </Typography>
+      <Link to="leaveRequests">
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
               <Event />
             </ListItemIcon>
-            <ListItemText primary="Leave Management" />
+            <ListItemText primary="Leave Requests" />
           </ListItemButton>
         </ListItem>
       </Link>
-
+      <Link to="leaveTypes">
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <Category/>
+            </ListItemIcon>
+            <ListItemText primary="Leave Types" />
+          </ListItemButton>
+        </ListItem>
+      </Link>
+      <Divider sx={{mt: 2, mb:1}}/>
+      
       <Link to="/HRMS/Dashboard">
         <ListItem disablePadding>
           <ListItemButton>

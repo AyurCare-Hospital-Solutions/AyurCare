@@ -14,23 +14,19 @@ const leaveRequestValidator = yup
   .noUnknown();
 
 /**
- *
+ * Get all leave requests
  * @param {express.Request} req
  * @param {express.Response} res
  */
-
-//Get all leave requests
 const getAllLeaveRequests = async (req, res) => {
   res.status(200).json(await LeaveRequest.findAll());
 };
 
 /**
- *
+ * Get leave request by id
  * @param {express.Request} req
  * @param {express.Response} res
  */
-
-//Get leave request by id
 const getLeaveRequestById = async (req, res) => {
   let id = Number.parseInt(req.params.id);
   if (!Number.isInteger(id)) {
@@ -46,7 +42,7 @@ const getLeaveRequestById = async (req, res) => {
 };
 
 /**
- *
+ * Create a new leave request
  * @param {express.Request} req
  * @param {express.Response} res
  */
@@ -103,7 +99,7 @@ const updateLeaveRequest = async (req, res) => {
 };
 
 /**
- *
+ * Delete leave request by id
  * @param {express.Request} req
  * @param {express.Response} res
  */
