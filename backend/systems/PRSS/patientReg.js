@@ -27,7 +27,7 @@ async function createTrackingNumber(i) {
     }else if (date.getMonth() === 1) {
         return `${date.getFullYear()}B${i}`;
     }else if (date.getMonth() === 2) {
-        return `${date.getFullYear()}C${i}}`;
+        return `${date.getFullYear()}C${i}`;
     }else if (date.getMonth() === 3) {
         return `${date.getFullYear()}D${i}`;
     }else if (date.getMonth() === 4) {
@@ -78,22 +78,27 @@ async function createNewPatient(req, res) {
         return;
     }
 
-    // getting the req.body
-    const data = req.body;
+    // check the patient already exist
+    const patientExist = await Patient.findOne({ where: { nic: req.body.nic } });
 
-    // getting the current date
-    const lastVisit = {...data, last_visit: getDate()};
-
-    // check the patient is already exist
-    const patientExist = await Patient.findOne({ where: { nic: lastVisit.nic } });
-
-    if(!patientExist){
-        // adding the tracking number
-        const addedTrackingNumber = createTrackingNumber;
+    // if exist send the error message
+    if (patientExist) {
+        return res.status(400).json({ msg: "Patient already exists" });
     }
 
     try {
-        const patient = await Patient.create(addedTrackingNumber);
+
+        // grtting the details from the frontene
+        const patientDetails = { ...req.body };
+
+        // create the tracking number
+        const tracking_no = await createTrackingNumber(1);
+
+        // add the tracking number to the patient details
+        const newPatient = { tracking_no, ...patientDetails };
+        console.log(newPatient);
+
+        const patient = await Patient.create(newPatient);
         return res.status(200).json(patient.toJSON());
     } catch (error) {
         console.log(error);
@@ -148,21 +153,24 @@ async function updatePatientDetails(req, res) {
         res.status(400).send({msg: validationError.errors[0]});
         return;
     }
+    
+    // getting the patient id
+    const id = Number.parseInt(req.params.id);
 
     // check the patient id is null
-    if(req.params.id === null){
+    if(id === null){
         res.status(400).json({msg: "Invalid patient id"});
         return;
     }
 
     //check the id is an integer
-    if (!Number.isInteger(Number.parseInt(req.params.id))) {
+    if (!Number.isInteger(id)) {
         res.status(400).json({msg: "Invalid patient id"});
         return;        
     }
 
     // find the patient by id
-    const patient = await Patient.findByPk(req.params.id);
+    const patient = await Patient.findByPk(id);
     if(patient === null){
         res.status(404).json({msg: "The patient does not exist"});
         return;
