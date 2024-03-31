@@ -9,9 +9,47 @@ const validatePatientDetails = yup.object({
     phone: yup.string().min(10).max(14).required(),
     email: yup.string().min(5).max(50).email().required(),
     address: yup.string().min(5).max(255).required(),
-    tracking_no: yup.string().min(5).max(15).required(),
-    last_visit: yup.string().required()
+    // tracking_no: yup.string().min(5).max(15).required(),
 }).strict().noUnknown();
+
+// get the current date
+function getDate() {
+    return new Date().toISOString().split("T")[0];
+};
+
+//create the tracking number
+async function createTrackingNumber(i) {
+    const date = new Date();
+    
+    // check the month is 0
+    if (date.getMonth() === 0) {
+        return `${date.getFullYear()}A${i}`;
+    }else if (date.getMonth() === 1) {
+        return `${date.getFullYear()}B${i}`;
+    }else if (date.getMonth() === 2) {
+        return `${date.getFullYear()}C${i}}`;
+    }else if (date.getMonth() === 3) {
+        return `${date.getFullYear()}D${i}`;
+    }else if (date.getMonth() === 4) {
+        return `${date.getFullYear()}E${i}`;
+    }else if (date.getMonth() === 5) {
+        return `${date.getFullYear()}F${i}`;
+    }else if (date.getDate() === 6) {
+        return `${date.getFullYear()}G${i}`;
+    }else if (date.getDate() === 7) {
+        return `${date.getFullYear()}H${i}`;
+    }else if (date.getDate() === 8) {
+        return `${date.getFullYear()}I${i}`;
+    }else if (date.getDate() === 9) {
+        return `${date.getFullYear()}J${i}`;
+    }else if (date.getDate() === 10) {
+        return `${date.getFullYear()}K${i}`;
+    }else if (date.getDate() === 11) {
+        return `${date.getFullYear()}L${i}`;
+    }else{
+        return false;
+    }
+}
 
 // localhost:5000/api/prss/test
 
@@ -31,15 +69,36 @@ async function test(req, res) {
  * @param {express.Response} res 
  */
 
+// create new patient
 async function createNewPatient(req, res) {
     try {
-        var data = await validatePatientDetails.validate(req.body); 
+        var check = await validatePatientDetails.validate(req.body); 
     } catch (validationError) {
         res.status(400).send({ msg: validationError.errors[0] });
         return;
     }
-    const patient = await Patient.create(data);
-    return res.status(200).json(patient.toJSON());
+
+    // getting the req.body
+    const data = req.body;
+
+    // getting the current date
+    const lastVisit = {...data, last_visit: getDate()};
+
+    // check the patient is already exist
+    const patientExist = await Patient.findOne({ where: { nic: lastVisit.nic } });
+
+    if(!patientExist){
+        // adding the tracking number
+        const addedTrackingNumber = createTrackingNumber;
+    }
+
+    try {
+        const patient = await Patient.create(addedTrackingNumber);
+        return res.status(200).json(patient.toJSON());
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({msg: "An error occured while creating the patient. Please try again later."});
+    }
 }
 
 /**
@@ -115,7 +174,6 @@ async function updatePatientDetails(req, res) {
 }
 
 /**
- * 
  * @param {express.Request} req 
  * @param {express.Response} res  
  */
