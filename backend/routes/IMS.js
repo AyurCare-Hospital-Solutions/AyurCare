@@ -19,7 +19,6 @@ router.post('/medicine/addMedicine', medicineService.addMedicine);
 router.put('/medicine/updateMedicine/:id', medicineService.updateMedicine);
 router.post('/medicine/deleteMedicine', medicineService.deleteMedicine);
 
-
 // Medicine Lot
 router.get('/medicineLot',medicineLotService.getMedicineLot);
 router.post('/medicineLot/addMedicineLot',medicineLotService.addMedicineLot);

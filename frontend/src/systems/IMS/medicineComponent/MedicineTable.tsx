@@ -12,7 +12,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Box, CircularProgress, IconButton } from '@mui/material';
 
 
-function MedicineTable(props: { data: any, query: String, deleteMedicine: any, handleUpdateModalOpen: () => any, setUpdatedmedicine: (p: any) => any }) {
+function MedicineTable(props: { data: any, query: String, deleteMedicine: any, handleUpdateModalOpen: () => any, setUpdatedmedicine: (p: any) => any, handleLotModalOpen: ()=> any }) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -58,7 +58,10 @@ function MedicineTable(props: { data: any, query: String, deleteMedicine: any, h
                             })
                             .map((row: any) => {
                                 return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id} onClick={()=>{
+                                        props.handleLotModalOpen();
+                                    }}
+                                    >
                                         <TableCell size="small">{row.id}</TableCell>
                                         <TableCell>{row.Item.name}</TableCell>
                                         <TableCell>{row.Item.reOrderBuffer}</TableCell>

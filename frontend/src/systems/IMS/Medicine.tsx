@@ -9,6 +9,7 @@ import MedicineSearchBar from './medicineComponent/MedicineSearchBar';
 import { Add } from '@mui/icons-material';
 import { useConfirm } from 'material-ui-confirm';
 import { enqueueSnackbar } from 'notistack';
+import MedicineLotModal from './medicineLotComponent/MedicineLotModal';
 
 function Medicine() {
   const [medicineData, setMedicineData] = useState<any>();
@@ -42,6 +43,7 @@ function Medicine() {
 
   useEffect(() => {
     getMedicineData();
+    getMedicineLotData();
   }, []);
 
   // Add new medicine
@@ -100,6 +102,22 @@ function Medicine() {
       })
   }
 
+  // Medicine Lot
+const [medicineLotData,setMedicineLotdata]  = useState();
+  // Fetch medicine lot data
+  const getMedicineLotData = async () => {
+    await axios.get('/api/ims/medicineLot').then((res) => {
+      setTimeout(() => setMedicineLotdata(res.data), 2000);
+      console.log(res.data);
+    })
+  }
+
+  // Mediicine Lot modal
+  const [openLotModal, setOpenLotModal] = React.useState(false);
+  const handleLotModalOpen = () => setOpenLotModal(true);
+  const handleLotModalClose = () => setOpenLotModal(false);
+
+
   return (
     <div>
       <Box sx={{ display: "flex" }} my={2} mx={2} >
@@ -109,9 +127,10 @@ function Medicine() {
           Add Medicine
         </Button>
       </Box>
-      <MedicineTable data={medicineData} query={searchQuery} deleteMedicine={deleteConfirmation} handleUpdateModalOpen={handleUpdateModalOpen} setUpdatedmedicine={setUpdatedmedicine} />
+      <MedicineTable data={medicineData} query={searchQuery} deleteMedicine={deleteConfirmation} handleUpdateModalOpen={handleUpdateModalOpen} setUpdatedmedicine={setUpdatedmedicine} handleLotModalOpen={handleLotModalOpen}/>
       <AddMedicineModal open={AddModalOpen} onClose={handleAddModalClose} addMedicine={addMedicine} />
       <UpdateMedicineModalOpen open={updateModalOpen} onClose={handleUpdateModalClose} updatedMedicine={updatedMedicine} setupdatetedMedicine={setUpdatedmedicine} updateMedicine={updateMedicine} />
+      <MedicineLotModal openLotModal={openLotModal} handleLotModalClose={handleLotModalClose} />
     </div>
   )
 }

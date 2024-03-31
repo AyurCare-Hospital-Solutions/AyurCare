@@ -100,7 +100,7 @@ function MaterialsTable({ data, query, deleteMaterial, hadelUpdateModalOpen, set
                 );
               }) :
               <TableRow>
-                <TableCell rowSpan={2} colSpan={5}>
+                <TableCell rowSpan={2} colSpan={6}>
                   <Box width={"100%"} display={"flex"} flexDirection={"column"} sx={{ alignItems: "center" }}>
                     <CircularProgress />
                   </Box>
