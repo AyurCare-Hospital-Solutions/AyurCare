@@ -20,7 +20,7 @@ router.put('/medicine/updateMedicine/:id', medicineService.updateMedicine);
 router.post('/medicine/deleteMedicine', medicineService.deleteMedicine);
 
 // Medicine Lot
-router.get('/medicineLot',medicineLotService.getMedicineLot);
+router.get('/medicineLot/:medId',medicineLotService.getMedicineLot);
 router.post('/medicineLot/addMedicineLot',medicineLotService.addMedicineLot);
 router.put('/medicineLot/updateMedicineLot/:id',medicineLotService.upDateMedicineLot);
 router.post('/medicineLot/deleteMedicineLot',medicineLotService.deleteMedicineLot);

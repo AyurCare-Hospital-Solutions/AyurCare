@@ -18,11 +18,20 @@ const medicineLotValidator = yup.object(
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-const getMedicineLot = (req, res) => {
-    const medicineLot = MedicineLot.findAll({
+const getMedicineLot = async (req, res) => {
+    let id = Number.parseInt(req.params.medId); // TODO: need to validate
+    console.log(id);
+    if (!Number.isInteger(id)) {
+        res.status(400).json({ msgL: " ID Format error" });
+        return;
+    }
+    const medicineLot = await MedicineLot.findAll({
         include: {
             model: Medicine,
             include: Item
+        },
+        where: {
+            MedicineID: id,
         }
     });
     res.status(200).json(medicineLot);
@@ -71,13 +80,13 @@ const upDateMedicineLot = async (req, res) => {
     }
     //check exsistance of lot
     const medicineLot = await MedicineLot.findByPk(id);
-    if (materialLot === null){
-        res.status(404).json({msg : "The Medicine Lot does not exist"});
+    if (materialLot === null) {
+        res.status(404).json({ msg: "The Medicine Lot does not exist" });
         return;
     }
-    medicineLot = await medicineLot.update({amount : (medicineLot.amout-medicineLotData.amount)});
+    medicineLot = await medicineLot.update({ amount: (medicineLot.amout - medicineLotData.amount) });
 
-    res.status(200).json({ data: { medicineLot} });
+    res.status(200).json({ data: { medicineLot } });
 }
 
 /**
@@ -85,7 +94,7 @@ const upDateMedicineLot = async (req, res) => {
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-const deleteMedicineLot = async (req,res)=>{
+const deleteMedicineLot = async (req, res) => {
     // get id from route params
     let id = Number.parseInt(req.body.id);
 

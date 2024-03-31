@@ -43,7 +43,6 @@ function Medicine() {
 
   useEffect(() => {
     getMedicineData();
-    getMedicineLotData();
   }, []);
 
   // Add new medicine
@@ -103,19 +102,16 @@ function Medicine() {
   }
 
   // Medicine Lot
-const [medicineLotData,setMedicineLotdata]  = useState();
-  // Fetch medicine lot data
-  const getMedicineLotData = async () => {
-    await axios.get('/api/ims/medicineLot').then((res) => {
-      setTimeout(() => setMedicineLotdata(res.data), 2000);
-      console.log(res.data);
-    })
-  }
 
   // Mediicine Lot modal
   const [openLotModal, setOpenLotModal] = React.useState(false);
   const handleLotModalOpen = () => setOpenLotModal(true);
   const handleLotModalClose = () => setOpenLotModal(false);
+
+  // Medicine lot modal data
+  const [lotModalData,setLotModalData] = useState({Item:{}}); // get medicine row data
+
+
 
 
   return (
@@ -127,10 +123,10 @@ const [medicineLotData,setMedicineLotdata]  = useState();
           Add Medicine
         </Button>
       </Box>
-      <MedicineTable data={medicineData} query={searchQuery} deleteMedicine={deleteConfirmation} handleUpdateModalOpen={handleUpdateModalOpen} setUpdatedmedicine={setUpdatedmedicine} handleLotModalOpen={handleLotModalOpen}/>
+      <MedicineTable data={medicineData} query={searchQuery} deleteMedicine={deleteConfirmation} handleUpdateModalOpen={handleUpdateModalOpen} setUpdatedmedicine={setUpdatedmedicine} handleLotModalOpen={handleLotModalOpen} setLotModalData={setLotModalData}/>
       <AddMedicineModal open={AddModalOpen} onClose={handleAddModalClose} addMedicine={addMedicine} />
       <UpdateMedicineModalOpen open={updateModalOpen} onClose={handleUpdateModalClose} updatedMedicine={updatedMedicine} setupdatetedMedicine={setUpdatedmedicine} updateMedicine={updateMedicine} />
-      <MedicineLotModal openLotModal={openLotModal} handleLotModalClose={handleLotModalClose} />
+      <MedicineLotModal openLotModal={openLotModal} handleLotModalClose={handleLotModalClose} lotModalData={lotModalData} />
     </div>
   )
 }

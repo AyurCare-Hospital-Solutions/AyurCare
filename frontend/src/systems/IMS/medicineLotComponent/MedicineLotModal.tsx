@@ -1,5 +1,5 @@
-import { Box, Modal, Typography } from '@mui/material';
-import React from 'react';
+import { Box, Button, Modal, Typography } from '@mui/material';
+import MedicineLotTable from './MedicineLotTable';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -13,7 +13,7 @@ const style = {
   p: 4,
 };
 
-function MedicineLotModal({ openLotModal, handleLotModalClose }: { openLotModal: boolean, handleLotModalClose : ()=> any }) {
+function MedicineLotModal({ openLotModal, handleLotModalClose, lotModalData }: { openLotModal: boolean, handleLotModalClose: () => any, lotModalData: any }) {
   return (
     <div>
       <Modal
@@ -23,12 +23,19 @@ function MedicineLotModal({ openLotModal, handleLotModalClose }: { openLotModal:
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
+          <Typography variant='h5' sx={{ fontSize: '1.4rem' }} id="modal-modal-title" component="h2" textAlign='center'>
+            Medicine ID : {lotModalData.id}
           </Typography>
+          <Typography variant='h6' sx={{ fontSize: '1rem' }}>Medicine Name : {lotModalData.Item.name}</Typography>
+          <Typography variant='h6' sx={{ fontSize: '1rem' }}>Origin : {lotModalData.inHouse ? "In-House" : "Out-Source"}</Typography>
+          <Typography variant='h6' sx={{ fontSize: '1rem' }}>Unit : {lotModalData.Item.unit}</Typography>
+
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
           </Typography>
+          <MedicineLotTable id={lotModalData.id} />
+          <Box display={'flex'} alignContent='end'>
+          <Button  onClick={handleLotModalClose} color='info' >Close</Button>
+          </Box>
         </Box>
       </Modal>
     </div>
