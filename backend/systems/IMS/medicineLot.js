@@ -102,3 +102,10 @@ const deleteMedicineLot = async (req,res)=>{
     await medicineLot.destroy();
     res.sendStatus(204);
 }
+
+module.exports = {
+    getMedicineLot,
+    addMedicineLot,
+    upDateMedicineLot,
+    deleteMedicineLot,
+};
