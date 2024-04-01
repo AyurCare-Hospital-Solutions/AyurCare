@@ -119,4 +119,4 @@ function UpdateMedicineModal(props: any) {
     )
 }
 
-export default UpdateMedicineModal
+export default UpdateMedicineModal;
