@@ -20,7 +20,6 @@ const medicineLotValidator = yup.object(
  */
 const getMedicineLot = async (req, res) => {
     let id = Number.parseInt(req.params.medId); // TODO: need to validate
-    console.log(id);
     if (!Number.isInteger(id)) {
         res.status(400).json({ msgL: " ID Format error" });
         return;
