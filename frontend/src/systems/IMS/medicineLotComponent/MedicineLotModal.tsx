@@ -45,4 +45,4 @@ function MedicineLotModal({ openLotModal, handleLotModalClose, lotModalData }: {
   )
 }
 
-export default MedicineLotModal;
+export default MedicineLotModal

@@ -14,22 +14,22 @@ router.post('/material/deleteMaterial', materialService.deleteMaterial);
 
 
 // Medicine 
-router.get('/medicine',medicineService.getMedicine);
+router.get('/medicine', medicineService.getMedicine);
 router.post('/medicine/addMedicine', medicineService.addMedicine);
 router.put('/medicine/updateMedicine/:id', medicineService.updateMedicine);
 router.post('/medicine/deleteMedicine', medicineService.deleteMedicine);
 
 // Medicine Lot
-router.get('/medicineLot/:medId',medicineLotService.getMedicineLot);
-router.post('/medicineLot/addMedicineLot',medicineLotService.addMedicineLot);
-router.put('/medicineLot/updateMedicineLot/:id',medicineLotService.upDateMedicineLot);
-router.post('/medicineLot/deleteMedicineLot',medicineLotService.deleteMedicineLot);
+router.get('/medicineLot/:medId', medicineLotService.getMedicineLot);
+router.post('/medicineLot/addMedicineLot', medicineLotService.addMedicineLot);
+router.put('/medicineLot/updateMedicineLot/:id', medicineLotService.updateMedicineLot);
+router.post('/medicineLot/deleteMedicineLot', medicineLotService.deleteMedicineLot);
 
 // Accessories
-router.get('/accessory',accessoryService.getAccessory);
-router.post('/accessory/addAccessory',accessoryService.addAccessory);
-router.put('/accessory/updateAccessory/:id',accessoryService.updateAccessory);
-router.post('/accessory/deleteAccessory',accessoryService.deleteAccessory);
+router.get('/accessory', accessoryService.getAccessory);
+router.post('/accessory/addAccessory', accessoryService.addAccessory);
+router.put('/accessory/updateAccessory/:id', accessoryService.updateAccessory);
+router.post('/accessory/deleteAccessory', accessoryService.deleteAccessory);
 
 // Request
 

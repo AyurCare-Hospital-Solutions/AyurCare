@@ -35,7 +35,7 @@ function Medicine() {
 
   // Fetch Medicine Data
   const getMedicineData = async () => {
-    await axios.get('/api/ims/medicine').then((res) => {
+    await axios.get('api/ims/medicine').then((res) => {
       setTimeout(() => setMedicineData(res.data), 2000);
       console.log(res.data);
     })
@@ -89,7 +89,6 @@ function Medicine() {
     confirm({ description: "Confirm Update Medicine Details" })
       .then(async () => {
         try {
-          console.log(data);
           await axios.put(`api/ims/medicine/updateMedicine/${data.updateId}`, { medicineName: data.updateName, inHouse: data.updateOrigin, buffer: data.updateBuffer, unit: data.updateUnit });
           enqueueSnackbar(`Medicine ${data.updateName} Updated Successfuly...`, { variant: "success" });
           getMedicineData();
@@ -131,5 +130,5 @@ function Medicine() {
   )
 }
 
-export default Medicine;
+export default Medicine
 

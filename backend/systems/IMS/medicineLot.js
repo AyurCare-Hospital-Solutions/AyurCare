@@ -59,31 +59,35 @@ const addMedicineLot = async (req, res) => {
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-const upDateMedicineLot = async (req, res) => {
+const updateMedicineLot = async (req, res) => {
+
     // get id from route params
     let id = Number.parseInt(req.params.id);
 
-    // check if ward number is valid
+    // get amount fron req body
+    const amount = Number(req.body.amount);
+
+    // check if id is valid
     if (!Number.isInteger(id)) {
         res.status(400).json({ msg: "Invalid Medicine ID (format error)" });
         return;
     }
 
-    //validate req body 
-    try {
-        var medicineLotData = await medicineLotValidator.validate(req.body);
-    }
-    catch (validationError) {
-        res.status(400).json({ msg: validationError.errors[0] });
+    // check if amount is valid
+    if (!Number(amount)) {
+        res.status(400).json({ msg: "Invalid Amount (format error)" });
         return;
     }
+
+
     //check exsistance of lot
-    const medicineLot = await MedicineLot.findByPk(id);
-    if (materialLot === null) {
+    let medicineLot = await MedicineLot.findByPk(id);
+    if (medicineLot === null) {
         res.status(404).json({ msg: "The Medicine Lot does not exist" });
         return;
     }
-    medicineLot = await medicineLot.update({ amount: (medicineLot.amout - medicineLotData.amount) });
+
+    medicineLot = await medicineLot.update({ amount: (medicineLot.amount - amount) });
 
     res.status(200).json({ data: { medicineLot } });
 }
@@ -103,7 +107,7 @@ const deleteMedicineLot = async (req, res) => {
         return;
     }
     const medicineLot = await MedicineLot.findByPk(id);
-    if (materialLot === null) {
+    if (medicineLot === null) {
         res.status(404).json({ msg: "The Medicine Lot does not exist" });
         return;
     }
@@ -114,6 +118,6 @@ const deleteMedicineLot = async (req, res) => {
 module.exports = {
     getMedicineLot,
     addMedicineLot,
-    upDateMedicineLot,
+    updateMedicineLot,
     deleteMedicineLot,
 };
