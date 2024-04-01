@@ -5,6 +5,8 @@ const Patient = sequelize.define("Patients", {
     name: DataTypes.STRING(100),
     nic: DataTypes.STRING(15),
     phone: DataTypes.STRING(14),
+    dob: DataTypes.DATEONLY,
+    gender: DataTypes.STRING,
     email: { type: DataTypes.STRING(50), validate: { isEmail: true, notEmpty: true } },
     address: DataTypes.STRING(255),
     tracking_no: DataTypes.STRING(15),
