@@ -130,5 +130,5 @@ function Medicine() {
   )
 }
 
-export default Medicine
+export default Medicine;
 
