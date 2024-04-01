@@ -10,6 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, CircularProgress, IconButton } from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 
 function MedicineTable(props: { data: any, query: String, deleteMedicine: any, handleUpdateModalOpen: () => any, setUpdatedmedicine: (p: any) => any, handleLotModalOpen: () => any, setLotModalData:(p:any)=> any}) {
@@ -41,7 +42,7 @@ function MedicineTable(props: { data: any, query: String, deleteMedicine: any, h
                             <TableCell>Re-Order Buffer</TableCell>
                             <TableCell>Unit</TableCell>
                             <TableCell>In-House</TableCell>
-                            <TableCell size="small">Action</TableCell>
+                            <TableCell size="medium">Action</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -58,17 +59,24 @@ function MedicineTable(props: { data: any, query: String, deleteMedicine: any, h
                             })
                             .map((row: any) => {
                                 return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id} onClick={()=>{
-                                        props.setLotModalData(row);
-                                        props.handleLotModalOpen();
-                                    }}
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id} 
                                     >
                                         <TableCell size="small">{row.id}</TableCell>
                                         <TableCell>{row.Item.name}</TableCell>
                                         <TableCell>{row.Item.reOrderBuffer}</TableCell>
                                         <TableCell>{row.Item.unit}</TableCell>
                                         <TableCell>{row.inHouse ? "In-House" : "Out-Source"}</TableCell>
-                                        <TableCell size="small">
+                                        <TableCell size="medium">
+                                            <IconButton
+                                                color='primary'
+                                                size='small'
+                                                onClick={() => {
+                                                    props.setLotModalData(row);
+                                                    props.handleLotModalOpen();
+                                                }}
+                                            >
+                                                <MoreVertIcon/>
+                                            </IconButton>
                                             <IconButton
                                                 color='primary'
                                                 size='small'
