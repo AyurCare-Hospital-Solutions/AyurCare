@@ -51,7 +51,7 @@ const addMedicineLot = async (req, res) => {
         res.status(400).json({ msg: validationError.errors[0] });
         return;
     }
-    let lot = await MedicineLot.create({ manufacturer: medicineLotData.manufacturer, amount: medicineLotData.amount, expire_date: medicineLotData.expireDate, medicineId: medicineLotData.medicineId });
+    let lot = await MedicineLot.create({ manufacturer: medicineLotData.manufacturer, amount: medicineLotData.amount, expire_date: medicineLotData.expireDate, MedicineId: medicineLotData.medicineId });
     res.status(200).json(lot);
 }
 

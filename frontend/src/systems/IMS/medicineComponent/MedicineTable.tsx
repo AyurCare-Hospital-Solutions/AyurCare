@@ -68,7 +68,7 @@ function MedicineTable(props: { data: any, query: String, deleteMedicine: any, h
                                         <TableCell>{row.inHouse ? "In-House" : "Out-Source"}</TableCell>
                                         <TableCell size="medium">
                                             <IconButton
-                                                color='primary'
+                                                color='success'
                                                 size='small'
                                                 onClick={() => {
                                                     props.setLotModalData(row);

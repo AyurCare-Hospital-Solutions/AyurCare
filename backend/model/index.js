@@ -22,6 +22,7 @@ function connect() {
             database: process.env.MYSQL_DATABASE,
             username: process.env.MYSQL_USERNAME,
             password: process.env.MYSQL_PASSWORD,
+            logging : false
         };
 
         let emptyOk = ["password", "port"];

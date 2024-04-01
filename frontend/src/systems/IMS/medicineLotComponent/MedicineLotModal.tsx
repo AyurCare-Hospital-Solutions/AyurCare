@@ -1,5 +1,8 @@
 import { Box, Button, Modal, Typography } from '@mui/material';
 import MedicineLotTable from './MedicineLotTable';
+import { useState } from 'react';
+import axios from 'axios';
+import { enqueueSnackbar } from 'notistack';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -8,12 +11,13 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: 400,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  borderRadius: '10px',
   boxShadow: 24,
   p: 4,
 };
 
 function MedicineLotModal({ openLotModal, handleLotModalClose, lotModalData }: { openLotModal: boolean, handleLotModalClose: () => any, lotModalData: any }) {
+
   return (
     <div>
       <Modal
@@ -30,11 +34,10 @@ function MedicineLotModal({ openLotModal, handleLotModalClose, lotModalData }: {
           <Typography variant='h6' sx={{ fontSize: '1rem' }}>Origin : {lotModalData.inHouse ? "In-House" : "Out-Source"}</Typography>
           <Typography variant='h6' sx={{ fontSize: '1rem' }}>Unit : {lotModalData.Item.unit}</Typography>
 
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          </Typography>
           <MedicineLotTable id={lotModalData.id} />
+
           <Box display={'flex'} alignContent='end'>
-          <Button  onClick={handleLotModalClose} color='info' >Close</Button>
+            <Button sx={{ marginTop: '7px' }} variant="outlined" color="error" onClick={handleLotModalClose} >Close</Button>
           </Box>
         </Box>
       </Modal>
