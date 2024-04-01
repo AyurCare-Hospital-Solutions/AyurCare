@@ -69,4 +69,4 @@ function MedicineLotUpdateModal({ updateLot, updateLotOpen, handleUpdateClose, u
   )
 }
 
-export default MedicineLotUpdateModal
+export default MedicineLotUpdateModal;

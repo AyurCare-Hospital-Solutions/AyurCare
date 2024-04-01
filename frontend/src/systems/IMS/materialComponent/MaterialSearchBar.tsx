@@ -23,4 +23,4 @@ function MaterialSearchBar({ setSearchQuery }: { setSearchQuery: (p:String)=> an
   )
 }
 
-export default MaterialSearchBar
+export default MaterialSearchBar;

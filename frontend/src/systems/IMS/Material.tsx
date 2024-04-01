@@ -111,4 +111,4 @@ function Material() {
   )
 }
 
-export default Material
+export default Material;

@@ -1,8 +1,5 @@
 import { Box, Button, Modal, Typography } from '@mui/material';
 import MedicineLotTable from './MedicineLotTable';
-import { useState } from 'react';
-import axios from 'axios';
-import { enqueueSnackbar } from 'notistack';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -45,4 +42,4 @@ function MedicineLotModal({ openLotModal, handleLotModalClose, lotModalData }: {
   )
 }
 
-export default MedicineLotModal
+export default MedicineLotModal;

@@ -79,4 +79,4 @@ function MedicineLotAddModal({ addLotOpen, handleAddClose, addNewMedicineLot }: 
     );
 }
 
-export default MedicineLotAddModal
+export default MedicineLotAddModal;

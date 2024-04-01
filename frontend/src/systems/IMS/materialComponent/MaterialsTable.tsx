@@ -130,4 +130,4 @@ function MaterialsTable({ data, query, deleteMaterial, hadelUpdateModalOpen, set
   );
 }
 
-export default MaterialsTable
+export default MaterialsTable;

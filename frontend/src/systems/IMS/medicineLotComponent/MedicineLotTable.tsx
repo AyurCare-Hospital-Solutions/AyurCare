@@ -165,4 +165,4 @@ function MedicineLotTable({ id }: { id: number }) {
     )
 }
 
-export default MedicineLotTable
+export default MedicineLotTable;

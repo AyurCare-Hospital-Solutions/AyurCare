@@ -97,4 +97,4 @@ function AddMaterialModal({ onClose, addMaterialModalOpen, addNewMaterial }: { o
     )
 }
 
-export default AddMaterialModal
+export default AddMaterialModal;

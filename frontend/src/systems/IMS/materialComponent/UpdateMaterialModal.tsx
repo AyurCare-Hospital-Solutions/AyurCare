@@ -136,4 +136,4 @@ function UpdateMaterialModal({ open, onClose, updatedMaterial, updateMaterial }:
     )
 }
 
-export default UpdateMaterialModal
+export default UpdateMaterialModal;
