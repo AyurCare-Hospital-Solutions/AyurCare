@@ -13,7 +13,7 @@ import { Box, CircularProgress, IconButton } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 
-function MedicineTable(props: { data: any, query: String, deleteMedicine: any, handleUpdateModalOpen: () => any, setUpdatedmedicine: (p: any) => any, handleLotModalOpen: () => any, setLotModalData:(p:any)=> any}) {
+function MedicineTable(props: { data: any, query: String, deleteMedicine: any, handleUpdateModalOpen: () => any, setUpdatedmedicine: (p: any) => any, handleLotModalOpen: () => any, setLotModalData: (p: any) => any }) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -23,7 +23,7 @@ function MedicineTable(props: { data: any, query: String, deleteMedicine: any, h
         //setData(props.data);
     }, []);
 
-    const handleChangePage = (newPage: any) => {
+    const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
     };
 
@@ -61,7 +61,7 @@ function MedicineTable(props: { data: any, query: String, deleteMedicine: any, h
                             })
                             .map((row: any) => {
                                 return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id} 
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}
                                     >
                                         <TableCell size="small">{row.id}</TableCell>
                                         <TableCell>{row.Item.name}</TableCell>
@@ -77,7 +77,7 @@ function MedicineTable(props: { data: any, query: String, deleteMedicine: any, h
                                                     props.handleLotModalOpen();
                                                 }}
                                             >
-                                                <MoreVertIcon/>
+                                                <MoreVertIcon />
                                             </IconButton>
                                             <IconButton
                                                 color='primary'
