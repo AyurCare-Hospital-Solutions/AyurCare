@@ -19,7 +19,7 @@ function MaterialsTable({ data, query, deleteMaterial, hadelUpdateModalOpen, set
     // setData(props.data);
   }, []);
 
-  const handleChangePage = (newPage: any) => {
+  const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
