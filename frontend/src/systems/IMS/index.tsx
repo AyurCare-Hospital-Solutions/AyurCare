@@ -2,6 +2,7 @@ import { RouteObject } from "react-router-dom";
 import ImsMain from "./ImsMain"
 import Medicine from "./Medicine";
 import Material from "./Material";
+import Accessories from "./Accessories";
 
 const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
     name: "IMS",
@@ -14,8 +15,12 @@ const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
         },
         {
             path: "material",
-            element: <Material/>
+            element: <Material />
         },
+        {
+            path: "accessories",
+            element: <Accessories />
+        }
     ],
 }
 

@@ -2,6 +2,7 @@
 import { Dashboard, Inbox, Mail } from '@mui/icons-material';
 import VaccinesIcon from '@mui/icons-material/Vaccines';
 import ScienceIcon from '@mui/icons-material/Science';
+import HealingIcon from '@mui/icons-material/Healing';
 import { Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { Link, Outlet } from 'react-router-dom'
 import DashboardPage from '../../components/DashboardPage';
@@ -40,6 +41,17 @@ function ImsMain() {
                             <ScienceIcon />
                         </ListItemIcon>
                         <ListItemText primary="Material" />
+                    </ListItemButton>
+                </ListItem>
+            </Link>
+
+            <Link to="/ims/accessories">
+                <ListItem disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <HealingIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Accessories" />
                     </ListItemButton>
                 </ListItem>
             </Link>
