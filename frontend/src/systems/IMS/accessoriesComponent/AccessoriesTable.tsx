@@ -11,7 +11,7 @@ import { Box, CircularProgress, IconButton, Typography } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 
-function AccessoriesTable({ accessorydata, query }: { accessorydata: any, query: string }) {
+function AccessoriesTable({ accessorydata, query, setUpdatedAccessory, handleUpdateOpen }: { accessorydata: any, query: string, setUpdatedAccessory: (arg: any) => any, handleUpdateOpen:()=> any }) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -94,6 +94,10 @@ function AccessoriesTable({ accessorydata, query }: { accessorydata: any, query:
                                             <IconButton
                                                 color='primary'
                                                 size='small'
+                                                onClick={()=>{
+                                                    setUpdatedAccessory(row);
+                                                    handleUpdateOpen();
+                                                }}
                                             >
                                                 <EditIcon />
                                             </IconButton>
