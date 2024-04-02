@@ -11,7 +11,7 @@ import { Box, CircularProgress, IconButton, Typography } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 
-function AccessoriesTable({ accessorydata, query, setUpdatedAccessory, handleUpdateOpen }: { accessorydata: any, query: string, setUpdatedAccessory: (arg: any) => any, handleUpdateOpen:()=> any }) {
+function AccessoriesTable({ accessorydata, query, setUpdatedAccessory, handleUpdateOpen, deleteAccessory }: { accessorydata: any, query: string, setUpdatedAccessory: (arg: any) => any, handleUpdateOpen: () => any, deleteAccessory: (arg: any) => any }) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -74,7 +74,7 @@ function AccessoriesTable({ accessorydata, query, setUpdatedAccessory, handleUpd
                             })
                             .map((row: any) => {
                                 return (
-                                    <TableRow hover sx={{backgroundColor:colorIndicator(row.amount)}} role="checkbox" tabIndex={-1} key={row.id}>
+                                    <TableRow hover sx={{ backgroundColor: colorIndicator(row.amount) }} role="checkbox" tabIndex={-1} key={row.id}>
                                         <TableCell align="center" >
                                             {row.id}
                                         </TableCell>
@@ -94,7 +94,7 @@ function AccessoriesTable({ accessorydata, query, setUpdatedAccessory, handleUpd
                                             <IconButton
                                                 color='primary'
                                                 size='small'
-                                                onClick={()=>{
+                                                onClick={() => {
                                                     setUpdatedAccessory(row);
                                                     handleUpdateOpen();
                                                 }}
@@ -104,6 +104,9 @@ function AccessoriesTable({ accessorydata, query, setUpdatedAccessory, handleUpd
                                             <IconButton
                                                 color='secondary'
                                                 size='small'
+                                                onClick={() => {
+                                                    deleteAccessory(row);
+                                                }}
                                             >
                                                 <DeleteForeverIcon />
                                             </IconButton>

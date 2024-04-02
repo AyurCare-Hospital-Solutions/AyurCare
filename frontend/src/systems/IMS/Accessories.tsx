@@ -37,6 +37,23 @@ function Accessories() {
 
     // confirm handle
     const confirm = useConfirm();
+
+    // Delete accessory
+    const deleteAccessory = (row: any) => {
+        confirm({ description: `This will permanently delete ${row.Item.name}` })
+            .then(async () => {
+                try {
+                    await axios.post("api/ims/accessory/deleteAccessory", { id: row.id })
+                    getAccessories();
+                    enqueueSnackbar("Accessory Deleted Successfuly...", { variant: "success" });
+                }
+                catch (e) {
+                    enqueueSnackbar("Failed to Delete Accessory...", { variant: "error" });
+                    console.error(e);
+                }
+            })
+    }
+
     // update accessory
     const [updatedAccessory, setUpdatedAccessory] = useState({ Item: {} });
     const updateAccessory = (id: number, accessoryName: string, amount: number, buffer: number, unit: string) => {
@@ -69,7 +86,7 @@ function Accessories() {
                     Add Accessory
                 </Button>
             </Box>
-            <AccessoriesTable accessorydata={accessorydata} query={query} setUpdatedAccessory={setUpdatedAccessory} handleUpdateOpen={handleUpdateOpen} />
+            <AccessoriesTable accessorydata={accessorydata} query={query} setUpdatedAccessory={setUpdatedAccessory} handleUpdateOpen={handleUpdateOpen} deleteAccessory={deleteAccessory} />
             <UpdateAccessoryModal updateOpen={updateOpen} handleUpdateClose={handleUpdateClose} updatedAccessory={updatedAccessory} updateAccessory={updateAccessory} />
         </div>
     )
