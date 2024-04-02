@@ -6,7 +6,7 @@ function Accessories() {
         <div>
             <Box>
                 <Typography variant='h3' color='primary' align="center">
-                    Medicine
+                    Accessories
                 </Typography>
             </Box>
         </div>
