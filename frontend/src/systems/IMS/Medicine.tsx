@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 //@ts-ignore
 import MedicineTable from "./medicineComponent/MedicineTable"
 import axios from 'axios';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import AddMedicineModal from './medicineComponent/AddMedicineModal';
 import UpdateMedicineModalOpen from './medicineComponent/UpdateMedicineModal'
 import MedicineSearchBar from './medicineComponent/MedicineSearchBar';
@@ -115,6 +115,11 @@ function Medicine() {
 
   return (
     <div>
+      <Box>
+        <Typography variant='h3' color='primary' align="center">
+          Medicine
+        </Typography>
+      </Box>
       <Box sx={{ display: "flex" }} my={2} mx={2} >
         <MedicineSearchBar onSearch={search} />
         <Box flexGrow={1}></Box>
