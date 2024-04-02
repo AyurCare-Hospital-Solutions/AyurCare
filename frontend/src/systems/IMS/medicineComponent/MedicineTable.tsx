@@ -17,15 +17,17 @@ function MedicineTable(props: { data: any, query: String, deleteMedicine: any, h
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
+    //const [data,setData] = React.useState<any>(props.data)
+
     React.useEffect(() => {
-        // setData(props.data);
+        //setData(props.data);
     }, []);
 
     const handleChangePage = (newPage: any) => {
         setPage(newPage);
     };
 
-    const handleChangeRowsPerPage = (event: any) => {
+    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
