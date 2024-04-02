@@ -40,7 +40,6 @@ function Material() {
 
   // add new Material
   const addNewMaterial = (data: any) => {
-    console.log(data);
     axios.post("api/ims/material/addMaterial", {
       materialName: data.materialName,
       amount: data.materialAmount,
@@ -92,7 +91,7 @@ function Material() {
           console.error(e);
         }
       })
-
+      
   }
 
   return (

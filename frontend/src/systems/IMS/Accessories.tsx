@@ -7,8 +7,33 @@ import AccessoriesTable from './accessoriesComponent/AccessoriesTable';
 import UpdateAccessoryModal from './accessoriesComponent/UpdateAccessoryModal';
 import { useConfirm } from 'material-ui-confirm';
 import { enqueueSnackbar } from 'notistack';
+import AddAccessoryModal from './accessoriesComponent/AddAccessoryModal';
 
 function Accessories() {
+    // confirm handle
+    const confirm = useConfirm();
+
+    // add accessory
+    const [openAddModal, setOpenAddModal] = useState(false);
+    const handleAddOpen = () => setOpenAddModal(true);
+    const handleAddClose = () => setOpenAddModal(false);
+
+    const addAccessory = (accessoryName: string, amount: number, buffer: number, unit: string) => {
+        confirm({ description: `Confirm new Accessory creation` })
+            .then(async () => {
+                await axios.post('api/ims/accessory/addAccessory', { accessoryName, amount, buffer, unit })
+                    .then((res) => {
+                        enqueueSnackbar("Accessory Added Successfuly...", { variant: "success" });
+                        console.log(res);
+                        getAccessories();
+                    })
+                    .catch((err) => {
+                        enqueueSnackbar("Failed to Add Accessory...", { variant: "error" });
+                        console.log(err)
+                    })
+            }
+            )
+    }
 
     // search function
     const [query, setQuery] = useState("");
@@ -34,9 +59,6 @@ function Accessories() {
     const [updateOpen, setUpdateOpen] = useState(false);
     const handleUpdateOpen = () => setUpdateOpen(true);
     const handleUpdateClose = () => setUpdateOpen(false);
-
-    // confirm handle
-    const confirm = useConfirm();
 
     // Delete accessory
     const deleteAccessory = (row: any) => {
@@ -82,14 +104,15 @@ function Accessories() {
             <Box sx={{ display: 'flex' }} my={2} mx={2}  >
                 <AccessoriesSearchBar setQuery={setQuery} />
                 <Box flexGrow={1}></Box>
-                <Button variant="outlined" startIcon={<Add />} >
+                <Button variant="outlined" startIcon={<Add />} onClick={handleAddOpen} >
                     Add Accessory
                 </Button>
             </Box>
             <AccessoriesTable accessorydata={accessorydata} query={query} setUpdatedAccessory={setUpdatedAccessory} handleUpdateOpen={handleUpdateOpen} deleteAccessory={deleteAccessory} />
             <UpdateAccessoryModal updateOpen={updateOpen} handleUpdateClose={handleUpdateClose} updatedAccessory={updatedAccessory} updateAccessory={updateAccessory} />
+            <AddAccessoryModal addAccessory={addAccessory} openAddModal={openAddModal} handleAddClose={handleAddClose} />
         </div>
-    )
+    );
 }
 
-export default Accessories
+export default Accessories;
