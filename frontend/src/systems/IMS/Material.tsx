@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react'
 import MaterialsTable from './materialComponent/MaterialsTable';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import MaterialSearchBar from './materialComponent/MaterialSearchBar';
 import { Add } from '@mui/icons-material';
 import { useConfirm } from 'material-ui-confirm';
@@ -97,6 +97,11 @@ function Material() {
 
   return (
     <div>
+      <Box>
+        <Typography variant='h3' color='primary' align="center">
+          Material
+        </Typography>
+      </Box>
       <Box sx={{ display: "flex" }} my={2} mx={2} >
         <MaterialSearchBar setSearchQuery={setSearchQuery} />
         <Box flexGrow={1}></Box>
