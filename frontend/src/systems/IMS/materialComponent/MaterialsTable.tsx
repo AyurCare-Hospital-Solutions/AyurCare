@@ -94,7 +94,6 @@ function MaterialsTable({ data, query, deleteMaterial, hadelUpdateModalOpen, set
                       >
                         <DeleteForeverIcon />
                       </IconButton>
-
                     </TableCell>
                   </TableRow>
                 );
@@ -125,7 +124,6 @@ function MaterialsTable({ data, query, deleteMaterial, hadelUpdateModalOpen, set
       <Box mx={10} my={1} display='flex'>
         <Box height='15px' width='15px' mx={1} sx={{ backgroundColor: '#ff7979' }}></Box> <Typography>Material out-of-stock</Typography>
       </Box>
-
     </Paper>
   );
 }
