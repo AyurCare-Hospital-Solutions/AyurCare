@@ -12,12 +12,10 @@ const Prescription = sequelize.define(
     note: DataTypes.STRING,
     dispensed_date: DataTypes.DATE,
     status: {
-      type: DataTypes.ENUM,
-      values: ["pending", "dispensed", "rejected"],
-    },
-  },
-  { paranoid: true }
-);
+        type: DataTypes.ENUM,
+        values: ["pending", "approved", "rejected"]
+    }
+}, { paranoid: true });
 
 const PrescriptionConditions = sequelize.define(
   "PrescriptionConditions",
