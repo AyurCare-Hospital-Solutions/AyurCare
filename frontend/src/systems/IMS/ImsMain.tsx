@@ -55,6 +55,17 @@ function ImsMain() {
                     </ListItemButton>
                 </ListItem>
             </Link>
+
+            <Link to="/ims/reqMedicine">
+                <ListItem disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <HealingIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Accessories" />
+                    </ListItemButton>
+                </ListItem>
+            </Link>
         </DashboardPage>
     )
 }
