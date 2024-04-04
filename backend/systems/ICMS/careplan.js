@@ -2,6 +2,8 @@ const express = require("express")
 const CarePlan = require("../../model/CarePlan");
 const IPDAdmission = require("../../model/IPDAdmission");
 const Patient = require("../../model/Patient");
+const Bed = require("../../model/Bed");
+const Ward = require("../../model/Ward");
 
 /**
  * 
@@ -16,10 +18,14 @@ const getCarePlan = async (req, res) => {
             patientID: patientID,
             discharge_date: null,
         },
-        include: {
+        include: [{
             model: Patient,
-            attributes: ["name", "tracking_no", "dob", "gender"]
-        }
+            attributes: ["name", "tracking_no", "dob", "gender", "id"]
+        },
+        {
+            model: Bed,
+            include: Ward
+        }]
     });
 
     if (admission === null) {

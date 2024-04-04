@@ -1,65 +1,35 @@
-import { Card, Divider, Grid, List, ListItem, ListItemText, Table, TableBody, TableCell, TableRow, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import PatientInfo from "./components/PatientInfo";
+import { PatientRecord, PatientRecordSchema } from "./types";
+import axios from "axios";
+import CarePlanInfo from "./components/CarePlanInfo";
+import NursingLogView from "./components/NursingLogView";
+
 
 
 const CarePlan = () => {
+    const [patientInfo, setPatientInfo] = useState<PatientRecord>();
+    const [nursingLog, setNursingLog] = useState<any>();
+
+    useEffect(() => {
+        axios.get("/api/icms/careplan/2").then(async (res) => {
+            setTimeout(() => setPatientInfo(PatientRecordSchema.cast(res.data)), 1000);
+        })
+    }, []);
+
+    useEffect(() => {
+        if (patientInfo) {
+            axios.get(`/api/icms/nursinglog/${patientInfo?.admission.id}`).then((res) => {
+                console.log(res.data)
+            })
+        }
+    }, [patientInfo]);
+
+
     return <>
-        <Typography variant="h5"> Patient Details</Typography>
-        <Divider />
-
-        <Grid container pt={3} justifyContent="space-around">
-            <Grid item xs={5}>
-                <Card sx={{ p: "16px" }}>
-                    <Typography fontWeight="550">Patient Details</Typography>
-                    <Table size="small">
-                        <TableBody>
-                            <TableRow>
-                                <TableCell>Patient ID</TableCell>
-                                <TableCell>12</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Name</TableCell>
-                                <TableCell>nkgndinhienr</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>DOB</TableCell>
-                                <TableCell>01/02/2003</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Gender</TableCell>
-                                <TableCell>Male</TableCell>
-                            </TableRow>
-
-                        </TableBody>
-                    </Table>
-                </Card>
-            </Grid>
-            <Grid item xs={5}>
-                <Card sx={{ p: "16px" }}>
-                    <Typography fontWeight="550">Admission Details</Typography>
-                    <Table size="small" >
-                        <TableBody>
-                            <TableRow>
-                                <TableCell>Admission No</TableCell>
-                                <TableCell>1223</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Date</TableCell>
-                                <TableCell>01/02/2003</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Ward</TableCell>
-                                <TableCell>12</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Bed No</TableCell>
-                                <TableCell>1</TableCell>
-                            </TableRow>
-
-                        </TableBody>
-                    </Table>
-                </Card>
-            </Grid>
-        </Grid>
+        <PatientInfo admission={patientInfo?.admission} />
+        <CarePlanInfo data={patientInfo?.carePlan} />
+        <NursingLogView />
     </>
 }
 
