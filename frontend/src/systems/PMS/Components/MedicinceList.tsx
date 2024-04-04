@@ -1,8 +1,27 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import axios from 'axios';
+
+
 
 export default function MedicineList() {
+  const [inventoryMedicine,setInventoryMedicine] = React.useState<any>([]);
+
+  const getInventoryMedicine  = async ()=>{
+  await axios.get("/api/pms/getInventoryMedicine").then((res: any) => {
+              console.log(res.data[0].Item.name)
+              setInventoryMedicine(res.data)
+            })
+}
+
+React.useEffect(
+  () => {getInventoryMedicine()
+  },[]
+)
+
+
+
   return (
     <Autocomplete
       disablePortal
@@ -16,7 +35,7 @@ export default function MedicineList() {
 
 // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
 const top100Films = [
-  { label: 'The Shawshank Redemption', year: 1994 },
+  { label: 'Th Shawshank Redemption', year: 1994 },
   { label: 'The Godfather', year: 1972 },
   { label: 'The Godfather: Part II', year: 1974 },
   { label: 'The Dark Knight', year: 2008 },

@@ -4,7 +4,7 @@ import Content from './Components/Content'
 const Dashboard = () => {
   return (
     <>
-    <Content />
+      <Content />
     </>
   )
 }

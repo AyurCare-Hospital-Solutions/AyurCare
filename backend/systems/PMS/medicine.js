@@ -17,7 +17,7 @@ const medicineAmountValidator = yup
  * @param {express.Request} req
  * @param {express.Response} res
  */
-async function getMedicines(req, res) {
+async function getPharmacyMedicines(req, res) {
   res.status(200).json(
     await PharmacyMedicine.findAll({
       include: [{ model: Medicine, include: Item }],
@@ -46,7 +46,6 @@ async function getSpecificMedicine(req, res) {
     res.status(404).json({ msg: "Medicine not found" });
     return;
   }
-
   res.status(200).json(medicine);
 }
 
@@ -137,9 +136,45 @@ async function changeStockLevel(req, res) {
   res.sendStatus(200);
 }
 
+/**
+ *get the medicine  names from inventory database
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+async function getInventoryMedicine(req, res) {
+  console.log("getting");
+  const inventoryMedicine = await Medicine.findAll({
+    include: Item,
+  });
+  res.status(200).json(inventoryMedicine);
+}
+
+// add the medicine to the db
+/**
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+async function setPharmacyMadicine(req, res) {
+  const id = req.body.id;
+  const qty = req.body.qty;
+  const expDate = req.body.expDate;
+
+  const medicine = await Medicine.findOne({ include: Item, where: { id: id } });
+
+  if (medicine == null) {
+    res.status(404).send("medicine not found!");
+    return;
+  }
+
+  //PharmacyMedicine.create();
+}
+
 module.exports = {
-  getMedicines,
+  getPharmacyMedicines,
   getSpecificMedicine,
   deleteMedicine,
   changeStockLevel,
+  getInventoryMedicine,
+  setPharmacyMadicine,
 };

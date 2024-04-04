@@ -10,7 +10,6 @@ const PharmacyMedicine = sequelize.define("PharmacyMedicine", {
     type: DataTypes.INTEGER,
   },
 
-  // same shit
   expire_date: {
     type: DataTypes.DATEONLY,
   },
