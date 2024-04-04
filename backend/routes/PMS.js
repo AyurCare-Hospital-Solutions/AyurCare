@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const medicine = require("../systems/PMS/medicine");
-const prescription = require("../systems/PMS/prescription");
+const medicine = require("../systems/PMS/medicine")
+const prescription = require("../systems/PMS/prescription")
 
-// here we have mention if the url (first parameter) call this function that's it.
-// those methods are inside the **** systems/pms ****
+router.get("/medicine", medicine.getMedicines)
+router.get("/prescriptionDetails", prescription.getPrescriptions);
 
 router.get("/medicineall", medicine.getPharmacyMedicines);
 router.get("/specificmedicine/:id", medicine.getSpecificMedicine);
