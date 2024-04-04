@@ -109,7 +109,7 @@ function UpdateMaterialModal({ open, onClose, updatedMaterial, updateMaterial }:
                                 label="Unit"
                                 required
                                 defaultValue=""
-                                helperText="Please select mesurement unit of medine"
+                                helperText="Please select mesurement unit of material"
                                 onChange={(e) => {
                                     setUpdateUnit(e.target.value);
                                 }}
