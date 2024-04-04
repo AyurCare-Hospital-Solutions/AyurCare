@@ -7,7 +7,7 @@ import SearchInput from './Components/SearchBar'
 import MedicineDialog from './Components/MedicineDialog'
 import { enqueueSnackbar } from 'notistack'
 
-const Medicine = () => {
+const wMedicine = () => {
     
     const [data, setData] = useState()
     const [modalOpen, setModalOpen] = useState(false)

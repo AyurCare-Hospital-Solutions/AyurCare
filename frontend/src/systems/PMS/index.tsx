@@ -13,12 +13,10 @@ const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
             path: "dashboard",
             element: <Dashboard />
         },
-
         {
             path: "medicines",
             element: <Medicine />
         }
-
     ],
 }
 
