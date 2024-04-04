@@ -3,9 +3,9 @@ import { ReactElement } from 'react';
 import { Outlet } from 'react-router-dom'
 
 
-const drawerWidth = 240;
+const drawerWidth = 275;
 
-export default (props: { children: ReactElement[] }) => {
+const DashboardPage = (props: { children: ReactElement[] }) => {
     return (
         <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1 }} >
             <Drawer variant="permanent"
@@ -23,7 +23,7 @@ export default (props: { children: ReactElement[] }) => {
                     {props.children}
                 </List>
             </Drawer>
-            <Card variant="outlined" sx={{                                                  
+            <Card variant="outlined" sx={{
                 m: "24px",
                 mb: "0px",
                 px: "20px",
@@ -38,4 +38,6 @@ export default (props: { children: ReactElement[] }) => {
             </Card>
         </Box >
     )
-}
+};
+
+export default DashboardPage;

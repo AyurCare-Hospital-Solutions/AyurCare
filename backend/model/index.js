@@ -37,6 +37,11 @@ function connect() {
         console.log(`Using ${process.env.MYSQL_DB} on ${process.env.MYSQL_HOST}`)
     }
 
+    if (!Number.parseInt(process.env.SQL_LOG_QUERY)) {
+        config.logging = false;
+    }
+
+
     return new Sequelize(config);
 }
 
