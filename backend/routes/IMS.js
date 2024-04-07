@@ -37,6 +37,7 @@ router.post('/accessory/deleteAccessory', accessoryService.deleteAccessory);
 router.get('/medicineRequest',medicineRequestService.getMedicineRequests);
 router.post('/medicineRequest/addMedicineRequest',medicineRequestService.addMeicicneRequest);
 router.put('/medicineRequest/:id',medicineRequestService.updateMedicineRequest);
+router.delete('/medicineRequest/:id',medicineRequestService.deleteMedicneRequest);
 
 
 module.exports = router;

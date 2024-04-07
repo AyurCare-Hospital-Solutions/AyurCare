@@ -48,6 +48,7 @@ const addMeicicneRequest = async (req, res) => {
     res.status(200).json(medicineRequest);
 }
 
+// update medicine request
 /**
  * @param {express.Request} req 
  * @param {express.Response} res 
@@ -76,8 +77,34 @@ const updateMedicineRequest = async (req, res) => {
     res.status(200).json(medicineRequest);
 }
 
+// delete medicine request
+/**
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
+const deleteMedicneRequest = async (req, res) => {
+    // get id from route params
+    const id = Number.parseInt(req.params.id);
+    // validate id format
+    if (!Number.isInteger(id)) {
+        res.status(400).json({ msg: "Invalid Medicine Request ID (format error)" });
+        return;
+    }
+    // check existance
+    var medicineRequest = await MedicineRequest.findByPk(id);
+    if (medicineRequest === null) {
+        res.status(404).json({ msg: "The Medicine Request does not exist" });
+        return;
+    }
+    // delete medicine request 
+    await medicineRequest.destroy();
+    res.sendStatus(203);
+}
+
+
 module.exports = {
     getMedicineRequests,
     addMeicicneRequest,
     updateMedicineRequest,
+    deleteMedicneRequest,
 }
