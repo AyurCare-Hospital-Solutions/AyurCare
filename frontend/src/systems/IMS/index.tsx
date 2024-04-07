@@ -5,6 +5,7 @@ import Material from "./Material";
 import Accessories from "./Accessories";
 import MedicineRequest from "./MedicineRequest";
 import ManageMadicineRequests from "./ManageMedicineRequests";
+import MaterialRequest from "./MaterialRequest";
 
 const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
     name: "IMS",
@@ -30,6 +31,10 @@ const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
         {
             path: "reqMedicine",
             element: <MedicineRequest />
+        },
+        {
+            path: "reqMaterial",
+            element: <MaterialRequest />
         }
     ],
 }

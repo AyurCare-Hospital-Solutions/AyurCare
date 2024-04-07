@@ -78,6 +78,17 @@ function ImsMain() {
                     </ListItemButton>
                 </ListItem>
             </Link>
+
+            <Link to="/ims/reqMatrial">
+                <ListItem disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <HealingIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Request Material(temp)" />
+                    </ListItemButton>
+                </ListItem>
+            </Link>
         </DashboardPage>
     )
 }
