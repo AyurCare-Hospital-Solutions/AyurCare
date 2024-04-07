@@ -6,6 +6,7 @@ import HealingIcon from '@mui/icons-material/Healing';
 import { Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { Link, Outlet } from 'react-router-dom'
 import DashboardPage from '../../components/DashboardPage';
+import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 
 
 function ImsMain() {
@@ -56,13 +57,24 @@ function ImsMain() {
                 </ListItem>
             </Link>
 
+            <Link to="/ims/medicineRequests">
+                <ListItem disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <MedicalServicesIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Manage Medicine Requests" />
+                    </ListItemButton>
+                </ListItem>
+            </Link>
+
             <Link to="/ims/reqMedicine">
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
                             <HealingIcon />
                         </ListItemIcon>
-                        <ListItemText primary="Accessories" />
+                        <ListItemText primary="Request Medicine(temp)" />
                     </ListItemButton>
                 </ListItem>
             </Link>
