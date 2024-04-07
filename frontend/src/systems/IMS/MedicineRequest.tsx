@@ -85,7 +85,7 @@ function MedicineRequest() {
                 <TextField type="number" id="outlined-basic" label="Amount" variant="outlined" onChange={(e) => {
                     setReqMedicineAmout(Number(e.target.value));
                 }} />
-                <Button variant="outlined" type='submit'>Add Request</Button>
+                <Button variant="contained" color="primary" type='submit'>Add Request</Button>
             </Box>
             <Typography color='primary' align="center" variant="h5">
                 Medicine Request Details
