@@ -40,7 +40,7 @@ function MedicineRequest() {
 
     const confirm = useConfirm();
     // add medicine request
-    const addMedicine = () => {
+    const addMedicineRequest = () => {
         confirm({ description: "Confirm medicine request" })
             .then(async () => {
                 await axios.post('api/ims/medicineRequest/addMedicineRequest', { medicineId: reqMedicine, amount: reqMedicineAmount })
@@ -71,7 +71,7 @@ function MedicineRequest() {
                 autoComplete="on"
                 onSubmit={(e) => {
                     e.preventDefault();
-                    addMedicine()
+                    addMedicineRequest()
                 }}
             >
                 <Autocomplete
