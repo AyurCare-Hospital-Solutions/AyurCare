@@ -31,7 +31,7 @@ export default function MedicineRequestTable({ medicineReqData }: { medicineReqD
     }
 
     return (
-        <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+        <Paper sx={{ marginTop: '1rem', width: '100%', overflow: 'hidden' }}>
             <TableContainer sx={{ maxHeight: 440 }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>

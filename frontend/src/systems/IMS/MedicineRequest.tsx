@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react'
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { useConfirm } from 'material-ui-confirm';
 import { enqueueSnackbar } from 'notistack';
 import MedicineRequestTable from './medicineRequest/MedicineRequestTable';
@@ -58,6 +58,9 @@ function MedicineRequest() {
 
     return (
         <div>
+            <Typography color='primary' align="center" variant="h5">
+                Add Medicine Request
+            </Typography>
             <Box
                 display="flex"
                 component="form"
@@ -84,6 +87,9 @@ function MedicineRequest() {
                 }} />
                 <Button variant="outlined" type='submit'>Add Request</Button>
             </Box>
+            <Typography color='primary' align="center" variant="h5">
+                Medicine Request Details
+            </Typography>
             <MedicineRequestTable medicineReqData={medicineReqData} />
         </div>
     );

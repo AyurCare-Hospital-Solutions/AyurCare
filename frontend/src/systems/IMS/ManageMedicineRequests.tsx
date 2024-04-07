@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import MedicineRequestModal from './medicineRequest/MedicineRequestModal';
 import { useConfirm } from 'material-ui-confirm';
 import { enqueueSnackbar } from 'notistack';
+import { Typography } from '@mui/material';
 
 function ManageMadicineRequests() {
     const [medicineReqData, setMedicineReqData] = useState<any>([]);
@@ -75,7 +76,7 @@ function ManageMadicineRequests() {
     const deleteMedicineRequest = (id: number) => {
         confirm({ description: 'Confirm delete medicine request' })
             .then(async () => {
-                try {        
+                try {
                     await axios.delete(`api/ims/medicineRequest/${id}`);
                     enqueueSnackbar("Medicine Request deleted successfully", { variant: 'success' });
                     getMedicineRequestData();
@@ -88,7 +89,10 @@ function ManageMadicineRequests() {
     }
     return (
         <div>
-            <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+            <Typography color='primary' align="center" variant="h5">
+                Manage Medicine Requests
+            </Typography>
+            <Paper sx={{ marginTop: '2rem', width: '100%', overflow: 'hidden' }}>
                 <TableContainer sx={{ maxHeight: 440 }}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
