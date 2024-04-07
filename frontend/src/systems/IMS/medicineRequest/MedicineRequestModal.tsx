@@ -2,7 +2,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useEffect, useState } from 'react';
-import { Button, Stack } from '@mui/material';
+import { Button, IconButton, Stack } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -16,11 +17,11 @@ const style = {
     p: 4,
 };
 
-export default function MedicineRequestModal({ open, handleClose, updateRequest, updateStatus }: { open: boolean, handleClose: () => any, updateRequest: any, updateStatus: (arg1: number, arg2: string) => any }) {
+export default function MedicineRequestModal({ open, handleClose, updateRequest, updateStatus, deleteMedicineRequest }: { open: boolean, handleClose: () => any, updateRequest: any, updateStatus: (arg1: number, arg2: string) => any, deleteMedicineRequest: (arg: number) => any }) {
     const [request, setRequest] = useState<any>();
     useEffect(() => {
         setRequest(updateRequest);
-    }, [request])
+    }, [updateRequest])
 
     return (
         <div>
@@ -31,6 +32,7 @@ export default function MedicineRequestModal({ open, handleClose, updateRequest,
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
+
                     <Typography align="center" id="modal-modal-title" variant="h5" component="h2">
                         Update Medicine Request
                     </Typography>
@@ -43,7 +45,7 @@ export default function MedicineRequestModal({ open, handleClose, updateRequest,
                     <Typography variant="h6" >
                         Status : {request?.status}
                     </Typography>
-                    <Stack alignItems="center" direction="row" spacing={3}>
+                    <Stack mt={5} alignContent="center" direction="row" spacing={4}>
                         <Button sx={{ backgroundColor: "#4aee78" }} variant="contained" onClick={() => {
                             updateStatus(request.id, "Accepted");
                             handleClose();
@@ -55,6 +57,12 @@ export default function MedicineRequestModal({ open, handleClose, updateRequest,
                         <Button variant="outlined" onClick={() => {
                             handleClose();
                         }}>Cancel</Button>
+                        <IconButton color='secondary' size="medium" onClick={() => {
+                            deleteMedicineRequest(request.id);
+                            handleClose();
+                        }}>
+                            <DeleteIcon />
+                        </IconButton>
                     </Stack>
                 </Box>
             </Modal>

@@ -59,7 +59,7 @@ function ManageMadicineRequests() {
     const updateStatus = (id: number, status: string) => {
         confirm({ description: 'Confirm status change' })
             .then(async () => {
-                try { 
+                try {
                     await axios.put(`api/ims/medicineRequest/${id}`, { status: status });
                     enqueueSnackbar("Request updated successfully", { variant: 'success' });
                     getMedicineRequestData();
@@ -71,6 +71,21 @@ function ManageMadicineRequests() {
             })
     }
 
+    // delete medicine request
+    const deleteMedicineRequest = (id: number) => {
+        confirm({ description: 'Confirm delete medicine request' })
+            .then(async () => {
+                try {        
+                    await axios.delete(`api/ims/medicineRequest/${id}`);
+                    enqueueSnackbar("Medicine Request deleted successfully", { variant: 'success' });
+                    getMedicineRequestData();
+                }
+                catch (e) {
+                    enqueueSnackbar("Failed to delete Medicine Request...", { variant: "error" });
+                    console.error(e);
+                }
+            })
+    }
     return (
         <div>
             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -117,7 +132,7 @@ function ManageMadicineRequests() {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Paper>
-            <MedicineRequestModal open={open} handleClose={handleClose} updateRequest={updateRequest} updateStatus={updateStatus} />
+            <MedicineRequestModal open={open} handleClose={handleClose} updateRequest={updateRequest} updateStatus={updateStatus} deleteMedicineRequest={deleteMedicineRequest} />
         </div>
     )
 }
