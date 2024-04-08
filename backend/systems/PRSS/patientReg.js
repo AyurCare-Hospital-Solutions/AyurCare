@@ -6,12 +6,13 @@ const yup = require("yup");
 const validatePatientDetails = yup.object({
     name: yup.string().min(2).max(100).required(),
     nic: yup.string().min(10).max(15).required(),
+    age: yup.isInteger().required(),
     phone: yup.string().min(10).max(14).required(),
     email: yup.string().min(5).max(50).email().required(),
     address: yup.string().min(5).max(255).required(),
-    // dob: DataTypes.DATEONLY,
-    // gender: DataTypes.STRING,
-    // tracking_no: yup.string().min(5).max(15).required(),
+    dob: DataTypes.DATEONLY,
+    gender: DataTypes.STRING().min(4).max(10).required(),
+    tracking_no: yup.number().min(5).max(15).required(),
 }).strict().noUnknown();
 
 // get the current date

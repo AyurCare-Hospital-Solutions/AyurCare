@@ -1,10 +1,17 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 
 interface IFormInput {
-    firstName: string
-    lastName: string
-    age: number
+    name: string
+    nic: string
+    phone: string
+    dob: Date
+    gender: string
+    email: string
+    address: string
+    tracking_no: number
 }
+
+
 
 export default function PatientRegForm() {
 
@@ -14,11 +21,12 @@ export default function PatientRegForm() {
 
   return (
     <div>
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <input {...register("firstName", { required: true, maxLength: 20 })} />
-            <input {...register("lastName", { pattern: /^[A-Za-z]+$/i })} />
+        <form onSubmit={handleSubmit(onSubmit)} >
+            <input {...register("name", { required: true, maxLength: 20 })} />
+            <input {...register("nic", { required: true, maxLength: 20 })} />
+            {/* <input {...register("", { pattern: /^[A-Za-z]+$/i })} />
             <input type="number" {...register("age", { min: 18, max: 99 })} />
-            <input type="submit" />
+            <input type="submit" /> */}
         </form>
     </div>
   )
