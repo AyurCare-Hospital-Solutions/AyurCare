@@ -68,6 +68,17 @@ function ImsMain() {
                 </ListItem>
             </Link>
 
+            <Link to="/ims/materialRequests">
+                <ListItem disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <MedicalServicesIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Manage Material Requests" />
+                    </ListItemButton>
+                </ListItem>
+            </Link>
+
             <Link to="/ims/reqMedicine">
                 <ListItem disablePadding>
                     <ListItemButton>
@@ -79,7 +90,7 @@ function ImsMain() {
                 </ListItem>
             </Link>
 
-            <Link to="/ims/reqMatrial">
+            <Link to="/ims/reqMaterial">
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>

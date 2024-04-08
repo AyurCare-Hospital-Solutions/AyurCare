@@ -5,7 +5,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { Box, Button, Typography } from '@mui/material';
 import { useConfirm } from 'material-ui-confirm';
 import { enqueueSnackbar } from 'notistack';
-import MedicineRequestTable from './medicineRequest/MedicineRequestTable';
+import MedicineRequestTable from './medicineRequestComponent/MedicineRequestTable';
 
 function MedicineRequest() {
     const [reqMedicine, setReqMedicine] = useState<any>({});
@@ -45,12 +45,12 @@ function MedicineRequest() {
             .then(async () => {
                 await axios.post('api/ims/medicineRequest/addMedicineRequest', { medicineId: reqMedicine, amount: reqMedicineAmount })
                     .then((res) => {
-                        enqueueSnackbar("Accessory Added Successfuly...", { variant: "success" });
+                        enqueueSnackbar("Medicine Request Added Successfuly...", { variant: "success" });
                         console.log(res);
                         getMedicineRequestData();
                     })
                     .catch((err) => {
-                        enqueueSnackbar("Failed to Add Accessory...", { variant: "error" });
+                        enqueueSnackbar("Failed to Add Medicine Request...", { variant: "error" });
                         console.log(err)
                     })
             })

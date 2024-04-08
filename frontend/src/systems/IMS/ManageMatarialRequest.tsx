@@ -8,23 +8,23 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { useEffect, useState } from 'react';
-import MedicineRequestModal from './medicineRequestComponent/MedicineRequestModal';
 import { useConfirm } from 'material-ui-confirm';
 import { enqueueSnackbar } from 'notistack';
 import { Typography } from '@mui/material';
+import MaterialRequestModal from './materialRequestComponent/MaterialRequestModal';
 
-function ManageMedicineRequests() {
-    const [medicineReqData, setMedicineReqData] = useState<any>([]);
+function ManageMaterialRequests() {
+    const [materialReqData, setMaterialReqData] = useState<any>([]);
     // fetch medicine request data
-    const getMedicineRequestData = async () => {
-        await axios.get('api/ims/medicineRequest').then((res) => {
+    const getMaterialRequestData = async () => {
+        await axios.get('api/ims/materialRequest').then((res) => {
             console.log(res.data);
-            setMedicineReqData(res.data);
+            setMaterialReqData(res.data);
         })
     }
 
     useEffect(() => {
-        getMedicineRequestData();
+        getMaterialRequestData();
     }, []);
 
     const colorIndicator = (status: string) => {
@@ -61,28 +61,28 @@ function ManageMedicineRequests() {
         confirm({ description: 'Confirm status change' })
             .then(async () => {
                 try {
-                    await axios.put(`api/ims/medicineRequest/${id}`, { status: status });
+                    await axios.put(`api/ims/materialRequest/${id}`, { status: status });
                     enqueueSnackbar("Request updated successfully", { variant: 'success' });
-                    getMedicineRequestData();
+                    getMaterialRequestData();
                 }
                 catch (e) {
-                    enqueueSnackbar("Failed to Update Medicine Request...", { variant: "error" });
+                    enqueueSnackbar("Failed to Update Material Request...", { variant: "error" });
                     console.error(e);
                 }
             })
     }
 
     // delete medicine request
-    const deleteMedicineRequest = (id: number) => {
+    const deleteMaterialRequest = (id: number) => {
         confirm({ description: 'Confirm delete medicine request' })
             .then(async () => {
                 try {
-                    await axios.delete(`api/ims/medicineRequest/${id}`);
-                    enqueueSnackbar("Medicine Request deleted successfully", { variant: 'success' });
-                    getMedicineRequestData();
+                    await axios.delete(`api/ims/materialRequest/${id}`);
+                    enqueueSnackbar("Material Request deleted successfully", { variant: 'success' });
+                    getMaterialRequestData();
                 }
                 catch (e) {
-                    enqueueSnackbar("Failed to delete Medicine Request...", { variant: "error" });
+                    enqueueSnackbar("Failed to delete Material Request...", { variant: "error" });
                     console.error(e);
                 }
             })
@@ -90,7 +90,7 @@ function ManageMedicineRequests() {
     return (
         <div>
             <Typography color='primary' align="center" variant="h5">
-                Manage Medicine Requests
+                Manage Material Requests
             </Typography>
             <Paper sx={{ marginTop: '2rem', width: '100%', overflow: 'hidden' }}>
                 <TableContainer sx={{ maxHeight: 440 }}>
@@ -98,14 +98,14 @@ function ManageMedicineRequests() {
                         <TableHead>
                             <TableRow>
                                 <TableCell>Request ID</TableCell>
-                                <TableCell>Medicine</TableCell>
+                                <TableCell>Material</TableCell>
                                 <TableCell>Amount</TableCell>
                                 <TableCell>Unit</TableCell>
                                 <TableCell>Status</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {medicineReqData
+                            {materialReqData
                                 .toReversed()
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row: any) => {
@@ -117,9 +117,9 @@ function ManageMedicineRequests() {
                                             }}
                                         >
                                             <TableCell>{row.id}</TableCell>
-                                            <TableCell>{row.Medicine.Item.name}</TableCell>
+                                            <TableCell>{row.Material.Item.name}</TableCell>
                                             <TableCell>{row.amount}</TableCell>
-                                            <TableCell>{row.Medicine.Item.unit}</TableCell>
+                                            <TableCell>{row.Material.Item.unit}</TableCell>
                                             <TableCell>{row.status}</TableCell>
                                         </TableRow>
                                     );
@@ -130,16 +130,16 @@ function ManageMedicineRequests() {
                 <TablePagination
                     rowsPerPageOptions={[10, 25, 100]}
                     component="div"
-                    count={medicineReqData.length}
+                    count={materialReqData.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Paper>
-            <MedicineRequestModal open={open} handleClose={handleClose} updateRequest={updateRequest} updateStatus={updateStatus} deleteMedicineRequest={deleteMedicineRequest} />
+            <MaterialRequestModal open={open} handleClose={handleClose} updateRequest={updateRequest} updateStatus={updateStatus} deleteMaterialRequest={deleteMaterialRequest} />
         </div>
     )
 }
 
-export default ManageMedicineRequests;
+export default ManageMaterialRequests;

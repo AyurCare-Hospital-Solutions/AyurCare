@@ -8,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 
-export default function MedicineRequestTable({ medicineReqData }: { medicineReqData: any }) {
+export default function MaterialRequestTable({ materialReqData }: { materialReqData: any }) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -37,22 +37,23 @@ export default function MedicineRequestTable({ medicineReqData }: { medicineReqD
                     <TableHead>
                         <TableRow>
                             <TableCell>Request ID</TableCell>
-                            <TableCell>Medicine</TableCell>
+                            <TableCell>Material</TableCell>
                             <TableCell>Amount</TableCell>
                             <TableCell>Unit</TableCell>
                             <TableCell>Status</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {medicineReqData
+                        {materialReqData
+                            .toReversed()
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row: any) => {
                                 return (
                                     <TableRow hover role="checkbox" key={row.id} sx={{ backgroundColor: colorIndicator(row.status) }}>
                                         <TableCell>{row.id}</TableCell>
-                                        <TableCell>{row.Medicine.Item.name}</TableCell>
+                                        <TableCell>{row.Material.Item.name}</TableCell>
                                         <TableCell>{row.amount}</TableCell>
-                                        <TableCell>{row.Medicine.Item.unit}</TableCell>
+                                        <TableCell>{row.Material.Item.unit}</TableCell>
                                         <TableCell>{row.status}</TableCell>
                                     </TableRow>
                                 );
@@ -63,7 +64,7 @@ export default function MedicineRequestTable({ medicineReqData }: { medicineReqD
             <TablePagination
                 rowsPerPageOptions={[10, 25, 100]}
                 component="div"
-                count={medicineReqData.length}
+                count={materialReqData.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
