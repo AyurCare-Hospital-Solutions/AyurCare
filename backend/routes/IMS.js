@@ -5,8 +5,8 @@ const accessoryService = require('../systems/IMS/accessory');
 const materialService = require('../systems/IMS/material');
 const medicineService = require('../systems/IMS/medicine');
 const medicineLotService = require('../systems/IMS/medicineLot');
-
-const medicineRequestService = require('../systems/IMS/medicineRequest')
+const materialRequestService = require('../systems/IMS/materialRequest');
+const medicineRequestService = require('../systems/IMS/medicineRequest');
 
 // Material
 router.get('/material', materialService.getMaterial);
@@ -34,10 +34,16 @@ router.put('/accessory/updateAccessory/:id', accessoryService.updateAccessory);
 router.post('/accessory/deleteAccessory', accessoryService.deleteAccessory);
 
 // Medicine Request
-router.get('/medicineRequest',medicineRequestService.getMedicineRequests);
-router.post('/medicineRequest/addMedicineRequest',medicineRequestService.addMeicicneRequest);
-router.put('/medicineRequest/:id',medicineRequestService.updateMedicineRequest);
-router.delete('/medicineRequest/:id',medicineRequestService.deleteMedicneRequest);
+router.get('/medicineRequest', medicineRequestService.getMedicineRequests);
+router.post('/medicineRequest/addMedicineRequest', medicineRequestService.addMeicicneRequest);
+router.put('/medicineRequest/:id', medicineRequestService.updateMedicineRequest);
+router.delete('/medicineRequest/:id', medicineRequestService.deleteMedicneRequest);
+
+// Material Request
+router.get('/materialRequest', materialRequestService.getMaterialRequests);
+router.post('/materialRequest/addMaterialRequest', materialRequestService.addMaterialRequest);
+router.put('/materialRequest/:id',materialRequestService.updateMaterialRequest);
+router.delete('/materialRequest/:id',materialRequestService.deleteMaterialRequest);
 
 
 module.exports = router;
