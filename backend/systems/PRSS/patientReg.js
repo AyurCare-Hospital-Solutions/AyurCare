@@ -9,6 +9,8 @@ const validatePatientDetails = yup.object({
     phone: yup.string().min(10).max(14).required(),
     email: yup.string().min(5).max(50).email().required(),
     address: yup.string().min(5).max(255).required(),
+    // dob: DataTypes.DATEONLY,
+    // gender: DataTypes.STRING,
     // tracking_no: yup.string().min(5).max(15).required(),
 }).strict().noUnknown();
 
