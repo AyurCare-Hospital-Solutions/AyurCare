@@ -6,7 +6,7 @@
 
 - React  [Site](react.dev)
 - yup (for validation) [Site](https://github.com/jquense/yup)
-- MUI (styling) [Components](https://mui.com/material-ui/all-components/) [Icons](https://mui.com/material-ui/material-icons/)
+- MUI (styling) [Components](https://mui.com/material-ui/all-components/) [Icons](https://mui.com/material-ui/material-icons/) [Charts](https://mui.com/x/react-charts/)
 - notistack (for displaying alerts) [Docs](https://notistack.com/api-reference)
 - material-ui-confirm (for displaying confirm dialogs) [Docs](https://www.npmjs.com/package/material-ui-confirm)
 - react router [Docs](https://reactrouter.com/en/main)
