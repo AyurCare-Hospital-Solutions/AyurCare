@@ -1,0 +1,27 @@
+/* Basic styling for name input */
+.nameInput {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 100%; /* Adjust as needed */
+  box-sizing: border-box; /* Ensure consistent sizing */
+}
+
+/* Adjust placeholder text color */
+.nameInput::placeholder {
+  color: #aaa;
+}
+
+/* Style for NIC input */
+.nicInput {
+  /* Same styles as .nameInput or adjust as needed */
+}
+
+/* Style for submit button */
+.submitButton {
+  background-color: #007bff; /* Blue background */
+  color: white;
+  border: none;
+  cursor: pointer;
+}
