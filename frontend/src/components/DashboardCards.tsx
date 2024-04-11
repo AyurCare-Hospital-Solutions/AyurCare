@@ -45,7 +45,7 @@ export const DateCard = () => {
 }
 
 export const WelcomeCard = ({ img }: { img: string }) => {
-    return <Paper elevation={3} sx={{ ...cardStyle, backgroundColor: "#cde1b4", mb: 4, minHeight: "140px" }}>
+    return <Paper elevation={3} sx={{ ...cardStyle, backgroundColor: "#cde1b4", mb: 4, minHeight: "140px", overflowX: "hidden" }}>
         <Box sx={{ my: "auto" }}>
             <Typography sx={{ color: "#003a2b", fontWeight: 600, fontSize: "1.8rem" }} >Welcome Back!</Typography>
             <Typography sx={{ color: "#003a2b", fontSize: "1.1rem" }} >Have a Nice Day!</Typography>
