@@ -13,7 +13,7 @@ function ImsMain() {
 
     return (
         <DashboardPage>
-            <Link to="/ims/dashboard">
+            <Link to="/ims">
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
