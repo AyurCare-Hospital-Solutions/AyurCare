@@ -1,7 +1,50 @@
+html {
+    background-color: #E5E5E5;
+}
+
 body {
     margin: 0;
 }
 
+#root {
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 #menu-appbar .MuiMenuItem-root:hover {
     background-color: rgb(199, 199, 199);
+}
+
+#menu-appbar .MuiMenuItem-root:not(:last-child) {
+    border-bottom-color: rgb(200, 200, 200, 0.8);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+
+
+#menu-appbar .MuiMenuItem-root {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+
+#menu-opener {
+    height: 64px;
+    cursor: pointer;
+}
+
+#menu-opener:hover {
+    min-height: 100%;
+    background-color: rgba(0, 0, 0, 0.24);
+}
+
+.sidebar>a {
+    text-decoration: none;
+    color: initial
+}
+
+.sidebar>a>li:hover {
+    background-color: rgba(0, 0, 0, 0.24);
 }
