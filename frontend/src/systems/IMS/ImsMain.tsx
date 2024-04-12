@@ -7,6 +7,7 @@ import { Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText
 import { Link, Outlet } from 'react-router-dom'
 import DashboardPage from '../../components/DashboardPage';
 import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
 
 
 function ImsMain() {
@@ -83,7 +84,7 @@ function ImsMain() {
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
-                            <MedicalServicesIcon />
+                            <QueryStatsIcon />
                         </ListItemIcon>
                         <ListItemText primary="Analytics" />
                     </ListItemButton>
