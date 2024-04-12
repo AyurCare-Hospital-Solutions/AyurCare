@@ -89,25 +89,31 @@ const materialGroups = async (req, res) => {
  * @param {express.Response} res 
  */
 const materialStockLevel = async (req, res) => {
-    const [reOrderLevelReached, metadata1] = await sequelize.query(`
+    var [reOrderLevelReached, metadata1] = await sequelize.query(`
         SELECT COUNT(*) AS count
         FROM materials M, items I
         WHERE M.ItemId = I.id AND I.reOrderBuffer >= M.amount AND M.amount > 0 
     `);
-    const [outOfStock, metadata2] = await sequelize.query(`
+    var [outOfStock, metadata2] = await sequelize.query(`
         SELECT COUNT(*) AS count
         FROM materials
         WHERE amount = 0
     `);
-    const [otherStock, metadata3] = await sequelize.query(`
+    var [otherStock, metadata3] = await sequelize.query(`
         SELECT COUNT(*) AS count
         FROM materials M, items I
         WHERE M.ItemId = I.id AND I.reOrderBuffer < M.amount
     `);
-    const [totalLOt, metadata4] = await sequelize.query(`
+    var [totalLOt, metadata4] = await sequelize.query(`
         SELECT COUNT(*) AS count
         FROM materials 
-    `)
+    `);
+
+    // format response
+    reOrderLevelReached = reOrderLevelReached[0] ? reOrderLevelReached[0].count : 0;
+    outOfStock = outOfStock[0] ? outOfStock[0].count : 0;
+    otherStock = otherStock[0] ? otherStock[0].count : 0;
+    totalLOt = totalLOt[0] ? totalLOt[0].count : 0;
 
     res.status(200).json({ reOrderLevelReached, outOfStock, otherStock, totalLOt });
 }
@@ -187,12 +193,17 @@ const medicineRequestData = async (req, res) => {
         WHERE status = 'Pending'
         GROUP BY status
     `);
+    var [totalCount, metadata3] = await sequelize.query(`
+        SELECT COUNT(*) AS count
+        FROM medicinerequests
+    `);
 
     acceptCount = acceptCount[0] ? acceptCount[0].count : 0;
     rejectCount = rejectCount[0] ? rejectCount[0].count : 0;
     pendingCount = pendingCount[0] ? pendingCount[0].count : 0;
+    totalCount = totalCount[0] ? totalCount[0].count : 0;
 
-    res.status(200).json({ acceptCount, rejectCount, pendingCount });
+    res.status(200).json({ acceptCount, rejectCount, pendingCount, totalCount });
 }
 
 // get material request analysis
@@ -219,12 +230,17 @@ const materialRequestData = async (req, res) => {
         WHERE status = 'Pending'
         GROUP BY status
     `);
+    var [totalCount, metadata3] = await sequelize.query(`
+        SELECT COUNT(*) AS count
+        FROM materialrequests
+    `);
 
     acceptCount = acceptCount[0] ? acceptCount[0].count : 0;
     rejectCount = rejectCount[0] ? rejectCount[0].count : 0;
     pendingCount = pendingCount[0] ? pendingCount[0].count : 0;
+    totalCount = totalCount[0] ? totalCount[0].count : 0;
 
-    res.status(200).json({ acceptCount, rejectCount, pendingCount });
+    res.status(200).json({ acceptCount, rejectCount, pendingCount, totalCount });
 }
 
 module.exports = {
