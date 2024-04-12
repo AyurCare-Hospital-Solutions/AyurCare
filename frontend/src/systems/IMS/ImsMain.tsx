@@ -79,6 +79,17 @@ function ImsMain() {
                 </ListItem>
             </Link>
 
+            <Link to="/ims/analytics">
+                <ListItem disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <MedicalServicesIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Analytics" />
+                    </ListItemButton>
+                </ListItem>
+            </Link>
+
             <Link to="/ims/reqMedicine">
                 <ListItem disablePadding>
                     <ListItemButton>
