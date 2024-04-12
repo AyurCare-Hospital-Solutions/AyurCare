@@ -79,9 +79,26 @@ const materialStockLevel = async (req, res) => {
     res.status(200).json({ reOrderLevelReached, outOfStock, other });
 }
 
+// get accssory groups
+/**
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
+const accessoryGroups = async (req,res)=>{
+    const [accessoryGroup,metadata] = await sequelize.query(`
+        SELECT I.unit, COUNT(*) AS count
+        FROM accessories A, items I
+        WHERE A.ItemId = I.id
+        GROUP BY I.unit
+    `);
+
+    res.status(200).json(accessoryGroup);
+}
+
 module.exports = {
     totalCounts,
     medicineLotGroups,
     materialGroups,
     materialStockLevel,
+    accessoryGroups,
 }
