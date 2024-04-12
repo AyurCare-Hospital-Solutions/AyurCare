@@ -50,6 +50,7 @@ router.delete('/materialRequest/:id',materialRequestService.deleteMaterialReques
 router.get('/analytics/totalCounts',analyticsService.totalCounts);
 router.get('/analytics/medicineLotGroups',analyticsService.medicineLotGroups);
 router.get('/analytics/materialGroups',analyticsService.materialGroups);
+router.get('/analytics/materialStockLevel',analyticsService.materialStockLevel);
 
 
 module.exports = router;

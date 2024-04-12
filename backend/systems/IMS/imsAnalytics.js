@@ -27,8 +27,8 @@ const totalCounts = async (req, res) => {
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-const medicineLotGroups = async (req,res)=>{
-    const [medicineGroup,metadata] = await sequelize.query(`
+const medicineLotGroups = async (req, res) => {
+    const [medicineGroup, metadata] = await sequelize.query(`
         SELECT ML.MedicineId, I.name, COUNT(*) AS count  
         FROM medicinelots ML , medicines M , items I 
         WHERE ML.MedicineID = M.id AND M.ItemId = I.id 
@@ -43,8 +43,8 @@ const medicineLotGroups = async (req,res)=>{
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-const materialGroups = async (req,res)=>{
-    const [materialGroup,metadata] = await sequelize.query(`
+const materialGroups = async (req, res) => {
+    const [materialGroup, metadata] = await sequelize.query(`
         SELECT I.unit , COUNT(*) AS count
         FROM materials M , items I
         WHERE M.ItemId = I.id
@@ -59,10 +59,29 @@ const materialGroups = async (req,res)=>{
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-const 
+const materialStockLevel = async (req, res) => {
+    const [reOrderLevelReached, metadata1] = await sequelize.query(`
+        SELECT COUNT(*) AS count
+        FROM materials M, items I
+        WHERE M.ItemId = I.id AND I.reOrderBuffer >= M.amount AND M.amount > 0 
+    `);
+    const [outOfStock, metadata2] = await sequelize.query(`
+        SELECT COUNT(*) AS count
+        FROM materials
+        WHERE amount = 0
+    `);
+    const [other, metadata3] = await sequelize.query(`
+        SELECT COUNT(*) AS count
+        FROM materials M, items I
+        WHERE M.ItemId = I.id AND I.reOrderBuffer < M.amount
+    `);
+
+    res.status(200).json({ reOrderLevelReached, outOfStock, other });
+}
 
 module.exports = {
     totalCounts,
     medicineLotGroups,
     materialGroups,
+    materialStockLevel,
 }
