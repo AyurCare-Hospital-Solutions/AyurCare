@@ -8,6 +8,7 @@ import { Link, Outlet } from 'react-router-dom'
 import DashboardPage from '../../components/DashboardPage';
 import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 
 
 function ImsMain() {
@@ -73,7 +74,7 @@ function ImsMain() {
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
-                            <MedicalServicesIcon />
+                            <AssignmentTurnedInIcon />
                         </ListItemIcon>
                         <ListItemText primary="Manage Material Requests" />
                     </ListItemButton>
