@@ -157,6 +157,70 @@ const accessoryStockLevel = async (req, res) => {
     res.status(200).json({ reOrderLevelReached, outOfStock, otherStock, totalLOt });
 }
 
+// get medicine request analysis
+/**
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
+const medicineRequestData = async (req, res) => {
+    var [acceptCount, metadata1] = await sequelize.query(`
+        SELECT status, COUNT(*) AS count
+        FROM medicinerequests
+        WHERE status = 'Accepted'
+        GROUP BY status
+    `);
+    var [rejectCount, metadata2] = await sequelize.query(`
+        SELECT status, COUNT(*) AS count
+        FROM medicinerequests
+        WHERE status = 'Rejected'
+        GROUP BY status
+    `);
+    var [pendingCount, metadata3] = await sequelize.query(`
+        SELECT status, COUNT(*) AS count
+        FROM medicinerequests
+        WHERE status = 'Pending'
+        GROUP BY status
+    `);
+
+    acceptCount = acceptCount[0] ? acceptCount[0].count : 0;
+    rejectCount = rejectCount[0] ? rejectCount[0].count : 0;
+    pendingCount = pendingCount[0] ? pendingCount[0].count : 0;
+
+    res.status(200).json({ acceptCount, rejectCount, pendingCount });
+}
+
+// get material request analysis
+/**
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
+const materialRequestData = async (req, res) => {
+    var [acceptCount, metadata1] = await sequelize.query(`
+        SELECT status, COUNT(*) AS count
+        FROM materialrequests
+        WHERE status = 'Accepted'
+        GROUP BY status
+    `);
+    var [rejectCount, metadata2] = await sequelize.query(`
+        SELECT status, COUNT(*) AS count
+        FROM materialrequests
+        WHERE status = 'Rejected'
+        GROUP BY status
+    `);
+    var [pendingCount, metadata3] = await sequelize.query(`
+        SELECT status, COUNT(*) AS count
+        FROM materialrequests
+        WHERE status = 'Pending'
+        GROUP BY status
+    `);
+
+    acceptCount = acceptCount[0] ? acceptCount[0].count : 0;
+    rejectCount = rejectCount[0] ? rejectCount[0].count : 0;
+    pendingCount = pendingCount[0] ? pendingCount[0].count : 0;
+
+    res.status(200).json({ acceptCount, rejectCount, pendingCount });
+}
+
 module.exports = {
     totalCounts,
     medicineLotGroups,
@@ -165,4 +229,6 @@ module.exports = {
     materialStockLevel,
     accessoryGroups,
     accessoryStockLevel,
+    medicineRequestData,
+    materialRequestData,
 }

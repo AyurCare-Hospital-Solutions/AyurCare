@@ -43,17 +43,19 @@ router.delete('/medicineRequest/:id', medicineRequestService.deleteMedicneReques
 // Material Request
 router.get('/materialRequest', materialRequestService.getMaterialRequests);
 router.post('/materialRequest/addMaterialRequest', materialRequestService.addMaterialRequest);
-router.put('/materialRequest/:id',materialRequestService.updateMaterialRequest);
-router.delete('/materialRequest/:id',materialRequestService.deleteMaterialRequest);
+router.put('/materialRequest/:id', materialRequestService.updateMaterialRequest);
+router.delete('/materialRequest/:id', materialRequestService.deleteMaterialRequest);
 
 // Analytics
-router.get('/analytics/totalCounts',analyticsService.totalCounts);
-router.get('/analytics/medicineLotGroups',analyticsService.medicineLotGroups);
-router.get('/analytics/medicineStockLevel',analyticsService.medicineStockLevel);
-router.get('/analytics/materialGroups',analyticsService.materialGroups);
-router.get('/analytics/materialStockLevel',analyticsService.materialStockLevel);
-router.get('/analytics/accessoryGroups',analyticsService.accessoryGroups);
-router.get('/analytics/accessoryStockLevel',analyticsService.accessoryStockLevel);
+router.get('/analytics/totalCounts', analyticsService.totalCounts);
+router.get('/analytics/medicineLotGroups', analyticsService.medicineLotGroups);
+router.get('/analytics/medicineStockLevel', analyticsService.medicineStockLevel);
+router.get('/analytics/materialGroups', analyticsService.materialGroups);
+router.get('/analytics/materialStockLevel', analyticsService.materialStockLevel);
+router.get('/analytics/accessoryGroups', analyticsService.accessoryGroups);
+router.get('/analytics/accessoryStockLevel', analyticsService.accessoryStockLevel);
+router.get('/analytics/medicineRequestData', analyticsService.medicineRequestData);
+router.get('/analytics/materialRequestData', analyticsService.materialRequestData);
 
 
 module.exports = router;
