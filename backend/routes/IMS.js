@@ -49,6 +49,7 @@ router.delete('/materialRequest/:id',materialRequestService.deleteMaterialReques
 // Analytics
 router.get('/analytics/totalCounts',analyticsService.totalCounts);
 router.get('/analytics/medicineLotGroups',analyticsService.medicineLotGroups);
+router.get('/analytics/materialGroups',analyticsService.materialGroups);
 
 
 module.exports = router;

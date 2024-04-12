@@ -19,20 +19,16 @@ const totalCounts = async (req, res) => {
     const materialCount = await Material.count();
     const accessoryCount = await Accessory.count();
 
-    const medicineGroup = await sequelize.query(`
-        SELECT ML.MedicineId, I.name, COUNT(*) AS count  
-        FROM medicinelots ML , medicines M , items I 
-        WHERE ML.MedicineID = M.id AND M.ItemId = I.id 
-        GROUP BY MedicineId; 
-    `)
-
-    console.log(medicineGroup);
-
     res.status(200).json({ itemCount, medicineCount, materialCount, accessoryCount });
 }
 
+// get madicine groups 
+/**
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
 const medicineLotGroups = async (req,res)=>{
-    const medicineGroup = await sequelize.query(`
+    const [medicineGroup,metadata] = await sequelize.query(`
         SELECT ML.MedicineId, I.name, COUNT(*) AS count  
         FROM medicinelots ML , medicines M , items I 
         WHERE ML.MedicineID = M.id AND M.ItemId = I.id 
@@ -42,7 +38,31 @@ const medicineLotGroups = async (req,res)=>{
     res.status(200).json(medicineGroup);
 }
 
+// get material groups 
+/**
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
+const materialGroups = async (req,res)=>{
+    const [materialGroup,metadata] = await sequelize.query(`
+        SELECT I.unit , COUNT(*) AS count
+        FROM materials M , items I
+        WHERE M.ItemId = I.id
+        GROUP BY I.unit
+    `);
+
+    res.status(200).json(materialGroup);
+}
+
+// get material re-Order analysis 
+/**
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
+const 
+
 module.exports = {
     totalCounts,
     medicineLotGroups,
+    materialGroups,
 }
