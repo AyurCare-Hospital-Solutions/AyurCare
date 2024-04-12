@@ -134,25 +134,31 @@ const accessoryGroups = async (req, res) => {
  * @param {express.Response} res 
  */
 const accessoryStockLevel = async (req, res) => {
-    const [reOrderLevelReached, metadata1] = await sequelize.query(`
+    var [reOrderLevelReached, metadata1] = await sequelize.query(`
         SELECT COUNT(*) AS count
         FROM accessories A, items I
         WHERE A.ItemId = I.id AND I.reOrderBuffer >= A.amount AND A.amount > 0 
     `);
-    const [outOfStock, metadata2] = await sequelize.query(`
+    var [outOfStock, metadata2] = await sequelize.query(`
         SELECT COUNT(*) AS count
         FROM accessories 
         WHERE amount = 0
     `);
-    const [otherStock, metadata3] = await sequelize.query(`
+    var [otherStock, metadata3] = await sequelize.query(`
         SELECT COUNT(*) AS count
         FROM accessories A, items I
         WHERE A.ItemId = I.id AND I.reOrderBuffer < A.amount
     `);
-    const [totalLOt, metadata4] = await sequelize.query(`
+    var [totalLOt, metadata4] = await sequelize.query(`
         SELECT COUNT(*) AS count
         FROM accessories 
     `)
+
+    // format response
+    reOrderLevelReached = reOrderLevelReached[0] ? reOrderLevelReached[0].count : 0;
+    outOfStock = outOfStock[0] ? outOfStock[0].count : 0;
+    otherStock = otherStock[0] ? otherStock[0].count : 0;
+    totalLOt = totalLOt[0] ? totalLOt[0].count : 0;
 
     res.status(200).json({ reOrderLevelReached, outOfStock, otherStock, totalLOt });
 }
