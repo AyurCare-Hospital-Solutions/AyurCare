@@ -31,7 +31,6 @@ const getMaterial = async (req, res) => {
  * @param {express.Response} res 
  */
 const addMaterial = async (req, res) => {
-    console.log(req.body);
     try {
         var materialData = await materialValidator.validate(req.body);
     }
