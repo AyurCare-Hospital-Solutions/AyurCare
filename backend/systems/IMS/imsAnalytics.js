@@ -72,7 +72,7 @@ const medicineStockLevel = async (req, res) => {
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-const materialGroups = async (req, res) => {
+const materialGroups = async (req, res) => {   // separate by unit
     const [materialGroup, metadata] = await sequelize.query(`
         SELECT I.unit , COUNT(*) AS count
         FROM materials M , items I
