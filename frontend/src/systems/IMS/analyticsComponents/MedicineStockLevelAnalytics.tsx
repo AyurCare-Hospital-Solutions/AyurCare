@@ -75,7 +75,7 @@ export const MedicineStockLevelBarChart = () => {
     }, []);
 
     const data = [
-        { id: 0, value: stockData ? stockData.expiredStock[0]?.count : 0, label: 'Expired', },
+        { id: 0, value: stockData ? stockData.expiredStock[0].count : 0, label: 'Expired', },
         { id: 1, value: stockData ? stockData.outOfStock[0].count : 0, label: 'Out-Of-Stock', },
         { id: 2, value: stockData ? stockData?.otherStock[0].count : 0, label: 'Other', },
     ];
@@ -87,7 +87,7 @@ export const MedicineStockLevelBarChart = () => {
                 xAxis={[{ scaleType: 'band', dataKey: 'label', label: "Status" }]}
                 yAxis={[{ label: "Count" }]}
                 dataset={data}
-                series={[{ dataKey: 'value', label: 'Medicine lot distribution' }]}
+                series={[{ dataKey: 'value', label: 'Medicine stock level distribution' }]}
                 width={500}
                 height={300}
                 sx={{ marginTop: '2rem' }}
