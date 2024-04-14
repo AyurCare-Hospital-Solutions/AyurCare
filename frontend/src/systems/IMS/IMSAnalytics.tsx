@@ -7,6 +7,7 @@ import { Box, Typography } from '@mui/material';
 import { MaterialStockLevelBarChart, MaterialStockLevelPieChart } from './analyticsComponents/MaterialStockLevelAnalytics';
 import { AccessoryGroupBarChart, AccessoryGroupPieChart } from './analyticsComponents/AccessoryGroupAnalytics';
 import { AccessoryStockLevelBarChart, AccessoryStockLevelPieChart } from './analyticsComponents/AccessoryStockLevelAnalytics';
+import { MedicineRequestStatusBarChart, MedicineRequestStatusPieChart } from './analyticsComponents/MedicineRequestAnalyrtics';
 
 function IMSAnalytics() {
   return (
@@ -29,6 +30,8 @@ function IMSAnalytics() {
       <AccessoryGroupBarChart />
       <AccessoryStockLevelPieChart />
       <AccessoryStockLevelBarChart />
+      <MedicineRequestStatusPieChart />
+      <MedicineRequestStatusBarChart />
     </div>
   )
 }

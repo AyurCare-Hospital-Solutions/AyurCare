@@ -101,7 +101,7 @@ export const AccessoryStockLevelBarChart = () => {
                 xAxis={[{ scaleType: 'band', dataKey: 'status', label: "Status" }]}
                 yAxis={[{ label: "Count" }]}
                 dataset={data}
-                series={[{ dataKey: 'count', label: 'Matrial stock level distribution' }]}
+                series={[{ dataKey: 'count', label: 'Accessory stock level distribution' }]}
                 width={500}
                 height={300}
                 sx={{ marginTop: '2rem' }}
