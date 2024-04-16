@@ -31,7 +31,6 @@ const getMaterialRequests = async (req, res) => {
  */
 const addMaterialRequest = async (req, res) => {
     try {
-        console.log(req.body);
         var materialRequestData = await materialRequestValidator.validate(req.body);
     }
     catch (validationError) {
