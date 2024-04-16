@@ -11,6 +11,8 @@
 - material-ui-confirm (for displaying confirm dialogs) [Docs](https://www.npmjs.com/package/material-ui-confirm)
 - react router [Docs](https://reactrouter.com/en/main)
 - Axios [Docs](https://axios-http.com/)
+- Day js [Docs](https://day.js.org/docs/en/installation/installation)
+- MUI X Charts [Docs](https://mui.com/x/react-charts/)
 
 #### Backend
 
