@@ -38,7 +38,6 @@ export const MedicineLotBarChart = () => {
                 series={[{ dataKey: 'count', label: 'Medicine lot distribution' }]}
                 width={500}
                 height={300}
-                sx={{ marginTop: '2rem' }}
             />
             <Typography align="center">
                 bar chart: Inventory Medicine Lot Distribution

@@ -36,7 +36,7 @@ export const MedicineRequestStatusPieChart = () => {
         ];
 
     return (
-        <Box width={400} height={200}>
+        <Box width={400} height={300}>
             <PieChart
                 series={[
                     {
@@ -52,7 +52,7 @@ export const MedicineRequestStatusPieChart = () => {
                     },
                 }}
                 width={400}
-                height={200}
+                height={300}
             />
             <Typography align="center">
                 pie chart: Medicine Request Status
@@ -60,7 +60,6 @@ export const MedicineRequestStatusPieChart = () => {
         </Box>
     );
 }
-
 
 export const MedicineRequestStatusBarChart = () => {
     const [requestData, setRequestData] = useState<any>();
@@ -100,7 +99,6 @@ export const MedicineRequestStatusBarChart = () => {
                 series={[{ dataKey: 'count', label: 'Medicine request status distribution' }]}
                 width={500}
                 height={300}
-                sx={{ marginTop: '2rem' }}
             />
             <Typography align="center">
                 bar chart: Medicine Request Status

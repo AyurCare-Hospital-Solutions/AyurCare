@@ -35,7 +35,7 @@ export const MedicineStockLevelPieChart = () => {
     ];
 
     return (
-        <Box width={400} height={200}>
+        <Box width={400} height={300}>
             <PieChart
                 series={[
                     {
@@ -51,8 +51,7 @@ export const MedicineStockLevelPieChart = () => {
                     },
                 }}
                 width={400}
-                height={200}
-                loadingAnimationDuration={10000}
+                height={300}
             />
             <Typography align="center">
                 pie chart: Medicine Stock Status
@@ -90,7 +89,6 @@ export const MedicineStockLevelBarChart = () => {
                 series={[{ dataKey: 'value', label: 'Medicine stock level distribution' }]}
                 width={500}
                 height={300}
-                sx={{ marginTop: '2rem' }}
             />
             <Typography align="center">
                 bar chart: Medicine Stock Status

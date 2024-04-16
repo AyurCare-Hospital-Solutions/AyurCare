@@ -35,7 +35,7 @@ export const TotalCountPieChart = () => {
     ];
 
     return (
-        <Box width={400} height={200}>
+        <Box width={400} height={300}>
             <PieChart
                 series={[
                     {
@@ -51,7 +51,7 @@ export const TotalCountPieChart = () => {
                     },
                 }}
                 width={400}
-                height={200}
+                height={300}
                 loadingAnimationDuration={10000}
             />
             <Typography align="center">
@@ -91,7 +91,6 @@ export const TotalCountBarChart = () => {
                 series={[{ dataKey: 'value', label: 'Category distribution' }]}
                 width={500}
                 height={300}
-                sx={{ marginTop: '2rem' }}
             />
             <Typography align="center">
                 bar chart: Inventory Item Category Distribution

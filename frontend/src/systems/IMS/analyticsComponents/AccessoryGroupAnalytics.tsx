@@ -38,7 +38,7 @@ export const AccessoryGroupPieChart = () => {
     }) : [];
 
     return (
-        <Box width={400} height={200}>
+        <Box width={400} height={300}>
             <PieChart
                 colors={['#FF66E8', '#897FDF', '#35C8A9']}
                 series={[
@@ -55,7 +55,7 @@ export const AccessoryGroupPieChart = () => {
                     },
                 }}
                 width={400}
-                height={200}
+                height={300}
             />
             <Typography align="center">
                 pie chart: Accessory mesurement unit Distribution
@@ -87,7 +87,6 @@ export const AccessoryGroupBarChart = () => {
                 series={[{ dataKey: 'count', label: 'Unit distribution' }]}
                 width={500}
                 height={300}
-                sx={{ marginTop: '2rem' }}
             />
             <Typography align="center">
                 bar chart: Accessory mesurement unit Distribution

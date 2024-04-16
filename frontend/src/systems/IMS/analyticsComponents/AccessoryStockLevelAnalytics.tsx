@@ -38,7 +38,7 @@ export const AccessoryStockLevelPieChart = () => {
     ];
 
     return (
-        <Box width={400} height={200}>
+        <Box width={400} height={300}>
             <PieChart
                 series={[
                     {
@@ -54,7 +54,7 @@ export const AccessoryStockLevelPieChart = () => {
                     },
                 }}
                 width={400}
-                height={200}
+                height={300}
             />
             <Typography align="center">
                 pie chart: Accessory Stock Status
@@ -104,7 +104,6 @@ export const AccessoryStockLevelBarChart = () => {
                 series={[{ dataKey: 'count', label: 'Accessory stock level distribution' }]}
                 width={500}
                 height={300}
-                sx={{ marginTop: '2rem' }}
             />
             <Typography align="center">
                 bar chart: Accessory Stock Status

@@ -40,7 +40,7 @@ export const MaterialGroupsPieChart = ()=>{
     }) : [];
 
     return (
-        <Box width={400} height={200}>
+        <Box width={400} height={300}>
             <PieChart
                 colors={['#007FFF', '#CD853F','#8A2BE2']}
                 series={[
@@ -57,8 +57,7 @@ export const MaterialGroupsPieChart = ()=>{
                     },
                 }}
                 width={400}
-                height={200}
-                loadingAnimationDuration={10000}
+                height={300}
             />
             <Typography align="center">
                 pie chart: Material mesurement unit Distribution
@@ -90,7 +89,6 @@ export const MaterialGroupBarChart = ()=>{
                 series={[{ dataKey: 'count', label: 'Unit distribution' }]}
                 width={500}
                 height={300}
-                sx={{ marginTop: '2rem' }}
             />
             <Typography align="center">
                 bar chart: Material mesurement unit Distribution
