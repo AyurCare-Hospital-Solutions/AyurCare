@@ -41,6 +41,14 @@ function MedicineRequest() {
     const confirm = useConfirm();
     // add medicine request
     const addMedicineRequest = () => {
+        // Validate amount (required, positive integer)
+        if (!reqMedicineAmount) {
+            enqueueSnackbar("Amount is required...", { variant: "error" });
+            return;
+        } else if (isNaN(Number(reqMedicineAmount)) || Number(reqMedicineAmount) <= 0) {
+            enqueueSnackbar("Amount must be a positive integer...", { variant: "error" });
+            return;
+        }
         confirm({ description: "Confirm medicine request" })
             .then(async () => {
                 await axios.post('api/ims/medicineRequest/addMedicineRequest', { medicineId: reqMedicine, amount: reqMedicineAmount })
