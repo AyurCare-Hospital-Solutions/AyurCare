@@ -4,10 +4,11 @@ import { NursingLog, NursingLogSchema, PatientRecord, PatientRecordSchema } from
 import axios from "axios";
 import CarePlanInfo from "./components/CarePlanInfo";
 import NursingLogView from "./components/NursingLogView";
-import { Box, Tabs, Tab, Typography } from "@mui/material";
+import { Box, Tabs, Tab, Typography, IconButton } from "@mui/material";
 import NursingLogAdd from "./components/NursingLogAdd";
 import { enqueueSnackbar } from "notistack";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { ArrowBack } from "@mui/icons-material";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -40,11 +41,21 @@ const PatientDetails = () => {
 
     const [patientInfo, setPatientInfo] = useState<PatientRecord>();
     const [nursingLog, setNursingLog] = useState<NursingLog>();
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get(`/api/icms/careplan/${patientId}`).then(async (res) => {
             setPatientInfo(PatientRecordSchema.cast(res.data));
-        })
+        }).catch((e: any) => {
+            if (e?.response?.status == 404) {
+                enqueueSnackbar("Patient is not admitted to the IPD", { variant: "error" });
+            } else {
+                enqueueSnackbar("Failed to get patient details", { variant: "error" });
+            }
+
+            console.log(e);
+            navigate("/icms/patient")
+        });
     }, [patientId]);
 
     useEffect(() => {
@@ -56,7 +67,7 @@ const PatientDetails = () => {
         }
     }, [patientInfo]);
 
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
 
     const handleChange = (_: any, newPage: number) => {
         setPage(newPage);
@@ -85,7 +96,14 @@ const PatientDetails = () => {
 
 
     return <>
-        <Typography variant="h5" mx={1} mb={2}>Patient Details</Typography>
+        <Link to="/icms/patient">
+            <IconButton color="primary" size="large">
+                <ArrowBack />
+            </IconButton>
+        </Link>
+
+        <Typography variant="h5" mx={1} mb={2} display="inline">Patient Details</Typography>
+
         <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={page} onChange={handleChange}>

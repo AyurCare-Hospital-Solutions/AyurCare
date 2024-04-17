@@ -26,6 +26,8 @@ const AdmissionSchema = object({
     })
 }).required();
 
+export const AdmissionListSchema = array(AdmissionSchema).required();
+
 const CarePlanSchema = object({
     id: number().required(),
     condition: string().required(),
@@ -49,6 +51,7 @@ export const NursingLogSchema = array(object({
 
 
 export type Admission = InferType<typeof AdmissionSchema>;
+export type AdmissionList = InferType<typeof AdmissionListSchema>;
 export type CarePlan = InferType<typeof CarePlanSchema>;
 export type PatientRecord = InferType<typeof PatientRecordSchema>;
 export type NursingLog = InferType<typeof NursingLogSchema>;

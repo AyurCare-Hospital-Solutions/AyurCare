@@ -3,6 +3,7 @@ import ICMS from "./ICMS";
 import Ward from "./Ward";
 import Dashboard from "./Dashboard";
 import PatientDetails from "./PatientDetails";
+import PatientList from "./PatientList";
 
 const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
     name: "ICMS",
@@ -15,6 +16,10 @@ const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
         {
             element: <Dashboard />,
             index: true,
+        },
+        {
+            path: "patient",
+            element: <PatientList />,
         },
         {
             path: "patient/:patientId",
