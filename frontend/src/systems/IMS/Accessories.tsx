@@ -19,6 +19,37 @@ function Accessories() {
     const handleAddClose = () => setOpenAddModal(false);
 
     const addAccessory = (accessoryName: string, amount: number, buffer: number, unit: string) => {
+        // validation 
+        // Validate accessory name (required, alphanumeric with spaces)
+        if (!accessoryName.trim()) {
+            enqueueSnackbar("Accessory name is required...", { variant: "error" });
+            return;
+        } else if (!/^[a-zA-Z0-9\s]+$/.test(accessoryName)) {
+            enqueueSnackbar("Accessory name can only contain letters, numbers, and spaces...", { variant: "error" });
+            return;
+        }
+        // Validate amount (required, positive integer)
+        if (!amount) {
+            enqueueSnackbar("Amount is required...", { variant: "error" });
+            return;
+        } else if (isNaN(Number(amount)) || Number(amount) <= 0) {
+            enqueueSnackbar("Amount must be a positive integer...", { variant: "error" });
+            return;
+        }
+        // Validate reorder buffer (required, positive integer)
+        if (!buffer) {
+            enqueueSnackbar("Re-Order Buffer is required...", { variant: "error" });
+            return;
+        } else if (isNaN(Number(buffer)) || Number(buffer) <= 0) {
+            enqueueSnackbar("Re-Order Buffer must be a positive integer...", { variant: "error" });
+            return;
+        }
+        // Validate measurement unit
+        if (unit.trim() === '') {
+            enqueueSnackbar("Measurement unit is required...", { variant: "error" });
+            return;
+        }
+
         confirm({ description: `Confirm new Accessory creation` })
             .then(async () => {
                 await axios.post('api/ims/accessory/addAccessory', { accessoryName, amount, buffer, unit })
@@ -45,7 +76,7 @@ function Accessories() {
             .then((res) => {
                 setTimeout(() => {
                     setAccessorydata(res.data);
-                }, 2000);
+                }, 1000);
                 console.log(res.data);
 
             })
@@ -79,6 +110,37 @@ function Accessories() {
     // update accessory
     const [updatedAccessory, setUpdatedAccessory] = useState({ Item: {} });
     const updateAccessory = (id: number, accessoryName: string, amount: number, buffer: number, unit: string) => {
+
+        // validation 
+        // Validate accessory name (required, alphanumeric with spaces)
+        if (!accessoryName.trim()) {
+            enqueueSnackbar("Accessory name is required...", { variant: "error" });
+            return;
+        } else if (!/^[a-zA-Z0-9\s]+$/.test(accessoryName)) {
+            enqueueSnackbar("Accessory name can only contain letters, numbers, and spaces...", { variant: "error" });
+            return;
+        }
+        // Validate amount (required, positive integer)
+        if (!amount) {
+            enqueueSnackbar("Amount is required...", { variant: "error" });
+            return;
+        } else if (isNaN(Number(amount)) || Number(amount) <= 0) {
+            enqueueSnackbar("Amount must be a positive integer...", { variant: "error" });
+            return;
+        }
+        // Validate reorder buffer (required, positive integer)
+        if (!buffer) {
+            enqueueSnackbar("Re-Order Buffer is required...", { variant: "error" });
+            return;
+        } else if (isNaN(Number(buffer)) || Number(buffer) <= 0) {
+            enqueueSnackbar("Re-Order Buffer must be a positive integer...", { variant: "error" });
+            return;
+        }
+        // Validate measurement unit
+        if (unit.trim() === '') {
+            enqueueSnackbar("Measurement unit is required...", { variant: "error" });
+            return;
+        }
         confirm({ description: `Confirm Update ${accessoryName}` })
             .then(async () => {
                 try {
