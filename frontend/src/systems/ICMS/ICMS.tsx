@@ -1,5 +1,5 @@
-import { Assessment, Bed, Dashboard, HourglassTop, House, MonitorHeart, ReceiptLong } from '@mui/icons-material';
-import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Assessment, Bed, Dashboard, HourglassTop, House, People } from '@mui/icons-material';
+import { Divider, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { Link } from 'react-router-dom'
 import DashboardPage from '../../components/DashboardPage';
 
@@ -17,6 +17,30 @@ function ICMS() {
                     </ListItemButton>
                 </ListItem>
             </Link>
+
+            <Link to="/icms/patient">
+                <ListItem disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <People />
+                        </ListItemIcon>
+                        <ListItemText primary="Patient Management" />
+                    </ListItemButton>
+                </ListItem>
+            </Link>
+
+            <Link to="/icms/wait_list">
+                <ListItem disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <HourglassTop />
+                        </ListItemIcon>
+                        <ListItemText primary="Wait List" />
+                    </ListItemButton>
+                </ListItem>
+            </Link>
+
+            <Divider sx={{ mt: 1, mb: 1 }} />
 
             <Link to="/icms/wards">
                 <ListItem disablePadding>
@@ -40,41 +64,7 @@ function ICMS() {
                 </ListItem>
             </Link>
 
-
-            <Link to="/icms/wait_list">
-                <ListItem disablePadding>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <HourglassTop />
-                        </ListItemIcon>
-                        <ListItemText primary="Wait List" />
-                    </ListItemButton>
-                </ListItem>
-            </Link>
-
-
-            <Link to="/icms/nursing_log">
-                <ListItem disablePadding>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <ReceiptLong />
-                        </ListItemIcon>
-                        <ListItemText primary="Nursing Log" />
-                    </ListItemButton>
-                </ListItem>
-            </Link>
-
-
-            <Link to="/icms/care_plan">
-                <ListItem disablePadding>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            < MonitorHeart />
-                        </ListItemIcon>
-                        <ListItemText primary="Care Plans" />
-                    </ListItemButton>
-                </ListItem>
-            </Link>
+            <Divider sx={{ mt: 1, mb: 1 }} />
 
 
             <Link to="/icms/reports">

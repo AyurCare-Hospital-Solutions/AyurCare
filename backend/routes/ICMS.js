@@ -14,6 +14,7 @@ router.get("/careplan/:pid", carePlanService.getCarePlan);
 
 const nursingLogService = require("../systems/ICMS/nursinglog");
 
-router.get("/nursinglog/:aid", nursingLogService.getNursingLog)
+router.get("/nursinglog/:aid", nursingLogService.getNursingLog);
+router.post("/nursinglog/:aid", nursingLogService.createNursingLog);
 
 module.exports = router;

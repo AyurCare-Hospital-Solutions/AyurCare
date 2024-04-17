@@ -1,4 +1,4 @@
-import { InferType, date, number, object, string } from "yup";
+import { InferType, array, date, number, object, string } from "yup";
 
 export interface ward {
     id: number,
@@ -37,9 +37,18 @@ const CarePlanSchema = object({
 export const PatientRecordSchema = object({
     admission: AdmissionSchema,
     carePlan: CarePlanSchema,
-})
+});
+
+export const NursingLogSchema = array(object({
+    id: number().required(),
+    note: string().required(),
+    Staff: object({ name: string().required() }).nullable(),
+    createdAt: date().required(),
+    updatedAt: date().nullable().required(),
+})).required();
 
 
 export type Admission = InferType<typeof AdmissionSchema>;
 export type CarePlan = InferType<typeof CarePlanSchema>;
 export type PatientRecord = InferType<typeof PatientRecordSchema>;
+export type NursingLog = InferType<typeof NursingLogSchema>;
