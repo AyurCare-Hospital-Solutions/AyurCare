@@ -7,7 +7,7 @@ import DashboardPage from '../../components/DashboardPage';
 function ICMS() {
     return (
         <DashboardPage>
-            <Link to="/icms/dashboard">
+            <Link to="/icms/">
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>

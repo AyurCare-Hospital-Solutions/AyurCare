@@ -1,4 +1,4 @@
-import { Navigate, RouteObject } from "react-router-dom";
+import { RouteObject } from "react-router-dom";
 import ICMS from "./ICMS";
 import Ward from "./Ward";
 import Dashboard from "./Dashboard";
@@ -13,10 +13,9 @@ const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
             element: <Ward />
         },
         {
-            path: "dashboard",
             element: <Dashboard />,
+            index: true,
         },
-        { index: true, element: <Navigate to="dashboard" replace /> },
         {
             path: "care_plan",
             element: <CarePlan />
