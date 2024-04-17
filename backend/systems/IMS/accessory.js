@@ -49,7 +49,6 @@ const addAccessory = async (req, res) => {
  */
 const updateAccessory = async (req, res) => {
     const id = Number.parseInt(req.params.id);
-
     // check if accessory id is valid
     if (!Number.isInteger(id)) {
         res.status(400).json({ msg: "Invalid accessory id (format)" });
@@ -73,7 +72,7 @@ const updateAccessory = async (req, res) => {
     var item = await Item.findByPk(accessory.ItemId)
     // update
     item = await item.update({ name: accessoryData.accessoryName, reOrderbuffer: accessoryData.buffer, unit: accessoryData.unit });
-    accessory = await accessory.update({ amount: (accessory.amount + accessoryData.amount) }); // need to recheck
+    accessory = await accessory.update({ amount: (accessory.amount + Number(accessoryData.amount)) }); // need to recheck
 
     res.status(200).json({accessory, item});
 }

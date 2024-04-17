@@ -52,7 +52,7 @@ const updateMedicine = async (req, res) => {
     // get id from route params
     let id = Number.parseInt(req.params.id);
 
-    // check if ward number is valid
+    // check if medicine number is valid
     if (!Number.isInteger(id)) {
         res.status(400).json({ msg: "Invalid Medicine ID (format error)" });
         return;

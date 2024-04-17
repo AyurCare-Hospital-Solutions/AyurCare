@@ -22,6 +22,7 @@ function connect() {
             database: process.env.MYSQL_DATABASE,
             username: process.env.MYSQL_USERNAME,
             password: process.env.MYSQL_PASSWORD,
+            logging : false
         };
 
         let emptyOk = ["password", "port"];
@@ -35,6 +36,11 @@ function connect() {
 
         console.log(`Using ${process.env.MYSQL_DB} on ${process.env.MYSQL_HOST}`)
     }
+
+    if (!Number.parseInt(process.env.SQL_LOG_QUERY)) {
+        config.logging = false;
+    }
+
 
     return new Sequelize(config);
 }
@@ -64,7 +70,7 @@ async function createAll() {
     }
 
     console.log("Synchronizing database with models...");
-    await sequelize.sync(syncConfig);
+    //await sequelize.sync(syncConfig);
     console.log("Finished synchronizing database.")
 }
 

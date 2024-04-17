@@ -1,10 +1,37 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
-import './index.css'
+import Nav from "./components/Nav.tsx";
+import "./index.css";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { SnackbarProvider } from 'notistack';
+import axios from 'axios';
+import { ConfirmProvider } from "material-ui-confirm"
+
+axios.defaults.baseURL = 'http://localhost:5000/';
+
+const theme = createTheme({
+  palette: {
+    mode: 'light',
+    primary: {
+      main: '#003a2b',
+    },
+    secondary: {
+      main: '#f50057',
+    },
+  },
+});
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+    <ThemeProvider theme={theme}>
+      <SnackbarProvider autoHideDuration={3000} >
+        <ConfirmProvider>
+          <Nav></Nav>
+          <App></App>
+        </ConfirmProvider>
+      </SnackbarProvider>
+      test
+    </ThemeProvider>
+  </React.StrictMode >,
 )
