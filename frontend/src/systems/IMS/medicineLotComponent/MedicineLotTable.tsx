@@ -50,6 +50,27 @@ function MedicineLotTable({ id }: { id: number }) {
 
     // add new lot
     const addNewMedicineLot = async (manufacturer: string, amount: number, expireDate: any) => {
+        // validation
+        // Validate manufacturer name (required, alphanumeric with spaces)
+        if (!manufacturer.trim()) {
+            enqueueSnackbar("Manufacturer name is required...", { variant: "error" });
+            return;
+        } else if (!/^[a-zA-Z0-9\s]+$/.test(manufacturer)) {
+            enqueueSnackbar("Manufacturer name can only contain letters, numbers, and spaces...", { variant: "error" });
+            return;
+        }
+        // Validate amount (required, positive integer)
+        if (!amount) {
+            enqueueSnackbar("Amount is required...", { variant: "error" });
+            return;
+        } else if (isNaN(Number(amount)) || Number(amount) <= 0) {
+            enqueueSnackbar("Amount must be a positive integer...", { variant: "error" });
+            return;
+        }
+        if (!expireDate.trim()) {
+            enqueueSnackbar("Expire date is required...", { variant: "error" });
+            return;
+        }
         const medicineId = id;
         await axios.post('api/ims/medicineLot/addMedicineLot', { medicineId, manufacturer, amount, expireDate })
             .then((res) => {
@@ -67,6 +88,14 @@ function MedicineLotTable({ id }: { id: number }) {
     // update lot
     const [updateLot, setUpdateLot] = useState({});
     const updateMedicineLlot = (id: number, amount: number) => {
+        // Validate amount (required, positive integer)
+        if (!amount) {
+            enqueueSnackbar("Amount is required...", { variant: "error" });
+            return;
+        } else if (isNaN(Number(amount)) || Number(amount) <= 0) {
+            enqueueSnackbar("Amount must be a positive integer...", { variant: "error" });
+            return;
+        }
         confirm({ description: `Confirm update medicine lot number : ${id}` })
             .then(async () => {
                 try {
