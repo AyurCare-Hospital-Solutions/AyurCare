@@ -36,7 +36,7 @@ function Medicine() {
   // Fetch Medicine Data
   const getMedicineData = async () => {
     await axios.get('api/ims/medicine').then((res) => {
-      setTimeout(() => setMedicineData(res.data), 2000);
+      setTimeout(() => setMedicineData(res.data), 1000);
       console.log(res.data);
     })
   }
@@ -47,6 +47,29 @@ function Medicine() {
 
   // Add new medicine
   const addMedicine = (data: any) => {
+    // validation 
+    // Validate medicine name (required, alphanumeric with spaces)
+    if (!data.name.trim()) {
+      enqueueSnackbar("Medicine name is required...", { variant: "error" });
+      return;
+    } else if (!/^[a-zA-Z0-9\s]+$/.test(data.name)) {
+      enqueueSnackbar("Medicine name can only contain letters, numbers, and spaces...", { variant: "error" });
+      return;
+    }
+    // Validate reorder buffer (required, positive integer)
+    if (!data.buffer) {
+      enqueueSnackbar("Re-Order Buffer is required...", { variant: "error" });
+      return;
+    } else if (isNaN(Number(data.buffer)) || Number(data.buffer) <= 0) {
+      enqueueSnackbar("Re-Order Buffer must be a positive integer...", { variant: "error" });
+      return;
+    }
+    // Validate measurement unit
+    if (data.unit.trim() === '') {
+      enqueueSnackbar("Measurement unit is required...", { variant: "error" });
+      return;
+    }
+    // api call
     axios.post("api/ims//medicine/addMedicine", {
       medicineName: data.name,
       inHouse: data.origin === 'inHouse',
@@ -86,6 +109,29 @@ function Medicine() {
 
   // Update medicine
   const updateMedicine = (data: any) => {
+    // validation 
+    // Validate medicine name (required, alphanumeric with spaces)
+    if (!data.updateName.trim()) {
+      enqueueSnackbar("Medicine name is required...", { variant: "error" });
+      return;
+    } else if (!/^[a-zA-Z0-9\s]+$/.test(data.name)) {
+      enqueueSnackbar("Medicine name can only contain letters, numbers, and spaces...", { variant: "error" });
+      return;
+    }
+    // Validate reorder buffer (required, positive integer)
+    if (!data.updateBuffer) {
+      enqueueSnackbar("Re-Order Buffer is required...", { variant: "error" });
+      return;
+    } else if (isNaN(Number(data.updateBuffer)) || Number(data.updateBuffer) <= 0) {
+      enqueueSnackbar("Re-Order Buffer must be a positive integer...", { variant: "error" });
+      return;
+    }
+    // Validate measurement unit
+    if (data.updateUnit.trim() === '') {
+      enqueueSnackbar("Measurement unit is required...", { variant: "error" });
+      return;
+    }
+
     confirm({ description: "Confirm Update Medicine Details" })
       .then(async () => {
         try {
@@ -100,7 +146,7 @@ function Medicine() {
       })
   }
 
-  // Medicine Lot
+  // Medicine Lot #######################################################
 
   // Mediicine Lot modal
   const [openLotModal, setOpenLotModal] = React.useState(false);
@@ -108,10 +154,7 @@ function Medicine() {
   const handleLotModalClose = () => setOpenLotModal(false);
 
   // Medicine lot modal data
-  const [lotModalData,setLotModalData] = useState({Item:{}}); // get medicine row data
-
-
-
+  const [lotModalData, setLotModalData] = useState({ Item: {} }); // get medicine row data
 
   return (
     <div>
@@ -127,7 +170,7 @@ function Medicine() {
           Add Medicine
         </Button>
       </Box>
-      <MedicineTable data={medicineData} query={searchQuery} deleteMedicine={deleteConfirmation} handleUpdateModalOpen={handleUpdateModalOpen} setUpdatedmedicine={setUpdatedmedicine} handleLotModalOpen={handleLotModalOpen} setLotModalData={setLotModalData}/>
+      <MedicineTable data={medicineData} query={searchQuery} deleteMedicine={deleteConfirmation} handleUpdateModalOpen={handleUpdateModalOpen} setUpdatedmedicine={setUpdatedmedicine} handleLotModalOpen={handleLotModalOpen} setLotModalData={setLotModalData} />
       <AddMedicineModal open={AddModalOpen} onClose={handleAddModalClose} addMedicine={addMedicine} />
       <UpdateMedicineModalOpen open={updateModalOpen} onClose={handleUpdateModalClose} updatedMedicine={updatedMedicine} setupdatetedMedicine={setUpdatedmedicine} updateMedicine={updateMedicine} />
       <MedicineLotModal openLotModal={openLotModal} handleLotModalClose={handleLotModalClose} lotModalData={lotModalData} />
