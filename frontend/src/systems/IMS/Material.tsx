@@ -29,7 +29,7 @@ function Material() {
   // Fetch material data 
   const getMaterialData = async () => {
     await axios.get("api/ims/material").then((res) => {
-      setTimeout(() => setMaterialData(res.data), 2000)
+      setTimeout(() => setMaterialData(res.data), 1000)
       console.log(res.data);
     })
   }
@@ -40,6 +40,36 @@ function Material() {
 
   // add new Material
   const addNewMaterial = (data: any) => {
+    // validation 
+    // Validate material name (required, alphanumeric with spaces)
+    if (!data.materialName.trim()) {
+      enqueueSnackbar("Material name is required...", { variant: "error" });
+      return;
+    } else if (!/^[a-zA-Z0-9\s]+$/.test(data.materialName)) {
+      enqueueSnackbar("Material name can only contain letters, numbers, and spaces...", { variant: "error" });
+      return;
+    }
+    // Validate amount (required, positive integer)
+    if (!data.materialAmount) {
+      enqueueSnackbar("Amount is required...", { variant: "error" });
+      return;
+    } else if (isNaN(Number(data.materialAmount)) || Number(data.materialAmount) <= 0) {
+      enqueueSnackbar("Amount must be a positive integer...", { variant: "error" });
+      return;
+    }
+    // Validate reorder buffer (required, positive integer)
+    if (!data.materialReOredrBuffer) {
+      enqueueSnackbar("Re-Order Buffer is required...", { variant: "error" });
+      return;
+    } else if (isNaN(Number(data.materialReOredrBuffer)) || Number(data.materialReOredrBuffer) <= 0) {
+      enqueueSnackbar("Re-Order Buffer must be a positive integer...", { variant: "error" });
+      return;
+    }
+    // Validate measurement unit
+    if (data.materialUnit.trim() === '') {
+      enqueueSnackbar("Measurement unit is required...", { variant: "error" });
+      return;
+    }
     axios.post("api/ims/material/addMaterial", {
       materialName: data.materialName,
       amount: data.materialAmount,
@@ -78,6 +108,36 @@ function Material() {
 
   // Update material
   const updateMaterial = (data: any) => {
+    // validation 
+    // Validate material name (required, alphanumeric with spaces)
+    if (!data.updateName.trim()) {
+      enqueueSnackbar("Material name is required...", { variant: "error" });
+      return;
+    } else if (!/^[a-zA-Z0-9\s]+$/.test(data.updateName)) {
+      enqueueSnackbar("Material name can only contain letters, numbers, and spaces...", { variant: "error" });
+      return;
+    }
+    // Validate amount (required, positive integer)
+    if (!data.amount) {
+      enqueueSnackbar("Amount is required...", { variant: "error" });
+      return;
+    } else if (isNaN(Number(data.amount)) || Number(data.amount) <= 0) {
+      enqueueSnackbar("Amount must be a positive integer...", { variant: "error" });
+      return;
+    }
+    // Validate reorder buffer (required, positive integer)
+    if (!data.updateReOrderBuffer) {
+      enqueueSnackbar("Re-Order Buffer is required...", { variant: "error" });
+      return;
+    } else if (isNaN(Number(data.updateReOrderBuffer)) || Number(data.updateReOrderBuffer) <= 0) {
+      enqueueSnackbar("Re-Order Buffer must be a positive integer...", { variant: "error" });
+      return;
+    }
+    // Validate measurement unit
+    if (data.updateUnit.trim() === '') {
+      enqueueSnackbar("Measurement unit is required...", { variant: "error" });
+      return;
+    }
     confirm({ description: "Confirm Update Material Details" })
       .then(async () => {
         try {
@@ -91,7 +151,7 @@ function Material() {
           console.error(e);
         }
       })
-      
+
   }
 
   return (
