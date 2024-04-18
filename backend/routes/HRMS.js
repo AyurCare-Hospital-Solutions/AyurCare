@@ -12,7 +12,7 @@ router.delete("/leave/:id", leaveService.deleteLeaveRequest);
 
 router.post("/leaveType", leaveTypeService.createLeaveType);
 router.get("/leaveType", leaveTypeService.getAllLeaveTypes);
-router.delete("leaveType/:id", leaveTypeService.deleteLeaveType)
-router.put("leaveType/:id", leaveTypeService.deleteLeaveType)
+router.delete("/leaveType/:id", leaveTypeService.deleteLeaveType)
+router.put("/leaveType/:id", leaveTypeService.deleteLeaveType)
 
 module.exports = router;
