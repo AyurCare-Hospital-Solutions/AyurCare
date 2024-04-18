@@ -25,6 +25,37 @@ const getAdmittedPatients = async (req, res) => {
             }
         ]
     }));
+};
+
+/**
+ * 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
+const dischargePatient = async (req, res) => {
+    let admissionID = Number.parseInt(req.params.aid);
+
+    if (!Number.isInteger(admissionID)) {
+        res.status(400).json({ msg: "Invalid admission number" });
+        return;
+    }
+
+    let admission = await IPDAdmission.findByPk(admissionID);
+    if (!admission) {
+        res.status(400).json({ msg: "Admission does not exist" });
+        return;
+    }
+
+    if (admission.discharge_date !== null) {
+        res.status(400).json({ msg: "Patient has already been discharged" });
+        return;
+    }
+
+    admission.discharge_date = new Date();
+
+    await admission.save();
+
+    res.status(204).json({ msg: "Patient discharged successfully" });
 }
 
-module.exports = { getAdmissions: getAdmittedPatients }
+module.exports = { getAdmissions: getAdmittedPatients, dischargePatient }

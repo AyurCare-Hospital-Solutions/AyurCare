@@ -4,11 +4,12 @@ import { NursingLog, NursingLogSchema, PatientRecord, PatientRecordSchema } from
 import axios from "axios";
 import CarePlanInfo from "./components/CarePlanInfo";
 import NursingLogView from "./components/NursingLogView";
-import { Box, Tabs, Tab, Typography, IconButton } from "@mui/material";
+import { Box, Tabs, Tab, Typography, IconButton, Button } from "@mui/material";
 import NursingLogAdd from "./components/NursingLogAdd";
 import { enqueueSnackbar } from "notistack";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowBack } from "@mui/icons-material";
+import { useConfirm } from "material-ui-confirm";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -42,7 +43,9 @@ const PatientDetails = () => {
     const [patientInfo, setPatientInfo] = useState<PatientRecord>();
     const [nursingLog, setNursingLog] = useState<NursingLog>();
     const navigate = useNavigate();
+    const confirm = useConfirm();
 
+    // TODO: loading animation
     useEffect(() => {
         axios.get(`/api/icms/careplan/${patientId}`).then(async (res) => {
             setPatientInfo(PatientRecordSchema.cast(res.data));
@@ -69,9 +72,8 @@ const PatientDetails = () => {
 
     const [page, setPage] = useState(0);
 
-    const handleChange = (_: any, newPage: number) => {
-        setPage(newPage);
-    };
+
+    const handlePageChange = (_: any, newPage: number) => setPage(newPage);
 
     const submitNLMessage = async (log: string) => {
         if (nursingLog === undefined) {
@@ -90,6 +92,21 @@ const PatientDetails = () => {
         }
     }
 
+    const dischargePatient = async () => {
+        if (!patientInfo) return;
+
+        await confirm({ description: `Patient ${patientInfo.admission.Patient.name} will be discharged from the ward` });
+
+        try {
+            await axios.post(`/api/icms/patient/${patientInfo.admission.id}/discharge`);
+            enqueueSnackbar("Successfully discharged patient ", { variant: "success" });
+        } catch (e) {
+            console.log(e);
+            enqueueSnackbar("Failed to discharge patient", { variant: "error" });
+        }
+        navigate("/icms/patient")
+
+    }
 
     const [NLModalOpen, setNLModalOpen] = useState(false);
 
@@ -106,7 +123,7 @@ const PatientDetails = () => {
 
         <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={page} onChange={handleChange}>
+                <Tabs value={page} onChange={handlePageChange}>
                     <Tab label="Details" />
                     <Tab label="Care Plan" />
                     <Tab label="Nursing Logs" />
@@ -123,6 +140,11 @@ const PatientDetails = () => {
                     setNLModalOpen(true);
                 }} />
             </TabPanel>
+
+            <Box display="flex" mx={1} px="16px">
+                <Box flexGrow="1"></Box>
+                <Button variant="contained" disableElevation onClick={dischargePatient}>Discharge Patient</Button>
+            </Box>
         </Box>
 
         <NursingLogAdd open={NLModalOpen} onClose={() => { setNLModalOpen(false) }} onSubmit={submitNLMessage}></NursingLogAdd>

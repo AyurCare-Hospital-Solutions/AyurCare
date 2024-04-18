@@ -18,6 +18,7 @@ router.get("/nursinglog/:aid", nursingLogService.getNursingLog);
 router.post("/nursinglog/:aid", nursingLogService.createNursingLog);
 
 const patientAdmissions = require("../systems/ICMS/patients");
-router.get("/patients/admitted", patientAdmissions.getAdmissions)
+router.get("/patients/admitted", patientAdmissions.getAdmissions);
+router.post("/patient/:aid/discharge", patientAdmissions.dischargePatient);
 
 module.exports = router;
