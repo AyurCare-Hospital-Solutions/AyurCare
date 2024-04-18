@@ -27,7 +27,7 @@ export const MaterialRequestStatusPieChart = () => {
                 console.log(e);
 
             })
-    })
+    },[])
 
     const data =
         [
