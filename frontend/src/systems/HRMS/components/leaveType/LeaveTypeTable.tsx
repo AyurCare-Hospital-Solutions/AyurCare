@@ -7,7 +7,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import IconButton from '@mui/material/IconButton';
 
 interface Row {
   id: number;
@@ -32,7 +34,7 @@ export default function LeaveTypeTable() {
   };
 
   const handleEdit = (id: number) => {
-    // Handle edit action here, e.g., redirect to edit page
+    // Redirect or show edit dialog for the leave type with this id
     console.log(`Editing row with ID: ${id}`);
   };
 
@@ -47,12 +49,12 @@ export default function LeaveTypeTable() {
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Leave Type</TableCell>
-            <TableCell>Hours</TableCell>
+            <TableCell style={{ flex: '0 0 50px' }}>ID</TableCell>
+            <TableCell style={{ flex: '1 1 auto' }}>Leave Type</TableCell>
+            <TableCell style={{ flex: '0 0 100px' }}>Hours</TableCell>
             <TableCell>Action</TableCell>
           </TableRow>
         </TableHead>
@@ -66,20 +68,20 @@ export default function LeaveTypeTable() {
               <TableCell>{row.name}</TableCell>
               <TableCell>{row.hours}</TableCell>
               <TableCell>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => handleEdit(row.id)}
-                >
-                  Edit
-                </Button>
-                <Button
-                  variant="contained"
+                <IconButton
                   color="secondary"
+                  aria-label="delete"
                   onClick={() => handleDelete(row.id)}
                 >
-                  Delete
-                </Button>
+                  <DeleteIcon />
+                </IconButton>
+                <IconButton
+                  color="primary"
+                  aria-label="edit"
+                  onClick={() => handleEdit(row.id)}
+                >
+                  <EditIcon />
+                </IconButton>
               </TableCell>
             </TableRow>
           ))}
