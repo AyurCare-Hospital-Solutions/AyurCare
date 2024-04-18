@@ -22,8 +22,8 @@ function TopNavBar() {
         setAnchorElUser(null);
     };
 
-    return (
-        <AppBar position="sticky">
+    return <>
+        <AppBar position="fixed">
             <Toolbar disableGutters={true} sx={{ px: "8px" }}>
                 <Box sx={{ flexGrow: 0 }}>
                     <img src="/assets/logo.png" alt="AyurCare Logo" style={{ height: "50px" }} />
@@ -87,6 +87,7 @@ function TopNavBar() {
                 </Box>
             </Toolbar>
         </AppBar>
-    );
+        <Toolbar />
+    </>;
 }
 export default TopNavBar;
