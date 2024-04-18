@@ -45,21 +45,21 @@ function AddMaterialModal({ onClose, addMaterialModalOpen, addNewMaterial }: { o
                         onSubmit={(e) => {
                             e.preventDefault();
                             addNewMaterial({ materialName, materialAmount, materialReOredrBuffer, materialUnit })
-                            onClose();
+                            //onClose();
                         }}
                     >
                         <Box>
-                            <TextField required id="outlined-basic1" label="Material Name" variant="outlined" name="name" onChange={(e) => {
+                            <TextField id="outlined-basic1" label="Material Name" variant="outlined" name="name" onChange={(e) => {
                                 setMaterialName(e.target.value);
                             }} />
                         </Box>
                         <Box>
-                            <TextField required type="number" id="outlined-basic2" label="Amount" variant="outlined" name="amount" onChange={(e) => {
+                            <TextField type="number" id="outlined-basic2" label="Amount" variant="outlined" name="amount" onChange={(e) => {
                                 setMaterialAmount(Number(e.target.value));
                             }} />
                         </Box>
                         <Box>
-                            <TextField required type="number" id="outlined-basic2" label="Re-Order Buffer" variant="outlined" name="reOrderBuffer" onChange={(e) => {
+                            <TextField type="number" id="outlined-basic2" label="Re-Order Buffer" variant="outlined" name="reOrderBuffer" onChange={(e) => {
                                 setMaterialReOredrBuffer(Number(e.target.value));
                             }} />
                         </Box>
