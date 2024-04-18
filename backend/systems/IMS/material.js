@@ -75,7 +75,14 @@ const updateMaterial = async (req, res) => {
 
     let item = await Item.findByPk(material.ItemId);
 
+    // prevent - values
+    if(materialData.amount<0 && -materialData.amount>material.amount){
+        res.status(400).json({msg : 'Invalid amount'});
+        return
+    }
+
     await item.update({ name: materialData.materialName, reOrderBuffer: materialData.buffer, unit: materialData.unit });
+    
     await material.update({ amount: (Number(material.amount) + Number(materialData.amount)) }); //need to recheck
     res.status(200).json({ item, material });
 }
