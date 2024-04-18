@@ -81,14 +81,9 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 
-function createData(name: string, duration: number) {
-  return { name, duration };
-}
-
 const rows = [
-  createData('Cupcake', 25),
-  createData('Donut', 452),
-].sort((a, b) => (a.duration < b.duration ? -1 : 1));
+  
+].sort();
 
 export default function LeaveTypeTable() {
   const [page, setPage] = React.useState(0);
