@@ -53,7 +53,7 @@ function Material() {
     if (!data.materialAmount) {
       enqueueSnackbar("Amount is required...", { variant: "error" });
       return;
-    } else if (isNaN(Number(data.materialAmount)) || Number(data.materialAmount) <= 0) {
+    } else if (isNaN(Number(data.materialAmount)) || Number(data.amount) <= 0) {
       enqueueSnackbar("Amount must be a positive integer...", { variant: "error" });
       return;
     }
@@ -85,6 +85,7 @@ function Material() {
         enqueueSnackbar("Failed to Add Material...", { variant: "error" });
         console.log(err)
       })
+      handleAddModalClose();
   }
 
   // confirm handle
@@ -121,7 +122,7 @@ function Material() {
     if (!data.amount) {
       enqueueSnackbar("Amount is required...", { variant: "error" });
       return;
-    } else if (isNaN(Number(data.amount)) || Number(data.amount) <= 0) {
+    } else if (isNaN(Number(data.amount))) {
       enqueueSnackbar("Amount must be a positive integer...", { variant: "error" });
       return;
     }
