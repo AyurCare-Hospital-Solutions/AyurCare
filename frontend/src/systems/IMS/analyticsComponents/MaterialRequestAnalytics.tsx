@@ -73,7 +73,7 @@ export const MaterialRequestStatusBarChart = () => {
             .catch((e) => {
                 console.log(e);
             })
-    });
+    }, []);
 
     const data = [
         {
