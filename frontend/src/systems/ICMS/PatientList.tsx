@@ -99,6 +99,9 @@ const PatientList = () => {
                             <TableCell colSpan={6} />
                         </TableRow>
                     )}
+                    {rows.length > 0 ? null : <TableRow>
+                        <TableCell colSpan={4}>No Patients Found</TableCell>
+                    </TableRow>}
                 </TableBody>
                 <TableFooter>
                     <TableRow>
