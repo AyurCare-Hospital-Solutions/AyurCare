@@ -85,6 +85,7 @@ function Medicine() {
         enqueueSnackbar("Failed to add Medicine...", { variant: "error" });
         console.log(err)
       })
+    handleAddModalClose();
   }
 
   // confirm handle

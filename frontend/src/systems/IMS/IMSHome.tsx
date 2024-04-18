@@ -9,7 +9,7 @@ function IMSHome() {
         m={5}
         sx={{ display: 'flex' }}
       >
-        <Box mr={4} sx={{ flexGrow: 1 }}><WelcomeCard img="" /></Box>
+        <Box mr={4} sx={{ flexGrow: 1 }}><WelcomeCard img="/assets/IMSimg.svg" /></Box>
         <Box>
           <DateCard />
         </Box>

@@ -70,6 +70,13 @@ const updateAccessory = async (req, res) => {
         return;
     }
     var item = await Item.findByPk(accessory.ItemId)
+
+    // prevent - values
+    if (accessoryData.amount < 0 && -accessoryData.amount > accessory.amount) {
+        res.status(400).json({ msg: 'Invalid amount' });
+        return
+    }
+    
     // update
     item = await item.update({ name: accessoryData.accessoryName, reOrderbuffer: accessoryData.buffer, unit: accessoryData.unit });
     accessory = await accessory.update({ amount: (accessory.amount + Number(accessoryData.amount)) }); // need to recheck

@@ -53,12 +53,12 @@ function UpdateMedicineModal(props: any) {
                         }}
                     >
                         <Box>
-                            <TextField required id="outlined-basic1" value={updateName} label="Medicine Name" variant="outlined" name="name" onChange={(e) => {
+                            <TextField  id="outlined-basic1" value={updateName} label="Medicine Name" variant="outlined" name="name" onChange={(e) => {
                                 setUpdateName(e.target.value);
                             }} />
                         </Box>
                         <Box>
-                            <TextField required type="number" id="outlined-basic2" value={updateBuffer} label="Re-Order Buffer" variant="outlined" name="reOrderBuffer" onChange={(e) => {
+                            <TextField type="number" id="outlined-basic2" value={updateBuffer} label="Re-Order Buffer" variant="outlined" name="reOrderBuffer" onChange={(e) => {
                                 setUpdateBuffer(Number.parseInt(e.target.value));
                             }} />
                         </Box>

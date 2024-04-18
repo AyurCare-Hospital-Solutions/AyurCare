@@ -56,12 +56,12 @@ function AddAccessoryModal({ openAddModal, handleAddClose, addAccessory }: { ope
                                 }} />
                             </Box>
                             <Box>
-                                <TextField required type="number" id="outlined-basic2" label="Amount" variant="outlined" name="amount" onChange={(e) => {
+                                <TextField type="number" id="outlined-basic2" label="Amount" variant="outlined" name="amount" onChange={(e) => {
                                     setAmount(Number(e.target.value));
                                 }} />
                             </Box>
                             <Box>
-                                <TextField required type="number" id="outlined-basic2" label="Re-Order Buffer" variant="outlined" name="reOrderBuffer" onChange={(e) => {
+                                <TextField type="number" id="outlined-basic2" label="Re-Order Buffer" variant="outlined" name="reOrderBuffer" onChange={(e) => {
                                     setBuffer(Number(e.target.value));
                                 }} />
                             </Box>
