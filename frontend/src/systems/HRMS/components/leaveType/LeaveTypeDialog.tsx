@@ -40,7 +40,7 @@ export default function LeaveTypeDialog({addLeaveType}: {addLeaveType: (data: an
         <DialogTitle>Add new leave type</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae maxime! 
+            Provide the leave type & the duration of the leave to create a new leave type. 
           </DialogContentText>
           
           <TextField

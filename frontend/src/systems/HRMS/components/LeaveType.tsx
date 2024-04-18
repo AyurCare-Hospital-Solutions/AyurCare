@@ -19,6 +19,8 @@ const LeaveType = () => {
         <Box flexGrow={1} />
         <LeaveTypeDialog addLeaveType = {addLeaveType}/>
       </Box>
+      
+      <LeaveTypeTable/>
     
     </div>
   )
