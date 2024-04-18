@@ -3,8 +3,8 @@ const express = require('express');
 const yup = require('yup');
 
 const patientAssessmentValidator = yup.object().shape({
-    // Define validation schema for patient assessment fields
-    // Example: name: yup.string().required()
+    patientId: yup.number().required(),
+    assessmentDate: yup.date().required(),
 });
 
 // GET all patient assessments
