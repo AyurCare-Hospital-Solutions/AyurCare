@@ -63,7 +63,7 @@ export default function AddMedicineModal({ open, onClose, addMedicine }: { open:
                                 label="Unit"
                                 required
                                 defaultValue=""
-                                helperText="Please select mesurement unit of medine"
+                                helperText="Please select mesurement unit of medicine"
                                 onChange={(e) => {
                                     setUnit(e.target.value);
                                 }}
