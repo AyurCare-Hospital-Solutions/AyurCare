@@ -1,9 +1,8 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
-const Item = require("./Item");
-const Staff = require("./Staff");
+const Medicine = require("./Medicine");
 
-const InventoryRequest = sequelize.define("InventoryRequests", {
+const MedicineRequest = sequelize.define("MedicineRequest", {
     amount: {
         type: DataTypes.INTEGER
     },
@@ -17,10 +16,6 @@ const InventoryRequest = sequelize.define("InventoryRequests", {
 
 });
 
-InventoryRequest.belongsTo(Staff);
-Staff.hasMany(InventoryRequest);
+MedicineRequest.belongsTo(Medicine);
 
-Item.hasMany(InventoryRequest);
-InventoryRequest.belongsTo(Item);
-
-module.exports = InventoryRequest;
+module.exports = MedicineRequest;

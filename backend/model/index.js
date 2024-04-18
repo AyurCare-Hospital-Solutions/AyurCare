@@ -36,19 +36,26 @@ function connect() {
         console.log(`Using ${process.env.MYSQL_DB} on ${process.env.MYSQL_HOST}`)
     }
 
+    if (!Number.parseInt(process.env.SQL_LOG_QUERY)) {
+        config.logging = false;
+    }
+
+
     return new Sequelize(config);
 }
 
 const sequelize = connect();
 
 async function createAll() {
-    console.log("Creating tables for all defined models.")
+    console.log("Loading all defined models...")
     let glob = require('glob')
     let path = require('path');
 
     glob.sync('./model/*.js').forEach(function (file) {
         require(path.resolve(file));
     });
+
+    console.log("Loaded all models.")
 
     let syncConfig = { force: false };
     if (Number.parseInt(process.env.SQL_SYNC_FORCE)) {
