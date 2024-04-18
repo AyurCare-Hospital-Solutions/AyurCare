@@ -1,7 +1,7 @@
 import { Box } from "@mui/material"
 import LeaveTypeDialog from "./leaveType/LeaveTypeDialog"
-import LeaveTypeTable from "./leaveType/LeaveType"
 import axios from "axios"
+import LeaveTypeTable from "./leaveType/LeaveTypeTable"
 const LeaveType = () => {
 
   const addLeaveType = (data:any) => {

@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -5,24 +7,44 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
 
-function createData(
-  id: number,
-  leaveType: string,
-  duration: string,
-) {
-  return { id, leaveType, duration };
+interface Row {
+  id: number;
+  name: string;
+  hours: string;
 }
 
-const rows = [
-  createData(1, 'Sick Leave', '3 days'),
-  createData(2, 'Vacation', '5 days'),
-  createData(3, 'Maternity Leave', '12 weeks'),
-  createData(4, 'Paternity Leave', '2 weeks'),
-  createData(5, 'Sick Leave', '1 day'),
-];
-
 export default function LeaveTypeTable() {
+  const [rows, setRows] = useState<Row[]>([]);
+
+  useEffect(() => {
+    fetchLeaveTypes();
+  }, []);
+
+  const fetchLeaveTypes = async () => {
+    try {
+      const response = await axios.get<Row[]>('/api/hrms/leaveType');
+      setRows(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  const handleEdit = (id: number) => {
+    // Handle edit action here, e.g., redirect to edit page
+    console.log(`Editing row with ID: ${id}`);
+  };
+
+  const handleDelete = async (id: number) => {
+    try {
+      await axios.delete(`/api/hrms/leaveType/${id}`);
+      setRows(prevRows => prevRows.filter(row => row.id !== id));
+    } catch (error) {
+      console.error('Error deleting row:', error);
+    }
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -30,7 +52,7 @@ export default function LeaveTypeTable() {
           <TableRow>
             <TableCell>ID</TableCell>
             <TableCell>Leave Type</TableCell>
-            <TableCell>Duration</TableCell>
+            <TableCell>Hours</TableCell>
             <TableCell>Action</TableCell>
           </TableRow>
         </TableHead>
@@ -41,9 +63,24 @@ export default function LeaveTypeTable() {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell>{row.id}</TableCell>
-              <TableCell>{row.leaveType}</TableCell>
-              <TableCell>{row.duration}</TableCell>
-              <TableCell>Action Button</TableCell>
+              <TableCell>{row.name}</TableCell>
+              <TableCell>{row.hours}</TableCell>
+              <TableCell>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleEdit(row.id)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => handleDelete(row.id)}
+                >
+                  Delete
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

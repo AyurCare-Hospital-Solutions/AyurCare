@@ -6,7 +6,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import LeaveType from '../leaveType/LeaveType';
 
 export default function LeaveRequestDialog() {
   const [open, setOpen] = React.useState(false);
@@ -44,8 +43,6 @@ export default function LeaveRequestDialog() {
           <DialogContentText>
             Please fill out the following form to request leave. 
           </DialogContentText>
-          
-          <LeaveType/>
 
           <TextField
             autoFocus
