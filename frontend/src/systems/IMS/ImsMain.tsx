@@ -3,7 +3,7 @@ import { Dashboard, Inbox, Mail } from '@mui/icons-material';
 import VaccinesIcon from '@mui/icons-material/Vaccines';
 import ScienceIcon from '@mui/icons-material/Science';
 import HealingIcon from '@mui/icons-material/Healing';
-import { Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { Link, Outlet } from 'react-router-dom'
 import DashboardPage from '../../components/DashboardPage';
 import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
@@ -25,7 +25,7 @@ function ImsMain() {
                     </ListItemButton>
                 </ListItem>
             </Link>
-
+        <Divider />
             <Link to="/ims/medicine">
                 <ListItem disablePadding>
                     <ListItemButton>
@@ -58,7 +58,7 @@ function ImsMain() {
                     </ListItemButton>
                 </ListItem>
             </Link>
-
+            <Divider />
             <Link to="/ims/medicineRequests">
                 <ListItem disablePadding>
                     <ListItemButton>
@@ -80,7 +80,7 @@ function ImsMain() {
                     </ListItemButton>
                 </ListItem>
             </Link>
-
+            <Divider />
             <Link to="/ims/analytics">
                 <ListItem disablePadding>
                     <ListItemButton>
@@ -91,7 +91,7 @@ function ImsMain() {
                     </ListItemButton>
                 </ListItem>
             </Link>
-
+            <Divider />
             <Link to="/ims/reqMedicine">
                 <ListItem disablePadding>
                     <ListItemButton>
