@@ -1,6 +1,6 @@
 import { Box } from "@mui/material"
 import LeaveTypeDialog from "./leaveType/LeaveTypeDialog"
-import LeaveTypeTable from "./leaveType/LeaveTypeTable"
+import LeaveTypeTable from "./leaveType/LeaveType"
 import axios from "axios"
 const LeaveType = () => {
 
@@ -19,7 +19,7 @@ const LeaveType = () => {
         <Box flexGrow={1} />
         <LeaveTypeDialog addLeaveType = {addLeaveType}/>
       </Box>
-      <LeaveTypeTable/>
+    
     </div>
   )
 }
