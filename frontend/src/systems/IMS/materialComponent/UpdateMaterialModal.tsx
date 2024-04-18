@@ -20,15 +20,19 @@ function UpdateMaterialModal({ open, onClose, updatedMaterial, updateMaterial }:
     const [updateReOrderBuffer, setUpdateReOrderBuffer] = useState(updatedMaterial.Item.reOrderBuffer ?? "");
     const [updateUnit, setUpdateUnit] = useState(updatedMaterial.Item.unit ?? "");
 
+    // error handle
+    const [errorMsg, setErrorMsg] = useState<string>("");
+
     useEffect(() => {
         setUpdateId(updatedMaterial.id);
         setUpdateName(updatedMaterial.Item.name ?? "");
         setUpdateAmount(updatedMaterial.amount ?? "");
         setUpdateReOrderBuffer(updatedMaterial.Item.reOrderBuffer ?? "");
         setUpdateUnit(updatedMaterial.Item.unit ?? "");
+        setErrorMsg("");
     }, [updatedMaterial]);
 
-    
+
     const [operation, setOperation] = useState<string | null>("add");
     const [advanced, setAdvanced] = useState(true);
 
@@ -80,7 +84,14 @@ function UpdateMaterialModal({ open, onClose, updatedMaterial, updateMaterial }:
                             </ToggleButton>
                         </ToggleButtonGroup>
                         <Box>
-                            <TextField required type="number" id="outlined-basic2" value={updateAmount} label="Amount" variant="outlined" name="reOrderBuffer" onChange={(e) => {
+                            <TextField helperText={errorMsg} error={errorMsg !== ""} type="number" id="outlined-basic2" value={updateAmount} label="Amount" variant="outlined" name="reOrderBuffer" onChange={(e) => {
+                                var value = Number.parseInt(e.target.value);
+                                if (isNaN(value) || value < 0 || (operation === 'remove' && value > updatedMaterial.amount)) {
+                                    setErrorMsg("Invalid Amount");
+                                }
+                                else {
+                                    setErrorMsg("");
+                                }
                                 setUpdateAmount(Number.parseInt(e.target.value));
                             }} />
                         </Box>
@@ -91,12 +102,12 @@ function UpdateMaterialModal({ open, onClose, updatedMaterial, updateMaterial }:
                         />
 
                         <Box>
-                            <TextField required id="outlined-basic1" value={updateName} disabled={advanced} label="Material Name" variant="outlined" name="name" onChange={(e) => {
+                            <TextField id="outlined-basic1" value={updateName} disabled={advanced} label="Material Name" variant="outlined" name="name" onChange={(e) => {
                                 setUpdateName(e.target.value);
                             }} />
                         </Box>
                         <Box>
-                            <TextField required type="number" id="outlined-basic2" value={updateReOrderBuffer} disabled={advanced} label="Re-Order Buffer" variant="outlined" name="reOrderBuffer" onChange={(e) => {
+                            <TextField type="number" id="outlined-basic2" value={updateReOrderBuffer} disabled={advanced} label="Re-Order Buffer" variant="outlined" name="reOrderBuffer" onChange={(e) => {
                                 setUpdateReOrderBuffer(Number.parseInt(e.target.value));
                             }} />
                         </Box>
@@ -126,7 +137,7 @@ function UpdateMaterialModal({ open, onClose, updatedMaterial, updateMaterial }:
                             </TextField>
                         </Box>
                         <Stack direction="row" spacing={2}>
-                            <Button variant="outlined" color="success" type='submit'>Update</Button>
+                            <Button variant="outlined" disabled={errorMsg !== ""} color="success" type='submit'>Update</Button>
                             <Button variant="outlined" color="error" onClick={onClose} >Cancel</Button>
                         </Stack>
                     </Box>
