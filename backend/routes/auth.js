@@ -9,6 +9,8 @@ const loginValidator = object({
     password: string().min(4).max(100).required()
 });
 
+const tokenExpiry = 4 * 60 * 60 * 1000
+
 router.post("/login", async (req, res) => {
 
     try {
@@ -22,8 +24,12 @@ router.post("/login", async (req, res) => {
     if (user) {
         // FIXME: re-enable password check
         if (true || await bcrypt.compare(data.password, user.password)) {
-            let authToken = createToken(user.id, user.user, "admin")
-            res.status(200).json({ token: authToken });
+            let authToken = createToken(user.id, user.name, "admin")
+            res.status(200).cookie("auth", authToken, { httpOnly: true, maxAge: tokenExpiry, }).json({
+                user: user.name,
+                role: "admin",
+                expires: Date.now() + tokenExpiry
+            });
         } else {
             res.status(400).json({ msg: "Incorrect username or password" })
         }

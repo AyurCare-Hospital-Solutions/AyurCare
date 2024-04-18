@@ -8,6 +8,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { AccountCircle, ArrowDropDown, ConfirmationNumber, Event, Logout, Mail } from '@mui/icons-material';
 import { ListItemIcon } from '@mui/material';
+import { getUser } from '../util/user';
 
 
 function TopNavBar() {
@@ -39,7 +40,7 @@ function TopNavBar() {
                         <IconButton sx={{ p: 0 }}>
                             <AccountCircle sx={{ color: "#ffffff", fontSize: "40px" }}></AccountCircle>
                         </IconButton>
-                        <Typography sx={{ color: "#ffffff", my: "auto", ml: 2 }}>User Name</Typography>
+                        <Typography sx={{ color: "#ffffff", my: "auto", ml: 2 }}>{getUser()?.user}</Typography>
                         <ArrowDropDown sx={{ color: "#ffffff", my: "auto", fontSize: "28px" }}></ArrowDropDown>
                     </Box>
                     <Menu
