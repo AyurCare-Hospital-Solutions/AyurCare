@@ -43,16 +43,16 @@ export default function AddMedicineModal({ open, onClose, addMedicine }: { open:
                         onSubmit={(e) => {
                             e.preventDefault();
                             addMedicine({ name, buffer, unit, origin });
-                            onClose();
+                            //onClose();
                         }}
                     >
                         <Box>
-                            <TextField required id="outlined-basic1" label="Medicine Name" variant="outlined" name="name" onChange={(e) => {
+                            <TextField id="outlined-basic1" label="Medicine Name" variant="outlined" name="name" onChange={(e) => {
                                 setName(e.target.value);
                             }} />
                         </Box>
                         <Box>
-                            <TextField required type="number" id="outlined-basic2" label="Re-Order Buffer" variant="outlined" name="reOrderBuffer" onChange={(e) => {
+                            <TextField type="number" id="outlined-basic2" label="Re-Order Buffer" variant="outlined" name="reOrderBuffer" onChange={(e) => {
                                 setBuffer(Number.parseInt(e.target.value));
                             }} />
                         </Box>
