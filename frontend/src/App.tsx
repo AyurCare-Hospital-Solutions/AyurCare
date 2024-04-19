@@ -6,7 +6,7 @@ import dmms from "./systems/DMMS";
 import hrms from "./systems/HRMS";
 import icms from "./systems/ICMS";
 import ims from "./systems/IMS";
-import ocms from "./systems/OCMS";
+import ocms from "./systems/OPCMS";
 import pms from "./systems/PMS";
 import prs from "./systems/PRS";
 
