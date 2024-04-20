@@ -18,10 +18,10 @@ const style = {
 };
 
 export default function AddMedicineModal({ open, onClose, addMedicine }: { open: boolean, onClose: () => any, addMedicine: (data: any) => any }) {
-    const [name, setName] = React.useState("");
-    const [buffer, setBuffer] = React.useState(0);
-    const [unit, setUnit] = React.useState("");
-    const [origin, setOrigin] = React.useState("");
+    const [name, setName] = React.useState<string>("");
+    const [buffer, setBuffer] = React.useState<number>(0);
+    const [unit, setUnit] = React.useState<string>("");
+    const [origin, setOrigin] = React.useState<string>("");
     return (
         <Modal
             open={open}
@@ -43,6 +43,11 @@ export default function AddMedicineModal({ open, onClose, addMedicine }: { open:
                         onSubmit={(e) => {
                             e.preventDefault();
                             addMedicine({ name, buffer, unit, origin });
+                            // reset values
+                            // setName("");
+                            // setBuffer(0);
+                            // setUnit("");
+                            // setOrigin("");
                             //onClose();
                         }}
                     >
@@ -61,7 +66,7 @@ export default function AddMedicineModal({ open, onClose, addMedicine }: { open:
                                 id="outlined-select3"
                                 select
                                 label="Unit"
-                                required
+
                                 defaultValue=""
                                 helperText="Please select mesurement unit of medicine"
                                 onChange={(e) => {
@@ -85,7 +90,7 @@ export default function AddMedicineModal({ open, onClose, addMedicine }: { open:
                                 select
                                 label="Origin"
                                 defaultValue=""
-                                required
+
                                 helperText="Please select origin of medicine"
                                 onChange={(e) => {
                                     setOrigin(e.target.value);
