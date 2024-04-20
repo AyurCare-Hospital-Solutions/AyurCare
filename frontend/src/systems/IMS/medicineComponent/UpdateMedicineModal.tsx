@@ -16,7 +16,7 @@ const style = {
 function UpdateMedicineModal(props: any) {
     const [updateId, setUpdateId] = useState(props.updatedMedicine.id ?? "");
     const [updateName, setUpdateName] = useState(props.updatedMedicine.Item.name ?? "");
-    const [updateBuffer, setUpdateBuffer] = useState(props.updatedMedicine.Item.reOrderBuffer ?? "");
+    const [updateBuffer, setUpdateBuffer] = useState(props.updatedMedicine.Item.reOrderBuffer ?? 0);
     const [updateUnit, setUpdateUnit] = useState(props.updatedMedicine.Item.unit ?? "");
     const [updateOrigin, setUpdateOrigin] = useState(props.updatedMedicine.Item.inHouse ?? "");
 
@@ -112,7 +112,6 @@ function UpdateMedicineModal(props: any) {
                             <Button variant="outlined" color="error" onClick={props.onClose} >Cancel</Button>
                         </Stack>
                     </Box>
-                    Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
                 </Box>
             </Box>
         </Modal>
