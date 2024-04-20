@@ -27,7 +27,7 @@ export const MaterialRequestStatusPieChart = () => {
                 console.log(e);
 
             })
-    })
+    }, [])
 
     const data =
         [
@@ -73,7 +73,7 @@ export const MaterialRequestStatusBarChart = () => {
             .catch((e) => {
                 console.log(e);
             })
-    });
+    }, []);
 
     const data = [
         {
