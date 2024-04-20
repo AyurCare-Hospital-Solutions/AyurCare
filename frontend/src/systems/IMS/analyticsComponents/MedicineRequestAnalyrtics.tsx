@@ -26,7 +26,7 @@ export const MedicineRequestStatusPieChart = () => {
             .catch((e) => {
                 console.log(e);
             })
-    });
+    },[]);
 
     const data =
         [
@@ -72,7 +72,7 @@ export const MedicineRequestStatusBarChart = () => {
             .catch((e) => {
                 console.log(e);
             })
-    });
+    },[]);
 
     const data = [
         {
