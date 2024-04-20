@@ -29,8 +29,7 @@ function Material() {
   // Fetch material data 
   const getMaterialData = async () => {
     await axios.get("api/ims/material").then((res) => {
-      setTimeout(() => setMaterialData(res.data), 1000)
-      console.log(res.data);
+      setTimeout(() => setMaterialData(res.data), 1000);
     })
   }
 
@@ -78,14 +77,13 @@ function Material() {
     })
       .then((res) => {
         enqueueSnackbar("Material Added Successfuly...", { variant: "success" });
-        console.log(res);
         getMaterialData();
       })
       .catch((err) => {
         enqueueSnackbar("Failed to Add Material...", { variant: "error" });
         console.log(err)
       })
-      handleAddModalClose();
+    handleAddModalClose();
   }
 
   // confirm handle
