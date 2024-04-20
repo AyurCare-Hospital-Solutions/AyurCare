@@ -19,10 +19,10 @@ const style = {
 
 
 function AddMaterialModal({ onClose, addMaterialModalOpen, addNewMaterial }: { onClose: () => any, addMaterialModalOpen: boolean, addNewMaterial :(p:any)=> any }) {
-    const [materialName, setMaterialName] = useState<String>("");
+    const [materialName, setMaterialName] = useState<string>("");
     const [materialAmount, setMaterialAmount] = useState<number>(0);
     const [materialReOredrBuffer, setMaterialReOredrBuffer] = useState<number>(0);
-    const [materialUnit, setMaterialUnit] = useState<String>("");
+    const [materialUnit, setMaterialUnit] = useState<string>("");
 
     return (
         <Modal
