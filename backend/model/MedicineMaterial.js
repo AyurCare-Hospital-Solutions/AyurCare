@@ -19,7 +19,4 @@ MedicineMaterial.belongsTo(Material, {
     foreignKey: { allowNull: false, }
 })
 
-
-MedicineMaterial.sync({ force: true })
-
 module.exports = MedicineMaterial;
