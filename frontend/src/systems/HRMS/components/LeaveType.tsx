@@ -85,9 +85,7 @@ const LeaveType = () => {
 
   return (
     <div className="LeaveType">
-      <Paper
-        sx={{ display: "flex", maxWidth: "1024px", mx: "auto", mb: 4, p: 2 }}
-      >
+      <Box sx={{ display: "flex", maxWidth: "1024px", mx: "auto", mb: 4 }}>
         <Box>
           <Typography variant="h5" gutterBottom>
             Leave Types
@@ -103,7 +101,7 @@ const LeaveType = () => {
         >
           Add Leave Type
         </Button>
-      </Paper>
+      </Box>
 
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <Box sx={{ display: "flex", maxWidth: "1024px", mx: "auto" }}>

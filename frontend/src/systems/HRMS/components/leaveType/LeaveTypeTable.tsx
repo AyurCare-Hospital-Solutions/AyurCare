@@ -40,10 +40,7 @@ export default function LeaveTypeTable({
 
   return (
     <>
-      <TableContainer
-        component={Paper}
-        sx={{ maxWidth: "1024px", mx: "auto", px: 2 }}
-      >
+      <TableContainer component={Paper} sx={{ maxWidth: "1024px", mx: "auto" }}>
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
