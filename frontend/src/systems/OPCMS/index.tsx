@@ -6,7 +6,7 @@ const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
     root: <p>OCMS</p>, // replace with main element
     routes: [
         {
-            path:"/assesment",
+            path:"assesment",
             element:<Assessment />
         }
     ],
