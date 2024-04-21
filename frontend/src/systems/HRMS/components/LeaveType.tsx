@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Paper, Typography } from "@mui/material";
 import LeaveTypeDialog from "./leaveType/NewLeaveTypeDialog";
 import axios from "axios";
 import LeaveTypeTable from "./leaveType/LeaveTypeTable";
@@ -85,7 +85,9 @@ const LeaveType = () => {
 
   return (
     <div className="LeaveType">
-      <Box sx={{ display: "flex", maxWidth: "1024px", mx: "auto", mb: 4 }}>
+      <Paper
+        sx={{ display: "flex", maxWidth: "1024px", mx: "auto", mb: 4, p: 2 }}
+      >
         <Box>
           <Typography variant="h5" gutterBottom>
             Leave Types
@@ -101,7 +103,7 @@ const LeaveType = () => {
         >
           Add Leave Type
         </Button>
-      </Box>
+      </Paper>
 
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <Box sx={{ display: "flex", maxWidth: "1024px", mx: "auto" }}>
