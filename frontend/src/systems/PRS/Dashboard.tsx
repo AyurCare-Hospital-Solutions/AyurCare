@@ -22,7 +22,6 @@ const Dashboard = () => {
           <WelcomeCard img='/assets/PRS-dash-logo-icon.svg' />
         </Grid>
         <Grid item xs={5}>
-          {/* <DateCard /> */}
           <Box flexGrow='3' display='flex' flexDirection='column' gap={4}>
             <LinkCard
               name='Patient Registration'

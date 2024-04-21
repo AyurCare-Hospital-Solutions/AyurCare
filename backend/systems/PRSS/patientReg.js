@@ -23,7 +23,7 @@ function getDate() {
 }
 
 //create the tracking number
-async function createTrackingNumber(i) {
+function createTrackingNumber(i) {
   const date = new Date();
 
   // check the month is 0
@@ -53,7 +53,7 @@ async function createNewPatient(req, res) {
   try {
     // const { tracking_no, ...patientDetails } = req.body;
 
-    var patientDetails = await validatePatientDetails.validate(req.body);
+    var patientDetails = validatePatientDetails.cast(req.body);
     console.log(patientDetails);
   } catch (validationError) {
     res.status(400).send({ msg: validationError.errors[0] });
@@ -103,7 +103,7 @@ async function createNewPatient(req, res) {
 
 // get the all patients details
 async function getPatients(req, res) {
-  res.status(200).json(await Patient.findAll());
+  return res.status(200).json(await Patient.findAll());
 }
 
 /**
@@ -124,7 +124,7 @@ async function getPatientDetails(req, res) {
     res.status(404).json({ msg: "The patient does not exist" });
     return;
   }
-  res.status(200).json(patient);
+  return res.status(200).json(patient);
 }
 
 /**
@@ -191,6 +191,19 @@ async function deletePatient(req, res) {
   res.status(200).json({ msg: "Patient deleted successfully" });
 }
 
+/**
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+
+async function getRecentPatient(req, res) {
+  // getting the recent patient details
+  const recentPatient = await Patient.findOne({
+    order: [["createdAt", "DESC"]],
+  });
+  return res.status(200).json(recentPatient);
+}
+
 module.exports = {
   test,
   createNewPatient,
@@ -198,4 +211,5 @@ module.exports = {
   getPatientDetails,
   updatePatientDetails,
   deletePatient,
+  getRecentPatient,
 };

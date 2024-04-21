@@ -4,7 +4,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import SendIcon from "@mui/icons-material/Send";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 
 // patient interface
@@ -12,7 +12,6 @@ interface Patient {
   name: string;
   nic: string;
   phone: string;
-  dob: string | null | undefined;
   gender: string;
   email: string;
   address: string;
@@ -24,7 +23,6 @@ export default function PatientRegForm() {
     name: "",
     nic: "",
     phone: "",
-    dob: "",
     gender: "",
     email: "",
     address: "",
@@ -43,32 +41,36 @@ export default function PatientRegForm() {
     e.preventDefault();
 
     // Ensure a date is selected before formatting
-    if (!value) {
+    if (!dobValue) {
       console.error("Please select a date of birth.");
       return; // Prevent further processing if no date is selected
     }
 
     // making the date format before passing to the backend
-    const formattedDate = value?.toISOString();
+    const formattedDate = dobValue?.toISOString();
 
-    setPatient((prevPatient) => {
-      const { name, nic, phone, gender, email, address } = prevPatient;
-      return {
-        name,
-        nic,
-        phone,
-        gender,
-        email,
-        address,
-        dob: formattedDate,
-      };
-    });
+    // set the formatted date to the patient object
+    const patientData = {
+      ...patient,
+      dob: formattedDate,
+    };
 
-    console.log(patient);
+    console.log(patientData);
   };
 
   // handle date change
-  const [value, setValue] = React.useState<Dayjs | null>(dayjs(null));
+  const [dobValue, setadobValue] = React.useState<Dayjs | null>(dayjs(null));
+
+  // get the current date
+  const [time, setTime] = useState(new Date());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div>
@@ -116,10 +118,14 @@ export default function PatientRegForm() {
             <DemoContainer components={["DatePicker", "DatePicker"]}>
               <DatePicker
                 label='Date Of Birth'
-                value={value}
-                onChange={(newValue) => setValue(newValue)}
+                value={dobValue}
+                onChange={(newValue) => setadobValue(newValue)}
               />
-              {value && <p>Selected Date: {value.format("YYYY-MM-DD")}</p>}
+              {dobValue && dobValue ? (
+                <p>Selected Date: {dobValue.format("YYYY-MM-DD")}</p>
+              ) : (
+                <p>Today Date: {dayjs(time).format("Do MMMM YYYY")}</p>
+              )}
             </DemoContainer>
           </LocalizationProvider>
 

@@ -11,5 +11,6 @@ router.get("/get-patients", Patient.getPatients);
 router.get("/get-patient/:id", Patient.getPatientDetails);
 router.put("/update-patient/:id", Patient.updatePatientDetails);
 router.delete("/delete-patient/:id", Patient.deletePatient);
+router.get("/recent-patient", Patient.getRecentPatient);
 
 module.exports = router;
