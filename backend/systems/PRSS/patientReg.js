@@ -52,10 +52,11 @@ async function test(req, res) {
 async function createNewPatient(req, res) {
   try {
     // const { tracking_no, ...patientDetails } = req.body;
-
+    await validatePatientDetails.validate(req.body);
     var patientDetails = validatePatientDetails.cast(req.body);
-    console.log(patientDetails);
+    // console.log(patientDetails);
   } catch (validationError) {
+    // console.log(validationError);
     res.status(400).send({ msg: validationError.errors[0] });
     console.log(validationError.errors[0]);
     return;
@@ -204,6 +205,32 @@ async function getRecentPatient(req, res) {
   return res.status(200).json(recentPatient);
 }
 
+/**
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+
+async function getPatientCountPerDay(req, res) {
+  // Get today's date at midnight (00:00:00) in UTC
+  const todayStart = new Date().setHours(0, 0, 0, 0);
+
+  // Get tomorrow's date at midnight (00:00:00) in UTC
+  const tomorrowStart = new Date(todayStart).setDate(new Date().getDate() + 1);
+
+  // gettint the patient count per day
+  const data = await Patient.findAndCountAll({
+    where: {
+      createdAt: {
+        [Op.gte]: new Date(todayStart),
+        [Op.lt]: new Date(tomorrowStart),
+      },
+    },
+  });
+
+  console.log(data);
+  res.status(200).json(data.count);
+}
+
 module.exports = {
   test,
   createNewPatient,
@@ -212,4 +239,5 @@ module.exports = {
   updatePatientDetails,
   deletePatient,
   getRecentPatient,
+  getPatientCountPerDay,
 };

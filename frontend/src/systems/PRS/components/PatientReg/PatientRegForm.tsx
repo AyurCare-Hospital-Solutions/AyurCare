@@ -6,6 +6,8 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import SendIcon from "@mui/icons-material/Send";
 import React, { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
+import { BASE_URL } from "../../config";
+import axios from "axios";
 
 // patient interface
 interface Patient {
@@ -54,8 +56,24 @@ export default function PatientRegForm() {
       ...patient,
       dob: formattedDate,
     };
+    
+    try {
+      const res = await axios.post("/api/prss/create-patient", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(patientData),
+      });
 
-    console.log(patientData);
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+    // console.log(patientData);
   };
 
   // handle date change
@@ -71,6 +89,8 @@ export default function PatientRegForm() {
 
     return () => clearInterval(interval);
   }, []);
+
+
 
   return (
     <div>
