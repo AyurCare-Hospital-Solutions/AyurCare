@@ -12,6 +12,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import UpdateLeaveTypeDialog from "./UpdateLeaveTypeDialog"; // Import the UpdateLeaveTypeDialog component
 import { LeaveTypeData } from "../../types";
+import { Box, Typography } from "@mui/material";
 
 export default function LeaveTypeTable({
   rows,
@@ -38,15 +39,15 @@ export default function LeaveTypeTable({
   };
 
   return (
-    <div>
-      <TableContainer component={Paper}>
+    <>
+      <TableContainer component={Paper} sx={{ maxWidth: "1024px", mx: "auto" }}>
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell style={{ flex: "0 0 50px" }}>ID</TableCell>
               <TableCell style={{ flex: "1 1 auto" }}>Leave Type</TableCell>
               <TableCell style={{ flex: "0 0 100px" }}>Hours</TableCell>
-              <TableCell>Action</TableCell>
+              <TableCell style={{ flex: "0 0 " }}></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -58,20 +59,21 @@ export default function LeaveTypeTable({
                 <TableCell>{row.id}</TableCell>
                 <TableCell>{row.name}</TableCell>
                 <TableCell>{row.hours}</TableCell>
-                <TableCell>
+                <TableCell sx={{ display: "flex" }}>
+                  <IconButton
+                    color="primary"
+                    aria-label="edit"
+                    onClick={() => handleEdit(row)}
+                    sx={{ ml: "auto" }}
+                  >
+                    <EditIcon />
+                  </IconButton>
                   <IconButton
                     color="secondary"
                     aria-label="delete"
                     onClick={() => deleteLeaveType(row.id)}
                   >
                     <DeleteIcon />
-                  </IconButton>
-                  <IconButton
-                    color="primary"
-                    aria-label="edit"
-                    onClick={() => handleEdit(row)}
-                  >
-                    <EditIcon />
                   </IconButton>
                 </TableCell>
               </TableRow>
@@ -87,6 +89,6 @@ export default function LeaveTypeTable({
         open={open} // Pass open state
         onSubmit={handleUpdate} // Pass handleUpdate function
       />
-    </div>
+    </>
   );
 }
