@@ -33,7 +33,7 @@ function connect() {
             }
         }
 
-        console.log(`Using ${process.env.MYSQL_DB} on ${process.env.MYSQL_HOST}`)
+        console.log(`Using mysql database ${process.env.MYSQL_DATABASE} on ${process.env.MYSQL_HOST}`)
     }
 
     if (!Number.parseInt(process.env.SQL_LOG_QUERY)) {
