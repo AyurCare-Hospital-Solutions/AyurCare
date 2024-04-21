@@ -45,7 +45,6 @@ const getLeaveTypeById = async (req, res) => {
 
 const createLeaveType = async (req, res) => {
   try {
-    console.log(req.body);
     var data = await leaveTypeValidator.validate(req.body);
   } catch (validationError) {
     res.status(400).send({ msg: validationError.errors[0] });

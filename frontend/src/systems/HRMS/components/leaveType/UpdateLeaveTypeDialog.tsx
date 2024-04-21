@@ -8,35 +8,61 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import React from "react";
-
-interface Row {
-  id: number;
-  name: string;
-  hours: string;
-}
+import { LeaveTypeData } from "../../types";
 
 export default function UpdateLeaveTypeDialog({
-  selectedRowId,
+  selectedRow,
   handleClose,
   open,
+  onSubmit,
 }: {
-  selectedRowId: number | null;
+  selectedRow: LeaveTypeData | null;
   handleClose: () => void;
   open: boolean;
+  onSubmit: (name: string, duration: number) => void;
 }) {
   const [name, setName] = useState("");
   const [duration, setDuration] = useState("");
 
-  const handleSubmit = async () => {
-    try {
-      await axios.put(`/api/hrms/leaveType/${selectedRowId}`, {
-        name: name,
-        hours: duration,
-      });
-      handleClose();
-    } catch (error) {
-      console.error("Error updating leave type:", error);
+  const [error, setError] = React.useState({
+    nameError: "",
+    durationError: "",
+  });
+  const [canSubmit, setCanSubmit] = React.useState(false);
+
+  const updateName = (newName: string) => {
+    let nameErrorMessage = "";
+
+    if (newName === "") {
+      nameErrorMessage = "Name cannot be empty";
+    } else if (newName.length > 50) {
+      nameErrorMessage = "Name cannot be longer than 50 characters";
+    } else if (newName.length < 3) {
+      nameErrorMessage = "Name must be at least 3 characters long";
+    } else if (!/^[a-zA-Z ]+$/.test(newName)) {
+      nameErrorMessage = "Name must contain only letters and spaces";
     }
+
+    setName(newName);
+    setError({ ...error, nameError: nameErrorMessage });
+    setCanSubmit(nameErrorMessage === "" && error.durationError === "");
+  };
+
+  const updateDuration = (newDurationStr: string) => {
+    const newDuration = parseFloat(newDurationStr);
+    let durationErrorMessage = "";
+
+    if (Number.isNaN(newDuration)) {
+      durationErrorMessage = "Duration must be a number";
+    } else if (newDuration <= 0) {
+      durationErrorMessage = "Duration must be greater than 0";
+    } else if (newDuration > 8) {
+      durationErrorMessage = "Duration cannot be greater than 8 hours";
+    }
+
+    setDuration(newDurationStr);
+    setError({ ...error, durationError: durationErrorMessage });
+    setCanSubmit(error.nameError === "" && durationErrorMessage === "");
   };
 
   const handleModalClose = () => {
@@ -46,22 +72,14 @@ export default function UpdateLeaveTypeDialog({
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (selectedRowId !== null) {
-          const response = await axios.get<Row>(
-            `/api/hrms/leaveType/${selectedRowId}`
-          );
-          setName(response.data.name);
-          setDuration(response.data.hours);
-        }
-      } catch (error) {
-        console.error("Error fetching leave type data:", error);
-      }
-    };
+    if (selectedRow !== null) {
+      setName(selectedRow.name);
+      setDuration(selectedRow.hours.toString());
+    }
 
-    fetchData();
-  }, [selectedRowId]);
+    setError({ nameError: "", durationError: "" });
+    setCanSubmit(false);
+  }, [selectedRow]);
 
   return (
     <Dialog
@@ -71,7 +89,7 @@ export default function UpdateLeaveTypeDialog({
         component: "form",
         onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
           event.preventDefault();
-          handleSubmit();
+          onSubmit(name, parseFloat(duration));
         },
       }}
     >
@@ -88,9 +106,13 @@ export default function UpdateLeaveTypeDialog({
           name="name"
           label="Leave Type Name"
           type="text"
-          variant="standard"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          error={error.nameError !== ""}
+          helperText={error.nameError}
+          variant="standard"
+          onChange={(e) => {
+            updateName(e.target.value);
+          }}
         />
 
         <br />
@@ -103,14 +125,18 @@ export default function UpdateLeaveTypeDialog({
           label="Duration (hours)"
           type="text"
           variant="standard"
+          error={error.durationError !== ""}
+          helperText={error.durationError}
           value={duration}
-          onChange={(e) => setDuration(e.target.value)}
+          onChange={(e) => updateDuration(e.target.value)}
           style={{ textAlign: "right", width: "fit-content" }}
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleModalClose}>Cancel</Button>
-        <Button type="submit">Update Leave Type</Button>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button type="submit" disabled={!canSubmit}>
+          Update Leave Type
+        </Button>
       </DialogActions>
     </Dialog>
   );

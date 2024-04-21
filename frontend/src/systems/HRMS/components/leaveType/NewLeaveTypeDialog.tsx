@@ -1,48 +1,95 @@
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import React from 'react';
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import React, { useEffect } from "react";
 
-export default function LeaveTypeDialog({addLeaveType}: {addLeaveType: (data: any) => any} ) {
-  const [open, setOpen] = React.useState(false);
-  const [name, setName] = React.useState('');
+interface Errors {
+  nameError: string;
+  durationError: string;
+}
+
+export default function LeaveTypeDialog({
+  addLeaveType,
+  open,
+  onClose,
+}: {
+  addLeaveType: (data: any) => any;
+  open: boolean;
+  onClose: () => void;
+}) {
+  const [name, setName] = React.useState("");
   const [duration, setDuration] = React.useState(0);
+  const [error, setError] = React.useState({
+    nameError: "",
+    durationError: "",
+  });
+  const [canSubmit, setCanSubmit] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  useEffect(() => {
+    setError({ nameError: "", durationError: "" });
+    setCanSubmit(false);
+  }, [open]);
+
+  const updateName = (newName: string) => {
+    let nameErrorMessage = "";
+
+    if (newName === "") {
+      nameErrorMessage = "Name cannot be empty";
+    } else if (newName.length > 50) {
+      nameErrorMessage = "Name cannot be longer than 50 characters";
+    } else if (newName.length < 3) {
+      nameErrorMessage = "Name must be at least 3 characters long";
+    } else if (!/^[a-zA-Z ]+$/.test(newName)) {
+      nameErrorMessage = "Name must contain only letters and spaces";
+    }
+
+    setName(newName);
+    setError({ ...error, nameError: nameErrorMessage });
+    setCanSubmit(nameErrorMessage === "" && error.durationError === "");
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const updateDuration = (newDurationStr: string) => {
+    const newDuration = parseFloat(newDurationStr);
+    let durationErrorMessage = "";
+
+    if (Number.isNaN(newDuration)) {
+      durationErrorMessage = "Duration must be a number";
+    } else if (newDuration <= 0) {
+      durationErrorMessage = "Duration must be greater than 0";
+    } else if (newDuration > 8) {
+      durationErrorMessage = "Duration cannot be greater than 8 hours";
+    }
+
+    setDuration(newDuration);
+    setError({ ...error, durationError: durationErrorMessage });
+    setCanSubmit(error.nameError === "" && durationErrorMessage === "");
   };
 
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Add Leave Type
-      </Button>
       <Dialog
         open={open}
-        onClose={handleClose}
+        onClose={onClose}
         PaperProps={{
-          component: 'form',
+          component: "form",
           onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault();
-            addLeaveType({name, duration});
-            handleClose();
+            addLeaveType({ name, duration });
+            onClose();
           },
         }}
       >
         <DialogTitle>Add new leave type</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Provide the leave type & the duration of the leave to create a new leave type. 
+            Provide the leave type & the duration of the leave to create a new
+            leave type.
           </DialogContentText>
-          
+
           <TextField
             autoFocus
             required
@@ -50,11 +97,15 @@ export default function LeaveTypeDialog({addLeaveType}: {addLeaveType: (data: an
             name="name"
             label="Leave Type Name"
             type="text"
+            error={error.nameError !== ""}
+            helperText={error.nameError}
             variant="standard"
-            onChange ={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              updateName(e.target.value);
+            }}
           />
 
-          <br/>
+          <br />
 
           <TextField
             autoFocus
@@ -64,14 +115,17 @@ export default function LeaveTypeDialog({addLeaveType}: {addLeaveType: (data: an
             label="Duration (hours)"
             type="text"
             variant="standard"
-            onChange={(e) => setDuration(Number.parseInt(e.target.value))}
-            style={{textAlign: 'right', width: 'fit-content'}}
+            error={error.durationError !== ""}
+            helperText={error.durationError}
+            onChange={(e) => updateDuration(e.target.value)}
+            style={{ textAlign: "right", width: "fit-content" }}
           />
-
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">Add Leave Type</Button>
+          <Button onClick={onClose}>Cancel</Button>
+          <Button type="submit" disabled={!canSubmit}>
+            Add Leave Type
+          </Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>

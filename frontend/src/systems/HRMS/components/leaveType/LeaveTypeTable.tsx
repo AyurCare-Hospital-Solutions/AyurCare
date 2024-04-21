@@ -11,42 +11,29 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import UpdateLeaveTypeDialog from "./UpdateLeaveTypeDialog"; // Import the UpdateLeaveTypeDialog component
+import { LeaveTypeData } from "../../types";
 
-interface Row {
-  id: number;
-  name: string;
-  hours: string;
-}
-
-export default function LeaveTypeTable() {
-  const [rows, setRows] = useState<Row[]>([]);
+export default function LeaveTypeTable({
+  rows,
+  deleteLeaveType,
+  updateLeaveType,
+}: {
+  rows: LeaveTypeData[];
+  deleteLeaveType: (id: number) => void;
+  updateLeaveType: (row: LeaveTypeData, name: string, duration: number) => void;
+}) {
   const [open, setOpen] = useState(false); // State for modal
-  const [selectedRowId, setSelectedRowId] = useState<number | null>(null); // State for selected row ID
+  const [selectedRow, setSelectedRow] = useState<LeaveTypeData | null>(null); // State for selected row ID
 
-  useEffect(() => {
-    fetchLeaveTypes();
-  }, []);
-
-  const fetchLeaveTypes = async () => {
-    try {
-      const response = await axios.get<Row[]>("/api/hrms/leaveType");
-      setRows(response.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  const handleEdit = (id: number) => {
-    setSelectedRowId(id); // Set the selected row ID
+  const handleEdit = (row: LeaveTypeData) => {
+    setSelectedRow(row); // Set the selected row ID
     setOpen(true); // Open the modal
   };
 
-  const handleDelete = async (id: number) => {
-    try {
-      await axios.delete(`/api/hrms/leaveType/${id}`);
-      setRows((prevRows) => prevRows.filter((row) => row.id !== id));
-    } catch (error) {
-      console.error("Error deleting row:", error);
+  const handleUpdate = (name: string, duration: number) => {
+    if (selectedRow !== null) {
+      updateLeaveType(selectedRow, name, duration); // Call updateLeaveType function
+      setOpen(false); // Close the modal
     }
   };
 
@@ -75,14 +62,14 @@ export default function LeaveTypeTable() {
                   <IconButton
                     color="secondary"
                     aria-label="delete"
-                    onClick={() => handleDelete(row.id)}
+                    onClick={() => deleteLeaveType(row.id)}
                   >
                     <DeleteIcon />
                   </IconButton>
                   <IconButton
                     color="primary"
                     aria-label="edit"
-                    onClick={() => handleEdit(row.id)}
+                    onClick={() => handleEdit(row)}
                   >
                     <EditIcon />
                   </IconButton>
@@ -95,9 +82,10 @@ export default function LeaveTypeTable() {
 
       {/* Render UpdateLeaveTypeDialog component with props */}
       <UpdateLeaveTypeDialog
-        selectedRowId={selectedRowId} // Pass selected row ID as prop
+        selectedRow={selectedRow} // Pass selected row ID as prop
         handleClose={() => setOpen(false)} // Pass handleClose function
         open={open} // Pass open state
+        onSubmit={handleUpdate} // Pass handleUpdate function
       />
     </div>
   );
