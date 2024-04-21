@@ -2,9 +2,9 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
+const { randomBytes } = require("crypto");
 
-const privateKey = fs.readFileSync("private.key");
-const publicKey = fs.readFileSync("public.key");
+const secret = randomBytes(64)
 
 let roles = {
     role1: { name: "Role 1" },
@@ -34,7 +34,7 @@ const auth = (allowedRoles) => {
         }
 
         try {
-            let token = jwt.verify(tokenHeader, publicKey);
+            let token = jwt.verify(tokenHeader, secret, { algorithms: ["HS512"] });
 
             if (allowedRoles.indexOf(token.role) === -1) {
                 res.status(401).json({ msg: "Unauthorized" });
@@ -65,8 +65,8 @@ const auth = (allowedRoles) => {
  * @param {string} role 
  */
 const createToken = (id, user, role) => {
-    return jwt.sign({ id: id, user: user, role: role }, privateKey, {
-        algorithm: "RS256",
+    return jwt.sign({ id: id, user: user, role: role }, secret, {
+        algorithm: "HS512",
         expiresIn: "6h"
     })
 }
