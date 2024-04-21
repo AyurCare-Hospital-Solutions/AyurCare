@@ -27,13 +27,18 @@ const LeaveType = () => {
   };
 
   const addLeaveType = async (data: any) => {
-    console.log(data);
-    const res = await axios.post("/api/hrms/leaveType", {
-      name: data.name,
-      hours: data.duration,
-    });
+    try {
+      const res = await axios.post("/api/hrms/leaveType", {
+        name: data.name,
+        hours: data.duration,
+      });
 
-    setRows([...rows, res.data]);
+      setRows([...rows, res.data]);
+      enqueueSnackbar("Leave type added successfully", { variant: "success" });
+    } catch (error) {
+      console.error("Error adding leave type:", error);
+      enqueueSnackbar("Error adding leave type", { variant: "error" });
+    }
   };
 
   const deleteLeaveType = async (id: number) => {
