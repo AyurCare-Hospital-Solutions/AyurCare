@@ -10,4 +10,6 @@ const LeaveType = sequelize.define(
   { timestamps: false }
 );
 
+//LeaveType.sync({ alter: true });
+
 module.exports = LeaveType;

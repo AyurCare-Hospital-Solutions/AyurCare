@@ -8,7 +8,14 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import { Assessment, Category, Dashboard, Event, Groups } from "@mui/icons-material";
+import {
+  Assessment,
+  Category,
+  ConfirmationNumber,
+  Dashboard,
+  Event,
+  Groups,
+} from "@mui/icons-material";
 
 const HRMS = () => {
   return (
@@ -23,8 +30,28 @@ const HRMS = () => {
           </ListItemButton>
         </ListItem>
       </Link>
-      <Divider sx={{mt: 2, mb:1}}/>
-      <Typography color="textSecondary" sx={{ fontWeight: 550, ml:-2, fontSize:"0.99rem", textAlign: "center"}}>Leave Management </Typography>
+      <Divider sx={{ mt: 2, mb: 1 }} />
+      <Typography
+        color="textSecondary"
+        sx={{
+          fontWeight: 550,
+          ml: -2,
+          fontSize: "0.99rem",
+          textAlign: "center",
+        }}
+      >
+        Leave Management{" "}
+      </Typography>
+      <Link to="myLeaveRequests">
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <ConfirmationNumber />
+            </ListItemIcon>
+            <ListItemText primary="My Leave Requests" />
+          </ListItemButton>
+        </ListItem>
+      </Link>
       <Link to="leaveRequests">
         <ListItem disablePadding>
           <ListItemButton>
@@ -39,14 +66,14 @@ const HRMS = () => {
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
-              <Category/>
+              <Category />
             </ListItemIcon>
             <ListItemText primary="Leave Types" />
           </ListItemButton>
         </ListItem>
       </Link>
-      <Divider sx={{mt: 2, mb:1}}/>
-      
+      <Divider sx={{ mt: 2, mb: 1 }} />
+
       <Link to="/HRMS/Dashboard">
         <ListItem disablePadding>
           <ListItemButton>
@@ -57,7 +84,7 @@ const HRMS = () => {
           </ListItemButton>
         </ListItem>
       </Link>
-      
+
       <Link to="/HRMS/Dashboard">
         <ListItem disablePadding>
           <ListItemButton>
@@ -72,4 +99,4 @@ const HRMS = () => {
   );
 };
 
-export default HRMS
+export default HRMS;
