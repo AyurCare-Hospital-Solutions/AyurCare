@@ -1,13 +1,22 @@
 import { RouteObject } from "react-router-dom";
 import Assessment from "./Assessment";
+import OPCMS_Home from "./OPCMS_Home";
 
-const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
-    name: "OCMS",
-    root: <p>OCMS</p>, // replace with main element
+const routes: { name: string, root: React.ReactNode, routes: RouteObject[] } = {
+    name: "OPCMS",
+    root: <p>OPCMS</p>, // replace with main element
     routes: [
         {
-            path:"assesment",
+            path: index,
+            
+        }
+        {
+            path:"assessment",
             element:<Assessment />
+        },
+        {
+            path:"OPCMS_Home",
+            element:<OPCMS_Home />
         }
     ],
 }
