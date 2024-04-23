@@ -4,6 +4,32 @@ const Staff = require("./Staff");
 const LeaveType = require("./LeaveType");
 
 const LeaveRequest = sequelize.define("LeaveRequests", {
+    reason: {
+        type: DataTypes.STRING
+    },
+    start_date: {
+        type: DataTypes.DATEONLY
+    },
+    end_date: {
+        type: DataTypes.DATEONLY
+    },
+    registration: {
+        type: DataTypes.STRING,
+        defaultValue: "pending",
+        validate: {
+            isIn: [["Full Day", "Part Day", "Multiple Day"]]
+        }
+    },
+    hours: {
+        type: DataTypes.REAL // possible to add decimals
+    },
+    status: {
+        type: DataTypes.STRING,
+        defaultValue: "pending",
+        validate: {
+            isIn: [["Approved", "Pending", "Rejected"]]
+        }
+    }
   reason: {
     type: DataTypes.STRING,
   },
