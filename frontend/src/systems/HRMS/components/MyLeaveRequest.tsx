@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import MyLeaveRequestTable from "./myLeaveRequest/MyLeaveRequestTable";
+import MyLeaveRequestDialog from "./myLeaveRequest/MyLeaveRequestDialog";
 
 const MyLeaveRequest = () => {
   return (
@@ -11,6 +12,7 @@ const MyLeaveRequest = () => {
         <Typography variant="body2" sx={{}}>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit.
         </Typography>
+        <MyLeaveRequestDialog />
       </Box>
       <MyLeaveRequestTable />
     </div>
