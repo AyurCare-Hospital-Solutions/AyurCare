@@ -6,8 +6,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import DatePicker from "@mui/lab/DatePicker";
-import dayjs from "dayjs";
+import { DatePicker } from "@mui/x-date-pickers";
 
 export default function MyLeaveRequestDialog() {
   const [open, setOpen] = React.useState(false);
@@ -46,12 +45,7 @@ export default function MyLeaveRequestDialog() {
             To subscribe to this website, please enter your email address here.
             We will send updates occasionally.
           </DialogContentText>
-
-          <DatePicker
-            label="Uncontrolled picker"
-            defaultValue={dayjs("2022-04-17")}
-          />
-
+          <DatePicker label="Basic date picker" />
           <TextField
             autoFocus
             required
