@@ -14,7 +14,6 @@ const validatePatientDetails = yup
     email: yup.string().min(5).max(50).email().required(),
     address: yup.string().min(5).max(255).required(),
   })
-  .strict()
   .noUnknown();
 
 // get the current date
@@ -54,9 +53,7 @@ async function createNewPatient(req, res) {
     // const { tracking_no, ...patientDetails } = req.body;
     await validatePatientDetails.validate(req.body);
     var patientDetails = validatePatientDetails.cast(req.body);
-    // console.log(patientDetails);
   } catch (validationError) {
-    // console.log(validationError);
     res.status(400).send({ msg: validationError.errors[0] });
     console.log(validationError.errors[0]);
     return;
@@ -145,7 +142,7 @@ async function updatePatientDetails(req, res) {
   // getting the patient id
   const id = Number.parseInt(req.params.id);
 
-  // check the patient id is null
+  // check the patient id is null not need
   if (id === null) {
     res.status(400).json({ msg: "Invalid patient id" });
     return;
@@ -227,7 +224,6 @@ async function getPatientCountPerDay(req, res) {
     },
   });
 
-  console.log(data);
   res.status(200).json(data.count);
 }
 

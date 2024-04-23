@@ -27,7 +27,7 @@ function ICMS() {
         </ListItem>
       </Link>
 
-      <Link to='/prs/patients'>
+      <Link to='/prs/patient-Admin'>
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>

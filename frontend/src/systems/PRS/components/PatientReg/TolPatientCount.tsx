@@ -8,7 +8,6 @@ export default function tolPatientCount() {
   // get the total number of patients from the database
   // state of the total number of patients
   const [totalPatients, setTotalPatients] = useState<number | null>(0);
-  console.log(totalPatients);
 
   //get the count
   const getTotalPatients = async () => {
@@ -59,7 +58,7 @@ export default function tolPatientCount() {
           </Box>
         </Typography>
         <Typography variant='h5' component='div'>
-          Today Patinet Count
+          Today Patient Count
         </Typography>
       </Box>
     </div>

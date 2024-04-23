@@ -6,20 +6,26 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import SendIcon from "@mui/icons-material/Send";
 import React, { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
-import { BASE_URL } from "../../config";
 import axios from "axios";
+import { enqueueSnackbar } from "notistack";
 
 // patient interface
 interface Patient {
+  id?: number;
   name: string;
   nic: string;
   phone: string;
   gender: string;
   email: string;
   address: string;
+  dob?: string;
 }
 
-export default function PatientRegForm() {
+export default function PatientRegForm({
+  patientDetails,
+}: {
+  patientDetails?: Patient;
+}) {
   // track the patient details
   const [patient, setPatient] = useState<Patient>({
     name: "",
@@ -39,7 +45,7 @@ export default function PatientRegForm() {
   };
 
   // handle form submission
-  const submitHandler = (e: React.FormEvent) => {
+  const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Ensure a date is selected before formatting
@@ -56,25 +62,39 @@ export default function PatientRegForm() {
       ...patient,
       dob: formattedDate,
     };
-    
-    try {
-      const res = await axios.post("/api/prss/create-patient", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(patientData),
-      });
 
-      const data = await res.json();
-      console.log(data);
+    try {
+      if (patientDetails) {
+        await axios.put(
+          `/api/prss/update-patient/${patientDetails.id}`,
+          patientData
+        );
+        enqueueSnackbar("Patient Updated Successfully", { variant: "success" });
+      } else {
+        const res = await axios.post("/api/prss/create-patient", patientData);
+        const data = res.data;
+        console.log(data);
+        enqueueSnackbar(data.msg, { variant: "success" });
+      }
+      // Reset the form after successful submission
+      setPatient({
+        name: "",
+        nic: "",
+        phone: "",
+        gender: "",
+        email: "",
+        address: "",
+      });
+      setadobValue(dayjs(null)); // Reset the date picker value
+
+      // Refresh the page after submitting the form
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }
   };
 
-    // console.log(patientData);
-  };
+  // console.log(patientData);
 
   // handle date change
   const [dobValue, setadobValue] = React.useState<Dayjs | null>(dayjs(null));
@@ -90,7 +110,13 @@ export default function PatientRegForm() {
     return () => clearInterval(interval);
   }, []);
 
-
+  // useEffect fot the fetcht the patient detials
+  useEffect(() => {
+    if (patientDetails) {
+      setPatient({ ...patientDetails });
+      setadobValue(dayjs(patientDetails.dob));
+    }
+  }, [patientDetails]);
 
   return (
     <div>

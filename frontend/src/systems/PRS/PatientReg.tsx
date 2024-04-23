@@ -1,6 +1,5 @@
 import RegForm from "./components/PatientReg/PatientRegForm";
 import RecentPatient from "./components/PatientReg/MostRecentPatient";
-import PatientTable from "./components/PatientReg/PatientTable";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 import Box from "@mui/material/Box";
 import TolPatientCount from "./components/PatientReg/TolPatientCount";
@@ -29,11 +28,6 @@ export default function PatientReg() {
           <Box height='auto' boxShadow={5} padding={2} borderRadius={2}>
             <TolPatientCount />
           </Box>
-        </Box>
-      </Grid>
-      <Grid xs={16}>
-        <Box boxShadow={5} padding={2} borderRadius={2}>
-          <PatientTable />
         </Box>
       </Grid>
     </Grid>

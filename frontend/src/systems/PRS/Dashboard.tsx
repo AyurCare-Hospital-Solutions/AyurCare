@@ -1,7 +1,8 @@
 import { Box, Grid, Typography } from "@mui/material";
 import dayjs from "dayjs";
 import AdvancedFormat from "dayjs/plugin/advancedFormat";
-import { LinkCard, WelcomeCard } from "../../components/DashbordCard";
+import { LinkCard } from "../../components/DashbordCard";
+import { WelcomeCard } from "./components/WelcomeCard";
 
 dayjs.extend(AdvancedFormat);
 
@@ -26,7 +27,7 @@ const Dashboard = () => {
             <LinkCard
               name='Patient Registration'
               desc='Add new patient to the system'
-              link='/prs/patients'
+              link='/prs/patient-Admin'
             ></LinkCard>
             <LinkCard
               name='Appointment Scheduling'
