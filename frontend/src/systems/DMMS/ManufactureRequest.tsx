@@ -5,7 +5,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import { useConfirm } from 'material-ui-confirm';
 import { enqueueSnackbar } from 'notistack';
-import ManufactureRequestTable from './ManuReqCom/ManufactureRequestTable';
+//import ManufactureRequestTable from './ManuReqCom/ManufactureRequestTable';
 
 function ManufactuureRequest() {
   const [reqMedicine, setReqMedicine] = useState<any>({});
