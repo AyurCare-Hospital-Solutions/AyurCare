@@ -1,7 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
 const Medicine = require("./Medicine");
-const Item = require("./Item");
 
 const ManufactureRequest = sequelize.define("ManufactureRequest", {
     amount: {
@@ -22,6 +21,6 @@ const ManufactureRequest = sequelize.define("ManufactureRequest", {
     }
 });
 
-ManufactureRequest.belongsTo(Item);
+ManufactureRequest.belongsTo(Medicine);
 
 module.exports = ManufactureRequest;

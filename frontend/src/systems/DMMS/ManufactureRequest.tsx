@@ -114,7 +114,7 @@ function ManufactuureRequest() {
       <Typography color='primary' align="center" variant="h5">
         Medicine Request Details
       </Typography>
-      <ManufactureRequestTable manufactureReqData={manufactureReqData} />
+
     </div>
   );
 }
