@@ -45,7 +45,7 @@ export default function MyLeaveRequestDialog() {
             To subscribe to this website, please enter your email address here.
             We will send updates occasionally.
           </DialogContentText>
-          <DatePicker label="Basic date picker" />
+          <DatePicker label="Test" />
           <TextField
             autoFocus
             required
