@@ -73,7 +73,6 @@ export default function PatientRegForm({
       } else {
         const res = await axios.post("/api/prss/create-patient", patientData);
         const data = res.data;
-        console.log(data);
         enqueueSnackbar(data.msg, { variant: "success" });
       }
       // Reset the form after successful submission

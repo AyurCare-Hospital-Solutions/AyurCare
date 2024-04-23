@@ -26,7 +26,9 @@ function createTrackingNumber(i) {
   const date = new Date();
 
   // check the month is 0
-  return `${date.getFullYear()}${"ABCDEFGHIJKL"[date.getMonth()]}${i}`;
+  return `${date.getFullYear()}${"ABCDEFGHIJKL"[date.getMonth()]}${String(
+    i
+  ).padStart(4, "0")}`;
 }
 
 // localhost:5000/api/prss/test
