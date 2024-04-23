@@ -5,9 +5,9 @@ const Medicine = require("../../model/Medicine");
 
 
 const requestValidator = yup.object({
-    amount : yup.number().integer().min(1).max(500).required(),
-    isPriority : yup.boolean().required(),
-    itemId : yup.number().integer().required(),
+    amount: yup.number().integer().min(1).max(500).required(),
+    isPriority: yup.boolean().required(),
+    MedicineId: yup.number().integer().required(),
 
 }).strict().noUnknown();
 
@@ -16,6 +16,8 @@ const requestValidator = yup.object({
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
+
+
 async function getRequests(req, res) {
     res.status(200).json(await ManufactureRequest.findAll());
 }
@@ -25,6 +27,8 @@ async function getRequests(req, res) {
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
+
+
 async function createRequest(req, res) {
     try {
         var data = await requestValidator.validate(req.body);
@@ -33,19 +37,19 @@ async function createRequest(req, res) {
         return;
     }
 
-    let medicine = await Medicine.findByPk(data.itemId);
-    if(medicine === null){
+    let medicine = await Medicine.findByPk(data.MedicineId);
+    if (medicine === null) {
         res.status(400).json({ msg: "Invalid Medicine Id" });
         return;
     }
 
     let requ = await ManufactureRequest.create({
-        amount:data.amount,
-        isPriority:data.isPriority,
-        itemId:data.itemId
+        amount: data.amount,
+        isPriority: data.isPriority,
+        MedicineId: data.MedicineId
     })
 
-    res.status(200).json({data:requ.toJSON()});
+    res.status(200).json({ data: requ.toJSON() });
 }
 
 
@@ -54,6 +58,8 @@ async function createRequest(req, res) {
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
+
+
 async function deleteRequest(req, res) {
     let reqId = Number.parseInt(req.params.id);
 
@@ -74,4 +80,4 @@ async function deleteRequest(req, res) {
     res.sendStatus(204);
 }
 
-module.exports = { getRequests, createRequest, deleteRequest}
+module.exports = { getRequests, createRequest, deleteRequest }
