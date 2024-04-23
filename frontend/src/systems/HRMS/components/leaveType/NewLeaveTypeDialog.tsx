@@ -7,10 +7,10 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import React, { useEffect } from "react";
 
-interface Errors {
-  nameError: string;
-  durationError: string;
-}
+// interface Errors {
+//   nameError: string;
+//   durationError: string;
+// }
 
 export default function LeaveTypeDialog({
   addLeaveType,

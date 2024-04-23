@@ -1,4 +1,4 @@
-import { Box, Button, Paper, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import LeaveTypeDialog from "./leaveType/NewLeaveTypeDialog";
 import axios from "axios";
 import LeaveTypeTable from "./leaveType/LeaveTypeTable";

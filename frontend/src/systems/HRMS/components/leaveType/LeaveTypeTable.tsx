@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -12,7 +11,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import UpdateLeaveTypeDialog from "./UpdateLeaveTypeDialog"; // Import the UpdateLeaveTypeDialog component
 import { LeaveTypeData } from "../../types";
-import { Box, Typography } from "@mui/material";
 
 export default function LeaveTypeTable({
   rows,

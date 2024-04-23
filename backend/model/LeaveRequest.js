@@ -4,29 +4,29 @@ const Staff = require("./Staff");
 const LeaveType = require("./LeaveType");
 
 const LeaveRequest = sequelize.define("LeaveRequests", {
-    reason: {
-        type: DataTypes.STRING
+  reason: {
+    type: DataTypes.STRING,
+  },
+  date: {
+    type: DataTypes.DATEONLY,
+  },
+  registration: {
+    type: DataTypes.STRING,
+    defaultValue: "Full Day",
+    validate: {
+      isIn: [["Full Day", "Part Day", "Multiple Day"]],
     },
-    date: {
-        type: DataTypes.DATEONLY
+  },
+  hours: {
+    type: DataTypes.REAL, // possible to add decimals
+  },
+  status: {
+    type: DataTypes.STRING,
+    defaultValue: "Pending",
+    validate: {
+      isIn: [["Approved", "Pending", "Rejected"]],
     },
-    registration: {
-        type: DataTypes.STRING,
-        defaultValue: "pending",
-        validate: {
-            isIn: [["Full Day", "Part Day", "Multiple Day"]]
-        }
-    },
-    hours: {
-        type: DataTypes.REAL // possible to add decimals
-    },
-    status: {
-        type: DataTypes.STRING,
-        defaultValue: "pending",
-        validate: {
-            isIn: [["Approved", "Pending", "Rejected"]]
-        }
-    }
+  },
 });
 
 LeaveRequest.belongsTo(Staff);

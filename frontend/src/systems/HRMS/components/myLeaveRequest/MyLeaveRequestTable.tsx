@@ -143,9 +143,11 @@ export default function MyLeaveRequestTable() {
       <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
         <TableHead>
           <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
+            <TableCell>Leave ID</TableCell>
+            <TableCell align="right">Reason</TableCell>
+            <TableCell align="right">Type</TableCell>
+            <TableCell align="right">Hours</TableCell>
+            <TableCell align="right">Status</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
