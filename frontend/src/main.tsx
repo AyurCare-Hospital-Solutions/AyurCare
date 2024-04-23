@@ -37,5 +37,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         </SnackbarProvider>
       </LocalizationProvider>
     </ThemeProvider>
-  </React.StrictMode >,
+  </React.StrictMode >
 )
