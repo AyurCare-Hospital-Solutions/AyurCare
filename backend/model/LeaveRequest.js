@@ -7,7 +7,10 @@ const LeaveRequest = sequelize.define("LeaveRequests", {
     reason: {
         type: DataTypes.STRING
     },
-    date: {
+    start_date: {
+        type: DataTypes.DATEONLY
+    },
+    end_date: {
         type: DataTypes.DATEONLY
     },
     registration: {
