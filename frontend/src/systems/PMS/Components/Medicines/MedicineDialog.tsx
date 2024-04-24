@@ -4,9 +4,8 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import MedicineList from "./MedicinceList";
+
 import axios from "axios";
 
 const baseURL = "/api/pms/";

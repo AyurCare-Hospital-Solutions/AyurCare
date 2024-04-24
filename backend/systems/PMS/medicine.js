@@ -142,7 +142,6 @@ async function changeStockLevel(req, res) {
  * @param {express.Response} res
  */
 async function getInventoryMedicine(req, res) {
-  console.log("getting");
   const inventoryMedicine = await Medicine.findAll({
     include: Item,
   });
@@ -166,8 +165,19 @@ async function setPharmacyMadicine(req, res) {
     res.status(404).send("medicine not found!");
     return;
   }
+}
 
-  //PharmacyMedicine.create();
+// Call the count method on the Medicine model
+
+// //GET TOTAL MEDICINE COUNT
+/**
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+async function getTotalMedicinesCount(req, res) {
+  const sum = await PharmacyMedicine.count();
+  res.status(200).json({ count: sum });
 }
 
 module.exports = {
@@ -177,4 +187,5 @@ module.exports = {
   changeStockLevel,
   getInventoryMedicine,
   setPharmacyMadicine,
+  getTotalMedicinesCount,
 };

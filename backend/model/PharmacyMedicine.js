@@ -2,8 +2,7 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
 const Medicine = require("./Medicine");
 
-// (table name, )
-// (table name, )
+
 const PharmacyMedicine = sequelize.define("PharmacyMedicine", {
   // column name
   amount: {

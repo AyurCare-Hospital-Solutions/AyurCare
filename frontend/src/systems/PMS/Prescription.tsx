@@ -1,10 +1,12 @@
 import React from "react";
-import PrescriptionTable from "./Components/PrescriptionTable";
+import PrescriptionTable from "../PMS/Pages/PrescriptionManagement";
 
 const Prescription = () => {
-  return <>
-  <PrescriptionTable />
-  </>;
+  return (
+    <>
+      <PrescriptionTable />
+    </>
+  );
 };
 
 export default Prescription;
