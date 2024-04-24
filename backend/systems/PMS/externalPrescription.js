@@ -1,7 +1,7 @@
 const express = require("express");
-const externalPrescription = require("../../model/ExternalPresciption");
+const externalPrescription = require("../../model/ExternalPresription");
 const userConcern = require("../../model/userConcern");
-const ExternalPrescription = require("../../model/ExternalPresciption");
+const ExternalPrescription = require("../../model/ExternalPresription");
 
 /**
  *

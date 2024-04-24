@@ -1,7 +1,7 @@
 const { DataTypes, ENUM } = require("sequelize");
 const { sequelize } = require(".");
 
-const ExternalPrescription = sequelize.define("ExternalPrescription", {
+const ExternalPresription = sequelize.define("ExternalPrescription", {
     name: DataTypes.STRING(100),
     age: DataTypes.NUMBER(),
     phone: DataTypes.STRING(14),
@@ -12,4 +12,4 @@ const ExternalPrescription = sequelize.define("ExternalPrescription", {
     status: { type: ENUM, values: ['pending', 'rejected', 'approved'], defaultValue: 'pending' }
 });
 
-module.exports = ExternalPrescription;
+module.exports = ExternalPresription;
