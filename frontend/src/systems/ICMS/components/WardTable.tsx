@@ -2,17 +2,18 @@ import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHe
 import TableLoader from "../../../components/TableLoader";
 import { useMemo } from "react";
 import { DeleteForever, Edit } from "@mui/icons-material";
-import { ward } from "../types";
+import { Ward } from "../types";
 
 
 
-
-const WardTable = ({ data, search, onRename, onDelete }: {
-    data: ward[] | undefined,
+const WardTable = ({ data, loading, search, onRename, onDelete }: {
+    data: Ward[],
     search: string | undefined,
-    onDelete: (v: ward) => unknown
-    onRename: (v: ward) => unknown
+    loading: boolean
+    onDelete: (v: Ward) => unknown
+    onRename: (v: Ward) => unknown
 }) => {
+
     const rows = useMemo(() => {
         if (search) {
             let filter = RegExp(search);
@@ -37,7 +38,7 @@ const WardTable = ({ data, search, onRename, onDelete }: {
                 </TableHead>
                 <TableBody>
                     {
-                        rows ? rows.map(v => {
+                        loading ? <TableLoader columns={3} /> : rows.map(v => {
                             return <TableRow key={v.id}>
                                 <TableCell >{v.id.toString()}</TableCell>
                                 <TableCell>{v.name}</TableCell>
@@ -56,11 +57,11 @@ const WardTable = ({ data, search, onRename, onDelete }: {
                                     </IconButton>
                                 </TableCell>
                             </TableRow>
-                        }) : <TableLoader columns={3} />
+                        })
                     }
 
                     {
-                        rows && rows.length == 0 ? <TableRow>
+                        !loading && rows.length == 0 ? <TableRow>
                             <TableCell colSpan={3}>No records found</TableCell>
                         </TableRow> : undefined
                     }

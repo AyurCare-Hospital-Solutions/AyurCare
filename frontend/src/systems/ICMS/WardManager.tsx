@@ -7,20 +7,22 @@ import SearchInput from "./components/SearchInput";
 import { enqueueSnackbar } from "notistack";
 import { useConfirm } from "material-ui-confirm";
 import WardDialog from "./components/WardDialog";
-import { ward } from "./types";
+import { Ward, WardArraySchema } from "./types";
 
-const Ward = () => {
-    const [wards, setWards] = useState<any>(undefined);
-    const [search, setSearch] = useState<string | undefined>(undefined);
+const WardManager = () => {
+    const [wards, setWards] = useState<Ward[]>([]);
+    const [search, setSearch] = useState<string>();
     const [modalOpen, setModalOpen] = useState(false);
     const [modalRenameOpen, setModalRenameOpen] = useState(false);
-    const [editWard, setEditWard] = useState<ward | undefined>(undefined);
+    const [editWard, setEditWard] = useState<Ward>();
+    const [loading, setLoading] = useState<boolean>(true);
 
     const confirm = useConfirm();
 
     useEffect(() => {
         axios.get("/api/icms/ward").then((res) => {
-            setTimeout(() => setWards(res.data), 1000);
+            const data = WardArraySchema.cast(res.data);
+            setTimeout(() => { setWards(data); setLoading(false) }, 500);
         })
     }, []);
 
@@ -54,11 +56,11 @@ const Ward = () => {
         }
     }
 
-    const onWardDeleteClick = async (v: ward) => {
+    const onWardDeleteClick = async (v: Ward) => {
         await confirm({ description: `This will permanently delete ward ${v.name}.` });
         try {
             await axios.delete(`/api/icms/ward/${v.id}`);
-            setWards(wards.filter((i: ward) => i.id != v.id));
+            setWards(wards.filter((i: Ward) => i.id != v.id));
             enqueueSnackbar("Ward deleted successfully", { variant: "success" });
         } catch (e) {
             enqueueSnackbar("Failed to delete ward", { variant: "error" });
@@ -66,7 +68,7 @@ const Ward = () => {
         }
     }
 
-    const onWardRenameClick = (v: ward) => {
+    const onWardRenameClick = (v: Ward) => {
         setEditWard(v);
         setModalRenameOpen(true);
     }
@@ -85,7 +87,7 @@ const Ward = () => {
         </Box>
 
         <Box mx={2} mt={4}>
-            <WardTable data={wards} search={search} onDelete={onWardDeleteClick} onRename={onWardRenameClick}></WardTable>
+            <WardTable data={wards} loading={loading} search={search} onDelete={onWardDeleteClick} onRename={onWardRenameClick}></WardTable>
         </Box >
 
         <WardDialog
@@ -107,4 +109,4 @@ const Ward = () => {
     </>
 }
 
-export default Ward;
+export default WardManager;

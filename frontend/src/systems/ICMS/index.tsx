@@ -1,6 +1,6 @@
 import { RouteObject } from "react-router-dom";
 import ICMS from "./ICMS";
-import Ward from "./Ward";
+import WardManager from "./WardManager";
 import Dashboard from "./Dashboard";
 import PatientDetails from "./PatientDetails";
 import PatientList from "./PatientList";
@@ -11,7 +11,7 @@ const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
     routes: [
         {
             path: "wards",
-            element: <Ward />
+            element: <WardManager />
         },
         {
             element: <Dashboard />,

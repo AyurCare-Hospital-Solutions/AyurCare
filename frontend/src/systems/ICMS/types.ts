@@ -1,9 +1,14 @@
 import { InferType, array, date, number, object, string } from "yup";
 
-export interface ward {
-    id: number,
-    name: string,
-}
+export const WardSchema = object({
+    id: number().required(),
+    name: string().required(),
+});
+
+export const WardArraySchema = array(WardSchema).required();
+
+export type Ward = InferType<typeof WardSchema>
+
 
 const AdmissionSchema = object({
     id: number().required(),
