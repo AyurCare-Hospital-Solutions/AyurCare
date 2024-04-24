@@ -2,6 +2,7 @@ const express = require("express");
 const yup = require("yup");
 const ManufactureRequest = require("../../model/ManufactureRequest");
 const Medicine = require("../../model/Medicine");
+const Item = require("../../model/Item");
 
 
 const requestValidator = yup.object({
@@ -19,7 +20,7 @@ const requestValidator = yup.object({
 
 
 async function getRequests(req, res) {
-    res.status(200).json(await ManufactureRequest.findAll());
+    res.status(200).json(await ManufactureRequest.findAll({ include: { model: Medicine, include: Item } }));
 }
 
 /**

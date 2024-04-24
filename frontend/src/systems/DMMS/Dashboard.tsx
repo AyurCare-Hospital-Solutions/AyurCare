@@ -1,46 +1,37 @@
-import { Box, Grid, Paper, Typography } from "@mui/material";
-import dayjs from "dayjs";
-import AdvancedFormat from "dayjs/plugin/advancedFormat";
-import { DateCard, LinkCard, WelcomeCard } from "../../components/DashboardCards";
+import { Box, Button, Stack, Typography } from '@mui/material'
+import { DateCard, LinkCard, WelcomeCard } from '../../components/DashboardCards'
 
-dayjs.extend(AdvancedFormat)
-
-
-const cardStyle = { display: "flex", px: "16px", py: "12px" }
-
-
-const Dashboard = () => {
-    return <>
-        <Grid container spacing={2} justifyContent="space-evenly">
-            <Grid item xs={12}>
-                <Box sx={{ my: 2.5, mx: 2, color: "#003a2b" }} >
-                    <Typography variant="h4" >Welcome to</Typography>
-                    <Typography variant="h5" sx={{ pl: 4 }}>Drug Manufacturing Management Dashboard</Typography>
+function Dashboard() {
+    return (
+        <div>
+            <Typography variant="h4" align="center" color="primary" >Drug Manufacturing Managment System</Typography>
+            <Box
+                m={5}
+                sx={{ display: 'flex' }}
+            >
+                <Box mr={4} sx={{ flexGrow: 1 }}><WelcomeCard img="/assets/IMSimg.svg" /></Box>
+                <Box>
+                    <DateCard />
                 </Box>
-            </Grid>
-            <Grid item xs={5}>
-                <WelcomeCard img="/assets/ICMS-dash-icon.svg" />
-            </Grid>
-            <Grid item xs={5}>
-                <DateCard />
-            </Grid>
-            <Grid item xs={6}>
-                <Paper sx={{ ...cardStyle }}>
-                    Waiting list
-                </Paper>
-            </Grid>
-            <Grid item xs={4}>
+            </Box>
+            <Box width="100%">
+                <Stack direction="row" spacing={6} alignItems="center" justifyContent="center" >
+                    <Box>
+                        <LinkCard name={"New Orders"} desc={""} link={"./medicine"} />
+                    </Box>
+                    <Box>
+                        <LinkCard name={"Production Table"} desc={""} link={"./material"} />
+                    </Box>
+                    <Box>
+                        <LinkCard name={"Manufacturing Data"} desc={""} link={"./accessories"} />
+                    </Box>
+                    <Box>
+                        <LinkCard name={"Reports"} desc={""} link={"./accessories"} />
+                    </Box>
+                </Stack>
+            </Box>
+        </div>
+    )
+}
 
-                <Box flexGrow="3" display="flex" flexDirection="column" >
-                    <LinkCard name="Care Plans" desc="View Patient Care Plans" link="/icms/care_plan"></LinkCard>
-                    <LinkCard name="Nursing Logs" desc="View Nursing Logs" link="/icms/nursing_log"></LinkCard>
-                    <LinkCard name="Reports" desc="Generate Reports" link="/icms/reports"></LinkCard>
-
-                </Box>
-            </Grid>
-
-        </Grid >
-    </>
-};
-
-export default Dashboard;
+export default Dashboard

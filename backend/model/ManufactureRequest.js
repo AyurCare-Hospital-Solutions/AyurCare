@@ -16,11 +16,11 @@ const ManufactureRequest = sequelize.define("ManufactureRequest", {
         type: DataTypes.STRING,
         defaultValue: "Pending",
         validate: {
-            isIn: [["Success", "Pending", "Reject"]]
+            isIn: [["Completed", "Pending", "Rejected", "In Progress", "Manufacture Error"]]
         }
     }
 });
 
 ManufactureRequest.belongsTo(Medicine);
-
+ManufactureRequest.sync({ alter: true })
 module.exports = ManufactureRequest;

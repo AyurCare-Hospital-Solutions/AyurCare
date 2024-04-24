@@ -17,7 +17,7 @@ const style = {
     p: 4,
 };
 
-export default function ManufactureRequestModal({ open, handleClose, updateRequest, updateStatus, deleteManufactureRequest }: { open: boolean, handleClose: () => any, updateRequest: any, updateStatus: (arg1: number, arg2: string) => any, deleteManufactureRequest: (arg: number) => any }) {
+export default function ManufactureRequestModal({ open, handleClose, updateRequest, updateStatus: updateProgress, deleteManufactureRequest }: { open: boolean, handleClose: () => any, updateRequest: any, updateStatus: (arg1: number, arg2: string) => any, deleteManufactureRequest: (arg: number) => any }) {
     const [request, setRequest] = useState<any>();
     useEffect(() => {
         setRequest(updateRequest);
@@ -37,23 +37,22 @@ export default function ManufactureRequestModal({ open, handleClose, updateReque
                         Update Manufacture Request
                     </Typography>
                     <Typography variant="h6" >
-                        ID : {request?.id}
+                        Order ID : {request?.id}
                     </Typography>
                     <Typography variant="h6" >
-                        ID : {request?.Medicine?.Item?.name}
+                        Medicine Name : {request?.Medicine?.Item?.name}
                     </Typography>
                     <Typography variant="h6" >
-                        Status : {request?.status}
+                        Progress : {request?.Progress}
+                    </Typography>
+                    <Typography variant='h6'>
+                        Priority : {request?.priority}
                     </Typography>
                     <Stack mt={5} alignContent="center" direction="row" spacing={4}>
                         <Button sx={{ backgroundColor: "#4aee78" }} variant="contained" onClick={() => {
-                            updateStatus(request.id, "Accepted");
+                            updateProgress(request.id, "Accepted");
                             handleClose();
-                        }}>Accept</Button>
-                        <Button sx={{ backgroundColor: "#ff7979" }} variant="contained" onClick={() => {
-                            updateStatus(request.id, "Rejected");
-                            handleClose();
-                        }} >Reject</Button>
+                        }}>Save Changes</Button>
                         <Button variant="outlined" onClick={() => {
                             handleClose();
                         }}>Cancel</Button>

@@ -5,7 +5,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import { useConfirm } from 'material-ui-confirm';
 import { enqueueSnackbar } from 'notistack';
-//import ManufactureRequestTable from './ManuReqCom/ManufactureRequestTable';
+import ManufactureRequestTable from './ManuReqCom/ManufactureRequestTable';
 
 function ManufactuureRequest() {
   const [reqMedicine, setReqMedicine] = useState<any>({});
@@ -21,8 +21,8 @@ function ManufactuureRequest() {
     })
   }
 
-  const [manufactureReqData, setManufactureReqData] = useState<any>([]);
-  // fetch medicine request data
+  const [ManufactureReqData, setManufactureReqData] = useState<any>([]);
+  // fetch Manufacture request data
   const getManufactureRequestData = async () => {
     await axios.get('api/dmms/request').then((res) => {
       console.log(res.data);
@@ -52,11 +52,12 @@ function ManufactuureRequest() {
     }
     confirm({ description: "Confirm manufacture request" })
       .then(async () => {
-        await axios.post('api/dmms/request', { MedicineId: reqMedicine, amount: reqAmount, isPriority: priority })
+        await axios.post('api/dmms/request', { MedicineId: reqMedicine, amount: reqAmount, isPriority: Boolean(priority) })
           .then((res) => {
             enqueueSnackbar("Medicine Request Added Successfuly...", { variant: "success" });
             console.log(res);
             getManufactureRequestData();
+            setReqAmout(0);
           })
           .catch((err) => {
             enqueueSnackbar("Failed to Add Medicine Request...", { variant: "error" });
@@ -88,7 +89,7 @@ function ManufactuureRequest() {
           id="combo-box-demo"
           options={medicineNames}
           sx={{ width: 300 }}
-          onChange={(e, v: any) => setReqMedicine(v.medicine.id)}
+          onChange={(_e, v: any) => setReqMedicine(v.medicine.id)}
           renderInput={(params) => <TextField {...params} label="Medicine" />}
         />
         <TextField type="number" id="outlined-basic" label="Amount" variant="outlined" onChange={(e) => {
@@ -112,11 +113,13 @@ function ManufactuureRequest() {
         <Button variant="contained" color="primary" type='submit'>Add Request</Button>
       </Box>
       <Typography color='primary' align="center" variant="h5">
-        Medicine Request Details
+        Manufacture Request Details
       </Typography>
+
+      <ManufactureRequestTable manufactureReqData={ManufactureReqData} />
 
     </div>
   );
 }
 
-export default ManufactuureRequest
+export default ManufactuureRequest;

@@ -1,4 +1,4 @@
-import { Assessment, Bed, Dashboard,  House } from '@mui/icons-material';
+import { Assessment, Bed, Dashboard, House } from '@mui/icons-material';
 import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { Link } from 'react-router-dom'
 import DashboardPage from '../../components/DashboardPage';
@@ -7,7 +7,7 @@ import DashboardPage from '../../components/DashboardPage';
 function DMMS() {
     return (
         <DashboardPage>
-            <Link to="/dmms/Dashboard">
+            <Link to="/dmms/">
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
@@ -18,24 +18,24 @@ function DMMS() {
                 </ListItem>
             </Link>
 
-            <Link to="/dmms/ManufacturingRequestModel">
+            <Link to="/dmms/reqMedicine">
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
                             < House />
                         </ListItemIcon>
-                        <ListItemText primary="ManufactureTable" />
+                        <ListItemText primary="Manufacture Request" />
                     </ListItemButton>
                 </ListItem>
             </Link>
 
-            <Link to="/dmms/ManufactureRequestTable">
+            <Link to="/dmms/mgMedicine">
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
                             <Bed />
                         </ListItemIcon>
-                        <ListItemText primary="Metirials Request" />
+                        <ListItemText primary="Manage Requests" />
                     </ListItemButton>
                 </ListItem>
             </Link>

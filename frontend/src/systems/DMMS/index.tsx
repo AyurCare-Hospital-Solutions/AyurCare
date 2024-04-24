@@ -1,6 +1,8 @@
 import { RouteObject } from "react-router-dom";
 import DMMS from "./DMMS";
 import ManufactureRequest from "./ManufactureRequest";
+import ManageManufactureRequest from "./ManageManufactureRequest";
+import Dashboard from "../DMMS/Dashboard";
 
 const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
 
@@ -9,18 +11,17 @@ const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
     routes: [
         {
             index: true,
-            element: <DMMS />
+            element: <Dashboard />
         },
-        /*
-        {
-            path: "manufactureRequest",
-            element: <ManufactureRequest />
-        },
-        */
 
         {
             path: "reqMedicine",
             element: <ManufactureRequest />
+        },
+
+        {
+            path: "mgMedicine",
+            element: <ManageManufactureRequest />
         },
 
     ],
