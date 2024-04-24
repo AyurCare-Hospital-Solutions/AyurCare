@@ -28,7 +28,7 @@ const AdmissionSchema = object({
 
 export const AdmissionListSchema = array(AdmissionSchema).required();
 
-const CarePlanSchema = object({
+export const CarePlanSchema = object({
     id: number().required(),
     condition: string().required(),
     diagnosis: string().required(),

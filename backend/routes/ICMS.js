@@ -11,6 +11,7 @@ router.delete("/ward/:id", wardService.deleteWard);
 const carePlanService = require("../systems/ICMS/careplan");
 
 router.get("/careplan/:pid", carePlanService.getCarePlan);
+router.post("/careplan/:aid", carePlanService.createCarePlan);
 
 const nursingLogService = require("../systems/ICMS/nursinglog");
 

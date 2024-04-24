@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import PatientInfo from "./components/PatientInfo";
-import { NursingLog, NursingLogSchema, PatientRecord, PatientRecordSchema } from "./types";
+import { CarePlan, CarePlanSchema, NursingLog, NursingLogSchema, PatientRecord, PatientRecordSchema, } from "./types";
 import axios from "axios";
 import CarePlanInfo from "./components/CarePlanInfo";
 import NursingLogView from "./components/NursingLogView";
@@ -42,6 +42,8 @@ const PatientDetails = () => {
 
     const [patientInfo, setPatientInfo] = useState<PatientRecord>();
     const [nursingLog, setNursingLog] = useState<NursingLog>();
+    const [NLModalOpen, setNLModalOpen] = useState(false);
+    const [page, setPage] = useState(0);
     const navigate = useNavigate();
     const confirm = useConfirm();
 
@@ -70,10 +72,6 @@ const PatientDetails = () => {
         }
     }, [patientInfo]);
 
-    const [page, setPage] = useState(0);
-
-
-    const handlePageChange = (_: any, newPage: number) => setPage(newPage);
 
     const submitNLMessage = async (log: string) => {
         if (nursingLog === undefined) {
@@ -108,7 +106,22 @@ const PatientDetails = () => {
 
     }
 
-    const [NLModalOpen, setNLModalOpen] = useState(false);
+    const updateCarePlan = async (carePlan: CarePlan) => {
+        if (!patientInfo) {
+            return;
+        }
+
+        try {
+            const res = await axios.post(`/api/icms/careplan/${patientInfo.admission.id}`, carePlan);
+            let newCarePlan = CarePlanSchema.cast(res.data);
+            setPatientInfo({ ...patientInfo, carePlan: newCarePlan })
+            enqueueSnackbar("Successfully added care plan ", { variant: "success" });
+        } catch (e) {
+            console.log(e);
+            enqueueSnackbar("Failed to add care plan", { variant: "error" });
+        }
+    }
+
 
 
 
@@ -123,7 +136,7 @@ const PatientDetails = () => {
 
         <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={page} onChange={handlePageChange}>
+                <Tabs value={page} onChange={(_: any, newPage: number) => { setPage(newPage) }}>
                     <Tab label="Details" />
                     <Tab label="Care Plan" />
                     <Tab label="Nursing Logs" />
@@ -133,7 +146,7 @@ const PatientDetails = () => {
                 <PatientInfo admission={patientInfo?.admission} />
             </TabPanel>
             <TabPanel value={page} index={1}>
-                <CarePlanInfo data={patientInfo?.carePlan} />
+                <CarePlanInfo data={patientInfo?.carePlan} onEdit={updateCarePlan} />
             </TabPanel>
             <TabPanel value={page} index={2}>
                 <NursingLogView data={nursingLog} onAdd={() => {
