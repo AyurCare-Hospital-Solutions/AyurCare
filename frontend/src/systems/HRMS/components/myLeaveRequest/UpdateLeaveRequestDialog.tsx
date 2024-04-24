@@ -17,17 +17,32 @@ import {
   Switch,
 } from "@mui/material";
 
-export default function MyLeaveRequestDialog({
+export default function UpdateLeaveRequestDialog({
   open,
   onClose,
+  leaveRequestData, // Existing leave request data to pre-fill the form
 }: {
   open: boolean;
   onClose: () => void;
+  leaveRequestData: any; // Data of the leave request being updated
 }) {
   const [isFullDay, setIsFullDay] = React.useState(true);
   const [isMultipleDays, setIsMultipleDays] = React.useState(false);
-  const [leaveType, setLeaveType] = React.useState<string>("");
+  const [leaveType, setLeaveType] = React.useState<string>(
+    leaveRequestData.leaveType || ""
+  );
   const [availableLeaves, setAvailableLeaves] = React.useState<number>(0);
+
+  // Pre-fill the form fields when the leave request data changes
+  React.useEffect(() => {
+    if (leaveRequestData.leaveType === "Annual") {
+      setAvailableLeaves(20);
+    } else if (leaveRequestData.leaveType === "Sick") {
+      setAvailableLeaves(10);
+    } else {
+      setAvailableLeaves(0); // Default value
+    }
+  }, [leaveRequestData]);
 
   const handleFullDayChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsFullDay(event.target.checked);
@@ -47,7 +62,6 @@ export default function MyLeaveRequestDialog({
   ) => {
     setLeaveType(event.target.value as string);
     // Set available leaves based on selected leave type
-    // For demonstration purpose, I'm setting a fixed value, you may fetch it from an API
     if (event.target.value === "Annual") {
       setAvailableLeaves(20);
     } else if (event.target.value === "Sick") {
@@ -76,10 +90,10 @@ export default function MyLeaveRequestDialog({
           },
         }}
       >
-        <DialogTitle>Request Leaves</DialogTitle>
+        <DialogTitle>Update Leave Request</DialogTitle>
         <DialogContent style={{ display: "flex", flexDirection: "column" }}>
           <DialogContentText>
-            To request for a leave, please provide the following details.
+            To update the leave request, please modify the following details.
           </DialogContentText>
           <TextField
             autoFocus
@@ -89,6 +103,7 @@ export default function MyLeaveRequestDialog({
             label="Leave Reason"
             type="text"
             variant="standard"
+            defaultValue={leaveRequestData.leaveReason}
           />
           <Box
             sx={{
@@ -133,22 +148,20 @@ export default function MyLeaveRequestDialog({
           >
             <Box sx={{ flexGrow: 1, mr: 1 }}>
               <FormControl sx={{ minWidth: 300 }}>
-                <InputLabel id="demo-simple-select-helper-label">
-                  Type
-                </InputLabel>
+                <InputLabel id="leave-type-label">Type</InputLabel>
                 <Select
-                  labelId="demo-simple-select-helper-label"
-                  id="demo-simple-select-helper"
-                  //value={age}
-                  label="Age"
-                  //onChange={handleChange}
+                  labelId="leave-type-label"
+                  id="leave-type-select"
+                  value={leaveType}
+                  //onChange={handleLeaveTypeChange}
+                  label="Type"
                 >
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value="Annual">Annual</MenuItem>
+                  <MenuItem value="Sick">Sick</MenuItem>
+                  {/* Add more leave types here */}
                 </Select>
               </FormControl>
             </Box>
@@ -163,7 +176,7 @@ export default function MyLeaveRequestDialog({
               variant="standard"
               InputProps={{
                 readOnly: true,
-                disabled: true, // make it look deactivated
+                disabled: true,
               }}
             />
           </Box>
@@ -174,8 +187,13 @@ export default function MyLeaveRequestDialog({
               mt: 3,
             }}
           >
-            <DatePicker label={isMultipleDays ? "Start Date" : "Date"} />
-            {isMultipleDays && <DatePicker label="End Date" />}
+            <DatePicker
+              label={isMultipleDays ? "Start Date" : "Date"}
+              value={leaveRequestData.startDate}
+            />
+            {isMultipleDays && (
+              <DatePicker label="End Date" value={leaveRequestData.endDate} />
+            )}
           </Box>
           {!isFullDay && (
             <TextField
@@ -187,12 +205,13 @@ export default function MyLeaveRequestDialog({
               type="text"
               variant="standard"
               sx={{ mt: 3 }}
+              defaultValue={leaveRequestData.hours}
             />
           )}
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose}>Cancel</Button>
-          <Button type="submit">Request Leave</Button>
+          <Button type="submit">Update Leave</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
