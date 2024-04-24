@@ -5,17 +5,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { DatePicker, MonthCalendar } from "@mui/x-date-pickers";
-import {
-  Autocomplete,
-  Box,
-  FormControl,
-  FormControlLabel,
-  InputLabel,
-  MenuItem,
-  Select,
-  Switch,
-} from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers";
+import { Autocomplete, Box, FormControlLabel, Switch } from "@mui/material";
 import { LeaveTypeData } from "../../types";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import axios from "axios";
@@ -38,7 +29,7 @@ export default function MyLeaveRequestDialog({
 }) {
   const [isFullDay, setIsFullDay] = useState(true);
   const [isMultipleDays, setIsMultipleDays] = useState(false);
-  const [availableLeaves, setAvailableLeaves] = useState<number>(0);
+  const [availableLeaves] = useState<number>(0);
   const [leaveTypes, setLeaveTypes] = useState<LeaveTypeData[]>([]);
   const [formData, setFormData] = useState<FormData>({
     leaveType: null,
@@ -87,16 +78,14 @@ export default function MyLeaveRequestDialog({
               type: formData.leaveType?.id,
               reason: formData.leaveReason,
               startDate: formData.startDate,
-              registration: "Full Day",
+              registration: isMultipleDays
+                ? "Multiple Days"
+                : isFullDay
+                ? "Full Day"
+                : "Part Day",
               endDate: formData.endDate,
-              hours: formData.hours,
+              hours: formData.hours ? Number.parseFloat(formData.hours) : null,
             });
-            // type: yup.number().required(),
-            // reason: yup.string().required(),
-            // date: yup.date().required(),
-            // registration: yup.string().required(),
-            // hours: yup.number().required(),
-            // status: yup.string().required(),
             onClose();
           },
         }}
@@ -163,7 +152,7 @@ export default function MyLeaveRequestDialog({
             <Box sx={{ flexGrow: 1, mr: 1 }}>
               <Autocomplete
                 options={leaveTypes}
-                onChange={(e, value) => {
+                onChange={(_e, value) => {
                   setFormData({ ...formData, leaveType: value });
                 }}
                 renderInput={(params) => (
@@ -216,6 +205,10 @@ export default function MyLeaveRequestDialog({
               type="text"
               variant="standard"
               sx={{ mt: 3 }}
+              onChange={(e) =>
+                setFormData({ ...formData, hours: e.target.value })
+              }
+              value={formData.hours}
             />
           )}
         </DialogContent>

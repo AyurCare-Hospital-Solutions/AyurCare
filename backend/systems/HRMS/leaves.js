@@ -2,12 +2,13 @@ const LeaveRequest = require("../../model/LeaveRequest");
 const express = require("express");
 const yup = require("yup");
 const { getUserID } = require("../../middleware/auth");
+const LeaveType = require("../../model/LeaveType");
 const leaveRequestValidator = yup
   .object({
     type: yup.number().required(),
     reason: yup.string().required(),
     startDate: yup.date().required(),
-    endDate: yup.date().required(),
+    endDate: yup.date().required().nullable(),
     registration: yup.string().required(),
     hours: yup.number().required().nullable(),
   })
@@ -56,9 +57,11 @@ const createLeaveRequest = async (req, res) => {
   }
 
   let leaveRequest = await LeaveRequest.create({
-    type: data.type,
+    //TODO: leave type id is in the DB
+    LeaveTypeId: data.type,
     reason: data.reason,
-    date: data.date,
+    start_date: data.startDate,
+    end_date: data.endDate,
     registration: data.registration,
     hours: data.hours,
     status: data.status,
@@ -130,7 +133,10 @@ const deleteLeaveRequest = async (req, res) => {
 const getLeaveRequestByUser = async (req, res) => {
   const userId = getUserID(res);
 
-  let leaveRequest = await LeaveRequest.findAll({ where: { StaffId: userId } });
+  let leaveRequest = await LeaveRequest.findAll({
+    where: { StaffId: userId },
+    include: LeaveType,
+  });
   if (leaveRequest === null) {
     res.status(404).json({ message: "Leave request not found" });
     return;
