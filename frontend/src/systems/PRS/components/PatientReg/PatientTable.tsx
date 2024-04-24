@@ -12,8 +12,10 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { Box, ThemeProvider } from "@mui/material";
+import QueueIcon from "@mui/icons-material/Queue";
+import { Box, ThemeProvider, Tooltip } from "@mui/material";
 import PatientRegForm from "./PatientRegForm";
+import { enqueueSnackbar } from "notistack";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -46,29 +48,64 @@ function DataGridTest() {
     { field: "nic", headerName: "NIC", width: 150 },
     { field: "gender", headerName: "Gender", width: 90 },
     { field: "phone", headerName: "Phone", width: 150 },
-    // { field: "email", headerName: "Email", width: 150 },
     {
-      field: "actions",
+      field: "add_to_Appointment_list",
+      headerName: "Add to List",
+      align: "center",
       width: 150,
       renderCell: (params) => [
-        <GridActionsCellItem
-          icon={<MoreIcon />}
-          label='View_More'
-          onClick={() => handleClickMoreDetails(params.row.id)}
-        />,
-        <GridActionsCellItem
-          icon={<EditIcon />}
-          label='Edit'
-          onClick={() => handleClickEdit(params.row.id)}
-        />,
-        <GridActionsCellItem
-          icon={<DeleteIcon />}
-          label='Delete'
-          onClick={() => handleClickDeleteIcon(params.row.id)}
-        />,
+        <Tooltip title='Add Patient to Appointment List' arrow>
+          <GridActionsCellItem
+            icon={<QueueIcon />}
+            label='addToAppointmentList'
+            onClick={() => hadleAddToAppointmentList(params.row.id)}
+          />
+        </Tooltip>,
+      ],
+    },
+    {
+      field: "actions",
+      headerName: "Actions",
+      align: "center",
+      width: 150,
+      renderCell: (params) => [
+        <Tooltip title='View More Details' arrow>
+          <GridActionsCellItem
+            icon={<MoreIcon />}
+            label='View_More'
+            onClick={() => handleClickMoreDetails(params.row.id)}
+          />
+        </Tooltip>,
+        <Tooltip title='Edit the patient details' arrow>
+          <GridActionsCellItem
+            icon={<EditIcon />}
+            label='Edit'
+            onClick={() => handleClickEdit(params.row.id)}
+          />
+        </Tooltip>,
+        <Tooltip title='Delete the Patient record' arrow>
+          <GridActionsCellItem
+            icon={<DeleteIcon />}
+            label='Delete'
+            onClick={() => handleClickDeleteIcon(params.row.id)}
+          />
+        </Tooltip>,
       ],
     },
   ];
+
+  // handle add patient to the appointment list
+  async function hadleAddToAppointmentList(id: number) {
+    const patientDetails = data[id];
+    console.log(patientDetails.id);
+
+    const res = await axios.post(`/api/prss/create-appointment`, {
+      PatientId: patientDetails.id,
+    });
+    if (res.data) {
+      enqueueSnackbar("Patient added to Queue", { variant: "success" });
+    }
+  }
 
   // cosnt setOpenedit state
   const [openEdit, setOpenEdit] = React.useState(false);
@@ -93,7 +130,7 @@ function DataGridTest() {
     nic: row.nic,
     gender: row.gender,
     phone: row.phone,
-    idID: row.id,
+    idDb: row.id,
     // email: row.email,
   }));
 
@@ -112,7 +149,6 @@ function DataGridTest() {
 
   // handle the delete Item
   async function handleClickDeleteIcon(id: number) {
-    console.log(id);
     const patient = data[id];
     const res = await axios.delete(`/api/prss/delete-patient/${patient.id}`);
     if (res.data.msg) {

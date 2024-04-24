@@ -7,6 +7,11 @@ import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import PatientTable from "./PatientTable";
 import { BASE_URL } from "../../config";
+import { Box, Tooltip } from "@mui/material";
+import QueueIcon from "@mui/icons-material/Queue";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import axios from "axios";
+import { enqueueSnackbar } from "notistack";
 
 interface recentPatientDetails {
   name: string;
@@ -39,7 +44,6 @@ export default function BasicCard() {
     try {
       const response = await fetch(`${BASE_URL}/api/prss/recent-patient`);
       const patient = await response.json();
-      console.log(patient);
       setRecentPatientDetails(patient);
     } catch (error) {
       console.log(error);
@@ -51,11 +55,51 @@ export default function BasicCard() {
     getRecentPatient();
   }, []);
 
+  async function handleAppointment() {
+    try {
+      // const make the patient to be added
+      const res = await axios.post("/api/prss/create-appointment", {
+        PatientId: recentPatientDetails.id,
+      });
+      if (res) {
+        enqueueSnackbar("Patient added to the appointment list", {
+          variant: "success",
+        });
+      }
+      // window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <>
-      <Typography variant='h5' component='div' marginBottom={2}>
-        Most Recent Patient
-      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <Typography variant='h5' component='div' marginBottom={2}>
+          Most Recent Patient
+        </Typography>
+        <Box sx={{ display: "flex", flexDirection: "row-reverse", gap: 1 }}>
+          <Tooltip title='Download the patient ticket' arrow>
+            <PictureAsPdfIcon
+              fontSize='large'
+              htmlColor='rgba(0, 58, 43, 0.8)'
+            />
+          </Tooltip>
+          <Tooltip title='Add Patient to Appointment List' arrow>
+            <QueueIcon
+              fontSize='large'
+              htmlColor='rgba(0, 58, 43, 0.8)'
+              onClick={handleAppointment}
+            />
+          </Tooltip>
+        </Box>
+      </Box>
       <Card sx={{ minWidth: 275 }}>
         <CardContent>
           <Typography variant='h5' component='div'>
@@ -69,6 +113,7 @@ export default function BasicCard() {
                 : "Mrs."}
             </Typography>
           </Typography>
+
           <Typography variant='body2'>
             Tracking No:{" "}
             {recentPatientDetails && recentPatientDetails.tracking_no}
