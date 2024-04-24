@@ -79,7 +79,7 @@ export default function MyLeaveRequestDialog({
               reason: formData.leaveReason,
               startDate: formData.startDate,
               registration: isMultipleDays
-                ? "Multiple Days"
+                ? "Multiple Day"
                 : isFullDay
                 ? "Full Day"
                 : "Part Day",
