@@ -1,4 +1,3 @@
-import * as React from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -6,8 +5,9 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { DatePicker } from "@mui/x-date-pickers";
+import { DatePicker, MonthCalendar } from "@mui/x-date-pickers";
 import {
+  Autocomplete,
   Box,
   FormControl,
   FormControlLabel,
@@ -16,6 +16,18 @@ import {
   Select,
   Switch,
 } from "@mui/material";
+import { LeaveTypeData } from "../../types";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import axios from "axios";
+import { Dayjs } from "dayjs";
+
+interface FormData {
+  leaveType: LeaveTypeData | null;
+  leaveReason: string;
+  startDate: Dayjs | null;
+  endDate: Dayjs | null;
+  hours: string | null;
+}
 
 export default function MyLeaveRequestDialog({
   open,
@@ -24,54 +36,67 @@ export default function MyLeaveRequestDialog({
   open: boolean;
   onClose: () => void;
 }) {
-  const [isFullDay, setIsFullDay] = React.useState(true);
-  const [isMultipleDays, setIsMultipleDays] = React.useState(false);
-  const [leaveType, setLeaveType] = React.useState<string>("");
-  const [availableLeaves, setAvailableLeaves] = React.useState<number>(0);
+  const [isFullDay, setIsFullDay] = useState(true);
+  const [isMultipleDays, setIsMultipleDays] = useState(false);
+  const [availableLeaves, setAvailableLeaves] = useState<number>(0);
+  const [leaveTypes, setLeaveTypes] = useState<LeaveTypeData[]>([]);
+  const [formData, setFormData] = useState<FormData>({
+    leaveType: null,
+    leaveReason: "",
+    startDate: null,
+    endDate: null,
+    hours: null,
+  });
 
-  const handleFullDayChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    const fetchLeaveTypes = async () => {
+      const allLeaveTypes = await axios.get("/api/hrms/leaveType");
+      const leaveTypeData = allLeaveTypes.data;
+
+      leaveTypeData.forEach((leaveType: LeaveTypeData) => {
+        (leaveType as any).label = leaveType.name;
+      });
+
+      setLeaveTypes(leaveTypeData);
+    };
+
+    fetchLeaveTypes();
+  }, []);
+
+  const handleFullDayChange = (event: ChangeEvent<HTMLInputElement>) => {
     setIsFullDay(event.target.checked);
     if (!event.target.checked) {
       setIsMultipleDays(false);
     }
   };
 
-  const handleMultipleDaysChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleMultipleDaysChange = (event: ChangeEvent<HTMLInputElement>) => {
     setIsMultipleDays(event.target.checked);
   };
 
-  const handleLeaveTypeChange = (
-    event: React.ChangeEvent<{ value: unknown }>
-  ) => {
-    setLeaveType(event.target.value as string);
-    // Set available leaves based on selected leave type
-    // For demonstration purpose, I'm setting a fixed value, you may fetch it from an API
-    if (event.target.value === "Annual") {
-      setAvailableLeaves(20);
-    } else if (event.target.value === "Sick") {
-      setAvailableLeaves(10);
-    } else {
-      setAvailableLeaves(0); // Default value
-    }
-  };
-
   return (
-    <React.Fragment>
+    <>
       <Dialog
         open={open}
         onClose={onClose}
         PaperProps={{
           component: "form",
-          onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+          onSubmit: (event: FormEvent<HTMLFormElement>) => {
             event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson: { [key: string]: string } = Object.fromEntries(
-              formData.entries() as Iterable<[string, string]>
-            );
-            const email = formJson.email;
-            console.log(email);
+            axios.post("/api/hrms/leave", {
+              type: formData.leaveType?.id,
+              reason: formData.leaveReason,
+              startDate: formData.startDate,
+              registration: "Full Day",
+              endDate: formData.endDate,
+              hours: formData.hours,
+            });
+            // type: yup.number().required(),
+            // reason: yup.string().required(),
+            // date: yup.date().required(),
+            // registration: yup.string().required(),
+            // hours: yup.number().required(),
+            // status: yup.string().required(),
             onClose();
           },
         }}
@@ -89,6 +114,10 @@ export default function MyLeaveRequestDialog({
             label="Leave Reason"
             type="text"
             variant="standard"
+            onChange={(e) =>
+              setFormData({ ...formData, leaveReason: e.target.value })
+            }
+            value={formData.leaveReason}
           />
           <Box
             sx={{
@@ -132,25 +161,15 @@ export default function MyLeaveRequestDialog({
             }}
           >
             <Box sx={{ flexGrow: 1, mr: 1 }}>
-              <FormControl sx={{ minWidth: 300 }}>
-                <InputLabel id="demo-simple-select-helper-label">
-                  Type
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-helper-label"
-                  id="demo-simple-select-helper"
-                  //value={age}
-                  label="Age"
-                  //onChange={handleChange}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
+              <Autocomplete
+                options={leaveTypes}
+                onChange={(e, value) => {
+                  setFormData({ ...formData, leaveType: value });
+                }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Leave Type" />
+                )}
+              />
             </Box>
 
             <TextField
@@ -174,8 +193,18 @@ export default function MyLeaveRequestDialog({
               mt: 3,
             }}
           >
-            <DatePicker label={isMultipleDays ? "Start Date" : "Date"} />
-            {isMultipleDays && <DatePicker label="End Date" />}
+            <DatePicker
+              label={isMultipleDays ? "Start Date" : "Date"}
+              onChange={(e) => setFormData({ ...formData, startDate: e })}
+              value={formData.startDate}
+            />
+            {isMultipleDays && (
+              <DatePicker
+                label="End Date"
+                onChange={(e) => setFormData({ ...formData, endDate: e })}
+                value={formData.endDate}
+              />
+            )}
           </Box>
           {!isFullDay && (
             <TextField
@@ -195,6 +224,6 @@ export default function MyLeaveRequestDialog({
           <Button type="submit">Request Leave</Button>
         </DialogActions>
       </Dialog>
-    </React.Fragment>
+    </>
   );
 }

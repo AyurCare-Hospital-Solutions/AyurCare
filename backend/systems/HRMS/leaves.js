@@ -1,15 +1,15 @@
 const LeaveRequest = require("../../model/LeaveRequest");
 const express = require("express");
 const yup = require("yup");
-
+const { getUserID } = require("../../middleware/auth");
 const leaveRequestValidator = yup
   .object({
-    type: yup.string().required(),
+    type: yup.number().required(),
     reason: yup.string().required(),
-    date: yup.date().required(),
+    startDate: yup.date().required(),
+    endDate: yup.date().required(),
     registration: yup.string().required(),
-    hours: yup.number().required(),
-    status: yup.string().required(),
+    hours: yup.number().required().nullable(),
   })
   .noUnknown();
 
@@ -62,7 +62,7 @@ const createLeaveRequest = async (req, res) => {
     registration: data.registration,
     hours: data.hours,
     status: data.status,
-    StaffId: 1,
+    StaffId: getUserID(res),
   });
   res.status(200).json({ data: leaveRequest });
 };
@@ -122,10 +122,27 @@ const deleteLeaveRequest = async (req, res) => {
   res.sendStatus(204);
 };
 
+/**
+ * Get leave request by id
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+const getLeaveRequestByUser = async (req, res) => {
+  const userId = getUserID(res);
+
+  let leaveRequest = await LeaveRequest.findAll({ where: { StaffId: userId } });
+  if (leaveRequest === null) {
+    res.status(404).json({ message: "Leave request not found" });
+    return;
+  }
+  res.status(200).json(leaveRequest);
+};
+
 module.exports = {
   getAllLeaveRequests,
   getLeaveRequestById,
   createLeaveRequest,
   updateLeaveRequest,
   deleteLeaveRequest,
+  getLeaveRequestByUser,
 };

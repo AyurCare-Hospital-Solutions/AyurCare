@@ -5,6 +5,7 @@ const leaveService = require("../systems/HRMS/leaves");
 const leaveTypeService = require("../systems/HRMS/leaveType");
 
 router.get("/leave", leaveService.getAllLeaveRequests);
+router.get("/leave/user", leaveService.getLeaveRequestByUser);
 router.get("/leave/:id", leaveService.getLeaveRequestById);
 router.post("/leave", leaveService.createLeaveRequest);
 router.put("/leave/:id", leaveService.updateLeaveRequest);

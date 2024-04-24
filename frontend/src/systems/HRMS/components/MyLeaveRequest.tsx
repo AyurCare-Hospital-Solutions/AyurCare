@@ -1,8 +1,7 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Paper, Typography } from "@mui/material";
 import { useState } from "react";
 import MyLeaveRequestDialog from "./myLeaveRequest/MyLeaveRequestDialog";
 import MyLeaveRequestTable from "./myLeaveRequest/MyLeaveRequestTable";
-import SearchBar from "./myLeaveRequest/SearchBar";
 
 const MyLeaveRequest = () => {
   const [requestDialogOpen, setRequestDialogOpen] = useState(false);
@@ -42,9 +41,9 @@ const MyLeaveRequest = () => {
             onClose={() => setRequestDialogOpen(false)}
           />
         </Box>
-        <Box sx={{ display: "flex", mb: 4 }}>
-          <SearchBar />
-        </Box>
+        <Paper sx={{ display: "flex", m: 4 }}>
+          {/* <MyLeaveRequestSearch /> */}
+        </Paper>
         <Box sx={{ display: "flex", mx: 4 }}>
           <MyLeaveRequestTable />
         </Box>
