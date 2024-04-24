@@ -119,7 +119,10 @@ async function getPatientDetails(req, res) {
     return;
   }
 
-  const patient = await Patient.findByPk(req.params.id);
+  // get the patient details by id
+  const id = Number.parseInt(req.params.id);
+
+  const patient = await Patient.findByPk(id);
   if (patient === null) {
     res.status(404).json({ msg: "The patient does not exist" });
     return;
