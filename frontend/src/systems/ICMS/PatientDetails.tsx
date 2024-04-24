@@ -153,11 +153,13 @@ const PatientDetails = () => {
                     setNLModalOpen(true);
                 }} />
             </TabPanel>
-
-            <Box display="flex" mx={1} px="16px">
-                <Box flexGrow="1"></Box>
-                <Button variant="contained" disableElevation onClick={dischargePatient}>Discharge Patient</Button>
-            </Box>
+            {
+                patientInfo?.admission.discharge_date ? null :
+                    <Box display="flex" mx={1} px="16px">
+                        <Box flexGrow="1"></Box>
+                        <Button variant="contained" disableElevation onClick={dischargePatient}>Discharge Patient</Button>
+                    </Box>
+            }
         </Box>
 
         <NursingLogAdd open={NLModalOpen} onClose={() => { setNLModalOpen(false) }} onSubmit={submitNLMessage}></NursingLogAdd>

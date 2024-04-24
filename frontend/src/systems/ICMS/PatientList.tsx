@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import { useState, ChangeEvent, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { Admission, AdmissionListSchema } from './types';
-import { Box, TableHead, Typography } from '@mui/material';
+import { Box, FormControlLabel, Switch, TableHead, Typography } from '@mui/material';
 import SearchInput from './components/SearchInput';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,6 +22,7 @@ const PatientList = () => {
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [data, setData] = useState<Admission[]>([]);
     const [search, setSearch] = useState<string>();
+    const [admittedOnly, setAdmittedOnly] = useState(true);
 
     const navigator = useNavigate();
 
@@ -37,11 +38,10 @@ const PatientList = () => {
     }, [data, search]);
 
     useEffect(() => {
-        axios.get(`/api/icms/patients/admitted`).then((res) => {
+        axios.get(`/api/icms/patients?admitted=${admittedOnly}`).then((res) => {
             setData(AdmissionListSchema.cast(res.data));
-            console.log(AdmissionListSchema.cast(res.data))
         })
-    }, [])
+    }, [admittedOnly])
 
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
@@ -62,6 +62,9 @@ const PatientList = () => {
 
         <Box sx={{ display: "flex" }} my={4} mx={2}>
             <SearchInput onChange={(s) => setSearch(s)} ></SearchInput>
+            <FormControlLabel sx={{ my: "auto", ml: "auto" }} control={
+                <Switch value={admittedOnly} onChange={(_, v) => setAdmittedOnly(!v)} />
+            } label="Show Discharged patients" labelPlacement="end" />
         </Box>
 
         <TableContainer component={Paper}>
