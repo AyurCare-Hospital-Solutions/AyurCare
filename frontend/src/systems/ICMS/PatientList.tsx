@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom';
 
 const PatientList = () => {
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
     const [data, setData] = useState<Admission[]>([]);
     const [search, setSearch] = useState<string>();
     const [admittedOnly, setAdmittedOnly] = useState(true);
@@ -109,7 +109,7 @@ const PatientList = () => {
                 <TableFooter>
                     <TableRow>
                         <TablePagination
-                            rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                            rowsPerPageOptions={[10, 25, 50, { label: 'All', value: -1 }]}
                             colSpan={3}
                             count={rows.length}
                             rowsPerPage={rowsPerPage}
