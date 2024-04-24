@@ -3,7 +3,7 @@ import { CarePlan } from "../types"
 import { useState } from "react";
 import { useConfirm } from "material-ui-confirm";
 
-const CarePlanInfo = ({ data, onEdit }: { data: CarePlan | undefined, onEdit: (c: CarePlan) => void }) => {
+const CarePlanInfo = ({ data, onEdit }: { data?: CarePlan | null, onEdit: (c: CarePlan) => void }) => {
     const [edit, setEdit] = useState(false);
     const [diagnosis, setDiagnosis] = useState("");
     const [condition, setCondition] = useState("");
@@ -11,14 +11,12 @@ const CarePlanInfo = ({ data, onEdit }: { data: CarePlan | undefined, onEdit: (c
 
     const confirm = useConfirm();
 
-    const onSubmit = async () => {
-        if (!data) {
-            return;
-        }
+    // FIXME: this does not work if the care plan does not exist.
 
+    const onSubmit = async () => {
         await confirm({ description: "Update care plan" });
         onEdit({
-            id: data?.id,
+            id: data ? data.id : -1,
             diagnosis: diagnosis,
             treatmentPlan: treatment,
             condition: condition,

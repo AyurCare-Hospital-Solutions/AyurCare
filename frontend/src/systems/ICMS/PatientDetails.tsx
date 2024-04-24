@@ -38,7 +38,7 @@ function TabPanel(props: TabPanelProps) {
 
 
 const PatientDetails = () => {
-    let { patientId } = useParams();
+    let { admissionId } = useParams();
 
     const [patientInfo, setPatientInfo] = useState<PatientRecord>();
     const [nursingLog, setNursingLog] = useState<NursingLog>();
@@ -49,7 +49,7 @@ const PatientDetails = () => {
 
     // TODO: loading animation
     useEffect(() => {
-        axios.get(`/api/icms/careplan/${patientId}`).then(async (res) => {
+        axios.get(`/api/icms/careplan/${admissionId}`).then(async (res) => {
             setPatientInfo(PatientRecordSchema.cast(res.data));
         }).catch((e: any) => {
             if (e?.response?.status == 404) {
@@ -61,7 +61,7 @@ const PatientDetails = () => {
             console.log(e);
             navigate("/icms/patient")
         });
-    }, [patientId]);
+    }, [admissionId]);
 
     useEffect(() => {
         if (patientInfo) {

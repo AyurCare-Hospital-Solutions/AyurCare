@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useState, ChangeEvent, useEffect, useMemo } from 'react';
 import axios from 'axios';
-import { AdmissionList, AdmissionListSchema } from './types';
+import { Admission, AdmissionListSchema } from './types';
 import { Box, TableHead, Typography } from '@mui/material';
 import SearchInput from './components/SearchInput';
 import { useNavigate } from 'react-router-dom';
@@ -20,7 +20,7 @@ import { useNavigate } from 'react-router-dom';
 const PatientList = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
-    const [data, setData] = useState<AdmissionList>([]);
+    const [data, setData] = useState<Admission[]>([]);
     const [search, setSearch] = useState<string>();
 
     const navigator = useNavigate();
@@ -81,7 +81,7 @@ const PatientList = () => {
                     ).map((row) => (
                         <TableRow key={row.id} hover={true} onClick={() => navigator("/icms/patient/" + row.id)}>
                             <TableCell >
-                                {row.Patient.id}
+                                {row.id}
                             </TableCell>
                             <TableCell component="th" scope="row">
                                 {row.Patient.name}

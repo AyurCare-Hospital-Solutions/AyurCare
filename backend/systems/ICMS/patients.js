@@ -3,6 +3,7 @@ const IPDAdmission = require("../../model/IPDAdmission");
 const Patient = require("../../model/Patient");
 const Bed = require("../../model/Bed");
 const Ward = require("../../model/Ward");
+const { sequelize } = require("../../model");
 
 
 /**
@@ -40,7 +41,7 @@ const dischargePatient = async (req, res) => {
         return;
     }
 
-    let admission = await IPDAdmission.findByPk(admissionID);
+    let admission = await IPDAdmission.findByPk(admissionID, { include: Bed });
     if (!admission) {
         res.status(400).json({ msg: "Admission does not exist" });
         return;
@@ -51,9 +52,12 @@ const dischargePatient = async (req, res) => {
         return;
     }
 
-    admission.discharge_date = new Date();
+    await sequelize.transaction(async t => {
+        await admission.Bed.update({ IPDAdmissionId: null }, { transaction: t });
+        await admission.update({ discharge_date: new Date() }, { transaction: t });
+    })
 
-    await admission.save();
+
 
     res.status(204).json({ msg: "Patient discharged successfully" });
 }

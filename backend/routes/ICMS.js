@@ -10,7 +10,7 @@ router.delete("/ward/:id", wardService.deleteWard);
 
 const carePlanService = require("../systems/ICMS/careplan");
 
-router.get("/careplan/:pid", carePlanService.getCarePlan);
+router.get("/careplan/:aid", carePlanService.getCarePlan);
 router.post("/careplan/:aid", carePlanService.createCarePlan);
 
 const nursingLogService = require("../systems/ICMS/nursinglog");
@@ -21,5 +21,12 @@ router.post("/nursinglog/:aid", nursingLogService.createNursingLog);
 const patientAdmissions = require("../systems/ICMS/patients");
 router.get("/patients/admitted", patientAdmissions.getAdmissions);
 router.post("/patient/:aid/discharge", patientAdmissions.dischargePatient);
+
+const waitListService = require("../systems/ICMS/waitlist");
+router.get("/waitlist", waitListService.getWaitList);
+router.post("/waitlist/admit/:waitID", waitListService.admitPatient);
+
+const bedService = require("../systems/ICMS/beds");
+router.get("/beds/available/:ward", bedService.getAvailableBeds)
 
 module.exports = router;

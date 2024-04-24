@@ -1,13 +1,26 @@
-import { InferType, array, date, number, object, string } from "yup";
+import { InferType, array, date, number, object, string, bool } from "yup";
+
+const PatientSchema = object({
+    id: number().required(),
+    name: string().required(),
+    tracking_no: string().required(),
+    dob: date().required(),
+    gender: string().required(),
+});
 
 export const WardSchema = object({
     id: number().required(),
     name: string().required(),
 });
 
-export const WardArraySchema = array(WardSchema).required();
 
-export type Ward = InferType<typeof WardSchema>
+const WaitListSchema = object({
+    id: number().required(),
+    reason: string().required(),
+    is_priority: bool().required(),
+    createdAt: date().required(),
+    Patient: PatientSchema
+});
 
 
 const AdmissionSchema = object({
@@ -15,13 +28,7 @@ const AdmissionSchema = object({
     discharge_date: date().nullable(),
     createdAt: date().required(),
     updatedAt: date().nullable().required(),
-    Patient: object({
-        id: number().required(),
-        name: string().required(),
-        tracking_no: string().required(),
-        dob: date().required(),
-        gender: string().required(),
-    }).required(),
+    Patient: PatientSchema.required(),
     Bed: object({
         id: number().required(),
         Ward: object({
@@ -31,7 +38,6 @@ const AdmissionSchema = object({
     })
 }).required();
 
-export const AdmissionListSchema = array(AdmissionSchema).required();
 
 export const CarePlanSchema = object({
     id: number().required(),
@@ -43,7 +49,7 @@ export const CarePlanSchema = object({
 
 export const PatientRecordSchema = object({
     admission: AdmissionSchema,
-    carePlan: CarePlanSchema,
+    carePlan: CarePlanSchema.nullable(),
 });
 
 export const NursingLogSchema = array(object({
@@ -54,9 +60,21 @@ export const NursingLogSchema = array(object({
     updatedAt: date().nullable().required(),
 })).required();
 
+export const BedSchema = object({
+    id: number().required(),
+    Ward: WardSchema.required(),
+}).required();
+
+
+export const WardArraySchema = array(WardSchema).required();
+export const BedArraySchema = array(BedSchema).required();
+export const WaitListArraySchema = array(WaitListSchema).required();
+export const AdmissionListSchema = array(AdmissionSchema).required();
 
 export type Admission = InferType<typeof AdmissionSchema>;
-export type AdmissionList = InferType<typeof AdmissionListSchema>;
 export type CarePlan = InferType<typeof CarePlanSchema>;
 export type PatientRecord = InferType<typeof PatientRecordSchema>;
 export type NursingLog = InferType<typeof NursingLogSchema>;
+export type WaitList = InferType<typeof WaitListSchema>;
+export type Ward = InferType<typeof WardSchema>;
+export type Bed = InferType<typeof BedSchema>;
