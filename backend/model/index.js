@@ -34,7 +34,7 @@ function connect() {
             }
         }
 
-        console.log(`Using ${process.env.MYSQL_DB} on ${process.env.MYSQL_HOST}`)
+        console.log(`Using mysql database ${process.env.MYSQL_DATABASE} on ${process.env.MYSQL_HOST}`)
     }
 
     if (!Number.parseInt(process.env.SQL_LOG_QUERY)) {
@@ -63,6 +63,11 @@ async function createAll() {
     if (Number.parseInt(process.env.SQL_SYNC_FORCE)) {
         console.log("Dropping existing tables")
         syncConfig.force = true;
+    }
+
+    if (Number.parseInt(process.env.SQL_SYNC_ALTER)) {
+        console.log("Altering existing tables")
+        syncConfig.alter = true;
     }
 
     if (!Number.parseInt(process.env.SQL_SYNC_DEBUG)) {
