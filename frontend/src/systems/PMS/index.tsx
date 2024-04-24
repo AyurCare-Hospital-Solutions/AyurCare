@@ -1,7 +1,7 @@
 import { RouteObject } from "react-router-dom";
 import Pms from "./Pms";
 import Dashboard from "./Dashboard";
-import Medicine from "./Pages/Medicine";
+import Medicine from "./Pages/MedicineManagement";
 import Prescription from "./Prescription";
 import ReceivedPrescription from "./Pages/ExternalPrescription";
 import UserConcerns from "./Pages/UserConerns";

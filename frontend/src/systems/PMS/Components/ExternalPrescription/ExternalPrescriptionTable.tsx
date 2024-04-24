@@ -17,13 +17,16 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { enqueueSnackbar } from "notistack";
+import ShowImageModal from "./ShowImageModal";
 
 const ExternalPrescriptionTable = () => {
   const [externalPrescription, setExternalPrescription] = React.useState<any>(
     []
   );
+  const [openImageModal, setOpenImageModal] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [deleteId, setDeleteId] = React.useState<number | null>(null);
+  const [prescriptionImage, setPrescriptionImage] = React.useState("");
 
   const getExternalPrescription = async () => {
     await axios.get("/api/pms/getExternalPrescription").then((res: any) => {
@@ -60,6 +63,11 @@ const ExternalPrescriptionTable = () => {
     setOpen(false); // Close the dialog after operation
   };
 
+  //handle the show the image
+  const handleClick = () => {
+    setOpenImageModal(true);
+  };
+
   // update external prescription status
   const updateExternalPrescriptionStatus = async (
     id: number,
@@ -72,7 +80,7 @@ const ExternalPrescriptionTable = () => {
         enqueueSnackbar(`Prescription status updated as ${status}!`, {
           variant: "success",
         });
-       
+
         getExternalPrescription();
       })
       .catch((err) => {
@@ -87,8 +95,8 @@ const ExternalPrescriptionTable = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Prescription No</TableCell>
-              <TableCell>Patient Name</TableCell>
+              <TableCell> No</TableCell>
+              <TableCell>Name</TableCell>
               <TableCell>Phone</TableCell>
               <TableCell>Email</TableCell>
               <TableCell>Uploaded Date</TableCell>
@@ -106,9 +114,31 @@ const ExternalPrescriptionTable = () => {
                   <TableCell>{row.name}</TableCell>
                   <TableCell>{row.phone}</TableCell>
                   <TableCell>{row.email}</TableCell>
-                  <TableCell>{row.uploadedDate}</TableCell>
+                  <TableCell>
+                    {new Date(Date.parse(row.createdAt)).toLocaleDateString()}
+                  </TableCell>
                   <TableCell>{row.status}</TableCell>
-                  <TableCell>File</TableCell>
+                  <TableCell>
+                    <Button
+                      onClick={() => {
+                        setOpenImageModal(true);
+                        setPrescriptionImage(row.file);
+                      }}
+                      sx={{
+                        backgroundColor: "#0d4838",
+                        fontSize: 10,
+                        color: "white",
+                        mr: 2,
+                        transition: "opacity 0.3s ease",
+                        "&:hover": {
+                          backgroundColor: "#0d4838",
+                          opacity: 0.7,
+                        },
+                      }}
+                    >
+                      Show
+                    </Button>
+                  </TableCell>
                   <TableCell>
                     <Button
                       onClick={() =>
@@ -188,6 +218,14 @@ const ExternalPrescriptionTable = () => {
           </Button>
         </DialogActions>
       </Dialog>
+
+      <ShowImageModal
+        open={openImageModal}
+        handleClose={() => {
+          setOpenImageModal(false);
+        }}
+        image={prescriptionImage}
+      />
     </>
   );
 };

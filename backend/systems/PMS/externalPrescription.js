@@ -2,7 +2,21 @@ const express = require("express");
 const externalPrescription = require("../../model/ExternalPresription");
 const userConcern = require("../../model/userConcern");
 const ExternalPrescription = require("../../model/ExternalPresription");
+const yup = require("yup");
+const fs = require("fs");
 
+// External Prescription Validator
+const externalPrescriptionValidator = yup
+  .object({
+    name: yup.string().min(3).max(100).required(),
+    age: yup.string().min(1).max(3).required(),
+    address: yup.string().min(10).max(200).required(),
+    email: yup.string().email().required(),
+    phone: yup.string().min(10).max(10).required(),
+    specialNotes: yup.string().min(0).max(200),
+  })
+  .strict();
+// .noUnknown();
 /**
  *
  * @param {express.Request} req
@@ -39,6 +53,43 @@ async function updateExternalPrescriptionStatus(req, res) {
   }
 }
 
+/**
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+async function uploadPrescription(req, res) {
+  try {
+    var data = await externalPrescriptionValidator.validate(req.body);
+  } catch (validationError) {
+    res.status(400).send({ msg: validationError.errors[0] });
+    return;
+  }
+
+  if (!req.file) {
+    res.status(400).send({ msg: "No prescription file given" });
+    return;
+  }
+
+  try {
+    let prescription = await ExternalPrescription.create({
+      name: data.name,
+      age: data.age,
+      address: data.address,
+      email: data.email,
+      phone: data.phone,
+      notes: data.specialNotes,
+      file: req.file.filename,
+    });
+    res.status(200).json(prescription);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ msg: "External precription data is invalid!" });
+  }
+}
+
+module.exports = { uploadPrescription };
+
 // Delete the external prescription
 // Delete the external prescription
 /**
@@ -66,47 +117,6 @@ async function deleteExternalPrescription(req, res) {
   } catch (error) {
     console.error("Failed to delete the external prescription", error);
     res.status(500).json({ msg: "Failed to delete the external prescription" });
-  }
-}
-
-/**
- *
- * @param {express.Request} req
- * @param {express.Response} res
- */
-async function setExternalPrescription(req, res) {
-  try {
-    if (
-      !req.body.name ||
-      !req.body.age ||
-      !req.body.phone ||
-      !req.body.address ||
-      !req.body.email
-      // !req.body.file
-    ) {
-      return res.status(400).send({
-        message: "Send all required fields!",
-      });
-    }
-
-    const prescriptionObject = {
-      name: req.body.name,
-      age: req.body.age,
-      phone: req.body.phone,
-      address: req.body.address,
-      email: req.body.email,
-      notes: req.body.notes,
-      // file: req.body.file,
-    };
-
-    console.log(prescriptionObject);
-
-    const prescription = await externalPrescription.create(prescriptionObject);
-
-    return res.status(201).send(prescription);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).send({ message: error.message });
   }
 }
 
@@ -208,13 +218,33 @@ async function getTotalExternalPrescriptionsCount(req, res) {
   res.status(200).json({ count: sum });
 }
 
+/**
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+async function getExternalPrescriptionImage(req, res) {
+  let name = req.params.filename;
+  if (!name) {
+    return res.sendStatus(400);
+  }
+
+  if (!fs.existsSync("./uploads/prescriptions/" + name)) {
+    return res.sendStatus(404);
+  }
+
+  res.sendFile(name, { root: "./uploads/prescriptions" });
+}
+
 module.exports = {
   getAllUserPrescriptions,
   setUserConcern,
   getUserConcerns,
   deleteConcerns,
   getTotalExternalPrescriptionsCount,
-  setExternalPrescription,
+  setExternalPrescription: uploadPrescription,
   updateExternalPrescriptionStatus,
   deleteExternalPrescription,
+  // this is the function for get the external prescription file from the database
+  getExternalPrescriptionImage,
 };

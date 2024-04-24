@@ -2,20 +2,17 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
 const Medicine = require("./Medicine");
 
-
 const PharmacyMedicine = sequelize.define("PharmacyMedicine", {
+  name: {
+    type: DataTypes.STRING,
+  },
   // column name
   amount: {
     // Have to mention the data type
     type: DataTypes.INTEGER,
   },
-
   expire_date: {
     type: DataTypes.DATEONLY,
-  },
-
-  cost: {
-    type: DataTypes.REAL,
   },
 });
 

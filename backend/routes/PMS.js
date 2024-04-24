@@ -3,6 +3,8 @@ const router = express.Router();
 const medicine = require("../systems/PMS/medicine");
 const prescription = require("../systems/PMS/prescription");
 const externalPrescription = require("../systems/PMS/externalPrescription");
+const multer = require("multer");
+const upload = multer({ dest: "./uploads/prescriptions" });
 
 // here we have mention if the url (first parameter) call this function that's it.
 // those methods are inside the **** systems/pms ****
@@ -22,6 +24,7 @@ router.put("/updatePrescription/:id", prescription.updatePrescriptionStatus);
 // ROUTES FOR EXTERNAL PRESCRIPTION
 router.post(
   "/setExternalPrescription",
+  upload.single("file"),
   externalPrescription.setExternalPrescription
 );
 router.get(
@@ -31,6 +34,10 @@ router.get(
 router.put(
   "/updateExternalPrescriptionStatus/:id",
   externalPrescription.updateExternalPrescriptionStatus
+);
+router.get(
+  "/getExternalPrescriptionImage/:filename",
+  externalPrescription.getExternalPrescriptionImage
 );
 router.post("/setUserConcerns", externalPrescription.setUserConcern);
 router.get("/getUserConcerns", externalPrescription.getUserConcerns);

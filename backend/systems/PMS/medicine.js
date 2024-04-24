@@ -154,16 +154,23 @@ async function getInventoryMedicine(req, res) {
  * @param {express.Request} req
  * @param {express.Response} res
  */
-async function setPharmacyMadicine(req, res) {
-  const id = req.body.id;
+async function setPharmacyMedicine(req, res) {
+  
+  const name = req.body.name;
   const qty = req.body.qty;
   const expDate = req.body.expDate;
 
-  const medicine = await Medicine.findOne({ include: Item, where: { id: id } });
+  const newPharmacyMedicine = {
+    name: name,
+    amount: qty,
+    expire_date: expDate,
+  };
 
-  if (medicine == null) {
-    res.status(404).send("medicine not found!");
-    return;
+  try {
+    const pharmacy = await PharmacyMedicine.create(newPharmacyMedicine);
+    res.status(200).send({ msg: "pharmacy medicine added successfully!" });
+  } catch (error) {
+    res.status(500).send({ msg: "pharmacy medicine not added successfully!" });
   }
 }
 
@@ -186,6 +193,6 @@ module.exports = {
   deleteMedicine,
   changeStockLevel,
   getInventoryMedicine,
-  setPharmacyMadicine,
+  setPharmacyMedicine,
   getTotalMedicinesCount,
 };
