@@ -11,7 +11,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 
-axios.defaults.baseURL = 'http://localhost:5000/';
+axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
 
 const theme = createTheme({
   palette: {
