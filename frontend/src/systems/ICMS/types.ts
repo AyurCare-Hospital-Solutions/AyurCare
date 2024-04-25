@@ -22,6 +22,11 @@ const WaitListSchema = object({
     Patient: PatientSchema
 });
 
+export const BedSchema = object({
+    id: number().required(),
+    number: number().required(),
+    Ward: WardSchema.required(),
+});
 
 const AdmissionSchema = object({
     id: number().required(),
@@ -29,13 +34,7 @@ const AdmissionSchema = object({
     createdAt: date().required(),
     updatedAt: date().nullable().required(),
     Patient: PatientSchema.required(),
-    Bed: object({
-        id: number().required(),
-        Ward: object({
-            id: number().required(),
-            name: string().required(),
-        }).required()
-    })
+    Bed: BedSchema,
 }).required();
 
 
@@ -60,10 +59,7 @@ export const NursingLogSchema = array(object({
     updatedAt: date().nullable().required(),
 })).required();
 
-export const BedSchema = object({
-    id: number().required(),
-    Ward: WardSchema.required(),
-}).required();
+
 
 
 export const WardArraySchema = array(WardSchema).required();

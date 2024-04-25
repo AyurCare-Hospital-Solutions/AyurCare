@@ -116,7 +116,7 @@ const WaitListDialog = ({ row, wards, open, onAdmit, onClose }: {
                 />
                 <Autocomplete
                     sx={{ mt: 1, ml: 2, flexGrow: 1 }}
-                    getOptionLabel={(option) => option.id.toString()}
+                    getOptionLabel={(option) => option.number.toString()}
                     options={availableBeds}
                     loading={bedsLoading}
                     value={selectedBed}

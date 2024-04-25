@@ -100,10 +100,10 @@ const PatientList = () => {
                                 {row.Patient.name}
                             </TableCell>
                             <TableCell size='small'>
-                                {row.Bed.Ward.name}
+                                {row.Bed?.Ward?.name}
                             </TableCell>
                             <TableCell size='small' sx={{ pr: 0 }}>
-                                {row.Bed.id}
+                                {row.Bed?.number}
                             </TableCell>
                             <TableCell sx={{ maxWidth: "32px", pl: 0 }}>
                                 <Tooltip title="View Patient Details">
