@@ -1,8 +1,4 @@
-import { Dashboard } from '@mui/icons-material';
-import EditCalendarIcon from '@mui/icons-material/EditCalendar';
-import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-import SummarizeIcon from '@mui/icons-material/Summarize';
-import AssessmentIcon from '@mui/icons-material/Assessment';
+import { Dashboard, EditCalendar, AssignmentInd, Summarize, Assessment } from '@mui/icons-material';
 import { Divider, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { Link } from 'react-router-dom'
 import DashboardPage from '../../components/DashboardPage';
@@ -27,7 +23,7 @@ function OPCMS() {
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
-                            <EditCalendarIcon />
+                            <EditCalendar />
                         </ListItemIcon>
                         <ListItemText primary="Appointments" />
                     </ListItemButton>
@@ -38,7 +34,7 @@ function OPCMS() {
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
-                            <AssignmentIndIcon />
+                            <AssignmentInd />
                         </ListItemIcon>
                         <ListItemText primary="Medical Records" />
                     </ListItemButton>
@@ -50,7 +46,7 @@ function OPCMS() {
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
-                            <SummarizeIcon />
+                            <Summarize />
                         </ListItemIcon>
                         <ListItemText primary="Reports" />
                     </ListItemButton>
@@ -62,7 +58,7 @@ function OPCMS() {
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
-                            <AssessmentIcon />
+                            <Assessment />
                         </ListItemIcon>
                         <ListItemText primary="Analytics" />
                     </ListItemButton>
