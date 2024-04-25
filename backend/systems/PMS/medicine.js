@@ -2,6 +2,7 @@ const express = require("express");
 const PharmacyMedicine = require("../../model/PharmacyMedicine");
 const Item = require("../../model/Item");
 const Medicine = require("../../model/Medicine");
+
 const yup = require("yup");
 
 // Data validator
@@ -11,6 +12,13 @@ const medicineAmountValidator = yup
   })
   .strict()
   .noUnknown();
+
+// Medicine Validator
+const medicineValidator = yup.object({
+  name: yup.string().min(3).max(100).required(),
+  amount: yup.string().min(1).max(3).required(),
+  expire_date: yup.date(),
+});
 
 /**
  *
@@ -155,26 +163,28 @@ async function getInventoryMedicine(req, res) {
  * @param {express.Response} res
  */
 async function setPharmacyMedicine(req, res) {
-  
-  const name = req.body.name;
-  const qty = req.body.qty;
-  const expDate = req.body.expDate;
+  try {
+    await medicineValidator.validate(req.body);
+    var data = medicineAmountValidator.cast(req.body);
+  } catch (validationError) {
+    res.status(400).send({ msg: validationError.errors[0] });
+    return;
+  }
 
   const newPharmacyMedicine = {
-    name: name,
-    amount: qty,
-    expire_date: expDate,
+    name: data.name,
+    amount: data.qty,
+    expire_date: data.expDate,
   };
 
   try {
     const pharmacy = await PharmacyMedicine.create(newPharmacyMedicine);
     res.status(200).send({ msg: "pharmacy medicine added successfully!" });
   } catch (error) {
+    console.log(error);
     res.status(500).send({ msg: "pharmacy medicine not added successfully!" });
   }
 }
-
-// Call the count method on the Medicine model
 
 // //GET TOTAL MEDICINE COUNT
 /**
@@ -187,6 +197,16 @@ async function getTotalMedicinesCount(req, res) {
   res.status(200).json({ count: sum });
 }
 
+// GET THE MEDICINES' ID AND NAMES FROM MEDICINE TABLE
+/**
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+async function getIdandNameFromMedicineTable(req, res) {
+  const sum = await PharmacyMedicine.count();
+  res.status(200).json({ count: sum });
+}
 module.exports = {
   getPharmacyMedicines,
   getSpecificMedicine,

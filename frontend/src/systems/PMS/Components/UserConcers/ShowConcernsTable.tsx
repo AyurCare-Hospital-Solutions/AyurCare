@@ -62,7 +62,7 @@ const ShowConcernsTable: React.FC<{ concerns?: Concerns }> = ({ concerns }) => {
   const handleEmailRedirect = (id: number, email: string, concern: string) => {
     const userName = email.split('@')[0];
     const subject = encodeURIComponent('Response to Your Concern');
-    const body = encodeURIComponent(`Dear ${userName},\n\nRegarding your concern: ${concern}\n\n****** Response goes here. ******\n\n\nBest regards,\nYour Company`);
+    const body = encodeURIComponent(`Dear ${userName},\n\nRegarding your concern: ${concern}\n\n****** Response goes here. ******\n\n\nBest regards,\nAyurCare`);
     const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
     window.open(mailtoLink, '_blank');
     

@@ -12,7 +12,7 @@ import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import EventBusyIcon from "@mui/icons-material/EventBusy";
 
-import { Grid } from "@mui/material";
+import { Grid, Paper } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const data = [
@@ -57,232 +57,254 @@ export default function ReportBox({
       >
         {/* medicine Available */}
         <Grid item xs={3.5} sx={{ mb: 3 }}>
-          <Card
+          <Paper
+            elevation={24}
             sx={{
               textAlign: "center",
               border: "1px solid #0a4738",
             }}
           >
-            <CardContent>
-              <LocalHospitalIcon sx={{ color: "#0a4738", fontSize: "50px" }} />
-              <Typography
-                sx={{ fontSize: 20 }}
-                color="text.secondary"
-                gutterBottom
+            <Card>
+              <CardContent>
+                <LocalHospitalIcon
+                  sx={{ color: "#0a4738", fontSize: "50px" }}
+                />
+                <Typography
+                  sx={{ fontSize: 20 }}
+                  color="text.secondary"
+                  gutterBottom
+                >
+                  {medicinesCount}
+                </Typography>
+                <Typography> {data[0].title} </Typography>
+              </CardContent>
+              <CardActions
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  p: 1,
+                  maxHeight: 20,
+                  backgroundColor: "#0a4738",
+                }}
               >
-                {medicinesCount}
-              </Typography>
-              <Typography> {data[0].title} </Typography>
-            </CardContent>
-            <CardActions
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                p: 1,
-                maxHeight: 20,
-                backgroundColor: "#0a4738",
-              }}
-            >
-              <Link to="/pms/medicines">
-                <Button sx={{ color: "#fff" }} size="small">
-                  View Full List <ArrowForward sx={{ marginLeft: 0 }} />
-                </Button>
-              </Link>
-            </CardActions>
-          </Card>
+                <Link to="/pms/medicines">
+                  <Button sx={{ color: "#fff" }} size="small">
+                    View Full List <ArrowForward sx={{ marginLeft: 0 }} />
+                  </Button>
+                </Link>
+              </CardActions>
+            </Card>
+          </Paper>
         </Grid>
 
         {/* Inventory Request */}
         <Grid item xs={3.5} sx={{ mb: 3 }}>
-          <Card
+          <Paper
+            elevation={24}
             sx={{
               textAlign: "center",
               maxWidth: 280,
               border: "1px solid #0a4738",
             }}
           >
-            <CardContent>
-              <StorageIcon sx={{ color: "#000f93", fontSize: "50px" }} />
-              <Typography
-                sx={{ fontSize: 20 }}
-                color="text.secondary"
-                gutterBottom
+            <Card>
+              <CardContent>
+                <StorageIcon sx={{ color: "#000f93", fontSize: "50px" }} />
+                <Typography
+                  sx={{ fontSize: 20 }}
+                  color="text.secondary"
+                  gutterBottom
+                >
+                  298
+                </Typography>
+                <Typography> {data[1].title} </Typography>
+              </CardContent>
+              <CardActions
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  p: 1,
+                  maxHeight: 20,
+                  backgroundColor: "#0a4738",
+                }}
               >
-                298
-              </Typography>
-              <Typography> {data[1].title} </Typography>
-            </CardContent>
-            <CardActions
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                p: 1,
-                maxHeight: 20,
-                backgroundColor: "#0a4738",
-              }}
-            >
-              <Link to="/pms/inventoryrequest">
-                <Button sx={{ color: "#fff" }} size="small">
-                  View Full List <ArrowForward sx={{ marginLeft: 0 }} />
-                </Button>
-              </Link>
-            </CardActions>
-          </Card>
+                <Link to="/pms/inventoryrequest">
+                  <Button sx={{ color: "#fff" }} size="small">
+                    View Full List <ArrowForward sx={{ marginLeft: 0 }} />
+                  </Button>
+                </Link>
+              </CardActions>
+            </Card>
+          </Paper>
         </Grid>
 
         {/* Prescription Completed */}
         <Grid item xs={3.5} sx={{ mb: 3 }}>
-          <Card
+          <Paper
+            elevation={24}
             sx={{
               textAlign: "center",
               maxWidth: 280,
               border: "1px solid  #0a4738",
             }}
           >
-            <CardContent>
-              <DescriptionIcon sx={{ color: " #7a002d", fontSize: "50px" }} />
-              <Typography
-                sx={{ fontSize: 20 }}
-                color="text.secondary"
-                gutterBottom
+            <Card>
+              <CardContent>
+                <DescriptionIcon sx={{ color: " #7a002d", fontSize: "50px" }} />
+                <Typography
+                  sx={{ fontSize: 20 }}
+                  color="text.secondary"
+                  gutterBottom
+                >
+                  {prescriptionsCount}
+                </Typography>
+                <Typography> {data[2].title}</Typography>
+              </CardContent>
+              <CardActions
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  p: 1,
+                  maxHeight: 20,
+                  backgroundColor: " #0a4738",
+                }}
               >
-                {prescriptionsCount}
-              </Typography>
-              <Typography> {data[2].title}</Typography>
-            </CardContent>
-            <CardActions
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                p: 1,
-                maxHeight: 20,
-                backgroundColor: " #0a4738",
-              }}
-            >
-              <Link to="/pms/prescriptionmanagement">
-                <Button sx={{ color: "#fff" }} size="small">
-                  View Full List <ArrowForward sx={{ marginLeft: 0 }} />
-                </Button>
-              </Link>
-            </CardActions>
-          </Card>
+                <Link to="/pms/prescriptionmanagement">
+                  <Button sx={{ color: "#fff" }} size="small">
+                    View Full List <ArrowForward sx={{ marginLeft: 0 }} />
+                  </Button>
+                </Link>
+              </CardActions>
+            </Card>
+          </Paper>
         </Grid>
 
         {/* Stock Shortage */}
         <Grid item xs={3.5} sx={{ mb: 3 }}>
-          <Card
+          <Paper
+            elevation={24}
             sx={{
               textAlign: "center",
               border: "1px solid #0a4738",
             }}
           >
-            <CardContent>
-              <ReportProblemIcon sx={{ color: "#F44336", fontSize: "50px" }} />
-              <Typography
-                sx={{ fontSize: 20 }}
-                color="text.secondary"
-                gutterBottom
+            <Card>
+              <CardContent>
+                <ReportProblemIcon
+                  sx={{ color: "#F44336", fontSize: "50px" }}
+                />
+                <Typography
+                  sx={{ fontSize: 20 }}
+                  color="text.secondary"
+                  gutterBottom
+                >
+                  298
+                </Typography>
+                <Typography>{data[3].title} </Typography>
+              </CardContent>
+              <CardActions
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  p: 1,
+                  maxHeight: 20,
+                  backgroundColor: "#0a4738",
+                }}
               >
-                298
-              </Typography>
-              <Typography>{data[3].title} </Typography>
-            </CardContent>
-            <CardActions
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                p: 1,
-                maxHeight: 20,
-                backgroundColor: "#0a4738",
-              }}
-            >
-              <Button sx={{ color: "#fff" }} size="small">
-                View Full List <ArrowForward sx={{ marginLeft: 0 }} />
-              </Button>
-            </CardActions>
-          </Card>
+                <Button sx={{ color: "#fff" }} size="small">
+                  View Full List <ArrowForward sx={{ marginLeft: 0 }} />
+                </Button>
+              </CardActions>
+            </Card>
+          </Paper>
         </Grid>
 
         {/* Expired Products */}
         <Grid item xs={3.5} sx={{ mb: 3 }}>
-          <Card
+          <Paper
+            elevation={24}
             sx={{
               textAlign: "center",
               maxWidth: 280,
               border: "1px solid #0a4738",
             }}
           >
-            <CardContent>
-              <EventBusyIcon sx={{ color: "#9E9E9E", fontSize: "50px" }} />
-              <Typography
-                sx={{ fontSize: 20 }}
-                color="text.secondary"
-                gutterBottom
+            <Card>
+              <CardContent>
+                <EventBusyIcon sx={{ color: "#9E9E9E", fontSize: "50px" }} />
+                <Typography
+                  sx={{ fontSize: 20 }}
+                  color="text.secondary"
+                  gutterBottom
+                >
+                  298
+                </Typography>
+                <Typography> {data[4].title} </Typography>
+              </CardContent>
+              <CardActions
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  p: 1,
+                  maxHeight: 20,
+                  backgroundColor: "#0a4738",
+                }}
               >
-                298
-              </Typography>
-              <Typography> {data[4].title} </Typography>
-            </CardContent>
-            <CardActions
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                p: 1,
-                maxHeight: 20,
-                backgroundColor: "#0a4738",
-              }}
-            >
-              <Button sx={{ color: "#fff" }} size="small">
-                View Full List <ArrowForward sx={{ marginLeft: 0 }} />
-              </Button>
-            </CardActions>
-          </Card>
+                <Button sx={{ color: "#fff" }} size="small">
+                  View Full List <ArrowForward sx={{ marginLeft: 0 }} />
+                </Button>
+              </CardActions>
+            </Card>
+          </Paper>
         </Grid>
 
         {/* Received Prescription */}
         <Grid item xs={3.5} sx={{ mb: 3 }}>
-          <Card
+          <Paper
+            elevation={24}
             sx={{
               textAlign: "center",
               maxWidth: 280,
               border: "1px solid #0a4738",
             }}
           >
-            <CardContent>
-              <AssignmentTurnedInIcon
-                sx={{ color: "purple", fontSize: "50px" }}
-              />
-              <Typography
-                sx={{ fontSize: 20 }}
-                color="text.secondary"
-                gutterBottom
+            <Card>
+              <CardContent>
+                <AssignmentTurnedInIcon
+                  sx={{ color: "purple", fontSize: "50px" }}
+                />
+                <Typography
+                  sx={{ fontSize: 20 }}
+                  color="text.secondary"
+                  gutterBottom
+                >
+                  {externalPrescriptionsCount}
+                </Typography>
+                <Typography> {data[5].title} </Typography>
+              </CardContent>
+              <CardActions
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  p: 1,
+                  maxHeight: 20,
+                  backgroundColor: "#0a4738",
+                }}
               >
-                {externalPrescriptionsCount}
-              </Typography>
-              <Typography> {data[5].title} </Typography>
-            </CardContent>
-            <CardActions
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                p: 1,
-                maxHeight: 20,
-                backgroundColor: "#0a4738",
-              }}
-            >
-              <Link to="/pms/receivedprescription">
-                <Button sx={{ color: "#fff" }} size="small">
-                  View Full List <ArrowForward sx={{ marginLeft: 0 }} />
-                </Button>
-              </Link>
-            </CardActions>
-          </Card>
+                <Link to="/pms/receivedprescription">
+                  <Button sx={{ color: "#fff" }} size="small">
+                    View Full List <ArrowForward sx={{ marginLeft: 0 }} />
+                  </Button>
+                </Link>
+              </CardActions>
+            </Card>
+          </Paper>
         </Grid>
       </Grid>
     </Box>

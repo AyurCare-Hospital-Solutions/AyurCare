@@ -43,7 +43,7 @@ const Pms = () => {
           </ListItem>
         </Link>
 
-        {/* <Link to="/pms/keep">
+        <Link to="/pms/keep">
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -52,7 +52,7 @@ const Pms = () => {
               <ListItemText primary="Keep" />
             </ListItemButton>
           </ListItem>
-        </Link> */}
+        </Link>
 
         <Link to="/pms/inventoryrequest">
           <ListItem disablePadding>
@@ -109,7 +109,7 @@ const Pms = () => {
           </ListItem>
         </Link>
 
-        {/* <Link to="/pms/userguide">
+        <Link to="/pms/userguide">
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -118,7 +118,7 @@ const Pms = () => {
               <ListItemText primary="User Guide" />
             </ListItemButton>
           </ListItem>
-        </Link> */}
+        </Link>
       </DashboardPage>
     </SnackbarProvider>
   );

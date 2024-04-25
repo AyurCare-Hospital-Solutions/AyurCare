@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ShowConcerns from "../Components/UserConcers/ShowConcernsTable";
-import SearchBar from "../Components/SearchBar";
 import Typography from "@mui/material/Typography/Typography";
 import BackButton from "../Components/Common/BackButton";
 import { Box } from "@mui/material";

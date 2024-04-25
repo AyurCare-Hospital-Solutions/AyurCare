@@ -15,7 +15,7 @@ router.get("/specificmedicine/:id", medicine.getSpecificMedicine);
 router.get("/deletemedicine/:id", medicine.deleteMedicine);
 router.post("/updatemedicinestock/:id", medicine.changeStockLevel);
 router.get("/getInventoryMedicine", medicine.getInventoryMedicine);
-router.post("/setPharmacyMadicine", medicine.setPharmacyMadicine);
+router.post("/setPharmacyMedicine", medicine.setPharmacyMedicine);
 
 // ROUTES FOR INTERNAL PRESCRIPTION
 router.get("/getAllPrescription", prescription.getPrescriptions);
