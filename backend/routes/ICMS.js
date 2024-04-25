@@ -5,6 +5,7 @@ const wardService = require("../systems/ICMS/wards");
 
 router.post("/ward", wardService.createWard);
 router.get("/ward", wardService.getWards);
+router.get("/ward/:id", wardService.getWard);
 router.put("/ward/:id", wardService.renameWard);
 router.delete("/ward/:id", wardService.deleteWard);
 
@@ -27,6 +28,9 @@ router.get("/waitlist", waitListService.getWaitList);
 router.post("/waitlist/admit/:waitID", waitListService.admitPatient);
 
 const bedService = require("../systems/ICMS/beds");
-router.get("/beds/available/:ward", bedService.getAvailableBeds)
+router.get("/beds/available/:ward", bedService.getAvailableBeds);
+router.get("/beds/:ward", bedService.getBeds);
+router.delete("/beds/:bed", bedService.deleteBed)
+router.post("/beds", bedService.createBed);
 
 module.exports = router;

@@ -26,6 +26,7 @@ export const BedSchema = object({
     id: number().required(),
     number: number().required(),
     Ward: WardSchema.required(),
+    IPDAdmissionId: number().nullable(),
 });
 
 const AdmissionSchema = object({
