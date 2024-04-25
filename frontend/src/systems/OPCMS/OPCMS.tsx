@@ -18,7 +18,7 @@ import DashboardPage from "../../components/DashboardPage";
 function OPCMS() {
   return (
     <DashboardPage>
-      <Link to="dashboard">
+      <Link to="./">
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
@@ -29,7 +29,7 @@ function OPCMS() {
         </ListItem>
       </Link>
       <Divider />
-      <Link to="/opcms/appointments">
+      <Link to="appointments">
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
@@ -40,7 +40,7 @@ function OPCMS() {
         </ListItem>
       </Link>
 
-      <Link to="/opcms/records">
+      <Link to="records">
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
@@ -52,7 +52,7 @@ function OPCMS() {
       </Link>
       <Divider />
 
-      <Link to="/opcms/reports">
+      <Link to="reports">
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
@@ -64,7 +64,7 @@ function OPCMS() {
       </Link>
       <Divider />
 
-      <Link to="/opcms/analytics">
+      <Link to="analytics">
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>

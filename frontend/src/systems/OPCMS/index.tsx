@@ -12,7 +12,7 @@ const routes: { name: string; root: React.ReactNode; routes: RouteObject[] } = {
   root: <OPCMS />,
   routes: [
     {
-      path: "dashboard",
+      index: true,
       element: <Dashboard />,
     },
     {
