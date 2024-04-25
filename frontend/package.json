@@ -16,25 +16,12 @@
     "@mui/material": "^5.15.15",
     "@mui/x-charts": "^7.3.0",
     "@mui/x-data-grid": "^7.3.0",
-<<<<<<< HEAD
-    "@mui/x-data-grid-generator": "^7.3.0",
-    "@mui/x-date-pickers": "^7.1.1",
-=======
     "@mui/x-date-pickers": "^7.2.0",
->>>>>>> a21bf803f11501bf1b85616a7e2afb7cc5e16505
     "axios": "^1.6.8",
     "dayjs": "^1.11.10",
     "express": "^4.18.2",
     "material-ui-confirm": "^3.0.11",
     "notistack": "^3.0.1",
-<<<<<<< HEAD
-    "react": "^17.0.0 || ^18.0.0",
-    "react-dom": "^17.0.0 || ^18.0.0",
-    "react-hook-form": "^7.51.2",
-    "react-router-dom": "^6.22.3",
-    "styled-components": "^6.1.8",
-    "react-pdf": "^7.7.1"
-=======
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.3",
@@ -42,7 +29,6 @@
     "react-router-dom": "^6.22.3",
     "styled-components": "^6.1.8",
     "yup": "^1.4.0"
->>>>>>> a21bf803f11501bf1b85616a7e2afb7cc5e16505
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",

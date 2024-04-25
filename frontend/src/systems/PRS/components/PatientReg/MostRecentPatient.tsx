@@ -66,7 +66,6 @@ export default function BasicCard() {
           variant: "success",
         });
       }
-      // window.location.reload();
     } catch (err) {
       console.log(err);
     }

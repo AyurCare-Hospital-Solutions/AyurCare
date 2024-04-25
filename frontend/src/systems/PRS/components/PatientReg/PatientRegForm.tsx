@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import axios from "axios";
 import { enqueueSnackbar } from "notistack";
+import { useNavigate } from "react-router-dom";
 
 // patient interface
 interface Patient {
@@ -26,6 +27,9 @@ export default function PatientRegForm({
 }: {
   patientDetails?: Patient;
 }) {
+  // useNavigate hook
+  const navigate = useNavigate();
+
   // track the patient details
   const [patient, setPatient] = useState<Patient>({
     name: "",
@@ -87,10 +91,15 @@ export default function PatientRegForm({
       setadobValue(dayjs(null)); // Reset the date picker value
 
       // Refresh the page after submitting the form
-      window.location.reload();
+      refreshPage();
     } catch (error) {
       console.error(error);
     }
+  };
+
+  // create function to refresh the page
+  const refreshPage = () => {
+    navigate(0);
   };
 
   // console.log(patientData);
