@@ -19,13 +19,13 @@ function Dashboard() {
         <Box width="100%">
             <Stack direction="row" spacing={6} alignItems="center" justifyContent="center" >
             <Box>
-                <LinkCard name={"Meidcine"} desc={""} link={"./medicine"} />
+                <LinkCard name={"Medical Records"} desc={"Find Medical Record details"} link={"./records"} />
             </Box>
             <Box>
-                <LinkCard name={"Material"} desc={""} link={"./material"} />
+                <LinkCard name={"Reports"} desc={"Generate reports"} link={"./reports"} />
             </Box>
             <Box>
-                <LinkCard name={"Accessory"} desc={""} link={"./accessories"} />
+                <LinkCard name={"Analysis"} desc={""} link={"./analysis"} />
             </Box>
             </Stack>
         </Box>
