@@ -9,7 +9,7 @@ const Prescription = sequelize.define("Prescriptions", {
     diagnosis: DataTypes.STRING,
     note: DataTypes.STRING,
     dispensed_date: DataTypes.DATE,
-    status: {
+    status: {   // remove status  
         type: DataTypes.ENUM,
         values: ["pending", "approved", "rejected"]
     }
@@ -28,9 +28,9 @@ const PrescriptionMedicine = sequelize.define("PrescriptionMedicines", {
 });
 
 
-Prescription.belongsToMany(ConditionType, { through: PrescriptionConditions });
-Prescription.belongsToMany(Medicine, { through: PrescriptionMedicine });
-Prescription.belongsTo(Staff, { as: "DispensedBy" });
+Prescription.belongsToMany(ConditionType, { through: PrescriptionConditions });   // remove condition type
+Prescription.belongsToMany(Medicine, { through: PrescriptionMedicine });  
+Prescription.belongsTo(Staff, { as: "DispensedBy" });  // remove dispensed by
 Prescription.belongsTo(Staff, { as: "Doctor" });
 Prescription.belongsTo(Patient);
 
