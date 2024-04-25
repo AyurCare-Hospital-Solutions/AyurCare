@@ -1,14 +1,14 @@
 import { Dashboard } from '@mui/icons-material';
-import VaccinesIcon from '@mui/icons-material/Vaccines';
-import ScienceIcon from '@mui/icons-material/Science';
-import HealingIcon from '@mui/icons-material/Healing';
+import EditCalendarIcon from '@mui/icons-material/EditCalendar';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import SummarizeIcon from '@mui/icons-material/Summarize';
+import AssessmentIcon from '@mui/icons-material/Assessment';
 import { Divider, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { Link } from 'react-router-dom'
 import DashboardPage from '../../components/DashboardPage';
-import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 
 
-function OPCMS_Main() {
+function OPCMS() {
 
     return (
         <DashboardPage>
@@ -27,7 +27,7 @@ function OPCMS_Main() {
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
-                            <VaccinesIcon />
+                            <EditCalendarIcon />
                         </ListItemIcon>
                         <ListItemText primary="Appointments" />
                     </ListItemButton>
@@ -38,7 +38,7 @@ function OPCMS_Main() {
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
-                            <ScienceIcon />
+                            <AssignmentIndIcon />
                         </ListItemIcon>
                         <ListItemText primary="Medical Records" />
                     </ListItemButton>
@@ -50,7 +50,7 @@ function OPCMS_Main() {
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
-                            <HealingIcon />
+                            <SummarizeIcon />
                         </ListItemIcon>
                         <ListItemText primary="Reports" />
                     </ListItemButton>
@@ -62,7 +62,7 @@ function OPCMS_Main() {
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
-                            <MedicalServicesIcon />
+                            <AssessmentIcon />
                         </ListItemIcon>
                         <ListItemText primary="Analytics" />
                     </ListItemButton>
@@ -72,4 +72,5 @@ function OPCMS_Main() {
     )
 }
 
-export default OPCMS_Main
+// eslint-disable-next-line react-refresh/only-export-components
+export default OPCMS
