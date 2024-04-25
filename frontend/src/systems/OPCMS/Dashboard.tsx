@@ -11,7 +11,7 @@ function Dashboard() {
                 borderRadius: 15,
             }}
         >
-            <Box mr={4} sx={{ flexGrow: 1 }}><WelcomeCard img="/assets/IMSimg.svg" /></Box>
+            <Box mr={4} sx={{ flexGrow: 1 }}><WelcomeCard img="/assets/" /></Box>
             <Box>
             <DateCard />
             </Box>
