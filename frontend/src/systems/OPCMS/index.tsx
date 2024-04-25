@@ -1,6 +1,6 @@
 import { RouteObject } from "react-router-dom";
 import Assessment from "./Assessment";
-import OPCMS_Home from "./OPCMS_Home";
+import OPCMS_Home from "./Dashboard";
 
 const routes: { name: string, root: React.ReactNode, routes: RouteObject[] } = {
     name: "OPCMS",

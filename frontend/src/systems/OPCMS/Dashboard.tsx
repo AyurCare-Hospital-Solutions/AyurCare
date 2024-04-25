@@ -1,7 +1,7 @@
 import { Box, Stack } from '@mui/material'
 import { DateCard, LinkCard, WelcomeCard } from '../../components/DashboardCards'
 
-function OPCMS_Home() {
+function Dashboard() {
     return (
         <div>
         <Box
@@ -33,4 +33,4 @@ function OPCMS_Home() {
     )
 }
 
-export default OPCMS_Home
+export default Dashboard;
