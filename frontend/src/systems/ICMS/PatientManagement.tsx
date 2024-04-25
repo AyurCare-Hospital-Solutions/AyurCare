@@ -9,9 +9,11 @@ import Paper from '@mui/material/Paper';
 import { useState, ChangeEvent, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { Admission, AdmissionListSchema } from './types';
-import { Box, FormControlLabel, Switch, TableHead, Typography } from '@mui/material';
+import { Box, FormControlLabel, Switch, TableHead, Tooltip, Typography } from '@mui/material';
 import SearchInput from './components/SearchInput';
 import { useNavigate } from 'react-router-dom';
+import TableLoader from '../../components/TableLoader';
+import { Launch } from '@mui/icons-material';
 
 
 
@@ -23,6 +25,7 @@ const PatientList = () => {
     const [data, setData] = useState<Admission[]>([]);
     const [search, setSearch] = useState<string>();
     const [admittedOnly, setAdmittedOnly] = useState(true);
+    const [loading, setLoading] = useState(true);
 
     const navigator = useNavigate();
 
@@ -40,11 +43,16 @@ const PatientList = () => {
     useEffect(() => {
         axios.get(`/api/icms/patients?admitted=${admittedOnly}`).then((res) => {
             setData(AdmissionListSchema.cast(res.data));
+            setLoading(false);
         })
     }, [admittedOnly])
 
-    const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+
+    let emptyRows = 0;
+    if (page > 0 || rows.length < rowsPerPage)
+        emptyRows = Math.max(0, (1 + page) * rowsPerPage - rows.length);
+    else if (!loading && rows.length == 0)
+        emptyRows = rowsPerPage - 1;
 
     const handleChangePage = (_: any, newPage: number) => {
         setPage(newPage);
@@ -58,7 +66,7 @@ const PatientList = () => {
     };
 
     return <>
-        <Typography variant="h5" mx={1} my={2}>Patients</Typography>
+        <Typography variant="h5" mx={1} my={2}>Patient Management</Typography>
 
         <Box sx={{ display: "flex" }} my={4} mx={2}>
             <SearchInput onChange={(s) => setSearch(s)} ></SearchInput>
@@ -74,7 +82,8 @@ const PatientList = () => {
                         <TableCell>Admission No</TableCell>
                         <TableCell>Patient Name</TableCell>
                         <TableCell size='small'>Ward</TableCell>
-                        <TableCell size='small'>Bed No</TableCell>
+                        <TableCell size='small' sx={{ pr: 0 }}>Bed No</TableCell>
+                        <TableCell sx={{ maxWidth: "32px", pl: 0 }}></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -82,29 +91,37 @@ const PatientList = () => {
                         ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         : rows
                     ).map((row) => (
-                        <TableRow key={row.id} hover={true} onClick={() => navigator("/icms/patient/" + row.id)}>
+                        <TableRow key={row.id}
+                            sx={{ height: "58px" }}
+                            hover={true} onClick={() => navigator("/icms/patient/" + row.id)}>
                             <TableCell >
                                 {row.id}
                             </TableCell>
-                            <TableCell component="th" scope="row">
+                            <TableCell scope="row">
                                 {row.Patient.name}
                             </TableCell>
                             <TableCell size='small'>
                                 {row.Bed.Ward.name}
                             </TableCell>
-                            <TableCell size='small'>
+                            <TableCell size='small' sx={{ pr: 0 }}>
                                 {row.Bed.id}
+                            </TableCell>
+                            <TableCell sx={{ maxWidth: "32px", pl: 0 }}>
+                                <Tooltip title="View Patient Details">
+                                    <Launch sx={{ fontSize: "1.24em" }} />
+                                </Tooltip>
                             </TableCell>
                         </TableRow>
                     ))}
+                    {!loading && rows.length == 0 ? <TableRow>
+                        <TableCell colSpan={5} sx={{ borderBottom: "none" }}>No Patients Found</TableCell>
+                    </TableRow> : null}
+                    {loading ? <TableLoader columns={5} /> : null}
                     {emptyRows > 0 && (
-                        <TableRow style={{ height: 53 * emptyRows }}>
+                        <TableRow style={{ height: 58 * emptyRows }}>
                             <TableCell colSpan={6} />
                         </TableRow>
                     )}
-                    {rows.length > 0 ? null : <TableRow>
-                        <TableCell colSpan={4}>No Patients Found</TableCell>
-                    </TableRow>}
                 </TableBody>
                 <TableFooter>
                     <TableRow>

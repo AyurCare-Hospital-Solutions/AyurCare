@@ -13,9 +13,8 @@ const Dashboard = () => {
     return <>
         <Grid container spacing={2} justifyContent="space-evenly">
             <Grid item xs={12}>
-                <Box sx={{ my: 2.5, mx: 2, color: "#003a2b" }} >
-                    <Typography variant="h4" >Welcome to</Typography>
-                    <Typography variant="h5" sx={{ pl: 4 }}>Inpatient Management Dashboard</Typography>
+                <Box sx={{ my: 2.5, mx: "auto", color: "#003a2b" }} >
+                    <Typography variant="h4" sx={{ pl: 4 }}>Inpatient Management Dashboard</Typography>
                 </Box>
             </Grid>
             <Grid item xs={5}>

@@ -1,4 +1,4 @@
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Table, TableBody, TableCell, TableRow, TextField, Typography, Autocomplete, CircularProgress } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Table, TableBody, TableCell, TableRow, TextField, Typography, Autocomplete, CircularProgress, Paper } from "@mui/material";
 import { Bed, BedArraySchema, WaitList, Ward } from "../types";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
@@ -47,40 +47,42 @@ const WaitListDialog = ({ row, wards, open, onAdmit, onClose }: {
         >
             <DialogTitle>Patient Info</DialogTitle>
             <DialogContent>
-                <Table size="small" >
-                    <TableBody>
-                        <TableRow>
-                            <TableCell>Tracking No</TableCell>
-                            <TableCell>
-                                <Typography>{row?.Patient.tracking_no}</Typography>
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>Name</TableCell>
-                            <TableCell>
-                                <Typography>{row?.Patient.name}</Typography>
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>Gender</TableCell>
-                            <TableCell>
-                                <Typography>{row?.Patient.gender}</Typography>
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>Age</TableCell>
-                            <TableCell>{row ? dayjs().diff(row.Patient.dob, "years") + " year(s)" : null}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>Is Priority</TableCell>
-                            <TableCell>{row?.is_priority ? "Yes" : "No"}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>Date Added</TableCell>
-                            <TableCell>{row ? dayjs(row.createdAt).format("DD/MM/YYYY HH:mm:ss") : null}</TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
+                <Paper variant="outlined">
+                    <Table size="small" >
+                        <TableBody>
+                            <TableRow>
+                                <TableCell>Tracking No</TableCell>
+                                <TableCell>
+                                    <Typography>{row?.Patient.tracking_no}</Typography>
+                                </TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Name</TableCell>
+                                <TableCell>
+                                    <Typography>{row?.Patient.name}</Typography>
+                                </TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Gender</TableCell>
+                                <TableCell>
+                                    <Typography>{row?.Patient.gender}</Typography>
+                                </TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Age</TableCell>
+                                <TableCell>{row ? dayjs().diff(row.Patient.dob, "years") + " year(s)" : null}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Is Priority</TableCell>
+                                <TableCell>{row?.is_priority ? "Yes" : "No"}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Date Added</TableCell>
+                                <TableCell>{row ? dayjs(row.createdAt).format("DD/MM/YYYY HH:mm:ss") : null}</TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </Paper>
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => setAdmitOpen(true)}>Admit Patient</Button>
@@ -120,6 +122,7 @@ const WaitListDialog = ({ row, wards, open, onAdmit, onClose }: {
                     value={selectedBed}
                     onChange={(_, v) => { setSelectedBed(v) }}
                     disabled={!selectedWard}
+                    noOptionsText="No Available Beds"
                     renderInput={(params) => (
                         <TextField
                             {...params}

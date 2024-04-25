@@ -3,7 +3,7 @@ import ICMS from "./ICMS";
 import WardManager from "./WardManager";
 import Dashboard from "./Dashboard";
 import PatientDetails from "./PatientDetails";
-import PatientList from "./PatientList";
+import PatientList from "./PatientManagement";
 import WaitListManager from "./WaitListManager";
 
 const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {

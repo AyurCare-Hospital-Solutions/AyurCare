@@ -4,6 +4,7 @@ import { Bed, WaitList, WaitListArraySchema, Ward, WardArraySchema } from "./typ
 import WaitListTable from "./components/WaitListTable";
 import WaitListDialog from "./components/WaitListDialog";
 import { enqueueSnackbar } from "notistack";
+import { Typography } from "@mui/material";
 
 
 const WaitListManager = () => {
@@ -59,6 +60,7 @@ const WaitListManager = () => {
     }
 
     return <>
+        <Typography variant="h5" mx={1} my={2}>Waiting List</Typography>
         <WaitListTable rows={waitList} loading={loading} onSelect={handleSelect} />
         <WaitListDialog open={modelOpen} row={selected} wards={wards} onAdmit={handleAdmit} onClose={() => setModalOpen(false)} />
     </>
