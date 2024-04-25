@@ -23,7 +23,7 @@ const PatientList = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [data, setData] = useState<Admission[]>([]);
-    const [search, setSearch] = useState<string>();
+    const [search, setSearch] = useState<RegExp>();
     const [admittedOnly, setAdmittedOnly] = useState(true);
     const [loading, setLoading] = useState(true);
 
@@ -31,9 +31,8 @@ const PatientList = () => {
 
     const rows = useMemo(() => {
         if (search) {
-            let filter = RegExp(search);
             return data?.filter((v) => {
-                return v.Patient.name.search(filter) !== -1;
+                return v.Patient.name.search(search) !== -1;
             })
         }
         return data;

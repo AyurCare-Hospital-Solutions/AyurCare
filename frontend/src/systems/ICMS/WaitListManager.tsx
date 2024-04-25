@@ -61,7 +61,7 @@ const WaitListManager = () => {
 
     return <>
         <Typography variant="h5" mx={1} my={2}>Waiting List</Typography>
-        <WaitListTable rows={waitList} loading={loading} onSelect={handleSelect} />
+        <WaitListTable data={waitList} loading={loading} onSelect={handleSelect} />
         <WaitListDialog open={modelOpen} row={selected} wards={wards} onAdmit={handleAdmit} onClose={() => setModalOpen(false)} />
     </>
 }

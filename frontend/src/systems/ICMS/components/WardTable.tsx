@@ -8,7 +8,7 @@ import { Ward } from "../types";
 
 const WardTable = ({ data, loading, search, onRename, onDelete }: {
     data: Ward[],
-    search: string | undefined,
+    search: RegExp | undefined,
     loading: boolean
     onDelete: (v: Ward) => unknown
     onRename: (v: Ward) => unknown
@@ -16,9 +16,8 @@ const WardTable = ({ data, loading, search, onRename, onDelete }: {
 
     const rows = useMemo(() => {
         if (search) {
-            let filter = RegExp(search);
             return data?.filter((v) => {
-                return v.name.search(filter) !== -1;
+                return v.name.search(search) !== -1;
             })
         }
         return data;

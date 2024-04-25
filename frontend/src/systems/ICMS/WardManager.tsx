@@ -11,7 +11,7 @@ import { Ward, WardArraySchema } from "./types";
 
 const WardManager = () => {
     const [wards, setWards] = useState<Ward[]>([]);
-    const [search, setSearch] = useState<string>();
+    const [search, setSearch] = useState<RegExp>();
     const [modalOpen, setModalOpen] = useState(false);
     const [modalRenameOpen, setModalRenameOpen] = useState(false);
     const [editWard, setEditWard] = useState<Ward>();
