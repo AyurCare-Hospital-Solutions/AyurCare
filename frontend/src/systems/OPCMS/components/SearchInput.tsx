@@ -2,7 +2,7 @@ import { Search } from "@mui/icons-material"
 import { InputAdornment, TextField } from "@mui/material"
 import { ChangeEvent } from "react";
 
-const SearchInput = ({ onChange }: { onChange: (inp: string) => any }) => {
+const SearchInput = ({ onChange }: { onChange: (inp: string) => unknown }) => {
 
     // add a 0.2 second delay for calling onChange that resets every time a character changes.
     // onChange will be called when the search text remains unchanged for 0.2 seconds.
