@@ -102,7 +102,20 @@ const updateLeaveRequest = async (req, res) => {
     return;
   }
 
-  await leaveRequest.update(data);
+  let leaveType = await LeaveType.findByPk(data.type);
+  if (leaveType === null) {
+    res.status(400).send({ msg: "Invalid leave type" });
+    return;
+  }
+
+  await leaveRequest.update({
+    LeaveTypeId: data.type,
+    reason: data.reason,
+    start_date: data.startDate,
+    end_date: data.endDate,
+    registration: data.registration,
+    hours: data.hours,
+  });
   res.sendStatus(204);
 };
 
