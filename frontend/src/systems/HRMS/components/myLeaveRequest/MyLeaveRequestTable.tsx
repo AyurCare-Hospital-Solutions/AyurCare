@@ -19,11 +19,12 @@ import { LeaveTypeData, MyLeaveRequestData } from "../../types";
 
 export default function MyLeaveRequestTable({
   rows, leaveTypes,
-  deleteLeaveRequest,
+  deleteLeaveRequest, updateLeaveRequest
 }: {
   leaveTypes: LeaveTypeData[];
   rows: MyLeaveRequestData[];
   deleteLeaveRequest: (id: number) => void;
+  updateLeaveRequest: (id: number, v: any) => void,
 }) {
   const [page, setPage] = useState(0);
   const [rowDataPerPage, setrowDataPerPage] = useState(5);
@@ -154,6 +155,7 @@ export default function MyLeaveRequestTable({
 
       <UpdateLeaveRequestDialog
         leaveTypes={leaveTypes}
+        updateRequest={updateLeaveRequest}
         open={openUpdateDialog}
         onClose={handleCloseUpdateDialog}
         leaveRequestData={selectedLeaveRequest}

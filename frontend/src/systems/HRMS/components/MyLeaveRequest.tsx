@@ -91,6 +91,24 @@ const MyLeaveRequest = () => {
     }
   };
 
+  const updateLeaveRequest = async (id: number, data: any) => {
+    try {
+      let updated = await axios.put(`api/hrms/leave/${id}`, data);
+      console.log(rows, updated.data)
+      const index = rows.findIndex((v) => v.id == updated.data.id);
+      if (index === -1) {
+        console.error("Failed to find request");
+      } else {
+        rows[index] = updated.data;
+        setRows([...rows]);
+      }
+      enqueueSnackbar("Leave request updated successfully", { variant: "success", });
+    } catch (e) {
+      enqueueSnackbar("Failed to update leave request", { variant: "error", });
+      console.log(e);
+    }
+  }
+
   return (
     <div className="MyLeaveRequest">
       <Box sx={{ display: "flex", mx: 4 }}>
@@ -125,6 +143,7 @@ const MyLeaveRequest = () => {
         </Paper>
         <Box sx={{ display: "flex", mx: 4 }}>
           <MyLeaveRequestTable
+            updateLeaveRequest={updateLeaveRequest}
             leaveTypes={leaveTypes}
             rows={rows}
             deleteLeaveRequest={deleteLeaveRequest}

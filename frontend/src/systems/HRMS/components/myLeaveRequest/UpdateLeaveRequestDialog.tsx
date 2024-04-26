@@ -22,11 +22,13 @@ export default function UpdateLeaveRequestDialog({
   open,
   onClose,
   leaveTypes,
+  updateRequest,
   leaveRequestData, // Existing leave request data to pre-fill the form
 }: {
   open: boolean;
   onClose: () => void;
   leaveTypes: LeaveTypeData[];
+  updateRequest: (id: number, v: any) => void,
   leaveRequestData: any; // Data of the leave request being updated
 }) {
   const [isFullDay, setIsFullDay] = React.useState(true);
@@ -36,8 +38,8 @@ export default function UpdateLeaveRequestDialog({
     React.useState<any>({
       LeaveType: null,
       reason: "",
-      startDate: null,
-      endDate: null,
+      start_date: null,
+      end_date: null,
       hours: ""
     });
 
@@ -77,7 +79,17 @@ export default function UpdateLeaveRequestDialog({
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    updateLeaveRequest();
+    const data = {
+      type: updateLeaveRequestData.LeaveType.id,
+      reason: updateLeaveRequestData.reason,
+      startDate: updateLeaveRequestData.start_date,
+      endDate: updateLeaveRequestData.end_date,
+      registration: getRegistration(),
+      hours: parseFloat(updateLeaveRequestData.hours),
+    };
+
+    updateRequest(updateLeaveRequestData.id, data);
+    onClose();
   };
 
   const getRegistration = () => {
@@ -90,17 +102,6 @@ export default function UpdateLeaveRequestDialog({
     }
   };
 
-  // update leave request
-  const updateLeaveRequest = () => {
-    axios.put(`api/hrms/leave/${updateLeaveRequestData.id}`, { type: updateLeaveRequestData.LeaveType.id, reason: updateLeaveRequestData.reason, startDate: updateLeaveRequestData.startDate, endDate: updateLeaveRequestData.endDate, registration: getRegistration(), hours: parseFloat(updateLeaveRequestData.hours) })
-      .then((res) => {
-        console.log(res.data);
-
-      })
-      .catch((e) => {
-        console.log(e);
-      })
-  }
 
   return (
     <React.Fragment>
@@ -180,6 +181,7 @@ export default function UpdateLeaveRequestDialog({
                   options={leaveTypes}
                   value={updateLeaveRequestData?.LeaveType || null}
                   getOptionLabel={v => v.name ?? ""}
+                  isOptionEqualToValue={(a, b) => a.id == b.id}
                   onChange={(_, lt) =>
                     setUpdateLeaveRequestData({
                       ...updateLeaveRequestData,
@@ -214,12 +216,20 @@ export default function UpdateLeaveRequestDialog({
           >
             <DatePicker
               label={isMultipleDays ? "Start Date" : "Date"}
-              value={dayjs(updateLeaveRequestData?.startDate)}
+              value={dayjs(updateLeaveRequestData?.start_date)}
+              onChange={v => setUpdateLeaveRequestData({
+                ...updateLeaveRequestData,
+                start_date: v
+              })}
             />
             {isMultipleDays && (
               <DatePicker
                 label="End Date"
-                value={dayjs(updateLeaveRequestData?.endDate)}
+                value={dayjs(updateLeaveRequestData?.end_date)}
+                onChange={v => setUpdateLeaveRequestData({
+                  ...updateLeaveRequestData,
+                  end_date: v
+                })}
               />
             )}
           </Box>

@@ -116,7 +116,7 @@ const updateLeaveRequest = async (req, res) => {
     registration: data.registration,
     hours: data.hours,
   });
-  res.sendStatus(204);
+  res.status(200).json({ ...leaveRequest.toJSON(), LeaveType: leaveType });
 };
 
 /**
