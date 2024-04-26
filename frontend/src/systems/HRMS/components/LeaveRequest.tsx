@@ -3,19 +3,43 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography, Tabs, Tab } from "@mui/material";
 import LeaveRequestTable from "./leaveManagement/LeaveRequestTable";
+import axios from "axios";
 
 const LeaveRequest: React.FC = () => {
-  useEffect(() => {});
+  useEffect(() => {
+    fetchAllLeaveRequests();
+  }, []);
+
+  const [rows, setRows] = useState([]);
+  const [tabValue, setTabValue] = useState(0);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const fetchAllLeaveRequests = async () => {
     try {
-    } catch (error) {}
+      const response = await axios.get("/api/hrms/leave");
+      setRows(response.data);
+    } catch (error) {
+      console.error("Error fetching leave requests:", error);
+    }
   };
-
-  const [tabValue, setTabValue] = useState(0);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
+  };
+
+  const handleChangePage = (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   return (
@@ -36,32 +60,17 @@ const LeaveRequest: React.FC = () => {
           <Tab label="Processed Leaves" />
           <Tab label="All Leave Requests" />
         </Tabs>
-        {tabValue === 0 && (
-          <Box sx={{ mt: 2 }}>
-            <LeaveRequestTable
-              leaveRequests={[]}
-              onPageChange={() => {}}
-              page={0}
-              rowsPerPage={5}
-              handleAccept={() => {}}
-              handleReject={() => {}}
-              pendingView={true}
-            />
-          </Box>
-        )}
-        {tabValue !== 0 && (
-          <Box sx={{ mt: 2 }}>
-            <LeaveRequestTable
-              leaveRequests={[]}
-              onPageChange={() => {}}
-              page={0}
-              rowsPerPage={5}
-              handleAccept={() => {}}
-              handleReject={() => {}}
-              pendingView={false}
-            />
-          </Box>
-        )}
+        <Box sx={{ mt: 2 }}>
+          <LeaveRequestTable
+            leaveRequests={rows}
+            onPageChange={handleChangePage}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            handleAccept={() => {}}
+            handleReject={() => {}}
+            pendingView={tabValue === 0}
+          />
+        </Box>
       </Box>
     </div>
   );
