@@ -82,6 +82,8 @@ export default function UpdateLeaveRequestDialog({
       formData.entries() as Iterable<[string, string]>
     );
 
+    // TODO: parse hours
+
     // Make the Axios request to update leave request
     try {
       const response = await axios.put(
@@ -118,6 +120,12 @@ export default function UpdateLeaveRequestDialog({
             label="Leave Reason"
             type="text"
             variant="standard"
+            onChange={(e) => {
+              setUpdateLeaveRequestData({
+                ...updateLeaveRequestData,
+                reason: e.target.value,
+              })
+            }}
             value={updateLeaveRequestData?.reason}
           />
           <Box
@@ -220,6 +228,12 @@ export default function UpdateLeaveRequestDialog({
               type="text"
               variant="standard"
               sx={{ mt: 3 }}
+              onChange={(e) => {
+                setUpdateLeaveRequestData({
+                  ...updateLeaveRequestData,
+                  hours: e.target.value
+                })
+              }}
               value={updateLeaveRequestData?.hours || ""}
             />
           )}

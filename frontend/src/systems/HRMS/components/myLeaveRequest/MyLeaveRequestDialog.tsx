@@ -29,7 +29,7 @@ export default function MyLeaveRequestDialog({
   onClose: () => void;
 }) {
   const [reason, setReason] = useState("");
-  const [hours, setHours] = useState<number>(0);
+  const [hours, setHours] = useState<string>("");
   const [status, setStatus] = useState<string>("");
   const [start_date, setStartDate] = useState<Dayjs | null>(null);
   const [end_date, setEndDate] = useState<Dayjs | null>(null);
@@ -66,7 +66,7 @@ export default function MyLeaveRequestDialog({
     }
   };
 
-  const updateHours = (newHours: number) => {
+  const updateHours = (newHours: string) => {
     let hoursErrorMessage = "";
     setHours(newHours);
   };
@@ -103,7 +103,7 @@ export default function MyLeaveRequestDialog({
     addLeaveRequest({
       reason,
       registration: getRegistration(),
-      hours,
+      hours: Number.parseFloat(hours),
       status,
       start_date,
       end_date: end_date ?? start_date,
@@ -265,6 +265,8 @@ export default function MyLeaveRequestDialog({
               label="Hours"
               type="text"
               variant="standard"
+              value={hours}
+              onChange={(e) => setHours(e.target.value)}
               sx={{ mt: 3 }}
             />
           )}
