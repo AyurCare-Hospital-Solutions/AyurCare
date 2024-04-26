@@ -1,21 +1,21 @@
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableFooter from "@mui/material/TableFooter";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import IconButton from "@mui/material/IconButton";
-import { TableHead } from "@mui/material";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableFooter,
+  TableHead,
+  TablePagination,
+  TableRow,
+  Paper,
+  IconButton,
+  Chip,
+} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Chip from "@mui/material/Chip";
+import { useState, useEffect, ChangeEvent, MouseEvent } from "react";
 import UpdateLeaveRequestDialog from "./UpdateLeaveRequestDialog"; // Import your update dialog component
-import axios from "axios";
-import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
-import { LeaveTypeData, MyLeaveRequestData } from "../../types";
-import { Dayjs } from "dayjs";
+import { MyLeaveRequestData } from "../../types";
 
 export default function MyLeaveRequestTable({
   rows,
@@ -24,27 +24,6 @@ export default function MyLeaveRequestTable({
   rows: MyLeaveRequestData[];
   deleteLeaveRequest: (id: number) => void;
 }) {
-  const [open, setOpen] = useState(false);
-  const [selectedRow, setSelectedRow] = useState<MyLeaveRequestData | null>(
-    null
-  );
-
-  // const handleEdit = (row: RowData) => {
-  //   setSelectedRow(row);
-  //   setOpen(true);
-  // };
-
-  // useEffect(() => {
-  //   const fetchAllLeaveRequests = async () => {
-  //     const allLeaveRequests = await axios.get("/api/hrms/leave/user");
-  //     const leaveRequestData = allLeaveRequests.data;
-
-  //     setRowData(leaveRequestData);
-  //   };
-
-  //   fetchAllLeaveRequests();
-  // }, []);
-
   const [page, setPage] = useState(0);
   const [rowDataPerPage, setrowDataPerPage] = useState(5);
   const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
@@ -55,6 +34,10 @@ export default function MyLeaveRequestTable({
 
   const emptyrowData =
     page > 0 ? Math.max(0, (1 + page) * rowDataPerPage - rowData.length) : 0;
+
+  useEffect(() => {
+    setRowData(rows);
+  }, [rows]);
 
   const handleChangePage = (
     _event: MouseEvent<HTMLButtonElement> | null,
@@ -72,7 +55,6 @@ export default function MyLeaveRequestTable({
 
   const handleEditClick = (row: MyLeaveRequestData) => {
     setSelectedLeaveRequest(row);
-    console.log(row);
     setOpenUpdateDialog(true);
   };
 
@@ -108,8 +90,8 @@ export default function MyLeaveRequestTable({
                 <TableCell component="th" scope="row">
                   {row.id}
                 </TableCell>
-                <TableCell align="right">{row.leaveReason}</TableCell>
-                <TableCell align="right">{row.leaveType?.name}</TableCell>
+                <TableCell align="right">{row.reason}</TableCell>
+                <TableCell align="right">{row.LeaveType?.name}</TableCell>
                 <TableCell align="right">{row.hours}</TableCell>
                 <TableCell align="right">
                   <Chip
@@ -125,9 +107,9 @@ export default function MyLeaveRequestTable({
                     }
                   />
                 </TableCell>
-                <TableCell align="right">{row.startDate}</TableCell>
+                <TableCell align="right">{row.start_date}</TableCell>
                 <TableCell align="right">
-                  {row.endDate ?? row.startDate}
+                  {row.end_date ?? row.start_date}
                 </TableCell>
                 <TableCell align="right">
                   <IconButton
@@ -171,7 +153,7 @@ export default function MyLeaveRequestTable({
 
       <UpdateLeaveRequestDialog
         open={openUpdateDialog}
-        onClose={() => setOpenUpdateDialog(false)}
+        onClose={handleCloseUpdateDialog}
         leaveRequestData={selectedLeaveRequest}
       />
     </>

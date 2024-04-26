@@ -6,10 +6,10 @@ export interface LeaveTypeData {
 
 export interface MyLeaveRequestData {
   id: number;
-  leaveType: LeaveTypeData;
-  leaveReason: string;
-  startDate: string;
-  endDate: string;
+  LeaveType: LeaveTypeData;
+  reason: string;
+  start_date: string;
+  end_date: string;
   hours: string;
   status: string;
 }

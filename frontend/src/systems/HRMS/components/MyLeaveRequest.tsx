@@ -54,36 +54,6 @@ const MyLeaveRequest = () => {
     }
   };
 
-  // const updateLeaveRequest = async (
-  //   row: MyLeaveRequestData,
-  //   reason: string,
-  //   hours: number,
-  //   startDate: string,
-  //   endDate: string
-  // ) => {
-  //   try {
-  //     await axios.put(`/api/hrms/leave/${row.id}`, {
-  //       reason,
-  //       hours,
-  //       start_date: startDate,
-  //       end_date: endDate,
-  //     });
-  //     row.reason = reason;
-  //     row.hours = hours;
-  //     row.start_date = startDate;
-  //     row.end_date = endDate;
-  //     setRows([...rows]);
-  //     enqueueSnackbar("Leave request updated successfully", {
-  //       variant: "success",
-  //     });
-  //   } catch (error) {
-  //     console.error("Error updating leave request:", error);
-  //     enqueueSnackbar("Failed to update leave request", {
-  //       variant: "error",
-  //     });
-  //   }
-  // };
-
   return (
     <div className="MyLeaveRequest">
       <Box sx={{ display: "flex", mx: 4 }}>
