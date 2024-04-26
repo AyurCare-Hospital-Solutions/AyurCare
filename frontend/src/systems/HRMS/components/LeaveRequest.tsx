@@ -1,5 +1,3 @@
-// LeaveRequest.tsx
-
 import React, { useEffect, useState } from "react";
 import { Box, Typography, Tabs, Tab } from "@mui/material";
 import LeaveRequestTable from "./leaveManagement/LeaveRequestTable";

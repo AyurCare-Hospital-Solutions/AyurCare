@@ -3,6 +3,7 @@ const express = require("express");
 const yup = require("yup");
 const { getUserID } = require("../../middleware/auth");
 const LeaveType = require("../../model/LeaveType");
+const Staff = require("../../model/Staff");
 const leaveRequestValidator = yup
   .object({
     type: yup.number().required(),
@@ -20,7 +21,9 @@ const leaveRequestValidator = yup
  * @param {express.Response} res
  */
 const getAllLeaveRequests = async (req, res) => {
-  res.status(200).json(await LeaveRequest.findAll());
+  res
+    .status(200)
+    .json(await LeaveRequest.findAll({ include: [LeaveType, Staff] }));
 };
 
 /**
