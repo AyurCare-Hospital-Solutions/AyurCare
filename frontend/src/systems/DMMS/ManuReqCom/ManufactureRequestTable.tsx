@@ -7,10 +7,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import IconButton from '@mui/material/IconButton/IconButton';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
-export default function ManufactureRequestTable({ manufactureReqData }: { manufactureReqData: any }) {
+
+export default function ManufactureRequestTable({ manufactureReqData, deleteManufactureRequest }: { manufactureReqData: any, deleteManufactureRequest: (arg: number) => any }) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
 
     const handleChangePage = (_event: unknown, newPage: number) => {
         setPage(newPage);
@@ -21,9 +25,11 @@ export default function ManufactureRequestTable({ manufactureReqData }: { manufa
         setPage(0);
     };
 
-    const colorIndicator = (status: string) => {
-        if (status === 'Rejected' || status === 'Manufacture Error') {
+    const colorIndicator = (progress: string) => {
+        if (progress === 'Rejected' || progress === 'Manufacture Error') {
             return '#ff7979';
+        } else if (progress === 'Completed') {
+            return '#4aee78';
         }
     }
 
@@ -38,7 +44,9 @@ export default function ManufactureRequestTable({ manufactureReqData }: { manufa
                             <TableCell>Amount</TableCell>
                             <TableCell>Requested Date</TableCell>
                             <TableCell>Manufactured Date</TableCell>
-                            <TableCell>Progress</TableCell>
+                            <TableCell>Status</TableCell>
+                            <center><TableCell>Action</TableCell></center>
+
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -49,13 +57,23 @@ export default function ManufactureRequestTable({ manufactureReqData }: { manufa
                                 console.log(row);
 
                                 return (
-                                    <TableRow hover role="checkbox" key={row.id} sx={{ backgroundColor: colorIndicator(row.status) }}>
+                                    <TableRow hover role="checkbox" key={row.id} sx={{ backgroundColor: colorIndicator(row.progress) }}>
                                         <TableCell>{row.id}</TableCell>
-                                        <TableCell>{row.Medicine.Item.name}</TableCell>
+                                        <TableCell>{row.Medicine.Item?.name}</TableCell>
                                         <TableCell>{row.amount}</TableCell>
-                                        <TableCell>{row.createdAt}</TableCell>
-                                        <TableCell>{row.progress === "Completed" ? row.updatedAt : ''}</TableCell>
+                                        <TableCell>{row.createdAt.slice(0, 19)}</TableCell>
+                                        <TableCell>{row.progress === "Completed" ? row.updatedAt.slice(0, 19) : ''}</TableCell>
                                         <TableCell>{row.progress}</TableCell>
+                                        <center><IconButton
+                                            color='secondary'
+                                            size='small'
+                                            disabled={row.progress !== "Pending"}
+                                            onClick={() => {
+                                                deleteManufactureRequest(row.id);
+                                            }}
+                                        >
+                                            <DeleteForeverIcon />
+                                        </IconButton></center>
                                     </TableRow>
                                 );
                             })}
@@ -74,3 +92,4 @@ export default function ManufactureRequestTable({ manufactureReqData }: { manufa
         </Paper>
     );
 }
+

@@ -15,7 +15,7 @@ import { enqueueSnackbar } from 'notistack';
 import { Box, Typography } from '@mui/material';
 
 function ManageManufactureRequest() {
-    const [medicineReqData, setManufactureReqData] = useState<any>([]);
+    const [manufactureReqData, setManufactureReqData] = useState<any>([]);
     const [searchQuery, setSearchQuery] = useState<String>("");  // for search query
 
     const search = (str: String) => {
@@ -34,10 +34,9 @@ function ManageManufactureRequest() {
     }, []);
 
     const colorIndicator = (progress: string) => {
-        if (progress === 'Rejected') {
+        if (progress === 'Rejected' || progress === 'Manufacture Error') {
             return '#ff7979';
-        }
-        else if (progress === 'Manufacture Error') {
+        } else if (progress === 'Completed') {
             return '#4aee78';
         }
     }
@@ -63,36 +62,21 @@ function ManageManufactureRequest() {
     // confirm handle
     const confirm = useConfirm();
     // update status
-    const updateStatus = (id: number, progress: string) => {
-        confirm({ description: 'Confirm Progress change' })
+    const updateProgress = (id: number, progress: string) => {
+        confirm({ description: 'Confirm Progress Type change' })
             .then(async () => {
                 try {
-                    await axios.put(`api/dmms/request/${id}`, { status: progress });
+                    await axios.put(`api/dmms/request/${id}`, { progress: progress });
                     enqueueSnackbar("Request updated successfully", { variant: 'success' });
                     getManufactureRequestData();
                 }
                 catch (e) {
-                    enqueueSnackbar("Failed to Update Medicine Request...", { variant: "error" });
+                    enqueueSnackbar("Failed to Update Manufacture Request...", { variant: "error" });
                     console.error(e);
                 }
             })
     }
 
-    // delete medicine request
-    const deleteManufactureRequest = (id: number) => {
-        confirm({ description: 'Confirm delete medicine request' })
-            .then(async () => {
-                try {
-                    await axios.delete(`api/dmms/request/${id}`);
-                    enqueueSnackbar("Request deleted successfully", { variant: 'success' });
-                    getManufactureRequestData();
-                }
-                catch (e) {
-                    enqueueSnackbar("Failed to delete Medicine Request...", { variant: "error" });
-                    console.error(e);
-                }
-            })
-    }
     return (
         <div>
             <Typography color='primary' align="center" variant="h5">
@@ -112,11 +96,11 @@ function ManageManufactureRequest() {
                                 <TableCell>Amount</TableCell>
                                 <TableCell>Requested Date</TableCell>
                                 <TableCell>Manufactured Date</TableCell>
-                                <TableCell>Progress</TableCell>
+                                <TableCell>Status</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {medicineReqData
+                            {manufactureReqData
                                 .toReversed()
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 
@@ -138,10 +122,10 @@ function ManageManufactureRequest() {
                                             }}
                                         >
                                             <TableCell>{row.id}</TableCell>
-                                            <TableCell>{row.Medicine.Item.name}</TableCell>
+                                            <TableCell>{row.Medicine?.Item?.name}</TableCell>
                                             <TableCell>{row.amount}</TableCell>
-                                            <TableCell>{row.createdAt}</TableCell>
-                                            <TableCell>{row.progress === "Completed" ? row.updatedAt : ''}</TableCell>
+                                            <TableCell>{row.createdAt.slice(0, 19)}</TableCell>
+                                            <TableCell>{row.progress === "Completed" ? row.updatedAt.slice(0, 19) : ''}</TableCell>
                                             <TableCell>{row.progress}</TableCell>
                                         </TableRow>
                                     );
@@ -152,14 +136,14 @@ function ManageManufactureRequest() {
                 <TablePagination
                     rowsPerPageOptions={[10, 25, 100]}
                     component="div"
-                    count={medicineReqData.length}
+                    count={manufactureReqData.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Paper>
-            <MedicineRequestModal open={open} handleClose={handleClose} updateRequest={updateRequest} updateStatus={updateStatus} deleteManufactureRequest={deleteManufactureRequest} />
+            <MedicineRequestModal open={open} handleClose={handleClose} updateRequest={updateRequest} updateProgress={updateProgress} /*deleteManufactureRequest={deleteManufactureRequest}*/ />
 
         </div>
     )

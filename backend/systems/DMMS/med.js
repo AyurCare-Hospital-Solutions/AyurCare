@@ -53,6 +53,36 @@ async function createRequest(req, res) {
     res.status(200).json({ data: requ.toJSON() });
 }
 
+/**
+ * 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
+
+
+async function updateRequest(req, res) {
+    // get id from route params
+    let id = Number.parseInt(req.params.id);
+    // get status
+    const progress = req.body.progress;
+
+    // check if medicine number is valid
+    if (!Number.isInteger(id)) {
+        res.status(400).json({ msg: "Invalid Manufacture request ID (format error)" });
+        return;
+    }
+
+    // check exsistance of medicine request
+    let manufactureRequest = await ManufactureRequest.findByPk(id);
+    if (manufactureRequest === null) {
+        res.status(404).json({ msg: "The Medicine Request does not exist" });
+        return;
+    }
+    // update request
+    await manufactureRequest.update({ progress: progress });
+
+    res.status(200).json(manufactureRequest);
+}
 
 /**
  * 
@@ -62,10 +92,10 @@ async function createRequest(req, res) {
 
 
 async function deleteRequest(req, res) {
-    let reqId = Number.parseInt(req.params.id);
+    let id = Number.parseInt(req.params.id);
 
     // check if Request number is valid
-    if (!Number.isInteger(reqId)) {
+    if (!Number.isInteger(id)) {
         res.status(400).json({ msg: "Invalid Request number" });
         return;
     }
@@ -81,4 +111,4 @@ async function deleteRequest(req, res) {
     res.sendStatus(204);
 }
 
-module.exports = { getRequests, createRequest, deleteRequest }
+module.exports = { getRequests, createRequest, updateRequest, deleteRequest }

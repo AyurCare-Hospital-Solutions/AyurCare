@@ -7,6 +7,7 @@ import { useConfirm } from 'material-ui-confirm';
 import { enqueueSnackbar } from 'notistack';
 import ManufactureRequestTable from './ManuReqCom/ManufactureRequestTable';
 
+
 function ManufactuureRequest() {
   const [reqMedicine, setReqMedicine] = useState<any>({});
   const [reqAmount, setReqAmout] = useState<number>(0)
@@ -40,8 +41,9 @@ function ManufactuureRequest() {
   }) ?? [];
 
   const confirm = useConfirm();
-  // add medicine request
+  // add manufacture request
   const addManufactureRequest = () => {
+    //
     // Validate amount (required, positive integer)
     if (!reqAmount) {
       enqueueSnackbar("Amount is required...", { variant: "error" });
@@ -50,19 +52,35 @@ function ManufactuureRequest() {
       enqueueSnackbar("Amount must be a positive integer...", { variant: "error" });
       return;
     }
-    confirm({ description: "Confirm manufacture request" })
+    confirm({ description: "Confirm Manufacture Request" })
       .then(async () => {
         await axios.post('api/dmms/request', { MedicineId: reqMedicine, amount: reqAmount, isPriority: Boolean(priority) })
           .then((res) => {
-            enqueueSnackbar("Medicine Request Added Successfuly...", { variant: "success" });
+            enqueueSnackbar("Manufacture Request Added Successfuly...", { variant: "success" });
             console.log(res);
             getManufactureRequestData();
             setReqAmout(0);
           })
           .catch((err) => {
-            enqueueSnackbar("Failed to Add Medicine Request...", { variant: "error" });
+            enqueueSnackbar("Failed to Add Manufacture Request...", { variant: "error" });
             console.log(err)
           })
+      })
+  }
+
+  // delete manufacture request
+  const deleteManufactureRequest = (id: number) => {
+    confirm({ description: 'Confirm delete Manufacture request' })
+      .then(async () => {
+        try {
+          await axios.delete(`api/dmms/request/${id}`);
+          enqueueSnackbar("Request deleted successfully", { variant: 'success' });
+          getManufactureRequestData();
+        }
+        catch (e) {
+          enqueueSnackbar("Failed to delete Manufacture Request...", { variant: "error" });
+          console.error(e);
+        }
       })
   }
 
@@ -116,7 +134,7 @@ function ManufactuureRequest() {
         Manufacture Request Details
       </Typography>
 
-      <ManufactureRequestTable manufactureReqData={ManufactureReqData} />
+      <ManufactureRequestTable manufactureReqData={ManufactureReqData} deleteManufactureRequest={deleteManufactureRequest} />
 
     </div>
   );

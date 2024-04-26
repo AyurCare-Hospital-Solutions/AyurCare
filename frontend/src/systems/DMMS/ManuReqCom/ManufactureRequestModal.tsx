@@ -2,8 +2,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useEffect, useState } from 'react';
-import { Button, IconButton, Stack } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Button, MenuItem, Stack, TextField } from '@mui/material';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -17,7 +16,7 @@ const style = {
     p: 4,
 };
 
-export default function ManufactureRequestModal({ open, handleClose, updateRequest, updateStatus: updateProgress, deleteManufactureRequest }: { open: boolean, handleClose: () => any, updateRequest: any, updateStatus: (arg1: number, arg2: string) => any, deleteManufactureRequest: (arg: number) => any }) {
+export default function ManufactureRequestModal({ open, handleClose, updateRequest, updateProgress }: { open: boolean, handleClose: () => any, updateRequest: any, updateProgress: (arg1: number, arg2: string) => any }) {
     const [request, setRequest] = useState<any>();
     useEffect(() => {
         setRequest(updateRequest);
@@ -43,25 +42,51 @@ export default function ManufactureRequestModal({ open, handleClose, updateReque
                         Medicine Name : {request?.Medicine?.Item?.name}
                     </Typography>
                     <Typography variant="h6" >
-                        Progress : {request?.Progress}
+                        Amount : {request?.amount}
+                    </Typography>
+                    <Typography variant="h6" >
+                        Requested Date : {request?.createdAt}
                     </Typography>
                     <Typography variant='h6'>
-                        Priority : {request?.priority}
+                        Priority : {request?.isPriority}
+                    </Typography>
+                    <Typography variant="h6" >Progress :
+                        <Box>
+                            <TextField
+                                id="outlined-select3"
+                                disabled={request?.progress === "Completed"}
+                                value={updateProgress}
+                                select
+                                label={request?.progress}
+                                required
+                                defaultValue=""
+                                helperText="Please select current progress of manufacture progress"
+                                onChange={(e) => {
+                                    updateProgress(request.id, e.target.value);
+                                    handleClose();
+                                }}
+                            >
+                                <MenuItem value="Manufacture Error">
+                                    Manufacture Error
+                                </MenuItem>
+                                <MenuItem value="Completed">
+                                    Completed
+                                </MenuItem>
+                            </TextField>
+                        </Box>
                     </Typography>
                     <Stack mt={5} alignContent="center" direction="row" spacing={4}>
-                        <Button sx={{ backgroundColor: "#4aee78" }} variant="contained" onClick={() => {
-                            updateProgress(request.id, "Accepted");
+                        <Button sx={{ backgroundColor: "#4aee78" }} variant="contained" disabled={request?.progress === "Completed" || request?.progress === "In Progress"} onClick={() => {
+                            updateProgress(request.id, "In Progress");
                             handleClose();
-                        }}>Save Changes</Button>
+                        }}>Accept</Button>
+                        <Button sx={{ backgroundColor: "#ff7979" }} variant="contained" disabled={request?.progress === "Completed" || request?.progress === "Rejected"} onClick={() => {
+                            updateProgress(request.id, "Rejected");
+                            handleClose();
+                        }}>Reject</Button>
                         <Button variant="outlined" onClick={() => {
                             handleClose();
                         }}>Cancel</Button>
-                        <IconButton color='secondary' size="medium" onClick={() => {
-                            deleteManufactureRequest(request.id);
-                            handleClose();
-                        }}>
-                            <DeleteIcon />
-                        </IconButton>
                     </Stack>
                 </Box>
             </Modal>
