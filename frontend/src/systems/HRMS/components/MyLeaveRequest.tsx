@@ -85,7 +85,6 @@ const MyLeaveRequest = () => {
             My Leave Requests
           </Typography>
           <Typography variant="body2">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
           </Typography>
         </Box>
         <Button
