@@ -18,22 +18,12 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-
-interface LeaveRequest {
-  id: string;
-  name: string;
-  leaveType: string;
-  startDate: string;
-  endDate: string;
-  registration: string;
-  hours: number;
-  status: "Approved" | "Rejected" | "Pending";
-}
+import { LeaveRequestData } from "../../types";
 
 interface LeaveRequestTableProps {
-  leaveRequests: LeaveRequest[];
+  leaveRequests: LeaveRequestData[];
   onPageChange: (
-    event: React.MouseEvent<HTMLButtonElement>,
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
     newPage: number
   ) => void;
   page: number;
@@ -59,43 +49,6 @@ const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - leaveRequests.length) : 0;
 
-  // Dummy data for testing
-  const dummyData: LeaveRequest[] = [
-    {
-      id: "1",
-      name: "John Doe",
-      leaveType: "Annual",
-      startDate: "2024-04-01",
-      endDate: "2024-04-05",
-      registration: "2024-03-25",
-      hours: 40,
-      status: "Pending",
-    },
-    {
-      id: "2",
-      name: "Jane Smith",
-      leaveType: "Sick",
-      startDate: "2024-04-10",
-      endDate: "2024-04-15",
-      registration: "2024-04-05",
-      hours: 24,
-      status: "Approved",
-    },
-    {
-      id: "3",
-      name: "Alice Johnson",
-      leaveType: "Maternity",
-      startDate: "2024-04-20",
-      endDate: "2024-04-25",
-      registration: "2024-04-15",
-      hours: 80,
-      status: "Rejected",
-    },
-  ];
-
-  // Merge dummy data with provided leave requests
-  const mergedLeaveRequests = [...dummyData, ...leaveRequests];
-
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="custom pagination table">
@@ -114,11 +67,11 @@ const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({
         </TableHead>
         <TableBody>
           {(rowsPerPage > 0
-            ? mergedLeaveRequests.slice(
+            ? leaveRequests.slice(
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage
               )
-            : mergedLeaveRequests
+            : leaveRequests
           ).map((row, index) => (
             <TableRow key={index}>
               <TableCell align="center">{row.id}</TableCell>
@@ -192,7 +145,7 @@ const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
               colSpan={9}
-              count={mergedLeaveRequests.length}
+              count={leaveRequests.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={onPageChange}
