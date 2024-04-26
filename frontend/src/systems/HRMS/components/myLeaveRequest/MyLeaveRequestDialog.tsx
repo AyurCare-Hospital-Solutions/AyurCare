@@ -1,16 +1,21 @@
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import { DatePicker } from "@mui/x-date-pickers";
-import { Autocomplete, Box, FormControlLabel, Switch } from "@mui/material";
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import {
+  Button,
+  TextField,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Switch,
+  FormControlLabel,
+  Box,
+  Autocomplete,
+} from "@mui/material";
 import { LeaveTypeData } from "../../types";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import axios from "axios";
 import { Dayjs } from "dayjs";
+import { DatePicker } from "@mui/x-date-pickers";
 
 export default function MyLeaveRequestDialog({
   addLeaveRequest,
@@ -22,8 +27,8 @@ export default function MyLeaveRequestDialog({
   onClose: () => void;
 }) {
   const [reason, setReason] = useState("");
-  const [registration, setRegistration] = useState<string>("");
-  const [hours, setHours] = useState<string>("");
+  const [registration, setRegistration] = useState("");
+  const [hours, setHours] = useState<number>(0);
   const [status, setStatus] = useState<string>("");
   const [start_date, setStartDate] = useState<string | null>(null);
   const [end_date, setEndDate] = useState<string | null>(null);
@@ -51,18 +56,19 @@ export default function MyLeaveRequestDialog({
     setReason(newReason);
   };
 
-  const updateRegistration = (newRegistration: string) => {
-    let registrationMessage = "";
+  const updateRegistration = () => {
+    let registrationValue = "";
     if (isMultipleDays) {
-      setRegistration("Multiple Day");
+      registrationValue = "Multiple Day";
     } else if (isFullDay) {
-      setRegistration("Full Day");
+      registrationValue = "Full Day";
     } else {
-      setRegistration("Part Day");
+      registrationValue = "Part Day";
     }
+    setRegistration(registrationValue);
   };
 
-  const updateHours = (newHours: string) => {
+  const updateHours = (newHours: number) => {
     let hoursErrorMessage = "";
     setHours(newHours);
   };
@@ -72,15 +78,41 @@ export default function MyLeaveRequestDialog({
     setStartDate(newStartDate?.format("YYYY-MM-DD") || null); // format to YYYY-MM-DD or set to null
   };
 
-  const updateEndDate = (newEndDate: Dayjs | null) => {
+  const updateEndDate = (newEndDate: Dayjs | null, startDate: Dayjs) => {
+    // Set a default error message (optional)
     let endDateErrorMessage = "";
-    setEndDate(newEndDate?.format("YYYY-MM-DD") || null); // format to YYYY-MM-DD or set to null
+
+    // Assign start date if newEndDate is null
+    const endDate = newEndDate || startDate;
+
+    // Optional validation (check if endDate is still null)
+    if (!endDate) {
+      endDateErrorMessage = "Both start and end dates are null."; // Customize message as needed
+    }
+
+    // Format and set endDate
+    setEndDate(endDate.format("YYYY-MM-DD"));
   };
 
   const updateLeaveTypeId = (newLeaveTypeId: LeaveTypeData | null) => {
     if (newLeaveTypeId) {
       setLeaveType(newLeaveTypeId);
     }
+  };
+
+  const handleSubmit = () => {
+    updateRegistration();
+    console.log();
+
+    addLeaveRequest({
+      reason,
+      registration,
+      hours,
+      status,
+      start_date,
+      end_date,
+      leave_type,
+    });
   };
 
   useEffect(() => {
@@ -109,7 +141,7 @@ export default function MyLeaveRequestDialog({
       leaveTypeError: "",
     });
     setCanSubmit(false);
-  }, [leaveTypes]); // Dependency array includes leaveTypes
+  }, []);
 
   const handleFullDayChange = (event: ChangeEvent<HTMLInputElement>) => {
     setIsFullDay(event.target.checked);
@@ -120,6 +152,12 @@ export default function MyLeaveRequestDialog({
 
   const handleMultipleDaysChange = (event: ChangeEvent<HTMLInputElement>) => {
     setIsMultipleDays(event.target.checked);
+    if (!event.target.checked) {
+      setIsFullDay(false);
+      setEndDate(start_date);
+    } else {
+      setIsFullDay(true);
+    }
   };
 
   return (
@@ -131,15 +169,7 @@ export default function MyLeaveRequestDialog({
           component: "form",
           onSubmit: (event: FormEvent<HTMLFormElement>) => {
             event.preventDefault();
-            addLeaveRequest({
-              reason,
-              registration,
-              hours,
-              status,
-              start_date,
-              end_date,
-              leave_type,
-            });
+            handleSubmit();
             onClose();
           },
         }}
@@ -235,10 +265,13 @@ export default function MyLeaveRequestDialog({
           >
             <DatePicker
               label={isMultipleDays ? "Start Date" : "Date"}
-              onChange={(e) => updateStartDate(e)}
+              onChange={(e: any) => updateStartDate(e)}
             />
             {isMultipleDays && (
-              <DatePicker label="End Date" onChange={(e) => updateEndDate(e)} />
+              <DatePicker
+                label="End Date"
+                onChange={(e: any) => updateEndDate(e)}
+              />
             )}
           </Box>
           {!isFullDay && (
@@ -251,7 +284,6 @@ export default function MyLeaveRequestDialog({
               type="text"
               variant="standard"
               sx={{ mt: 3 }}
-              onChange={(e) => updateRegistration(e.target.value)}
             />
           )}
         </DialogContent>
