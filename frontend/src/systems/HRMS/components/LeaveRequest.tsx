@@ -1,10 +1,17 @@
 // LeaveRequest.tsx
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography, Tabs, Tab } from "@mui/material";
 import LeaveRequestTable from "./leaveManagement/LeaveRequestTable";
 
 const LeaveRequest: React.FC = () => {
+  useEffect(() => {});
+
+  const fetchAllLeaveRequests = async () => {
+    try {
+    } catch (error) {}
+  };
+
   const [tabValue, setTabValue] = useState(0);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {

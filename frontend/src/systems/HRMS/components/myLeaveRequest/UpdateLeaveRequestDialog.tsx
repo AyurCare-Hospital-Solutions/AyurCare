@@ -36,7 +36,6 @@ export default function UpdateLeaveRequestDialog({
 
   React.useEffect(() => {
     setUpdateLeaveRequestData(leaveRequestData);
-    console.log(leaveRequestData);
   }, [leaveRequestData]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -193,7 +192,7 @@ export default function UpdateLeaveRequestDialog({
               type="text"
               variant="standard"
               sx={{ mt: 3 }}
-              value={updateLeaveRequestData?.hours}
+              value={updateLeaveRequestData?.hours || ""}
             />
           )}
         </DialogContent>
