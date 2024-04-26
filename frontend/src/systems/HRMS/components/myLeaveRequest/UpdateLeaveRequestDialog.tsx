@@ -77,25 +77,30 @@ export default function UpdateLeaveRequestDialog({
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const formJson: { [key: string]: string } = Object.fromEntries(
-      formData.entries() as Iterable<[string, string]>
-    );
+    updateLeaveRequest();
+  };
 
-    // TODO: parse hours
-
-    // Make the Axios request to update leave request
-    try {
-      const response = await axios.put(
-        "your-backend-api-endpoint", // Replace this with your actual API endpoint
-        formJson
-      );
-      console.log("Leave request updated successfully:", response.data);
-      onClose(); // Close the dialog after successful submission
-    } catch (error) {
-      console.error("Error updating leave request:", error);
+  const getRegistration = () => {
+    if (isMultipleDays) {
+      return "Multiple Day";
+    } else if (isFullDay) {
+      return "Full Day";
+    } else {
+      return "Part Day";
     }
   };
+
+  // update leave request
+  const updateLeaveRequest = () => {
+    axios.put("api/hrms/leave", { type: updateLeaveRequestData.LeaveType.id, reason: updateLeaveRequestData.reason, startDate: updateLeaveRequestData.startDate, endDate: updateLeaveRequestData.endDate, registration: getRegistration(), hours: parseFloat(updateLeaveRequestData.hours) })
+      .then((res) => {
+        console.log(res.data);
+
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+  }
 
   return (
     <React.Fragment>
