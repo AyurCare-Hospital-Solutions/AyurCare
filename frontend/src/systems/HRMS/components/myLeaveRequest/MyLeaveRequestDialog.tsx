@@ -21,8 +21,10 @@ export default function MyLeaveRequestDialog({
   addLeaveRequest,
   open,
   onClose,
+  leaveTypes,
 }: {
   addLeaveRequest: (data: any) => any;
+  leaveTypes: LeaveTypeData[];
   open: boolean;
   onClose: () => void;
 }) {
@@ -33,7 +35,6 @@ export default function MyLeaveRequestDialog({
   const [end_date, setEndDate] = useState<Dayjs | null>(null);
   const [leave_type, setLeaveType] = useState<LeaveTypeData | null>(null);
 
-  const [leaveTypes, setLeaveTypes] = useState<LeaveTypeData[]>([]);
   const [isFullDay, setIsFullDay] = useState(true);
   const [isMultipleDays, setIsMultipleDays] = useState(false);
   const [availableLeaves] = useState<number>(0);
@@ -111,20 +112,6 @@ export default function MyLeaveRequestDialog({
   };
 
   useEffect(() => {
-    const fetchLeaveTypes = async () => {
-      const allLeaveTypes = await axios.get("/api/hrms/leaveType");
-      const leaveTypeData = allLeaveTypes.data;
-
-      leaveTypeData.forEach((leaveType: LeaveTypeData) => {
-        (leaveType as any).label = leaveType.name;
-      });
-
-      setLeaveTypes(leaveTypeData);
-    };
-
-    // Fetch leave types data and set initial errors and submission state
-    fetchLeaveTypes();
-
     // Reset errors and submission state when leave types change
     setErrors({
       reasonError: "",

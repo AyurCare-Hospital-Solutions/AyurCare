@@ -18,14 +18,17 @@ import {
 } from "@mui/material";
 import dayjs from "dayjs";
 import axios from "axios";
+import { LeaveTypeData } from "../../types";
 
 export default function UpdateLeaveRequestDialog({
   open,
   onClose,
+  leaveTypes,
   leaveRequestData, // Existing leave request data to pre-fill the form
 }: {
   open: boolean;
   onClose: () => void;
+  leaveTypes: LeaveTypeData[];
   leaveRequestData: any; // Data of the leave request being updated
 }) {
   const [isFullDay, setIsFullDay] = React.useState(true);
@@ -35,8 +38,23 @@ export default function UpdateLeaveRequestDialog({
     React.useState<any>({});
 
   React.useEffect(() => {
+    if (!leaveRequestData) {
+      return;
+    }
+
     setUpdateLeaveRequestData(leaveRequestData);
+    if (leaveRequestData.registration == "Multiple Day") {
+      setIsMultipleDays(true);
+      setIsFullDay(true)
+    } else if (leaveRequestData.registration == "Full Day") {
+      setIsFullDay(true);
+      setIsMultipleDays(false);
+    } else {
+      setIsFullDay(false);
+      setIsMultipleDays(false);
+    }
   }, [leaveRequestData]);
+
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -55,7 +73,6 @@ export default function UpdateLeaveRequestDialog({
       onClose(); // Close the dialog after successful submission
     } catch (error) {
       console.error("Error updating leave request:", error);
-      // Handle error state or display error message to the user
     }
   };
 

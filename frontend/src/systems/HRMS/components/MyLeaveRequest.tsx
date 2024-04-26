@@ -6,17 +6,19 @@ import MyLeaveRequestTable from "./myLeaveRequest/MyLeaveRequestTable";
 import { useConfirm } from "material-ui-confirm";
 import axios from "axios";
 import { enqueueSnackbar } from "notistack";
-import { MyLeaveRequestData } from "../types";
+import { LeaveTypeData, MyLeaveRequestData } from "../types";
 
 const MyLeaveRequest = () => {
   useEffect(() => {
     fetchUserLeaveRequests();
+    fetchLeaveTypes();
   }, []);
 
   const confirm = useConfirm();
 
   const [rows, setRows] = useState<MyLeaveRequestData[]>([]);
   const [requestDialogOpen, setRequestDialogOpen] = useState(false);
+  const [leaveTypes, setLeaveTypes] = useState<LeaveTypeData[]>([]);
 
   //Fetching all the leave requests by user id
   const fetchUserLeaveRequests = async () => {
@@ -30,6 +32,18 @@ const MyLeaveRequest = () => {
       console.log("Error fetching Leave Request by User ID :", error);
     }
   };
+
+  const fetchLeaveTypes = async () => {
+    const allLeaveTypes = await axios.get("/api/hrms/leaveType");
+    const leaveTypeData = allLeaveTypes.data;
+
+    leaveTypeData.forEach((leaveType: LeaveTypeData) => {
+      (leaveType as any).label = leaveType.name;
+    });
+
+    setLeaveTypes(leaveTypeData);
+  };
+
 
   //Adding a leave request
   const addLeaveRequest = async (data: any) => {
@@ -100,6 +114,7 @@ const MyLeaveRequest = () => {
         <Box sx={{ display: "flex", mx: 4, mb: 4 }}>
           <Box flexGrow={1} />
           <MyLeaveRequestDialog
+            leaveTypes={leaveTypes}
             addLeaveRequest={addLeaveRequest}
             open={requestDialogOpen}
             onClose={() => setRequestDialogOpen(false)}
