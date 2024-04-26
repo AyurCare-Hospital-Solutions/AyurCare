@@ -8,12 +8,10 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { DatePicker } from "@mui/x-date-pickers";
 import {
+  Autocomplete,
   Box,
   FormControl,
   FormControlLabel,
-  InputLabel,
-  MenuItem,
-  Select,
   Switch,
 } from "@mui/material";
 import dayjs from "dayjs";
@@ -35,14 +33,32 @@ export default function UpdateLeaveRequestDialog({
   const [isMultipleDays, setIsMultipleDays] = React.useState(false);
   const [availableLeaves, setAvailableLeaves] = React.useState<number>(0);
   const [updateLeaveRequestData, setUpdateLeaveRequestData] =
-    React.useState<any>({});
+    React.useState<any>({
+      LeaveType: null,
+      reason: "",
+      startDate: null,
+      endDate: null,
+      hours: ""
+    });
+
 
   React.useEffect(() => {
     if (!leaveRequestData) {
+
       return;
     }
 
-    setUpdateLeaveRequestData(leaveRequestData);
+    if (!leaveTypes) {
+      return;
+    }
+
+    let newLeaveType = leaveTypes.find((v) => v.id == leaveRequestData.LeaveType.id);
+    if (!newLeaveType) {
+      throw "Leave type not valid"
+    }
+
+    leaveRequestData.LeaveType = newLeaveType;
+
     if (leaveRequestData.registration == "Multiple Day") {
       setIsMultipleDays(true);
       setIsFullDay(true)
@@ -53,6 +69,9 @@ export default function UpdateLeaveRequestDialog({
       setIsFullDay(false);
       setIsMultipleDays(false);
     }
+
+    setUpdateLeaveRequestData(leaveRequestData);
+
   }, [leaveRequestData]);
 
 
@@ -144,26 +163,18 @@ export default function UpdateLeaveRequestDialog({
           >
             <Box sx={{ flexGrow: 1, mr: 1 }}>
               <FormControl sx={{ minWidth: 300 }}>
-                <InputLabel id="leave-type-label">Type</InputLabel>
-                <Select
-                  labelId="leave-type-label"
-                  id="leave-type-select"
-                  value={updateLeaveRequestData?.LeaveType || ""}
-                  onChange={(e) =>
+                <Autocomplete
+                  options={leaveTypes}
+                  value={updateLeaveRequestData?.LeaveType || null}
+                  getOptionLabel={v => v.name ?? ""}
+                  onChange={(_, lt) =>
                     setUpdateLeaveRequestData({
                       ...updateLeaveRequestData,
-                      LeaveType: e.target.value,
+                      LeaveType: lt,
                     })
                   }
-                  label="Type"
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value="Annual">Annual</MenuItem>
-                  <MenuItem value="Sick">Sick</MenuItem>
-                  {/* Add more leave types here */}
-                </Select>
+                  renderInput={(params) => <TextField {...params} label="Type" />}
+                />
               </FormControl>
             </Box>
 

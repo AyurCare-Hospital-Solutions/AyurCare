@@ -125,6 +125,7 @@ const MyLeaveRequest = () => {
         </Paper>
         <Box sx={{ display: "flex", mx: 4 }}>
           <MyLeaveRequestTable
+            leaveTypes={leaveTypes}
             rows={rows}
             deleteLeaveRequest={deleteLeaveRequest}
           />

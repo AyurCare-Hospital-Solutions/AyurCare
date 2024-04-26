@@ -15,12 +15,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useState, useEffect, ChangeEvent, MouseEvent } from "react";
 import UpdateLeaveRequestDialog from "./UpdateLeaveRequestDialog"; // Import your update dialog component
-import { MyLeaveRequestData } from "../../types";
+import { LeaveTypeData, MyLeaveRequestData } from "../../types";
 
 export default function MyLeaveRequestTable({
-  rows,
+  rows, leaveTypes,
   deleteLeaveRequest,
 }: {
+  leaveTypes: LeaveTypeData[];
   rows: MyLeaveRequestData[];
   deleteLeaveRequest: (id: number) => void;
 }) {
@@ -152,6 +153,7 @@ export default function MyLeaveRequestTable({
       </TableContainer>
 
       <UpdateLeaveRequestDialog
+        leaveTypes={leaveTypes}
         open={openUpdateDialog}
         onClose={handleCloseUpdateDialog}
         leaveRequestData={selectedLeaveRequest}
