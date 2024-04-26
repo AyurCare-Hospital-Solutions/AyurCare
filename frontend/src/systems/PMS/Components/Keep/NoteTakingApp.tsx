@@ -11,6 +11,7 @@ import {
   Typography,
   IconButton,
   Grid,
+  Paper,
 } from "@mui/material";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -112,25 +113,27 @@ const NoteTakingApp: React.FC = () => {
           >
             Add Note
           </Button>
-          <Grid container spacing={2} sx={{ mt: 2 }}>
+          <Grid container spacing={5} sx={{ mt: 2 }}>
             {notes.map((note) => (
-              <Grid item key={note.id} xs={12} sm={6} md={4}>
-                <Card sx={{ minWidth: 200, maxWidth: 250 }}>
-                  <CardContent>
-                    <Typography variant="h6" gutterBottom>
-                      {note.content}
-                    </Typography>
-                    <Typography color="textSecondary">
-                      Created: {new Date(note.createdAt).toLocaleString()}
-                    </Typography>
-                  </CardContent>
-                  <IconButton
-                    onClick={() => handleDelete(note.id)}
-                    color="error"
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </Card>
+              <Grid item key={note.id} xs={6} sm={6} md={4}>
+                <Paper elevation={24} sx={{ mr: 8 }}>
+                  <Card sx={{ minWidth: 200, maxWidth: 250 }}>
+                    <CardContent>
+                      <Typography variant="h6" gutterBottom>
+                        {note.content}
+                      </Typography>
+                      <Typography color="textSecondary">
+                        Created: {new Date(note.createdAt).toLocaleString()}
+                      </Typography>
+                    </CardContent>
+                    <IconButton
+                      onClick={() => handleDelete(note.id)}
+                      color="error"
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Card>
+                </Paper>
               </Grid>
             ))}
           </Grid>

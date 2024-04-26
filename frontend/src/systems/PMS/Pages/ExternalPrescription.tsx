@@ -1,6 +1,5 @@
 import { useState } from "react";
 import ExternalPrescriptionTable from "../Components/ExternalPrescription/ExternalPrescriptionTable";
-import SearchInput from "../Components/SearchBar";
 import { Box, Typography } from "@mui/material";
 import BackButton from "../Components/Common/BackButton";
 

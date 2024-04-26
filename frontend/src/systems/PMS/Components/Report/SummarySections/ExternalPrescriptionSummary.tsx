@@ -16,7 +16,11 @@ const style = {
   borderColor: "divider",
   backgroundColor: "background.paper",
 };
-const ExternalPrescriptionSummary = () => {
+const ExternalPrescriptionSummary = ({
+  PrescriptionData,
+}: {
+  PrescriptionData: any;
+}) => {
   return (
     <div>
       <Paper elevation={24} sx={{ p: 5 }}>
@@ -27,15 +31,17 @@ const ExternalPrescriptionSummary = () => {
           External Prescription Summary
         </Typography>
 
-        <ExternalPrescriptionPieChart />
+        <ExternalPrescriptionPieChart PrescriptionData={PrescriptionData} />
 
         <List sx={style}>
           <ListItem>
             <ListItemText primary="Approved prescriptions: " />
+            {PrescriptionData.approved}
           </ListItem>
           <Divider component="li" />
           <ListItem>
             <ListItemText primary="Rejected prescriptions: " />
+            {PrescriptionData.rejected}
           </ListItem>
           <Divider variant="inset" component="li" />
         </List>

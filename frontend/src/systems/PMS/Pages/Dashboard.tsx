@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Header from "./Components/Dashboard/DashboardHeader";
-import ReportBox from "./Components/Dashboard/ReportBox";
+import Header from "../Components/Dashboard/DashboardHeader";
+import ReportBox from "../Components/Dashboard/ReportBox";
 import axios from "axios";
 
 const Dashboard = () => {
@@ -13,7 +13,6 @@ const Dashboard = () => {
   const getMedicinesCount = () => {
     axios.get("/api/pms/getTotalMedicinesCount").then((res: any) => {
       setMedicinesCount(res.data.count);
-      console.log(res.data.count);
     });
   };
 

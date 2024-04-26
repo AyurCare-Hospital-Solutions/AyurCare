@@ -13,9 +13,10 @@ const CalendarComponent: React.FC<CalendarComponentProps> = ({ events }) => {
     <div
       style={{
         width: "500px",
-        height: "400px",
+        height: "500px",
         padding: "20px",
-        fontFamily: "monospace;",
+        fontWeight: "none",
+        fontFamily: "Helvetica",
       }}
     >
       <FullCalendar

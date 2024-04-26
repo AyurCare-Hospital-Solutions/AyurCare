@@ -17,10 +17,14 @@ const style = {
   borderColor: "divider",
   backgroundColor: "background.paper",
 };
-const InternalPrescriptionSummary = () => {
+const InternalPrescriptionSummary = ({
+  PrescriptionData,
+}: {
+  PrescriptionData: any;
+}) => {
   return (
     <div>
-      <Paper elevation={24} sx={{ p: 5 }}>
+      <Paper elevation={24} sx={{ p: 5, mt: 7 }}>
         <Typography
           variant="h5"
           sx={{ textAlign: "center", mb: 3, fontWeight: "bold" }}
@@ -28,14 +32,16 @@ const InternalPrescriptionSummary = () => {
           Internal Prescription Summary
         </Typography>
 
-        <PrescriptionPieChart />
+        <PrescriptionPieChart PrescriptionData={PrescriptionData} />
         <List sx={style}>
           <ListItem>
             <ListItemText primary="Approved prescriptions: " />
+            {PrescriptionData.approved}
           </ListItem>
           <Divider component="li" />
           <ListItem>
             <ListItemText primary="Rejected prescriptions: " />
+            {PrescriptionData.rejected}
           </ListItem>
           <Divider variant="inset" component="li" />
         </List>
@@ -44,4 +50,4 @@ const InternalPrescriptionSummary = () => {
   );
 };
 
-export default  InternalPrescriptionSummary;
+export default InternalPrescriptionSummary;

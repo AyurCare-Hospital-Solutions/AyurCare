@@ -1,5 +1,5 @@
 import React from "react";
-import PrescriptionTable from "../PMS/Pages/PrescriptionManagement";
+import PrescriptionTable from "./PrescriptionManagement";
 
 const Prescription = () => {
   return (

@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import BackButton from "../Common/BackButton";
+import BackButton from "../Components/Common/BackButton";
 
 const UserGuide = () => {
   return (
@@ -17,6 +17,10 @@ const UserGuide = () => {
           User Guide
         </Typography>
       </Box>
+
+      <Typography> 
+        Getting Started
+      </Typography>
     </>
   );
 };

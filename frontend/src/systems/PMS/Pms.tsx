@@ -113,7 +113,7 @@ const Pms = () => {
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <BookIcon />;
+                <BookIcon />
               </ListItemIcon>
               <ListItemText primary="User Guide" />
             </ListItemButton>

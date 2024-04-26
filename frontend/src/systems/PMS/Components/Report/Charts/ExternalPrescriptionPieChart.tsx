@@ -1,6 +1,11 @@
 import { PieChart } from "@mui/x-charts/PieChart";
 
-const ExternalPrescriptionPieChart = () => {
+const ExternalPrescriptionPieChart = ({
+  PrescriptionData,
+}: {
+  PrescriptionData: any;
+}) => {
+  const { approved, rejected } = PrescriptionData;
   return (
     <>
       <PieChart
@@ -8,8 +13,8 @@ const ExternalPrescriptionPieChart = () => {
         series={[
           {
             data: [
-              { id: 0, value: 10, label: "Approved", color: "#6f42c1" },
-              { id: 1, value: 15, label: "Rejected", color: "#ffc107" },
+              { id: 0, value: approved, label: "Approved", color: "#6f42c1" },
+              { id: 1, value: rejected, label: "Rejected", color: "#ffc107" },
             ],
           },
         ]}

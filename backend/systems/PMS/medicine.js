@@ -2,8 +2,10 @@ const express = require("express");
 const PharmacyMedicine = require("../../model/PharmacyMedicine");
 const Item = require("../../model/Item");
 const Medicine = require("../../model/Medicine");
+const { Op } = require("sequelize");
 
 const yup = require("yup");
+const { where } = require("sequelize");
 
 // Data validator
 const medicineAmountValidator = yup
@@ -20,6 +22,7 @@ const medicineValidator = yup.object({
   expire_date: yup.date(),
 });
 
+// get the medicine count
 /**
  *
  * @param {express.Request} req
@@ -207,6 +210,60 @@ async function getIdandNameFromMedicineTable(req, res) {
   const sum = await PharmacyMedicine.count();
   res.status(200).json({ count: sum });
 }
+
+// FETCHING THE DATA FOR THE REPORT GENERATION
+// 2. Fetching the zero medicine count
+/**
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+async function getZeroMedicineCount(req, res) {
+  try {
+    const equalCount = await PharmacyMedicine.count({
+      where: {
+        amount: 0, // Assuming the field that holds stock/quantity information is named 'quantity'
+      },
+    });
+
+    res.status(200).json({ count: equalCount });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
+// 3. Fetching the medicine which is less than 10
+/**
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+async function getMedicineStockLessThan10(req, res) {
+  try {
+    // Count the entries where the quantity is less than or equal to 10
+    const lowStockCount = await PharmacyMedicine.count({
+      where: {
+        /*
+          Op: This is an object provided by Sequelize that contains symbols used to specify conditions
+          in a query in a way that is safe from SQL injection attacks.
+          
+          lte: This stands for "Less Than or Equal to." It's used to filter data by comparing
+          whether a field's value is less than or equal to a specified value.
+        */
+        amount: {
+          [Op.lte]: 10, // Use the Sequelize operator lte (less than or equal to)
+        },
+      },
+    });
+
+    res.status(200).json({ lowStockCount });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
 module.exports = {
   getPharmacyMedicines,
   getSpecificMedicine,
@@ -215,4 +272,7 @@ module.exports = {
   getInventoryMedicine,
   setPharmacyMedicine,
   getTotalMedicinesCount,
+  getZeroMedicineCount,
+  getZeroMedicineCount,
+  getMedicineStockLessThan10,
 };

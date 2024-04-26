@@ -1,7 +1,6 @@
 const express = require("express");
-const externalPrescription = require("../../model/ExternalPresription");
 const userConcern = require("../../model/userConcern");
-const ExternalPrescription = require("../../model/ExternalPresription");
+const externalPrescription = require("../../model/ExternalPresription");
 const yup = require("yup");
 const fs = require("fs");
 
@@ -17,6 +16,7 @@ const externalPrescriptionValidator = yup
   })
   .strict();
 // .noUnknown();
+
 /**
  *
  * @param {express.Request} req
@@ -38,7 +38,7 @@ async function updateExternalPrescriptionStatus(req, res) {
   const { status } = req.body;
 
   try {
-    const prescriptionObject = await ExternalPrescription.findByPk(
+    const prescriptionObject = await externalPrescription.findByPk(
       prescriptionId
     );
     if (!prescriptionObject) {
@@ -72,7 +72,7 @@ async function uploadPrescription(req, res) {
   }
 
   try {
-    let prescription = await ExternalPrescription.create({
+    let prescription = await externalPrescription.create({
       name: data.name,
       age: data.age,
       address: data.address,
@@ -102,7 +102,7 @@ async function deleteExternalPrescription(req, res) {
   console.log(prescriptionId); // Corrected typo
 
   try {
-    const prescriptionObject = await ExternalPrescription.findByPk(
+    const prescriptionObject = await externalPrescription.findByPk(
       prescriptionId
     );
 
@@ -236,6 +236,103 @@ async function getExternalPrescriptionImage(req, res) {
   res.sendFile(name, { root: "./uploads/prescriptions" });
 }
 
+//  -----------------------------------  FETCH THE DATA FOR THE REPORT -------------------------------------------------------
+
+// 1. total prescriptions ----------------------------------------------------------------------------------------------------
+/**
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+async function getTotalPrescriptionsCount(req, res) {
+  try {
+    const sum = await externalPrescription.count();
+    res.status(200).json({ count: sum });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
+// 2. total approved prescriptions --------------------------------------------------------------------------------------------
+/**
+ *
+ * @param {express.Request} req
+ * @param {express.Response} rens
+ */
+async function getApprovedPrescriptionsCount(req, res) {
+  try {
+    const count = await externalPrescription.count({
+      where: {
+        status: "Approved",
+      },
+    });
+
+    res.status(200).json({ count: count });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
+// 3. total rejected prescriptios -----------------------------------------------------------------------------------------------
+/**
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+async function getRejectedPrescriptionsCount(req, res) {
+  try {
+    const count = await externalPrescription.count({
+      where: {
+        status: "Rejected",
+      },
+    });
+    res.status(200).json({ count: count });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
+// 4. total pending prescriptios
+/**
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+async function getPendingPrescriptionsCount(req, res) {
+  try {
+    const count = await externalPrescription.count({
+      where: {
+        status: "pending",
+      },
+    });
+    res.status(200).json({ count: count });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
+}
+//  -----------------------------------  FETCH THE DATA FOR THE USER CONCERNS -------------------------------------------------------
+
+// 1. total concerns ----------------------------------------------------------------------------------------------------
+
+/**
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+async function getTotalUserConcerns(req, res) {
+  try {
+    const sum = await userConcern.count();
+    res.status(200).json({ count: sum });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
 module.exports = {
   getAllUserPrescriptions,
   setUserConcern,
@@ -245,6 +342,10 @@ module.exports = {
   setExternalPrescription: uploadPrescription,
   updateExternalPrescriptionStatus,
   deleteExternalPrescription,
-  // this is the function for get the external prescription file from the database
   getExternalPrescriptionImage,
+  getTotalPrescriptionsCount,
+  getApprovedPrescriptionsCount,
+  getRejectedPrescriptionsCount,
+  getTotalUserConcerns,
+  getPendingPrescriptionsCount,
 };

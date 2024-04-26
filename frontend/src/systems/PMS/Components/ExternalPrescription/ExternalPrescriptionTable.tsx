@@ -29,7 +29,7 @@ const ExternalPrescriptionTable = () => {
   const [prescriptionImage, setPrescriptionImage] = React.useState("");
 
   const getExternalPrescription = async () => {
-    await axios.get("/api/pms/getExternalPrescription").then((res: any) => {
+    await axios.get("/api/pms/getAllUserPrescriptions").then((res: any) => {
       setExternalPrescription(res.data);
     });
   };
