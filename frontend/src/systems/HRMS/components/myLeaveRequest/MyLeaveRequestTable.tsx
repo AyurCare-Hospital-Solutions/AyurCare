@@ -81,9 +81,9 @@ export default function MyLeaveRequestTable({
           <TableBody>
             {(rowDataPerPage > 0
               ? rowData.slice(
-                  page * rowDataPerPage,
-                  page * rowDataPerPage + rowDataPerPage
-                )
+                page * rowDataPerPage,
+                page * rowDataPerPage + rowDataPerPage
+              )
               : rows
             ).map((row) => (
               <TableRow key={row.id}>
@@ -100,10 +100,10 @@ export default function MyLeaveRequestTable({
                       row.status === "Approved"
                         ? "success"
                         : row.status === "Rejected"
-                        ? "error"
-                        : row.status === "Pending"
-                        ? "warning"
-                        : "default"
+                          ? "error"
+                          : row.status === "Pending"
+                            ? "warning"
+                            : "default"
                     }
                   />
                 </TableCell>

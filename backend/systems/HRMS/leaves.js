@@ -56,9 +56,14 @@ const createLeaveRequest = async (req, res) => {
     return;
   }
 
+  let leaveType = await LeaveType.findByPk(data.type);
+  if (leaveType === null) {
+    res.status(400).send({ msg: "Invalid leave type" });
+    return;
+  }
+
   let leaveRequest = await LeaveRequest.create({
-    //TODO: leave type id is in the DB
-    LeaveTypeId: data.type,
+    LeaveTypeId: leaveType.id,
     reason: data.reason,
     start_date: data.startDate,
     end_date: data.endDate,
@@ -67,7 +72,7 @@ const createLeaveRequest = async (req, res) => {
     status: data.status,
     StaffId: getUserID(res),
   });
-  res.status(200).json({ data: leaveRequest });
+  res.status(200).json({ ...leaveRequest.toJSON(), LeaveType: leaveType });
 };
 
 /**

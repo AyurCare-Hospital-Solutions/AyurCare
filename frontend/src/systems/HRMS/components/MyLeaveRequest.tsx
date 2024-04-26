@@ -36,10 +36,10 @@ const MyLeaveRequest = () => {
     try {
       const response = await axios.post("/api/hrms/leave", {
         reason: data.reason,
-        start_date: data.start_date,
-        end_date: data.end_date,
+        startDate: data.start_date,
+        endDate: data.end_date,
         hours: data.hours,
-        leave_type_id: data.leave_type?.id, // Fixed property access
+        type: data.leave_type?.id, // Fixed property access
         registration: data.registration,
       });
 

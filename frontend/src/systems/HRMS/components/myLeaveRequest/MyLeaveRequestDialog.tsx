@@ -27,7 +27,6 @@ export default function MyLeaveRequestDialog({
   onClose: () => void;
 }) {
   const [reason, setReason] = useState("");
-  const [registration, setRegistration] = useState("");
   const [hours, setHours] = useState<number>(0);
   const [status, setStatus] = useState<string>("");
   const [start_date, setStartDate] = useState<Dayjs | null>(null);
@@ -56,16 +55,14 @@ export default function MyLeaveRequestDialog({
     setReason(newReason);
   };
 
-  const updateRegistration = () => {
-    let registrationValue = "";
+  const getRegistration = () => {
     if (isMultipleDays) {
-      registrationValue = "Multiple Day";
+      return "Multiple Day";
     } else if (isFullDay) {
-      registrationValue = "Full Day";
+      return "Full Day";
     } else {
-      registrationValue = "Part Day";
+      return "Part Day";
     }
-    setRegistration(registrationValue);
   };
 
   const updateHours = (newHours: number) => {
@@ -78,12 +75,12 @@ export default function MyLeaveRequestDialog({
     setStartDate(newStartDate); // format to YYYY-MM-DD or set to null
   };
 
-  const updateEndDate = (newEndDate: Dayjs, startDate: Dayjs) => {
+  const updateEndDate = (newEndDate: Dayjs) => {
     // Set a default error message (optional)
     let endDateErrorMessage = "";
 
     // Assign start date if newEndDate is null
-    const endDate = newEndDate || startDate;
+    const endDate = newEndDate || start_date;
 
     // Optional validation (check if endDate is still null)
     if (!endDate) {
@@ -101,16 +98,14 @@ export default function MyLeaveRequestDialog({
   };
 
   const handleSubmit = () => {
-    updateRegistration();
-    console.log();
 
     addLeaveRequest({
       reason,
-      registration,
+      registration: getRegistration(),
       hours,
       status,
       start_date,
-      end_date,
+      end_date: end_date ?? start_date,
       leave_type,
     });
   };
@@ -270,7 +265,7 @@ export default function MyLeaveRequestDialog({
             {isMultipleDays && (
               <DatePicker
                 label="End Date"
-                onChange={(e: any) => updateEndDate(e, start_date)}
+                onChange={(e: any) => updateEndDate(e)}
               />
             )}
           </Box>
