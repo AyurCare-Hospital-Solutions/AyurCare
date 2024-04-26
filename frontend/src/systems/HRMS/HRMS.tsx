@@ -13,8 +13,11 @@ import {
   Category,
   ConfirmationNumber,
   Dashboard,
+  Email,
   Event,
   Groups,
+  Message,
+  QueryBuilder,
 } from "@mui/icons-material";
 
 const HRMS = () => {
@@ -31,7 +34,7 @@ const HRMS = () => {
         </ListItem>
       </Link>
       <Divider sx={{ mt: 2, mb: 1 }} />
-      <Typography
+      {/* <Typography
         color="textSecondary"
         sx={{
           fontWeight: 550,
@@ -41,7 +44,7 @@ const HRMS = () => {
         }}
       >
         Leave Management{" "}
-      </Typography>
+      </Typography> */}
       <Link to="myLeaveRequests">
         <ListItem disablePadding>
           <ListItemButton>
@@ -74,7 +77,7 @@ const HRMS = () => {
       </Link>
       <Divider sx={{ mt: 2, mb: 1 }} />
 
-      <Link to="/HRMS/Dashboard">
+      <Link to="rosterManagement">
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
@@ -85,13 +88,35 @@ const HRMS = () => {
         </ListItem>
       </Link>
 
-      <Link to="/HRMS/Dashboard">
+      <Link to="shifts">
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <QueryBuilder />
+            </ListItemIcon>
+            <ListItemText primary="My Shifts" />
+          </ListItemButton>
+        </ListItem>
+      </Link>
+
+      <Link to="reports">
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
               <Assessment />
             </ListItemIcon>
             <ListItemText primary="Reports" />
+          </ListItemButton>
+        </ListItem>
+      </Link>
+
+      <Link to="chat">
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <Email />
+            </ListItemIcon>
+            <ListItemText primary="Chat" />
           </ListItemButton>
         </ListItem>
       </Link>

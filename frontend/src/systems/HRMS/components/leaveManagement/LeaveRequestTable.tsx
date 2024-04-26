@@ -1,5 +1,3 @@
-// LeaveRequestTable.tsx
-
 import React from "react";
 import {
   Box,
@@ -13,18 +11,23 @@ import {
   TableRow,
   Paper,
   IconButton,
+  Chip,
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 interface LeaveRequest {
+  id: string;
   name: string;
-  reason: string;
-  start_date: string;
-  end_date: string;
+  leaveType: string;
+  startDate: string;
+  endDate: string;
   registration: string;
   hours: number;
+  status: "Approved" | "Rejected" | "Pending";
 }
 
 interface LeaveRequestTableProps {
@@ -37,6 +40,8 @@ interface LeaveRequestTableProps {
   rowsPerPage: number;
   handleAccept: (index: number) => void;
   handleReject: (index: number) => void;
+  handleEdit?: (index: number) => void;
+  handleDelete?: (index: number) => void;
   pendingView: boolean;
 }
 
@@ -47,67 +52,138 @@ const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({
   rowsPerPage,
   handleAccept,
   handleReject,
+  handleEdit,
+  handleDelete,
   pendingView,
 }) => {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - leaveRequests.length) : 0;
 
+  // Dummy data for testing
+  const dummyData: LeaveRequest[] = [
+    {
+      id: "1",
+      name: "John Doe",
+      leaveType: "Annual",
+      startDate: "2024-04-01",
+      endDate: "2024-04-05",
+      registration: "2024-03-25",
+      hours: 40,
+      status: "Pending",
+    },
+    {
+      id: "2",
+      name: "Jane Smith",
+      leaveType: "Sick",
+      startDate: "2024-04-10",
+      endDate: "2024-04-15",
+      registration: "2024-04-05",
+      hours: 24,
+      status: "Approved",
+    },
+    {
+      id: "3",
+      name: "Alice Johnson",
+      leaveType: "Maternity",
+      startDate: "2024-04-20",
+      endDate: "2024-04-25",
+      registration: "2024-04-15",
+      hours: 80,
+      status: "Rejected",
+    },
+  ];
+
+  // Merge dummy data with provided leave requests
+  const mergedLeaveRequests = [...dummyData, ...leaveRequests];
+
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+      <Table sx={{ minWidth: 700 }} aria-label="custom pagination table">
         <TableHead>
           <TableRow>
-            <TableCell>Staff Name</TableCell>
-            <TableCell align="right">Reason</TableCell>
-            <TableCell align="right">Start Date</TableCell>
-            <TableCell align="right">End Date</TableCell>
-            <TableCell align="right">Registration</TableCell>
-            <TableCell align="right">Hours</TableCell>
-            <TableCell align="right">Action</TableCell>
+            <TableCell align="center">Staff ID</TableCell>
+            <TableCell align="center">Staff Name</TableCell>
+            <TableCell align="center">Leave Type</TableCell>
+            <TableCell align="center">Start Date</TableCell>
+            <TableCell align="center">End Date</TableCell>
+            <TableCell align="center">Registration</TableCell>
+            <TableCell align="center">Hours</TableCell>
+            <TableCell align="center">Status</TableCell>
+            <TableCell align="center">Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {(rowsPerPage > 0
-            ? leaveRequests.slice(
+            ? mergedLeaveRequests.slice(
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage
               )
-            : leaveRequests
+            : mergedLeaveRequests
           ).map((row, index) => (
             <TableRow key={index}>
-              <TableCell component="th" scope="row">
-                {row.name}
+              <TableCell align="center">{row.id}</TableCell>
+              <TableCell align="center">{row.name}</TableCell>
+              <TableCell align="center">{row.leaveType}</TableCell>
+              <TableCell align="center">{row.startDate}</TableCell>
+              <TableCell align="center">{row.endDate}</TableCell>
+              <TableCell align="center">{row.registration}</TableCell>
+              <TableCell align="center">{row.hours}</TableCell>
+              <TableCell align="center">
+                <Chip
+                  label={row.status}
+                  color={
+                    row.status === "Approved"
+                      ? "success"
+                      : row.status === "Rejected"
+                      ? "error"
+                      : "warning"
+                  }
+                />
               </TableCell>
-              <TableCell align="right">{row.reason}</TableCell>
-              <TableCell align="right">{row.start_date}</TableCell>
-              <TableCell align="right">{row.end_date}</TableCell>
-              <TableCell align="right">{row.registration}</TableCell>
-              <TableCell align="right">{row.hours}</TableCell>
-              <TableCell align="right">
-                {/* Edit button */}
-                <IconButton disabled={pendingView} aria-label="edit">
-                  <EditIcon style={{ color: "blue" }} />
-                </IconButton>
-                {/* Accept button */}
-                <IconButton
-                  onClick={() => handleAccept(index)}
-                  aria-label="accept"
-                >
-                  <CheckCircleIcon style={{ color: "green" }} />
-                </IconButton>
-                {/* Reject button */}
-                <IconButton
-                  onClick={() => handleReject(index)}
-                  aria-label="reject"
-                >
-                  <CancelIcon style={{ color: "red" }} />
-                </IconButton>
+              <TableCell align="center">
+                {pendingView && (
+                  <>
+                    <IconButton
+                      onClick={() => handleAccept(index)}
+                      aria-label="accept"
+                      disabled={row.status !== "Pending"}
+                    >
+                      <CheckCircleIcon style={{ color: "green" }} />
+                    </IconButton>
+                    <IconButton
+                      onClick={() => handleReject(index)}
+                      aria-label="reject"
+                      disabled={row.status !== "Pending"}
+                    >
+                      <CancelIcon style={{ color: "red" }} />
+                    </IconButton>
+                  </>
+                )}
+                {!pendingView && (
+                  <>
+                    <IconButton
+                      onClick={() => handleEdit && handleEdit(index)}
+                      aria-label="edit"
+                    >
+                      <EditIcon style={{ color: "black" }} />
+                    </IconButton>
+                    <IconButton
+                      onClick={() => handleDelete && handleDelete(index)}
+                      aria-label="delete"
+                    >
+                      <DeleteIcon style={{ color: "red" }} />
+                    </IconButton>
+                    <IconButton aria-label="view">
+                      <VisibilityIcon />
+                    </IconButton>
+                  </>
+                )}
               </TableCell>
             </TableRow>
           ))}
           {emptyRows > 0 && (
             <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={7} />
+              <TableCell colSpan={9} />
             </TableRow>
           )}
         </TableBody>
@@ -115,8 +191,8 @@ const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({
           <TableRow>
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-              colSpan={7}
-              count={leaveRequests.length}
+              colSpan={9}
+              count={mergedLeaveRequests.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={onPageChange}

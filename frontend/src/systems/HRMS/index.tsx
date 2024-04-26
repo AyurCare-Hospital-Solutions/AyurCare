@@ -3,6 +3,10 @@ import HRMS from "./HRMS";
 import LeaveType from "./components/LeaveType";
 import LeaveRequest from "./components/LeaveRequest";
 import MyLeaveRequest from "./components/MyLeaveRequest";
+import RosterManagement from "./components/RosterManagement";
+import Shifts from "./components/Shifts";
+import Reports from "./components/Reports";
+import Chat from "./components/Chat";
 
 const routes: { name: string; root: React.ReactNode; routes: RouteObject[] } = {
   name: "HRMS",
@@ -19,6 +23,22 @@ const routes: { name: string; root: React.ReactNode; routes: RouteObject[] } = {
     {
       path: "myLeaveRequests",
       element: <MyLeaveRequest />,
+    },
+    {
+      path: "rosterManagement",
+      element: <RosterManagement />,
+    },
+    {
+      path: "shifts",
+      element: <Shifts />,
+    },
+    {
+      path: "reports",
+      element: <Reports />,
+    },
+    {
+      path: "chat",
+      element: <Chat />,
     },
   ],
 };

@@ -16,6 +16,8 @@ import {
   Select,
   Switch,
 } from "@mui/material";
+import dayjs from "dayjs";
+import axios from "axios";
 
 export default function UpdateLeaveRequestDialog({
   open,
@@ -28,46 +30,33 @@ export default function UpdateLeaveRequestDialog({
 }) {
   const [isFullDay, setIsFullDay] = React.useState(true);
   const [isMultipleDays, setIsMultipleDays] = React.useState(false);
-  const [leaveType, setLeaveType] = React.useState<string>(
-    leaveRequestData.leaveType || ""
-  );
   const [availableLeaves, setAvailableLeaves] = React.useState<number>(0);
+  const [updateLeaveRequestData, setUpdateLeaveRequestData] =
+    React.useState<any>({});
 
-  // Pre-fill the form fields when the leave request data changes
   React.useEffect(() => {
-    if (leaveRequestData.leaveType === "Annual") {
-      setAvailableLeaves(20);
-    } else if (leaveRequestData.leaveType === "Sick") {
-      setAvailableLeaves(10);
-    } else {
-      setAvailableLeaves(0); // Default value
-    }
+    setUpdateLeaveRequestData(leaveRequestData);
+    console.log(leaveRequestData);
   }, [leaveRequestData]);
 
-  const handleFullDayChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsFullDay(event.target.checked);
-    if (!event.target.checked) {
-      setIsMultipleDays(false);
-    }
-  };
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const formJson: { [key: string]: string } = Object.fromEntries(
+      formData.entries() as Iterable<[string, string]>
+    );
 
-  const handleMultipleDaysChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setIsMultipleDays(event.target.checked);
-  };
-
-  const handleLeaveTypeChange = (
-    event: React.ChangeEvent<{ value: unknown }>
-  ) => {
-    setLeaveType(event.target.value as string);
-    // Set available leaves based on selected leave type
-    if (event.target.value === "Annual") {
-      setAvailableLeaves(20);
-    } else if (event.target.value === "Sick") {
-      setAvailableLeaves(10);
-    } else {
-      setAvailableLeaves(0); // Default value
+    // Make the Axios request to update leave request
+    try {
+      const response = await axios.put(
+        "your-backend-api-endpoint", // Replace this with your actual API endpoint
+        formJson
+      );
+      console.log("Leave request updated successfully:", response.data);
+      onClose(); // Close the dialog after successful submission
+    } catch (error) {
+      console.error("Error updating leave request:", error);
+      // Handle error state or display error message to the user
     }
   };
 
@@ -78,16 +67,7 @@ export default function UpdateLeaveRequestDialog({
         onClose={onClose}
         PaperProps={{
           component: "form",
-          onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson: { [key: string]: string } = Object.fromEntries(
-              formData.entries() as Iterable<[string, string]>
-            );
-            const email = formJson.email;
-            console.log(email);
-            onClose();
-          },
+          onSubmit: handleSubmit,
         }}
       >
         <DialogTitle>Update Leave Request</DialogTitle>
@@ -103,7 +83,7 @@ export default function UpdateLeaveRequestDialog({
             label="Leave Reason"
             type="text"
             variant="standard"
-            defaultValue={leaveRequestData.leaveReason}
+            value={updateLeaveRequestData?.reason}
           />
           <Box
             sx={{
@@ -117,7 +97,7 @@ export default function UpdateLeaveRequestDialog({
               control={
                 <Switch
                   checked={isFullDay}
-                  onChange={handleFullDayChange}
+                  onChange={() => setIsFullDay(!isFullDay)}
                   name="fullDay"
                   color="primary"
                 />
@@ -129,7 +109,7 @@ export default function UpdateLeaveRequestDialog({
                 control={
                   <Switch
                     checked={isMultipleDays}
-                    onChange={handleMultipleDaysChange}
+                    onChange={() => setIsMultipleDays(!isMultipleDays)}
                     name="multipleDays"
                     color="primary"
                     disabled={!isFullDay}
@@ -152,8 +132,13 @@ export default function UpdateLeaveRequestDialog({
                 <Select
                   labelId="leave-type-label"
                   id="leave-type-select"
-                  value={leaveType}
-                  //onChange={handleLeaveTypeChange}
+                  value={updateLeaveRequestData?.LeaveType || ""}
+                  onChange={(e) =>
+                    setUpdateLeaveRequestData({
+                      ...updateLeaveRequestData,
+                      LeaveType: e.target.value,
+                    })
+                  }
                   label="Type"
                 >
                   <MenuItem value="">
@@ -189,10 +174,13 @@ export default function UpdateLeaveRequestDialog({
           >
             <DatePicker
               label={isMultipleDays ? "Start Date" : "Date"}
-              value={leaveRequestData.startDate}
+              value={dayjs(updateLeaveRequestData?.startDate)}
             />
             {isMultipleDays && (
-              <DatePicker label="End Date" value={leaveRequestData.endDate} />
+              <DatePicker
+                label="End Date"
+                value={dayjs(updateLeaveRequestData?.endDate)}
+              />
             )}
           </Box>
           {!isFullDay && (
@@ -205,7 +193,7 @@ export default function UpdateLeaveRequestDialog({
               type="text"
               variant="standard"
               sx={{ mt: 3 }}
-              defaultValue={leaveRequestData.hours}
+              value={updateLeaveRequestData?.hours}
             />
           )}
         </DialogContent>

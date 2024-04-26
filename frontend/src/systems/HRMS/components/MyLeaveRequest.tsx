@@ -1,15 +1,88 @@
 import { Box, Button, Paper, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MyLeaveRequestDialog from "./myLeaveRequest/MyLeaveRequestDialog";
 import MyLeaveRequestTable from "./myLeaveRequest/MyLeaveRequestTable";
+import { useConfirm } from "material-ui-confirm";
+import axios from "axios";
+import { enqueueSnackbar } from "notistack";
+import { MyLeaveRequestData } from "../types";
 
 const MyLeaveRequest = () => {
+  useEffect(() => {
+    fetchUserLeaveRequests();
+  }, []);
+
+  const confirm = useConfirm();
+
+  const [rows, setRows] = useState<MyLeaveRequestData[]>([]);
   const [requestDialogOpen, setRequestDialogOpen] = useState(false);
 
-  // Function to handle opening the dialog
+  //Fetching all the leave requests by user id
+  const fetchUserLeaveRequests = async () => {
+    try {
+      const response = await axios.get<MyLeaveRequestData[]>(
+        "/api/hrms/leave/user"
+      );
+      console.log(response.data);
+      setRows(response.data);
+    } catch (error) {
+      console.log("Error fetching Leave Request by User ID :", error);
+    }
+  };
+
   const handleOpenDialog = () => {
     setRequestDialogOpen(true);
   };
+
+  const deleteLeaveRequest = async (id: number) => {
+    await confirm({
+      description: "Are you sure you want to delete this leave request?",
+    });
+
+    try {
+      await axios.delete(`/api/hrms/leave/${id}`);
+      setRows((prevRows) => prevRows.filter((row) => row.id !== id));
+      enqueueSnackbar("Leave type deleted successfully", {
+        variant: "success",
+      });
+    } catch (error) {
+      // Handle error here
+      console.error("Error deleting leave request:", error);
+      enqueueSnackbar("Failed to delete leave request", {
+        variant: "error",
+      });
+    }
+  };
+
+  // const updateLeaveRequest = async (
+  //   row: MyLeaveRequestData,
+  //   reason: string,
+  //   hours: number,
+  //   startDate: string,
+  //   endDate: string
+  // ) => {
+  //   try {
+  //     await axios.put(`/api/hrms/leave/${row.id}`, {
+  //       reason,
+  //       hours,
+  //       start_date: startDate,
+  //       end_date: endDate,
+  //     });
+  //     row.reason = reason;
+  //     row.hours = hours;
+  //     row.start_date = startDate;
+  //     row.end_date = endDate;
+  //     setRows([...rows]);
+  //     enqueueSnackbar("Leave request updated successfully", {
+  //       variant: "success",
+  //     });
+  //   } catch (error) {
+  //     console.error("Error updating leave request:", error);
+  //     enqueueSnackbar("Failed to update leave request", {
+  //       variant: "error",
+  //     });
+  //   }
+  // };
 
   return (
     <div className="MyLeaveRequest">
@@ -45,7 +118,10 @@ const MyLeaveRequest = () => {
           {/* <MyLeaveRequestSearch /> */}
         </Paper>
         <Box sx={{ display: "flex", mx: 4 }}>
-          <MyLeaveRequestTable />
+          <MyLeaveRequestTable
+            rows={rows}
+            deleteLeaveRequest={deleteLeaveRequest}
+          />
         </Box>
       </Box>
     </div>

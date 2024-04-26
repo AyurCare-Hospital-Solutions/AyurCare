@@ -14,39 +14,44 @@ import Chip from "@mui/material/Chip";
 import UpdateLeaveRequestDialog from "./UpdateLeaveRequestDialog"; // Import your update dialog component
 import axios from "axios";
 import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
+import { LeaveTypeData, MyLeaveRequestData } from "../../types";
+import { Dayjs } from "dayjs";
 
-interface RowData {
-  id: number;
-  name: string;
-  reason: string;
-  hours: number;
-  status: string;
-  start_date: string;
-  end_date: string;
-  LeaveType: {
-    name: string;
-  };
-}
+export default function MyLeaveRequestTable({
+  rows,
+  deleteLeaveRequest,
+}: {
+  rows: MyLeaveRequestData[];
+  deleteLeaveRequest: (id: number) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [selectedRow, setSelectedRow] = useState<MyLeaveRequestData | null>(
+    null
+  );
 
-export default function MyLeaveRequestTable() {
-  useEffect(() => {
-    const fetchAllLeaveRequests = async () => {
-      const allLeaveRequests = await axios.get("/api/hrms/leave/user");
-      const leaveRequestData = allLeaveRequests.data;
+  // const handleEdit = (row: RowData) => {
+  //   setSelectedRow(row);
+  //   setOpen(true);
+  // };
 
-      setRowData(leaveRequestData);
-    };
+  // useEffect(() => {
+  //   const fetchAllLeaveRequests = async () => {
+  //     const allLeaveRequests = await axios.get("/api/hrms/leave/user");
+  //     const leaveRequestData = allLeaveRequests.data;
 
-    fetchAllLeaveRequests();
-  }, []);
+  //     setRowData(leaveRequestData);
+  //   };
+
+  //   fetchAllLeaveRequests();
+  // }, []);
 
   const [page, setPage] = useState(0);
   const [rowDataPerPage, setrowDataPerPage] = useState(5);
   const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
   const [selectedLeaveRequest, setSelectedLeaveRequest] =
-    useState<RowData | null>(null);
+    useState<MyLeaveRequestData | null>(null);
 
-  const [rowData, setRowData] = useState<RowData[]>([]);
+  const [rowData, setRowData] = useState<MyLeaveRequestData[]>([]);
 
   const emptyrowData =
     page > 0 ? Math.max(0, (1 + page) * rowDataPerPage - rowData.length) : 0;
@@ -65,8 +70,9 @@ export default function MyLeaveRequestTable() {
     setPage(0);
   };
 
-  const handleEditClick = (row: RowData) => {
+  const handleEditClick = (row: MyLeaveRequestData) => {
     setSelectedLeaveRequest(row);
+    console.log(row);
     setOpenUpdateDialog(true);
   };
 
@@ -96,14 +102,14 @@ export default function MyLeaveRequestTable() {
                   page * rowDataPerPage,
                   page * rowDataPerPage + rowDataPerPage
                 )
-              : rowData
+              : rows
             ).map((row) => (
               <TableRow key={row.id}>
                 <TableCell component="th" scope="row">
                   {row.id}
                 </TableCell>
-                <TableCell align="right">{row.reason}</TableCell>
-                <TableCell align="right">{row.LeaveType?.name}</TableCell>
+                <TableCell align="right">{row.leaveReason}</TableCell>
+                <TableCell align="right">{row.leaveType?.name}</TableCell>
                 <TableCell align="right">{row.hours}</TableCell>
                 <TableCell align="right">
                   <Chip
@@ -119,9 +125,9 @@ export default function MyLeaveRequestTable() {
                     }
                   />
                 </TableCell>
-                <TableCell align="right">{row.start_date}</TableCell>
+                <TableCell align="right">{row.startDate}</TableCell>
                 <TableCell align="right">
-                  {row.end_date ?? row.start_date}
+                  {row.endDate ?? row.startDate}
                 </TableCell>
                 <TableCell align="right">
                   <IconButton
@@ -131,7 +137,11 @@ export default function MyLeaveRequestTable() {
                   >
                     <EditIcon style={{ color: "black" }} />
                   </IconButton>
-                  <IconButton aria-label="delete" color="inherit">
+                  <IconButton
+                    aria-label="delete"
+                    color="inherit"
+                    onClick={() => deleteLeaveRequest(row.id)}
+                  >
                     <DeleteIcon style={{ color: "red" }} />
                   </IconButton>
                 </TableCell>
@@ -158,13 +168,12 @@ export default function MyLeaveRequestTable() {
           </TableFooter>
         </Table>
       </TableContainer>
-      {openUpdateDialog && (
-        <UpdateLeaveRequestDialog
-          open={openUpdateDialog}
-          onClose={handleCloseUpdateDialog}
-          leaveRequestData={selectedLeaveRequest}
-        />
-      )}
+
+      <UpdateLeaveRequestDialog
+        open={openUpdateDialog}
+        onClose={() => setOpenUpdateDialog(false)}
+        leaveRequestData={selectedLeaveRequest}
+      />
     </>
   );
 }
