@@ -1,3 +1,4 @@
+// MyLeaveRequest.tsx
 import { Box, Button, Paper, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import MyLeaveRequestDialog from "./myLeaveRequest/MyLeaveRequestDialog";
@@ -27,6 +28,28 @@ const MyLeaveRequest = () => {
       setRows(response.data);
     } catch (error) {
       console.log("Error fetching Leave Request by User ID :", error);
+    }
+  };
+
+  //Adding a leave request
+  const addLeaveRequest = async (data: any) => {
+    try {
+      const response = await axios.post("/api/hrms/leave", {
+        reason: data.reason,
+        start_date: data.start_date,
+        end_date: data.end_date,
+        hours: data.hours,
+        leave_type_id: data.leave_type?.id, // Fixed property access
+        registration: data.registration,
+      });
+
+      setRows([...rows, response.data]);
+      enqueueSnackbar("Leave Request added successfully", {
+        variant: "success",
+      });
+    } catch (error) {
+      console.error("Error adding leave type:", error);
+      enqueueSnackbar("Error adding leave type", { variant: "error" });
     }
   };
 
@@ -65,11 +88,10 @@ const MyLeaveRequest = () => {
             Lorem ipsum dolor sit amet, consectetur adipisicing elit.
           </Typography>
         </Box>
-        {/* Button to open the dialog */}
         <Button
           sx={{ ml: "auto", my: "auto" }}
           variant="outlined"
-          onClick={handleOpenDialog} // Call handleOpenDialog on click
+          onClick={handleOpenDialog}
         >
           Request Leave
         </Button>
@@ -78,8 +100,8 @@ const MyLeaveRequest = () => {
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <Box sx={{ display: "flex", mx: 4, mb: 4 }}>
           <Box flexGrow={1} />
-          {/* Pass the state and setState function to the dialog component */}
           <MyLeaveRequestDialog
+            addLeaveRequest={addLeaveRequest}
             open={requestDialogOpen}
             onClose={() => setRequestDialogOpen(false)}
           />

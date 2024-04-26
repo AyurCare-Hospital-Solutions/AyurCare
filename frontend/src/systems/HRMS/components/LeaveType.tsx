@@ -28,12 +28,12 @@ const LeaveType = () => {
 
   const addLeaveType = async (data: any) => {
     try {
-      const res = await axios.post("/api/hrms/leaveType", {
+      const response = await axios.post("/api/hrms/leaveType", {
         name: data.name,
         hours: data.duration,
       });
 
-      setRows([...rows, res.data]);
+      setRows([...rows, response.data]);
       enqueueSnackbar("Leave type added successfully", { variant: "success" });
     } catch (error) {
       console.error("Error adding leave type:", error);
