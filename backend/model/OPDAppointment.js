@@ -11,7 +11,7 @@ Patient.hasMany(OPDAppointment, {
   onDelete: "CASCADE",
   foreignKey: { allowNull: false },
 });
-OPDAppointment.hasOne(Patient);
+OPDAppointment.belongsTo(Patient);
 
 Prescription.belongsTo(OPDAppointment, {
   onDelete: "CASCADE",
