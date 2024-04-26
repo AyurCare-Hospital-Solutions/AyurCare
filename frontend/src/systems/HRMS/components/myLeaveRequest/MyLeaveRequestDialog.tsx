@@ -30,8 +30,8 @@ export default function MyLeaveRequestDialog({
   const [registration, setRegistration] = useState("");
   const [hours, setHours] = useState<number>(0);
   const [status, setStatus] = useState<string>("");
-  const [start_date, setStartDate] = useState<string | null>(null);
-  const [end_date, setEndDate] = useState<string | null>(null);
+  const [start_date, setStartDate] = useState<Dayjs | null>(null);
+  const [end_date, setEndDate] = useState<Dayjs | null>(null);
   const [leave_type, setLeaveType] = useState<LeaveTypeData | null>(null);
 
   const [leaveTypes, setLeaveTypes] = useState<LeaveTypeData[]>([]);
@@ -73,12 +73,12 @@ export default function MyLeaveRequestDialog({
     setHours(newHours);
   };
 
-  const updateStartDate = (newStartDate: Dayjs | null) => {
+  const updateStartDate = (newStartDate: Dayjs) => {
     let startDateErrorMessage = "";
-    setStartDate(newStartDate?.format("YYYY-MM-DD") || null); // format to YYYY-MM-DD or set to null
+    setStartDate(newStartDate); // format to YYYY-MM-DD or set to null
   };
 
-  const updateEndDate = (newEndDate: Dayjs | null, startDate: Dayjs) => {
+  const updateEndDate = (newEndDate: Dayjs, startDate: Dayjs) => {
     // Set a default error message (optional)
     let endDateErrorMessage = "";
 
@@ -91,7 +91,7 @@ export default function MyLeaveRequestDialog({
     }
 
     // Format and set endDate
-    setEndDate(endDate.format("YYYY-MM-DD"));
+    setEndDate(endDate);
   };
 
   const updateLeaveTypeId = (newLeaveTypeId: LeaveTypeData | null) => {
@@ -270,7 +270,7 @@ export default function MyLeaveRequestDialog({
             {isMultipleDays && (
               <DatePicker
                 label="End Date"
-                onChange={(e: any) => updateEndDate(e)}
+                onChange={(e: any) => updateEndDate(e, start_date)}
               />
             )}
           </Box>
