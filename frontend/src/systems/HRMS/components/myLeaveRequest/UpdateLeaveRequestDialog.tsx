@@ -92,7 +92,7 @@ export default function UpdateLeaveRequestDialog({
 
   // update leave request
   const updateLeaveRequest = () => {
-    axios.put("api/hrms/leave", { type: updateLeaveRequestData.LeaveType.id, reason: updateLeaveRequestData.reason, startDate: updateLeaveRequestData.startDate, endDate: updateLeaveRequestData.endDate, registration: getRegistration(), hours: parseFloat(updateLeaveRequestData.hours) })
+    axios.put(`api/hrms/leave/${updateLeaveRequestData.id}`, { type: updateLeaveRequestData.LeaveType.id, reason: updateLeaveRequestData.reason, startDate: updateLeaveRequestData.startDate, endDate: updateLeaveRequestData.endDate, registration: getRegistration(), hours: parseFloat(updateLeaveRequestData.hours) })
       .then((res) => {
         console.log(res.data);
 
