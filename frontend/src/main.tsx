@@ -3,27 +3,19 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import Nav from "./components/Nav.tsx";
 import "./index.css";
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import { SnackbarProvider } from 'notistack';
 import axios from 'axios';
 import { ConfirmProvider } from "material-ui-confirm"
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
+import { themeConfig, baseURL } from './config.ts'
 
-axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
 
-const theme = createTheme({
-  palette: {
-    mode: 'light',
-    primary: {
-      main: '#003a2b',
-    },
-    secondary: {
-      main: '#f50057',
-    },
-  },
-});
+axios.defaults.baseURL = baseURL;
+
+const theme = themeConfig;
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
