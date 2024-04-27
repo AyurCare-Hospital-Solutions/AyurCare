@@ -10,8 +10,9 @@ import ManufactureRequestTable from './ManuReqCom/ManufactureRequestTable';
 
 function ManufactuureRequest() {
   const [reqMedicine, setReqMedicine] = useState<any>({});
-  const [reqAmount, setReqAmout] = useState<number>(0)
-  const [priority, setpriority] = useState<boolean>();
+  const [reqAmount, setReqAmout] = useState<number | string>("");
+  const [selectOption, setSelectOption] = useState<string>("")
+  const [priority, setPriority] = useState<boolean | string>("");
 
   const [medicineData, setMedicineData] = useState<any>([]);
   // fetch medicine data
@@ -59,7 +60,10 @@ function ManufactuureRequest() {
             enqueueSnackbar("Manufacture Request Added Successfuly...", { variant: "success" });
             console.log(res);
             getManufactureRequestData();
-            setReqAmout(0);
+            setSelectOption("");
+            setReqAmout('');
+            setPriority('');
+            reqMedicine('')
           })
           .catch((err) => {
             enqueueSnackbar("Failed to Add Manufacture Request...", { variant: "error" });
@@ -109,10 +113,14 @@ function ManufactuureRequest() {
           sx={{ width: 300 }}
           onChange={(_e, v: any) => setReqMedicine(v.medicine.id)}
           renderInput={(params) => <TextField {...params} label="Medicine" />}
+          value={selectOption}
         />
-        <TextField type="number" id="outlined-basic" label="Amount" variant="outlined" onChange={(e) => {
-          setReqAmout(Number(e.target.value));
-        }} />
+        <TextField type="number" id="outlined-basic" label="Amount"
+          variant="outlined" onChange={(e) => {
+            setReqAmout(Number(e.target.value));
+          }}
+          value={reqAmount}
+        />
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Priority</InputLabel>
           <Select
@@ -121,7 +129,7 @@ function ManufactuureRequest() {
             value={priority}
             label="Priority"
             onChange={(event) => {
-              setpriority(event.target.value as boolean)
+              setPriority(event.target.value)
             }}
           >
             <MenuItem value={1}>Is priority</MenuItem>

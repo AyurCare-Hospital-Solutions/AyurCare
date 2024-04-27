@@ -2,7 +2,8 @@ import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Stack, TextField } from '@mui/material';
+import { Autocomplete, Stack, TextField } from '@mui/material';
+import axios from 'axios';
 
 const style = {
     position: 'absolute',
@@ -17,6 +18,42 @@ const style = {
 };
 
 export default function AddMedicineMaterials() {
+    const [getMedicine, setGetMedicine] = useState<any>({});
+    const [getMaterial, setGetMaterial] = useState<any>({});
+    const [reqMaterialAmount, setReqMaterialAmount] = useState<number>(0)
+
+    const [medicineData, setMedicineData] = useState<any>([]);
+    // fetch medicine data
+    const getMedicineData = async () => {
+        await axios.get('api/ims/medicine').then((res) => {
+            setMedicineData(res.data);
+            console.log(res.data);
+        })
+    }
+
+    const [materialData, setMaterialData] = useState<any>([]);
+    // fetch medicine request data
+    const getMaterialData = async () => {
+        await axios.get('api/ims/material').then((res) => {
+            setMaterialData(res.data);
+            console.log(res.data);
+
+        })
+    }
+
+    useEffect(() => {
+        getMedicineData();
+        getMaterialData();
+    }, []);
+
+    const medicineNames = medicineData?.map((med: any) => {
+        return { "label": medimeti., "medicine": med };
+    }) ?? [];
+
+    const materialNames = materialData?.map((med: any) => {
+        return { "label": med.Item.name, "material": med };
+    }) ?? [];
+
     const [additionalFieldsCount, setAdditionalFieldsCount] = useState(0);
 
     const addAdditionalField = () => {
@@ -55,14 +92,24 @@ export default function AddMedicineMaterials() {
                         <Button variant="outlined" onClick={addAdditionalField}>Add More Fields</Button>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <TextField type="number" id="outlined-basic2" label="Material" variant="outlined" name="reOrderBuffer" onChange={(_e) => {
-                        }} />
+                        <Autocomplete
+                            disablePortal
+                            id="combo-box-demo"
+                            options={medicineNames}
+                            sx={{ width: 300 }}
+                            renderInput={(params) => <TextField {...params} label="Material" />}
+                        />
 
                     </Box>
                     {[...Array(additionalFieldsCount)].map((_, index) => (
                         <Box key={index}>
-                            <TextField type="number" id="outlined-basic2" label="Material" variant="outlined" name="reOrderBuffer" onChange={(__e) => {
-                            }} />
+                            <Autocomplete
+                                disablePortal
+                                id="combo-box-demo"
+                                options={materialNames}
+                                sx={{ width: 300 }}
+                                renderInput={(params) => <TextField {...params} label="Material" />}
+                            />
                         </Box>
                     ))}
                     {additionalFieldsCount > 0 && (
@@ -77,3 +124,11 @@ export default function AddMedicineMaterials() {
         </Box>
     );
 }
+function useEffect(arg0: () => void, arg1: never[]) {
+    throw new Error('Function not implemented.');
+}
+
+function getMaterialData() {
+    throw new Error('Function not implemented.');
+}
+
