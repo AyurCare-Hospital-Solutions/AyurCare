@@ -2,7 +2,7 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
-import { BASE_URL } from "../../config";
+import axios from "axios";
 
 export default function tolPatientCount() {
   // get the total number of patients from the database
@@ -12,9 +12,8 @@ export default function tolPatientCount() {
   //get the count
   const getTotalPatients = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/api/prss/tolCount-patient`);
-      const jsonData = await response.json();
-      setTotalPatients(jsonData);
+      const response = await axios.get(`/api/prss/tolCount-patient`);
+      setTotalPatients(response.data);
     } catch (err) {
       console.log(err);
     }

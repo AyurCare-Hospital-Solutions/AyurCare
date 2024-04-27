@@ -168,20 +168,20 @@ export default function PatientRegForm({
             value={patient.phone}
             onChange={handleInputChange}
           />
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DemoContainer components={["DatePicker", "DatePicker"]}>
-              <DatePicker
-                label='Date Of Birth'
-                value={dobValue}
-                onChange={(newValue) => setadobValue(newValue)}
-              />
-              {dobValue && dobValue ? (
-                <p>Selected Date: {dobValue.format("YYYY-MM-DD")}</p>
-              ) : (
-                <p>Today Date: {dayjs(time).format("Do MMMM YYYY")}</p>
-              )}
-            </DemoContainer>
-          </LocalizationProvider>
+
+          <Box display='flex' justifyContent='space-between' pt={2}>
+            <DatePicker
+              label='Date Of Birth'
+              value={dobValue}
+              onChange={(newValue) => setadobValue(newValue)}
+              sx={{ width: "50px" }}
+            />
+            {dobValue && dobValue ? (
+              <p>Selected Date: {dobValue.format("YYYY-MM-DD")}</p>
+            ) : (
+              <p>Today Date: {dayjs(time).format("Do MMMM YYYY")}</p>
+            )}
+          </Box>
 
           <TextField
             fullWidth

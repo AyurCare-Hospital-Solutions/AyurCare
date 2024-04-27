@@ -29,15 +29,17 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 function DataGridTest() {
   const [data, setData] = React.useState<any>([]);
 
-  async function getNBATeamData() {
+  async function getPatients() {
     await axios.get("/api/prss/get-patients").then((res) => {
       setData(res.data);
     });
   }
 
   useEffect(() => {
-    getNBATeamData();
+    getPatients();
   }, []);
+
+  // console.log(data);
 
   // create columns
   const columns: GridColDef[] = [
@@ -97,7 +99,6 @@ function DataGridTest() {
   // handle add patient to the appointment list
   async function hadleAddToAppointmentList(id: number) {
     const patientDetails = data[id];
-    console.log(patientDetails.id);
 
     const res = await axios.post(`/api/prss/create-appointment`, {
       PatientId: patientDetails.id,
@@ -154,10 +155,8 @@ function DataGridTest() {
     if (res.data.msg) {
       alert(res.data.msg);
     }
-    getNBATeamData();
+    getPatients();
   }
-
-  // console.log(selectedRowData);
 
   const handleClose = () => {
     setOpen(false);

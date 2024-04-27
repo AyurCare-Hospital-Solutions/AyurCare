@@ -83,7 +83,6 @@ async function createNewPatient(req, res) {
 
     // add the tracking number to the patient details
     const newPatient = { tracking_no, ...patientDetails };
-    console.log(newPatient);
 
     const patient = await Patient.create(newPatient);
     return res.status(200).json(patient.toJSON());
@@ -113,14 +112,12 @@ async function getPatients(req, res) {
 
 // get patient details by id
 async function getPatientDetails(req, res) {
+  const id = Number.parseInt(req.params.id);
   // check the patient id is null
-  if (!Number.isInteger(Number.parseInt(req.params.id))) {
+  if (!Number.isInteger(id)) {
     res.status(400).json({ msg: "Invalid patient id" });
     return;
   }
-
-  // get the patient details by id
-  const id = Number.parseInt(req.params.id);
 
   const patient = await Patient.findByPk(id);
   if (patient === null) {

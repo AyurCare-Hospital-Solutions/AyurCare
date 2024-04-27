@@ -1,17 +1,16 @@
-import React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
-import PatientTable from "./PatientTable";
-import { BASE_URL } from "../../config";
 import { Box, Tooltip } from "@mui/material";
 import QueueIcon from "@mui/icons-material/Queue";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import axios from "axios";
 import { enqueueSnackbar } from "notistack";
+// import { Document, Page, Text } from "react-pdf";
+import { usePDF } from "react-to-pdf";
 
 interface recentPatientDetails {
   name: string;
@@ -42,9 +41,8 @@ export default function BasicCard() {
 
   async function getRecentPatient() {
     try {
-      const response = await fetch(`${BASE_URL}/api/prss/recent-patient`);
-      const patient = await response.json();
-      setRecentPatientDetails(patient);
+      const response = await axios.get(`/api/prss/recent-patient`);
+      setRecentPatientDetails(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -71,6 +69,11 @@ export default function BasicCard() {
     }
   }
 
+  // to pdf
+  const { toPDF, targetRef } = usePDF({
+    filename: "PatientTicket.pdf",
+  });
+
   return (
     <>
       <Box
@@ -88,6 +91,7 @@ export default function BasicCard() {
             <PictureAsPdfIcon
               fontSize='large'
               htmlColor='rgba(0, 58, 43, 0.8)'
+              onClick={() => toPDF()}
             />
           </Tooltip>
           <Tooltip title='Add Patient to Appointment List' arrow>
@@ -99,7 +103,7 @@ export default function BasicCard() {
           </Tooltip>
         </Box>
       </Box>
-      <Card sx={{ minWidth: 275 }}>
+      <Card sx={{ minWidth: 275 }} ref={targetRef}>
         <CardContent>
           <Typography variant='h5' component='div'>
             {recentPatientDetails && recentPatientDetails
