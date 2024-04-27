@@ -14,6 +14,7 @@ import {
 import { useParams } from "react-router-dom";
 import CreatePrescriptionForm from "./CreatePrescriptionForm";
 import EditPatientPrescription from "./EditPatientPrescription";
+import { enqueueSnackbar } from "notistack";
 
 interface Patient {
   id: number;
@@ -46,8 +47,10 @@ const PatientProfile = () => {
         setPrescriptions(res.data.prescription);
         setPatient(res.data.patient);
       })
-      .catch((err) => console.error(err));
-  };
+      .catch((err) => {
+        console.error(err)
+        enqueueSnackbar("Failed to fetch patient prescription", { variant: "error"});
+  })};
 
   useEffect(() => {
     getPatientPrescription();
@@ -65,8 +68,14 @@ const PatientProfile = () => {
 
   // Delete Patient Prescription
   const deletePatientPrescription = async (pressId: number) => {
-    await axios.delete(`api/opcms/prescriptions/${pressId}`);
-    getPatientPrescription();
+    try {
+      await axios.delete(`api/opcms/prescriptions/${pressId}`);
+      getPatientPrescription();
+      enqueueSnackbar("Prescription deleted successfully", { variant: "success" });
+    } catch (error) {
+      console.error(error);
+      enqueueSnackbar("Failed to delete Prescription", { variant: "error" });
+    }
   };
 
 
@@ -153,7 +162,7 @@ const PatientProfile = () => {
 
 
 // Calculate age from date of birth
-function calculateAge(dob: string | number | Date) {
+function calculateAge(dob: string | number | Date): number {
   const today = new Date();
   const birthDate = new Date(dob);
   let age = today.getFullYear() - birthDate.getFullYear();
@@ -171,5 +180,6 @@ function calculateAge(dob: string | number | Date) {
 
   return age;
 }
+
 
 export default PatientProfile;

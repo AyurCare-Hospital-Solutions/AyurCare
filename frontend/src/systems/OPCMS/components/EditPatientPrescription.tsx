@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { enqueueSnackbar } from "notistack";
 import {
   Typography,
   TextField,
@@ -45,8 +46,10 @@ const EditPrescriptionForm: React.FC<EditPrescriptionFormProps> = ({
       });
       handleClose();
       getPatientPrescription();
+      enqueueSnackbar("Prescription edited successfully", { variant: "success" });
     } catch (error) {
       console.error("Error editing prescription:", error);
+      enqueueSnackbar("Failed to edit prescription", { variant: "error" });
     }
   };
 
