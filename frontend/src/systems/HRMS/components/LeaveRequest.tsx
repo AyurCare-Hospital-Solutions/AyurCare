@@ -5,11 +5,14 @@ import axios from "axios";
 import { enqueueSnackbar } from "notistack";
 import { LeaveRequestData } from "../types";
 import SearchBar from "./SearchBar";
+import { useConfirm } from "material-ui-confirm";
 
 const LeaveRequest: React.FC = () => {
   useEffect(() => {
     fetchAllLeaveRequests();
   }, []);
+
+  const confirm = useConfirm();
 
   const [rows, setRows] = useState<LeaveRequestData[]>([]);
   const [tabValue, setTabValue] = useState<"Pending" | "Processed" | "All">(
@@ -54,6 +57,10 @@ const LeaveRequest: React.FC = () => {
       if (leaveIndex === -1) return;
 
       const leaveRequest = rows[leaveIndex];
+
+      await confirm({
+        description: `Are you sure you want to delete the leave request ${leaveRequest.id}?`,
+      });
 
       const response = await axios.delete(`/api/hrms/leave/${leaveRequest.id}`);
       if (response.status === 204) {

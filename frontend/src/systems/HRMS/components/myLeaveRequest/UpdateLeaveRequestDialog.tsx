@@ -17,6 +17,7 @@ import {
 import dayjs, { Dayjs } from "dayjs";
 import { LeaveTypeData } from "../../types";
 import { FormEvent, useEffect, useState } from "react";
+import { useConfirm } from "material-ui-confirm";
 
 export default function UpdateLeaveRequestDialog({
   open,
@@ -31,6 +32,8 @@ export default function UpdateLeaveRequestDialog({
   updateRequest: (id: number, v: any) => void;
   leaveRequestData: any;
 }) {
+  const confirm = useConfirm();
+
   const [isFullDay, setIsFullDay] = useState(true);
   const [isMultipleDays, setIsMultipleDays] = useState(false);
   const [updateLeaveRequestData, setUpdateLeaveRequestData] = useState<any>({

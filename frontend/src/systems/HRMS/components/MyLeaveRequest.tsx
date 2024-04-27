@@ -44,7 +44,6 @@ const MyLeaveRequest = () => {
     setLeaveTypes(leaveTypeData);
   };
 
-  //Adding a leave request
   const addLeaveRequest = async (data: any) => {
     try {
       const response = await axios.post("/api/hrms/leave", {
