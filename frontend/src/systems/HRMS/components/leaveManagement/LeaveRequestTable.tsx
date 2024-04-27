@@ -15,9 +15,7 @@ import {
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import { LeaveRequestData } from "../../types";
 
 interface LeaveRequestTableProps {
@@ -115,19 +113,24 @@ const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({
                 {!pendingView && (
                   <>
                     <IconButton
-                      onClick={() => handleEdit && handleEdit(index)}
-                      aria-label="edit"
+                      onClick={() => handleAccept(index)}
+                      aria-label="accept"
+                      disabled={row.status !== "Pending"}
                     >
-                      <EditIcon style={{ color: "black" }} />
+                      <CheckCircleIcon style={{ color: "green" }} />
+                    </IconButton>
+                    <IconButton
+                      onClick={() => handleReject(index)}
+                      aria-label="reject"
+                      disabled={row.status !== "Pending"}
+                    >
+                      <CancelIcon style={{ color: "red" }} />
                     </IconButton>
                     <IconButton
                       onClick={() => handleDelete && handleDelete(index)}
                       aria-label="delete"
                     >
                       <DeleteIcon style={{ color: "red" }} />
-                    </IconButton>
-                    <IconButton aria-label="view">
-                      <VisibilityIcon />
                     </IconButton>
                   </>
                 )}
