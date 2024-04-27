@@ -32,7 +32,7 @@ const routes: { name: string; root: React.ReactNode; routes: RouteObject[] } = {
       element: <Analytics />,
     },
     {
-      path : "appointments/profile/:id/prescriptions",
+      path : "appointments/profile/:id/prescriptions/:appId",
       element: <Profile/>,
     }
   ],

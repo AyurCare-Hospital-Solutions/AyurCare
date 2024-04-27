@@ -12,6 +12,7 @@ import {
   Button,
 } from "@mui/material";
 import { useParams } from "react-router-dom";
+import CreatePrescriptionForm from "./CreatePrescriptionForm";
 
 interface Patient {
   id: number;
@@ -32,30 +33,46 @@ interface Prescription {
 const PatientProfile = () => {
   const [patient, setPatient] = useState<Patient | null>(null);
   const [prescriptions, setPrescriptions] = useState<Prescription | null>(null);
-  const { id } = useParams();
+  const { id, appId } = useParams();
 
-  useEffect(() => {
+  const getPatientPrescription = () => {
     axios
-      .get(`/api/opcms/patients/${id}`)
+      .get(`api/opcms/patientPrescriptions/${id}`)
       .then((res) => {
-        setPatient(res.data);
-      })
-      .catch((err) => console.error(err));
-
-    axios
-      .get(`/api/opcms/patients/${id}/prescriptions`)
-      .then((res) => {
+        console.log(res.data);
         setPrescriptions(res.data);
       })
       .catch((err) => console.error(err));
-  }, [id]);
+  };
 
-  if (!patient) return null;
+  useEffect(() => {
+    getPatientPrescription();
+  }, []);
+
+  //if (!patient) return null;
+
+  // add prescription modal
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  
+  // Delete Patient Prescription
+  const deletePatientPrescription = async (pressId: number) => {
+    await axios.delete(`api/opcms/prescriptions/${pressId}`);
+    getPatientPrescription();
+  };
 
   return (
     <div>
       <Typography variant="h4">{patient && patient.name}</Typography>
-      <Typography variant="body1">Age: {calculateAge(patient.dob)}</Typography>
+      {/*<Typography variant="body1">Age: {calculateAge(patient.dob)}</Typography> */}
+      <Button onClick={handleClickOpen}>Add Prescription</Button>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -77,13 +94,26 @@ const PatientProfile = () => {
                   <TableCell>{prescription.status}</TableCell>
                   <TableCell>
                     <Button>Edit</Button>
-                    <Button>Delete</Button>
+                    <Button
+                      onClick={() => {
+                        deletePatientPrescription(prescription.id);
+                      }}
+                    >
+                      Delete
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
           </TableBody>
         </Table>
       </TableContainer>
+      <CreatePrescriptionForm
+        open={open}
+        handleClose={handleClose}
+        PatientId={id}
+        OPDAppointmentId={appId}
+        getPatientPrescription={getPatientPrescription}
+      />
     </div>
   );
 };

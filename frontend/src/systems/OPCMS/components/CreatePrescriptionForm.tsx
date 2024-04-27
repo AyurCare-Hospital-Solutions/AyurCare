@@ -1,20 +1,45 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { Typography, TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import React, { useState } from "react";
+import axios from "axios";
+import {
+  Typography,
+  TextField,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from "@mui/material";
 
 interface Props {
   open: boolean;
   handleClose: () => void;
+  PatientId: any;
+  OPDAppointmentId: any;
+  getPatientPrescription: () => any;
 }
 
-const CreatePrescriptionForm: React.FC<Props> = ({ open, handleClose }) => {
-  const [diagnosis, setDiagnosis] = useState<string>('');
-  const [note, setNote] = useState<string>('');
+const CreatePrescriptionForm: React.FC<Props> = ({
+  open,
+  handleClose,
+  PatientId,
+  OPDAppointmentId,
+  getPatientPrescription,
+}) => {
+  const [diagnosis, setDiagnosis] = useState<string | null>("");
+  const [note, setNote] = useState<string | null>("");
 
   const handleSubmit = async () => {
     try {
-      await axios.post('/api/prescriptions', { diagnosis, note });
+      await axios.post(`/api/opcms/patients/${PatientId}/prescriptions`, {
+        diagnosis,
+        note,
+        OPDAppointmentId,
+        PatientId,
+      });
       handleClose();
+      setDiagnosis(null);
+      setNote(null);
+      getPatientPrescription();
     } catch (error) {
       console.error(error);
     }
@@ -23,6 +48,7 @@ const CreatePrescriptionForm: React.FC<Props> = ({ open, handleClose }) => {
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>Create Prescription</DialogTitle>
+      <Typography>Patient ID : {PatientId}</Typography>
       <DialogContent>
         <Typography variant="subtitle1">Diagnosis</Typography>
         <TextField

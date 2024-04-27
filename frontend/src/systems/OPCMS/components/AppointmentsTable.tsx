@@ -29,11 +29,11 @@ const AppointmentsTable: React.FC = () => {
     axios
       .get<Appointment[]>("/api/opcms/opdAppointments")
       .then((res) => {
+        console.log(res.data);
         setAppointments(res.data);
       })
       .catch((err) => console.error(err));
   }, []);
-  
 
   return (
     <TableContainer component={Paper}>
@@ -51,7 +51,13 @@ const AppointmentsTable: React.FC = () => {
               <TableCell>{appointment.Patient.name}</TableCell>
               <TableCell>{appointment.status}</TableCell>
               <TableCell>
-                <Button onClick={() => navigate(`./profile/${appointment.Patient.id}/prescriptions`)}>
+                <Button
+                  onClick={() =>
+                    navigate(
+                      `./profile/${appointment.Patient.id}/prescriptions/${appointment.id}`
+                    )
+                  }
+                >
                   View Profile
                 </Button>
               </TableCell>
