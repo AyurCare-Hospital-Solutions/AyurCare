@@ -21,7 +21,7 @@ const LeaveRequest = sequelize.define("LeaveRequests", {
     },
   },
   hours: {
-    type: DataTypes.REAL, // possible to add decimals
+    type: DataTypes.REAL, 
   },
   status: {
     type: DataTypes.STRING,
