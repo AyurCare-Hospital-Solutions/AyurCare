@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   Table,
@@ -20,12 +21,9 @@ interface Appointment {
   status: string;
 }
 
-interface Props {
-  onProfileClick: (patientId: number) => void;
-}
-
-const AppointmentsTable = ({ onProfileClick }:Props) => {
+const AppointmentsTable: React.FC = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const navigate = useNavigate(); // Get the history object from useHistory hook
 
   useEffect(() => {
     axios
@@ -53,7 +51,7 @@ const AppointmentsTable = ({ onProfileClick }:Props) => {
               <TableCell>{appointment.Patient.name}</TableCell>
               <TableCell>{appointment.status}</TableCell>
               <TableCell>
-                <Button onClick={() => onProfileClick(appointment.Patient.id)}>
+                <Button onClick={() => navigate(`./profile/${appointment.Patient.id}/prescriptions`)}>
                   View Profile
                 </Button>
               </TableCell>

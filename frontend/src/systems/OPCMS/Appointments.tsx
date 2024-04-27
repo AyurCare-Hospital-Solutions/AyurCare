@@ -6,7 +6,7 @@ const Appointments = () => {
     return (
         <div>
             <h1>Appointments</h1>
-            <AppointmentsTable onProfileClick={(patientId) => console.log(patientId)} />
+            <AppointmentsTable />
         </div>
     );
 }
