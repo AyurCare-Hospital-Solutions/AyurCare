@@ -1,14 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const patientAssessmentService = require('../systems/OPCMS/patient_assessment');
+const appointmentsService = require('../systems/OPCMS/appointments');
 
-// Patient Assessment
-router.get('/patientAssessment', patientAssessmentService.getPatientAssessments);
-router.post('/patientAssessment/addPatientAssessment', patientAssessmentService.addPatientAssessment);
-router.put('/patientAssessment/updatePatientAssessment/:id', patientAssessmentService.updatePatientAssessment);
-router.delete('/patientAssessment/deletePatientAssessment/:id', patientAssessmentService.deletePatientAssessment);
-
-//
+// Appointments
+router.get('/opdAppointments', appointmentsService.getAllOPDAppointments);
+router.put('/opdAppointments/:id', appointmentsService.updateOPDAppointment);
 
 module.exports = router;
