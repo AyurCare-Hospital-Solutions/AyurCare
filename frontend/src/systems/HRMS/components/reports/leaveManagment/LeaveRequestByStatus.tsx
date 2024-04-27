@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { BarChart, PieChart } from "@mui/x-charts";
 import { Box, Typography } from "@mui/material";
+import { BarChart, PieChart } from "@mui/x-charts";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-const LeaveRequestByType = () => {
-  const [typeCount, setTypeCount] = useState([]);
+const LeaveRequestByStatus = () => {
+  const [leaveCount, setLeaveCount] = useState([]);
 
   useEffect(() => {
     getReportData();
@@ -13,8 +13,7 @@ const LeaveRequestByType = () => {
   const getReportData = async () => {
     try {
       const response = await axios.get("/api/hrms/reports");
-      console.log(response.data.allLeaves);
-      setTypeCount(response.data.leaveCountById);
+      setLeaveCount(response.data.leaveCountByStatus);
     } catch (error) {
       console.error("Error fetching leave requests:", error);
     }
@@ -23,7 +22,7 @@ const LeaveRequestByType = () => {
   return (
     <>
       <Typography variant="h6" sx={{ mb: 4 }}>
-        Leave Request Amount by Leave Type
+        Leave Request Amount w.r.t. Status
       </Typography>
       <Box
         sx={{
@@ -41,24 +40,24 @@ const LeaveRequestByType = () => {
           <PieChart
             series={[
               {
-                data: typeCount,
+                data: leaveCount,
               },
             ]}
           />
         </Box>
         <Box sx={{ width: "50%", height: "45vh", m: 2 }}>
           <BarChart
-            colors={["#FF9515"]}
+            colors={["#C9190B"]}
             xAxis={[
               {
                 scaleType: "band",
                 dataKey: "label",
-                label: "Measurement unit",
+                label: "Leave Status Categories",
               },
             ]}
-            yAxis={[{ label: "Count" }]}
-            dataset={typeCount}
-            series={[{ dataKey: "value", label: "Unit Leave Type" }]}
+            yAxis={[{ label: "Leave Count" }]}
+            dataset={leaveCount}
+            series={[{ dataKey: "value", label: "Leave Status" }]}
           />
         </Box>
       </Box>
@@ -66,4 +65,4 @@ const LeaveRequestByType = () => {
   );
 };
 
-export default LeaveRequestByType;
+export default LeaveRequestByStatus;

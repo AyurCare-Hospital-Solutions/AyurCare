@@ -12,7 +12,8 @@ const { QueryTypes } = require("sequelize");
 const generateReportData = async (req, res) => {
   const leaveCountById = await fetchLeaveCountByType();
   const allLeaves = await fetchAllLeaveReqs();
-  res.status(200).json({ leaveCountById, allLeaves });
+  const leaveCountByStatus = await fetchLeaveCountByStatus();
+  res.status(200).json({ leaveCountById, allLeaves, leaveCountByStatus });
 };
 
 const fetchLeaveCountByType = async () => {
@@ -27,6 +28,14 @@ const fetchLeaveCountByType = async () => {
 
 const fetchAllLeaveReqs = async () => {
   const leaveRequests = await LeaveRequest.findAll();
+  return leaveRequests;
+};
+
+const fetchLeaveCountByStatus = async () => {
+  const leaveRequests = await sequelize.query(
+    `SELECT status AS label, COUNT(*) AS value FROM LeaveRequests GROUP BY status;`,
+    { type: QueryTypes.SELECT }
+  );
   return leaveRequests;
 };
 
