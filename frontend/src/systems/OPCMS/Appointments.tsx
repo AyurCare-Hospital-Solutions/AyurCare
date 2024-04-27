@@ -1,10 +1,10 @@
-import React from 'react';
+import AppointmentsTable from './components/AppointmentsTable';
 
 const Appointments = () => {
     return (
         <div>
             <h1>Appointments</h1>
-            {/* Add your appointment-related components and logic here */}
+            <AppointmentsTable onProfileClick={(patientId) => console.log(patientId)} />
         </div>
     );
 }

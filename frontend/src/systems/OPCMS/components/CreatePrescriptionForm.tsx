@@ -2,9 +2,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Typography, TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 
-const CreatePrescriptionForm = ({ open, handleClose }) => {
-  const [diagnosis, setDiagnosis] = useState('');
-  const [note, setNote] = useState('');
+interface Props {
+  open: boolean;
+  handleClose: () => void;
+}
+
+const CreatePrescriptionForm: React.FC<Props> = ({ open, handleClose }) => {
+  const [diagnosis, setDiagnosis] = useState<string>('');
+  const [note, setNote] = useState<string>('');
 
   const handleSubmit = async () => {
     try {

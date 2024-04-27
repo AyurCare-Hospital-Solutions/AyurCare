@@ -1,5 +1,4 @@
 import { RouteObject } from "react-router-dom";
-import Assessment from "./Assessment";
 import OPCMS from "./OPCMS";
 import Dashboard from "./Dashboard";
 import Appointments from "./Appointments";
@@ -14,10 +13,6 @@ const routes: { name: string; root: React.ReactNode; routes: RouteObject[] } = {
     {
       index: true,
       element: <Dashboard />,
-    },
-    {
-      path: "assessment",
-      element: <Assessment />,
     },
     {
       path: "appointments",

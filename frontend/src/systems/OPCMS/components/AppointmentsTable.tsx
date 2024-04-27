@@ -2,11 +2,24 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
 
-const AppointmentsTable = ({ onProfileClick }) => {
-  const [appointments, setAppointments] = useState([]);
+interface Appointment {
+  id: number;
+  patient: {
+    id: number;
+    name: string;
+  };
+  status: string;
+}
+
+interface Props {
+  onProfileClick: (patientId: number) => void;
+}
+
+const AppointmentsTable: React.FC<Props> = ({ onProfileClick }) => {
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
 
   useEffect(() => {
-    axios.get('/api/opdAppointments')
+    axios.get<Appointment[]>('/api/opdAppointments')
       .then(res => {
         setAppointments(res.data);
       })
