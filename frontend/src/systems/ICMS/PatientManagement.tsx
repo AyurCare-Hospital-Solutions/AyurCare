@@ -4,7 +4,7 @@ import { Admission, AdmissionListSchema } from './types';
 import { Box, FormControlLabel, Switch, Typography } from '@mui/material';
 import SearchInput from './components/SearchInput';
 import PatientTable from './components/PatientTable';
-import ReportPage from '../../components/ReportPage';
+import ReportGenerator from '../../components/ReportGenerator';
 
 
 
@@ -37,9 +37,9 @@ const PatientList = () => {
                 <Switch value={admittedOnly} onChange={(_, v) => setAdmittedOnly(!v)} />
             } label="Show Discharged patients" labelPlacement="end" />
         </Box>
-        <ReportPage title="Patient List" filename='PatientList.pdf'>
+        <ReportGenerator title="Patient List" filename='PatientList.pdf'>
             <PatientTable loading={loading} data={data} search={search} print={true} />
-        </ReportPage>
+        </ReportGenerator>
         <PatientTable loading={loading} data={data} search={search} />
     </>
 

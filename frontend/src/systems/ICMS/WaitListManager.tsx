@@ -6,7 +6,7 @@ import WaitListDialog from "./components/WaitListDialog";
 import { enqueueSnackbar } from "notistack";
 import { Box, Typography } from "@mui/material";
 import SearchInput from "./components/SearchInput";
-import ReportPage from "../../components/ReportPage";
+import ReportGenerator from "../../components/ReportGenerator";
 
 const WaitListManager = () => {
     const [waitList, setWaitList] = useState<WaitList[]>([]);
@@ -67,9 +67,9 @@ const WaitListManager = () => {
         <Box sx={{ display: "flex" }} my={4} mx={2}>
             <SearchInput onChange={(s) => setSearch(s)} />
         </Box>
-        <ReportPage title="Wait List" filename="WaitList.pdf">
+        <ReportGenerator title="Wait List" filename="WaitList.pdf">
             <WaitListTable data={waitList} loading={loading} onSelect={handleSelect} print search={search} />
-        </ReportPage>
+        </ReportGenerator>
         <WaitListTable data={waitList} loading={loading} onSelect={handleSelect} search={search} />
         <WaitListDialog open={modelOpen} row={selected} wards={wards} onAdmit={handleAdmit} onClose={() => setModalOpen(false)} />
     </>
