@@ -12,7 +12,7 @@ router.put("/opdAppointments/:id", appointmentsService.updateOPDAppointment);
 router.post("/patients/:id/prescriptions",prescriptionsService.createPrescription);
 router.get("/prescriptions", prescriptionsService.getAllPrescriptions);
 router.get("/prescriptions/:id", prescriptionsService.getPrescriptionById);
-router.put("/prescriptions/:id", prescriptionsService.updatePrescription);
+router.put("/patients/:id/prescriptions", prescriptionsService.updatePrescription);
 router.delete("/prescriptions/:id", prescriptionsService.deletePrescription);
 router.get("/patientPrescriptions/:id",prescriptionsService.getPrescriptionByPatientId);
 

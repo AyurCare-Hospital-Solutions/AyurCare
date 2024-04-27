@@ -13,7 +13,7 @@ const Prescription = sequelize.define("Prescriptions", {
         type: DataTypes.ENUM,
         values: ["pending", "approved", "rejected"]
     }
-}, { paranoid: true });
+}, { paranoid: false });
 
 const PrescriptionConditions = sequelize.define('PrescriptionConditions', {}, { timestamps: false });
 

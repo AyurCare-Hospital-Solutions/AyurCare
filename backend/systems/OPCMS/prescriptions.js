@@ -87,6 +87,13 @@ const deletePrescription = async (req, res) => {
 
 const getPrescriptionByPatientId = async (req, res) => {
   const id = req.params.id;
+
+  const patient = await Patient.findByPk(id);
+
+  if(patient === null){
+    return res.status(404).json({ error: "Patient not found" });
+  }
+
   try {
     const prescription = await Prescription.findAll({
       where:{
@@ -97,7 +104,8 @@ const getPrescriptionByPatientId = async (req, res) => {
       return res.status(404).json({ error: "Prescription not found" });
     }
     console.log(prescription);
-    res.status(200).json(prescription);
+    console.log(prescription);
+    res.status(200).json({prescription, patient});
   } catch (error) {
     res
       .status(500)

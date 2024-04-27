@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import CreatePrescriptionForm from "./CreatePrescriptionForm";
+import EditPatientPrescription from "./EditPatientPrescription";
 
 interface Patient {
   id: number;
@@ -35,12 +36,15 @@ const PatientProfile = () => {
   const [prescriptions, setPrescriptions] = useState<Prescription | null>(null);
   const { id, appId } = useParams();
 
+
+  // Get Patient Prescription
   const getPatientPrescription = () => {
     axios
       .get(`api/opcms/patientPrescriptions/${id}`)
       .then((res) => {
         console.log(res.data);
-        setPrescriptions(res.data);
+        setPrescriptions(res.data.prescription);
+        setPatient(res.data.patient);
       })
       .catch((err) => console.error(err));
   };
@@ -49,29 +53,45 @@ const PatientProfile = () => {
     getPatientPrescription();
   }, []);
 
-  //if (!patient) return null;
 
-  // add prescription modal
+  // Add prescription modal
   const [open, setOpen] = useState(false);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
-  
+
   // Delete Patient Prescription
   const deletePatientPrescription = async (pressId: number) => {
     await axios.delete(`api/opcms/prescriptions/${pressId}`);
     getPatientPrescription();
   };
 
+
+  // Edit Patient Prescription
+  const [initialPresData, setInitialPresData] = useState<Prescription | null>(
+    null
+  );
+
+  const [editOpen, setEditOpen] = useState(false);
+
+  const editHandleClickOpen = () => {
+    setEditOpen(true);
+  };
+
+  const editHandleClose = () => {
+    setEditOpen(false);
+  };
+
   return (
     <div>
-      <Typography variant="h4">{patient && patient.name}</Typography>
-      {/*<Typography variant="body1">Age: {calculateAge(patient.dob)}</Typography> */}
+      <Typography variant="h4">{patient?.name}</Typography>
+      <Typography variant="h6">Patient ID: {id}</Typography>
+      <Typography variant="h6">
+      Age: {calculateAge(patient?.dob || '')} years
+      </Typography>
       <Button onClick={handleClickOpen}>Add Prescription</Button>
       <TableContainer component={Paper}>
         <Table>
@@ -93,7 +113,14 @@ const PatientProfile = () => {
                   <TableCell>{prescription.dispensed_date}</TableCell>
                   <TableCell>{prescription.status}</TableCell>
                   <TableCell>
-                    <Button>Edit</Button>
+                    <Button
+                      onClick={() => {
+                        setInitialPresData(prescription);
+                        editHandleClickOpen();
+                      }}
+                    >
+                      Edit
+                    </Button>
                     <Button
                       onClick={() => {
                         deletePatientPrescription(prescription.id);
@@ -114,10 +141,18 @@ const PatientProfile = () => {
         OPDAppointmentId={appId}
         getPatientPrescription={getPatientPrescription}
       />
+      <EditPatientPrescription
+        open={editOpen}
+        handleClose={editHandleClose}
+        initialData={initialPresData}
+        getPatientPrescription={getPatientPrescription}
+      />
     </div>
   );
 };
 
+
+// Calculate age from date of birth
 function calculateAge(dob: string | number | Date) {
   const today = new Date();
   const birthDate = new Date(dob);
