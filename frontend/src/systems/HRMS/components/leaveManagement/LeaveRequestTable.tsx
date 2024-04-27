@@ -41,11 +41,11 @@ const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - leaveRequests.length) : 0;
 
+  const [rows, setRows] = useState([]);
   const handleAccept = async (index: number) => {
     try {
       const leaveRequest = leaveRequests[index];
-
-      const response = await axios.put(`/api/hrms/leave/${leaveRequest.id}`, {
+      const requestData = {
         id: leaveRequest.id,
         status: "Approved",
         startDate: leaveRequest.start_date,
@@ -54,8 +54,14 @@ const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({
         hours: leaveRequest.hours,
         registration: leaveRequest.registration,
         reason: leaveRequest.reason,
-      });
+      };
 
+      console.log(requestData);
+
+      const response = await axios.put(
+        `/api/hrms/leave/${leaveRequest.id}`,
+        requestData
+      );
       if (response.status === 200) {
         leaveRequest.status = "Approved";
 
@@ -70,6 +76,7 @@ const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({
     try {
       const leaveRequest = leaveRequests[index];
       const requestData = {
+        id: leaveRequest.id,
         status: "Approved",
         startDate: leaveRequest.start_date,
         endDate: leaveRequest.end_date,
@@ -113,6 +120,7 @@ const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({
           <TableRow>
             <TableCell align="center">Staff ID</TableCell>
             <TableCell align="center">Staff Name</TableCell>
+            <TableCell align="center">Reason</TableCell>
             <TableCell align="center">Leave Type</TableCell>
             <TableCell align="center">Start Date</TableCell>
             <TableCell align="center">End Date</TableCell>
@@ -133,6 +141,7 @@ const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({
             <TableRow key={index}>
               <TableCell align="center">{row.id}</TableCell>
               <TableCell align="center">{row.Staff?.name}</TableCell>
+              <TableCell align="center">{row.reason}</TableCell>
               <TableCell align="center">{row.LeaveType?.name}</TableCell>
               <TableCell align="center">{row.start_date}</TableCell>
               <TableCell align="center">{row.end_date}</TableCell>
