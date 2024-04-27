@@ -4,8 +4,9 @@ import { Bed, WaitList, WaitListArraySchema, Ward, WardArraySchema } from "./typ
 import WaitListTable from "./components/WaitListTable";
 import WaitListDialog from "./components/WaitListDialog";
 import { enqueueSnackbar } from "notistack";
-import { Typography } from "@mui/material";
-
+import { Box, Typography } from "@mui/material";
+import SearchInput from "./components/SearchInput";
+import ReportPage from "../../components/ReportPage";
 
 const WaitListManager = () => {
     const [waitList, setWaitList] = useState<WaitList[]>([]);
@@ -13,6 +14,8 @@ const WaitListManager = () => {
     const [loading, setLoading] = useState(true);
     const [modelOpen, setModalOpen] = useState(false);
     const [selected, setSelected] = useState<WaitList>();
+
+    const [search, setSearch] = useState<RegExp>();
 
     useEffect(() => {
         axios.get("/api/icms/waitlist").then((res) => {
@@ -61,7 +64,13 @@ const WaitListManager = () => {
 
     return <>
         <Typography variant="h5" mx={1} my={2}>Waiting List</Typography>
-        <WaitListTable data={waitList} loading={loading} onSelect={handleSelect} />
+        <Box sx={{ display: "flex" }} my={4} mx={2}>
+            <SearchInput onChange={(s) => setSearch(s)} />
+        </Box>
+        <ReportPage title="Wait List" filename="WaitList.pdf">
+            <WaitListTable data={waitList} loading={loading} onSelect={handleSelect} print search={search} />
+        </ReportPage>
+        <WaitListTable data={waitList} loading={loading} onSelect={handleSelect} search={search} />
         <WaitListDialog open={modelOpen} row={selected} wards={wards} onAdmit={handleAdmit} onClose={() => setModalOpen(false)} />
     </>
 }

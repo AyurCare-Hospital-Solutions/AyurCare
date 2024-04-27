@@ -1,15 +1,13 @@
-import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody, TablePagination, Tooltip, Box } from "@mui/material";
+import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody, TablePagination, Tooltip } from "@mui/material";
 import TableLoader from "../../../components/TableLoader";
 import { WaitList } from "../types";
 import { useState, ChangeEvent, useMemo } from "react";
 import { Launch } from "@mui/icons-material";
-import SearchInput from "./SearchInput";
 
 
-const WaitListTable = ({ data, onSelect, loading }: { data: WaitList[], onSelect: (l: WaitList) => void, loading: boolean }) => {
+const WaitListTable = ({ data, onSelect, loading, search, print }: { data: WaitList[], onSelect: (l: WaitList) => void, search?: RegExp, loading: boolean, print?: boolean }) => {
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [search, setSearch] = useState<RegExp>();
+    const [rowsPerPage, setRowsPerPage] = useState(print ? -1 : 10);
 
     const rows = useMemo(() => {
         if (search) {
@@ -35,10 +33,7 @@ const WaitListTable = ({ data, onSelect, loading }: { data: WaitList[], onSelect
 
 
     return <>
-        <Box sx={{ display: "flex" }} my={4} mx={2}>
-            <SearchInput onChange={(s) => setSearch(s)} />
-        </Box>
-        <TableContainer component={Paper} >
+        <TableContainer component={Paper}>
             <Table >
                 <TableHead>
                     <TableRow>
@@ -59,7 +54,7 @@ const WaitListTable = ({ data, onSelect, loading }: { data: WaitList[], onSelect
                                     <TableCell>{v.Patient.name}</TableCell>
                                     <TableCell>{v.reason}</TableCell>
                                     <TableCell sx={{ pr: 0, maxWidth: "32px" }}>{v.is_priority ? "Yes" : "No"}</TableCell>
-                                    <TableCell sx={{ maxWidth: "32px", pl: 0 }}>
+                                    <TableCell sx={{ maxWidth: "32px", pl: 0, display: print ? "none" : "" }}>
                                         <Tooltip title="View Patient Details">
                                             <Launch sx={{ fontSize: "1.24em" }} />
                                         </Tooltip>
@@ -81,6 +76,7 @@ const WaitListTable = ({ data, onSelect, loading }: { data: WaitList[], onSelect
                 </TableBody>
             </Table>
             <TablePagination
+                sx={{ display: print ? "none" : "" }}
                 rowsPerPageOptions={[10, 25, 100]}
                 component="div"
                 count={rows.length}
