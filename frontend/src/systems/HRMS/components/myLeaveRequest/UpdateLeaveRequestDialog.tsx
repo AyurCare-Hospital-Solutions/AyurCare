@@ -1,4 +1,3 @@
-import * as React from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -15,8 +14,8 @@ import {
   Switch,
 } from "@mui/material";
 import dayjs from "dayjs";
-import axios from "axios";
 import { LeaveTypeData } from "../../types";
+import { FormEvent, useEffect, useState } from "react";
 
 export default function UpdateLeaveRequestDialog({
   open,
@@ -28,25 +27,22 @@ export default function UpdateLeaveRequestDialog({
   open: boolean;
   onClose: () => void;
   leaveTypes: LeaveTypeData[];
-  updateRequest: (id: number, v: any) => void,
+  updateRequest: (id: number, v: any) => void;
   leaveRequestData: any; // Data of the leave request being updated
 }) {
-  const [isFullDay, setIsFullDay] = React.useState(true);
-  const [isMultipleDays, setIsMultipleDays] = React.useState(false);
-  const [availableLeaves, setAvailableLeaves] = React.useState<number>(0);
-  const [updateLeaveRequestData, setUpdateLeaveRequestData] =
-    React.useState<any>({
-      LeaveType: null,
-      reason: "",
-      start_date: null,
-      end_date: null,
-      hours: ""
-    });
+  const [isFullDay, setIsFullDay] = useState(true);
+  const [isMultipleDays, setIsMultipleDays] = useState(false);
+  const [availableLeaves, setAvailableLeaves] = useState<number>(0);
+  const [updateLeaveRequestData, setUpdateLeaveRequestData] = useState<any>({
+    LeaveType: null,
+    reason: "",
+    start_date: null,
+    end_date: null,
+    hours: "",
+  });
 
-
-  React.useEffect(() => {
+  useEffect(() => {
     if (!leaveRequestData) {
-
       return;
     }
 
@@ -54,16 +50,18 @@ export default function UpdateLeaveRequestDialog({
       return;
     }
 
-    let newLeaveType = leaveTypes.find((v) => v.id == leaveRequestData.LeaveType.id);
+    let newLeaveType = leaveTypes.find(
+      (v) => v.id == leaveRequestData.LeaveType.id
+    );
     if (!newLeaveType) {
-      throw "Leave type not valid"
+      throw "Leave type not valid";
     }
 
     leaveRequestData.LeaveType = newLeaveType;
 
     if (leaveRequestData.registration == "Multiple Day") {
       setIsMultipleDays(true);
-      setIsFullDay(true)
+      setIsFullDay(true);
     } else if (leaveRequestData.registration == "Full Day") {
       setIsFullDay(true);
       setIsMultipleDays(false);
@@ -73,11 +71,9 @@ export default function UpdateLeaveRequestDialog({
     }
 
     setUpdateLeaveRequestData(leaveRequestData);
-
   }, [leaveRequestData]);
 
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = {
       type: updateLeaveRequestData.LeaveType.id,
@@ -102,9 +98,8 @@ export default function UpdateLeaveRequestDialog({
     }
   };
 
-
   return (
-    <React.Fragment>
+    <>
       <Dialog
         open={open}
         onClose={onClose}
@@ -130,7 +125,7 @@ export default function UpdateLeaveRequestDialog({
               setUpdateLeaveRequestData({
                 ...updateLeaveRequestData,
                 reason: e.target.value,
-              })
+              });
             }}
             value={updateLeaveRequestData?.reason}
           />
@@ -180,7 +175,7 @@ export default function UpdateLeaveRequestDialog({
                 <Autocomplete
                   options={leaveTypes}
                   value={updateLeaveRequestData?.LeaveType || null}
-                  getOptionLabel={v => v.name ?? ""}
+                  getOptionLabel={(v) => v.name ?? ""}
                   isOptionEqualToValue={(a, b) => a.id == b.id}
                   onChange={(_, lt) =>
                     setUpdateLeaveRequestData({
@@ -188,7 +183,9 @@ export default function UpdateLeaveRequestDialog({
                       LeaveType: lt,
                     })
                   }
-                  renderInput={(params) => <TextField {...params} label="Type" />}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Type" />
+                  )}
                 />
               </FormControl>
             </Box>
@@ -217,19 +214,23 @@ export default function UpdateLeaveRequestDialog({
             <DatePicker
               label={isMultipleDays ? "Start Date" : "Date"}
               value={dayjs(updateLeaveRequestData?.start_date)}
-              onChange={v => setUpdateLeaveRequestData({
-                ...updateLeaveRequestData,
-                start_date: v
-              })}
+              onChange={(v) =>
+                setUpdateLeaveRequestData({
+                  ...updateLeaveRequestData,
+                  start_date: v,
+                })
+              }
             />
             {isMultipleDays && (
               <DatePicker
                 label="End Date"
                 value={dayjs(updateLeaveRequestData?.end_date)}
-                onChange={v => setUpdateLeaveRequestData({
-                  ...updateLeaveRequestData,
-                  end_date: v
-                })}
+                onChange={(v) =>
+                  setUpdateLeaveRequestData({
+                    ...updateLeaveRequestData,
+                    end_date: v,
+                  })
+                }
               />
             )}
           </Box>
@@ -246,8 +247,8 @@ export default function UpdateLeaveRequestDialog({
               onChange={(e) => {
                 setUpdateLeaveRequestData({
                   ...updateLeaveRequestData,
-                  hours: e.target.value
-                })
+                  hours: e.target.value,
+                });
               }}
               value={updateLeaveRequestData?.hours || ""}
             />
@@ -258,6 +259,6 @@ export default function UpdateLeaveRequestDialog({
           <Button type="submit">Update Leave</Button>
         </DialogActions>
       </Dialog>
-    </React.Fragment>
+    </>
   );
 }
