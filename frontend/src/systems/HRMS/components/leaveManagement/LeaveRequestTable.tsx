@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Table,
@@ -17,6 +17,8 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { LeaveRequestData } from "../../types";
+import axios from "axios";
+import { enqueueSnackbar } from "notistack";
 
 interface LeaveRequestTableProps {
   leaveRequests: LeaveRequestData[];
@@ -26,10 +28,6 @@ interface LeaveRequestTableProps {
   ) => void;
   page: number;
   rowsPerPage: number;
-  handleAccept: (index: number) => void;
-  handleReject: (index: number) => void;
-  handleEdit?: (index: number) => void;
-  handleDelete?: (index: number) => void;
   pendingView: boolean;
 }
 
@@ -38,14 +36,75 @@ const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({
   onPageChange,
   page,
   rowsPerPage,
-  handleAccept,
-  handleReject,
-  handleEdit,
-  handleDelete,
   pendingView,
 }) => {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - leaveRequests.length) : 0;
+
+  const handleAccept = async (index: number) => {
+    try {
+      const leaveRequest = leaveRequests[index];
+
+      const response = await axios.put(`/api/hrms/leave/${leaveRequest.id}`, {
+        id: leaveRequest.id,
+        status: "Approved",
+        startDate: leaveRequest.start_date,
+        endDate: leaveRequest.end_date,
+        type: leaveRequest.LeaveType.id,
+        hours: leaveRequest.hours,
+        registration: leaveRequest.registration,
+        reason: leaveRequest.reason,
+      });
+
+      if (response.status === 200) {
+        leaveRequest.status = "Approved";
+
+        enqueueSnackbar("Leave request approved", { variant: "success" });
+      }
+    } catch (error) {
+      enqueueSnackbar("Error approving leave request", { variant: "error" });
+    }
+  };
+
+  const handleReject = async (index: number) => {
+    try {
+      const leaveRequest = leaveRequests[index];
+      const requestData = {
+        status: "Approved",
+        startDate: leaveRequest.start_date,
+        endDate: leaveRequest.end_date,
+        type: leaveRequest.LeaveType.id,
+        hours: leaveRequest.hours,
+        registration: leaveRequest.registration,
+        reason: leaveRequest.reason,
+      };
+
+      const response = await axios.put(
+        `/api/hrms/leave/${leaveRequest.id}`,
+        requestData
+      );
+      if (response.status === 200) {
+        leaveRequest.status = "Approved";
+
+        enqueueSnackbar("Leave request approved", { variant: "success" });
+      }
+    } catch (error) {
+      enqueueSnackbar("Error approving leave request", { variant: "error" });
+    }
+  };
+
+  const handleDelete = async (index: number) => {
+    try {
+      const leaveRequest = leaveRequests[index];
+      const response = await axios.delete(`/api/hrms/leave/${leaveRequest.id}`);
+      if (response.status === 200) {
+        leaveRequests.splice(index, 1);
+        enqueueSnackbar("Leave request deleted", { variant: "success" });
+      }
+    } catch (error) {
+      enqueueSnackbar("Error deleting leave request", { variant: "error" });
+    }
+  };
 
   return (
     <TableContainer component={Paper}>

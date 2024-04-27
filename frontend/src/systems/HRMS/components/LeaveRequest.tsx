@@ -64,8 +64,6 @@ const LeaveRequest: React.FC = () => {
             onPageChange={handleChangePage}
             page={page}
             rowsPerPage={rowsPerPage}
-            handleAccept={() => {}}
-            handleReject={() => {}}
             pendingView={tabValue === 0}
           />
         </Box>

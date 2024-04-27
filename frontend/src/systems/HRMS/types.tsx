@@ -26,4 +26,5 @@ export interface LeaveRequestData {
   end_date: string;
   hours: string;
   status: string;
+  reason: string; //
 }
