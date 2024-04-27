@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { Box, Container, Divider, Stack, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { Box, Divider, Stack, Typography } from "@mui/material";
 import { PieChart } from "@mui/x-charts/PieChart";
-import {
-  LineChart,
-  lineElementClasses,
-  markElementClasses,
-} from "@mui/x-charts/LineChart";
 import axios from "axios";
-import { set } from "react-hook-form";
+import { Gauge, gaugeClasses } from "@mui/x-charts";
 
 interface Gender {
   id: number;
   value: number;
   label: string;
+}
+
+const settings = {
+  width: 200,
+  height: 200,
+};
+
+interface Count {
+  count: number;
 }
 
 function PatientGenderAnalysis() {
@@ -30,13 +34,13 @@ function PatientGenderAnalysis() {
     label: "",
   });
 
+  // set the total patient count
+  const [totalPatientCount, setTotalPatientCount] = useState<any>();
+
   // getting the data from the backend
   async function getGenderCount() {
     await axios.get("/api/prss/gender-count").then((res) => {
       const result = { ...res.data };
-      // console.log(result);
-      // console.log(result.malePatientCount);
-      // console.log(result.femalePatientCount);
 
       // set data
       setMaleCount({
@@ -52,8 +56,16 @@ function PatientGenderAnalysis() {
     });
   }
 
+  // get the new registrated patients count
+  async function getTheTotalPatientCount() {
+    await axios.get("/api/prss/get-patient-stat").then((res) => {
+      setTotalPatientCount({ ...res.data });
+    });
+  }
+
   useEffect(() => {
     getGenderCount();
+    getTheTotalPatientCount();
   }, []);
 
   const data = [{ ...maleCount }, { ...femaleCount }];
@@ -64,43 +76,60 @@ function PatientGenderAnalysis() {
         Patient Registration Sub System
       </Typography>
       <Divider />
-      <Stack direction='row' alignItems='center' spacing={2}>
-        <PieChart
-          series={[
-            {
-              data,
-              highlightScope: { faded: "global", highlighted: "item" },
-              faded: {
-                innerRadius: 30,
-                additionalRadius: -30,
-                color: "gray",
+      <Stack
+        direction='row'
+        alignItems='center'
+        spacing={2}
+        justifyContent='space-evenly'
+        p={4}
+      >
+        <Stack direction='column' alignItems='center' gap={3}>
+          <PieChart
+            series={[
+              {
+                data,
+                highlightScope: { faded: "global", highlighted: "item" },
+                faded: {
+                  innerRadius: 30,
+                  additionalRadius: -30,
+                  color: "gray",
+                },
               },
-            },
-          ]}
-          height={200}
-        />
-        <LineChart
-          xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
-          series={[
-            {
-              data: [2, 5.5, 2, 8.5, 1.5, 5],
-            },
-          ]}
-          sx={{
-            [`& .${lineElementClasses.root}`]: {
-              stroke: "#8884d8",
-              strokeWidth: 2,
-            },
-            [`& .${markElementClasses.root}`]: {
-              stroke: "#8884d8",
-              scale: "0.6",
-              fill: "#fff",
-              strokeWidth: 2,
-            },
-          }}
-          width={1000}
-          height={400}
-        />
+            ]}
+            height={200}
+          />
+          <Typography variant='h6' sx={{ alignSelf: "left" }} gutterBottom>
+            Pie chart: Total patient count analysis between genders
+          </Typography>
+        </Stack>
+
+        <Stack direction='column' alignItems='center'>
+          <Gauge
+            {...settings}
+            value={totalPatientCount?.todayCount}
+            valueMax={totalPatientCount?.totalCount}
+            startAngle={-120}
+            endAngle={120}
+            cornerRadius='50%'
+            sx={(theme) => ({
+              [`& .${gaugeClasses.valueText}`]: {
+                fontSize: 30,
+                fontFamily: theme.typography.fontFamily,
+                transform: "translate(0px, 0px)",
+              },
+              [`& .${gaugeClasses.valueArc}`]: {
+                fill: "#52b202",
+              },
+              [`& .${gaugeClasses.referenceArc}`]: {
+                fill: theme.palette.text.disabled,
+              },
+            })}
+            text={({ value, valueMax }) => `${value} / ${valueMax}`}
+          />
+          <Typography variant='h6' sx={{ alignSelf: "left" }} gutterBottom>
+            Line chart: Recent registrated patient precentage
+          </Typography>
+        </Stack>
       </Stack>
     </Box>
   );

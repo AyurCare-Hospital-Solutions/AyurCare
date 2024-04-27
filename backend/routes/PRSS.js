@@ -26,5 +26,6 @@ router.get("/today-appointments", Appointment.getpendingAppointment);
 
 // Analysis related APIs
 router.get("/gender-count", Analysis.getGenderCount);
+router.get("/get-patient-stat", Analysis.getNewPatientCount);
 
 module.exports = router;
