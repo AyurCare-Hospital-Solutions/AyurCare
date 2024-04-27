@@ -35,7 +35,7 @@ const AdmissionSchema = object({
     createdAt: date().required(),
     updatedAt: date().nullable().required(),
     Patient: PatientSchema.required(),
-    Bed: BedSchema,
+    Bed: BedSchema.nullable(),
 }).required();
 
 
