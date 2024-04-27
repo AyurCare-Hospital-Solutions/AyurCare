@@ -23,7 +23,6 @@ import {
   Tooltip,
 } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
-import { alignProperty } from "@mui/material/styles/cssUtils";
 import Appointment from "../../Appointment";
 import { useConfirm } from "material-ui-confirm";
 import axios from "axios";
@@ -143,8 +142,8 @@ function AppointmentTable({ appointments }: { appointments?: Appointment[] }) {
     id: index++,
     Aid: row.id,
     patientId: row.PatientId,
-    patientName: row.Patient.name,
-    tracking_no: row.Patient.tracking_no,
+    patientName: row.Patient?.name,
+    tracking_no: row.Patient?.tracking_no,
     status: row.status,
   }));
 
@@ -195,6 +194,16 @@ function AppointmentTable({ appointments }: { appointments?: Appointment[] }) {
         selectedRowData
       );
       enqueueSnackbar("Patient Updated Successfully", { variant: "success" });
+
+      const appointment = appointmentData.find(
+        (i: any) => i.id === selectedRowData.id
+      );
+
+      if (appointment) {
+        appointment.status = selectedRowData.status;
+      }
+
+      setAppointmentData([...appointmentData]);
 
       // Reset the form after successful submission
       setSelectedRowData({
@@ -306,7 +315,7 @@ function AppointmentTable({ appointments }: { appointments?: Appointment[] }) {
                     label='Patient Name'
                     variant='standard'
                     margin='normal'
-                    value={selectedRowData.Patient.name}
+                    value={selectedRowData.Patient?.name}
                   />
                   <TextField
                     fullWidth
@@ -317,7 +326,7 @@ function AppointmentTable({ appointments }: { appointments?: Appointment[] }) {
                     label='Tracking No'
                     variant='standard'
                     margin='normal'
-                    value={selectedRowData.Patient.tracking_no}
+                    value={selectedRowData.Patient?.tracking_no}
                   />
                   <Stack spacing={2} direction='row' alignSelf={"center"}>
                     <Button
