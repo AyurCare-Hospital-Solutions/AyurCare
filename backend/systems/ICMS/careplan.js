@@ -4,6 +4,14 @@ const IPDAdmission = require("../../model/IPDAdmission");
 const Patient = require("../../model/Patient");
 const Bed = require("../../model/Bed");
 const Ward = require("../../model/Ward");
+const yup = require("yup");
+const { getUserID } = require("../../middleware/auth");
+
+const careplanValidator = yup.object({
+    condition: yup.string().min(4).max(50).required(),
+    diagnosis: yup.string().min(4).max(50).required(),
+    treatmentPlan: yup.string().min(4).max(1000).required(),
+}).required().noUnknown();
 
 /**
  * 
@@ -11,12 +19,15 @@ const Ward = require("../../model/Ward");
  * @param {express.Response} res 
  */
 const getCarePlan = async (req, res) => {
-    let patientID = Number.parseInt(req.params.pid);
+    let admissionId = Number.parseInt(req.params.aid);
+
+    if (!Number.isInteger(admissionId)) {
+        res.status(400).json({ msg: "Invalid care plan id" })
+    }
 
     let admission = await IPDAdmission.findOne({
         where: {
-            patientID: patientID,
-            discharge_date: null,
+            id: admissionId
         },
         include: [{
             model: Patient,
@@ -29,7 +40,7 @@ const getCarePlan = async (req, res) => {
     });
 
     if (admission === null) {
-        res.status(404).json({ msg: "patient is not currently admitted" })
+        res.status(404).json({ msg: "admission not found" })
         return;
     }
 
@@ -42,4 +53,42 @@ const getCarePlan = async (req, res) => {
     res.status(200).json({ admission, carePlan })
 }
 
-module.exports = { getCarePlan }
+/**
+ * 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
+const createCarePlan = async (req, res) => {
+    const admissionID = Number.parseInt(req.params.aid);
+    if (!Number.isInteger(admissionID)) {
+        res.status(400).json({ msg: "Invalid admission number" });
+        return;
+    }
+
+    const admission = await IPDAdmission.findByPk(admissionID);
+    if (admission == null) {
+        res.status(404).json({ msg: "patient is not currently admitted" })
+        return;
+    }
+
+    try {
+        var data = await careplanValidator.validate(req.body)
+    } catch (e) {
+        res.status(400).send({ msg: e.errors[0] });
+        return;
+    }
+
+    const userId = getUserID(res)
+
+    let plan = await CarePlan.create({
+        condition: data.condition,
+        diagnosis: data.diagnosis,
+        treatmentPlan: data.treatmentPlan,
+        IPDAdmissionId: admission.id,
+        StaffId: userId,
+    });
+
+    res.status(200).json(plan);
+}
+
+module.exports = { getCarePlan, createCarePlan }

@@ -3,6 +3,7 @@ const IPDAdmission = require("../../model/IPDAdmission");
 const Patient = require("../../model/Patient");
 const Bed = require("../../model/Bed");
 const Ward = require("../../model/Ward");
+const { sequelize } = require("../../model");
 
 
 /**
@@ -10,9 +11,14 @@ const Ward = require("../../model/Ward");
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-const getAdmittedPatients = async (req, res) => {
+const getPatients = async (req, res) => {
+    let where = undefined;
+    if (req.query.admitted === "true") {
+        where = { discharge_date: null }
+    }
+
     res.status(200).json(await IPDAdmission.findAll({
-        where: { discharge_date: null },
+        where: where,
         include: [
             {
                 model: Patient,
@@ -40,7 +46,7 @@ const dischargePatient = async (req, res) => {
         return;
     }
 
-    let admission = await IPDAdmission.findByPk(admissionID);
+    let admission = await IPDAdmission.findByPk(admissionID, { include: Bed });
     if (!admission) {
         res.status(400).json({ msg: "Admission does not exist" });
         return;
@@ -51,11 +57,14 @@ const dischargePatient = async (req, res) => {
         return;
     }
 
-    admission.discharge_date = new Date();
+    await sequelize.transaction(async t => {
+        await admission.Bed.update({ IPDAdmissionId: null }, { transaction: t });
+        await admission.update({ discharge_date: new Date() }, { transaction: t });
+    })
 
-    await admission.save();
+
 
     res.status(204).json({ msg: "Patient discharged successfully" });
 }
 
-module.exports = { getAdmissions: getAdmittedPatients, dischargePatient }
+module.exports = { getPatients, dischargePatient }

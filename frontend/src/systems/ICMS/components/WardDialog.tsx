@@ -5,10 +5,10 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { FormEvent, useEffect, useState } from 'react';
-import { ward } from '../types';
+import { Ward } from '../types';
 
 
-export default ({ open, data, action, onClose, onSubmit }: { open: boolean, action: string, data?: ward, onClose: () => any, onSubmit: (name: string) => any }) => {
+export default ({ open, data, action, onClose, onSubmit }: { open: boolean, action: string, data?: Ward, onClose: () => any, onSubmit: (name: string) => any }) => {
 
     const [wardValue, setWardValue] = useState('')
     const [wardError, setWardError] = useState('');

@@ -20,6 +20,29 @@ const getWards = async (req, res) => {
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
+const getWard = async (req, res) => {
+    let id = Number.parseInt(req.params.id);
+
+    // check if ward number is valid
+    if (!Number.isInteger(id)) {
+        res.status(400).json({ msg: "Invalid ward number" });
+        return;
+    }
+    // get the ward with the given id
+    let ward = await Ward.findByPk(id);
+    if (ward === null) {
+        res.status(404).json({ msg: "The ward does not exist" })
+        return;
+    }
+
+    res.status(200).json(ward);
+}
+
+/**
+ * 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
 const createWard = async (req, res) => {
     try {
         var data = await wardValidator.validate(req.body);
@@ -90,4 +113,4 @@ const deleteWard = async (req, res) => {
     res.sendStatus(204);
 }
 
-module.exports = { createWard, getWards, renameWard, deleteWard }
+module.exports = { createWard, getWards, getWard, renameWard, deleteWard }
