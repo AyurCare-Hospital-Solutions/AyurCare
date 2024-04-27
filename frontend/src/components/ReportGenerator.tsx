@@ -3,7 +3,7 @@ import { Button, Typography } from "@mui/material";
 import { ReactElement, useEffect, useRef, useState } from "react";
 import generatePDF, { Margin } from "react-to-pdf";
 
-const ReportPage = ({ children, filename, title, visible }: { children: ReactElement | ReactElement[], visible?: boolean, filename: string, title: string }) => {
+const ReportGenerator = ({ children, filename, title, visible }: { children: ReactElement | ReactElement[], visible?: boolean, filename: string, title: string }) => {
     const [isPrint, setIsPrinting] = useState(false);
 
     useEffect(() => {
@@ -24,4 +24,4 @@ const ReportPage = ({ children, filename, title, visible }: { children: ReactEle
 };
 
 
-export default ReportPage;
+export default ReportGenerator;
