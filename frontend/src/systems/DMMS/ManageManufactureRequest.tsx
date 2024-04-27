@@ -12,21 +12,28 @@ import MedicineRequestModal from './ManuReqCom/ManufactureRequestModal';
 import SearchBar from './SearchBar';
 import { useConfirm } from 'material-ui-confirm';
 import { enqueueSnackbar } from 'notistack';
-import { Box, Typography } from '@mui/material';
+import { Box, Tooltip, Typography } from '@mui/material';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import { usePDF } from 'react-to-pdf';
+import dayjs from 'dayjs';
 
 function ManageManufactureRequest() {
     const [manufactureReqData, setManufactureReqData] = useState<any>([]);
-    const [searchQuery, setSearchQuery] = useState<String>("");  // for search query
+    const [searchQuery, setSearchQuery] = useState<RegExp>();  // for search query
 
-    const search = (str: String) => {
-        setSearchQuery(str)
-    }
     // fetch medicine request data
     const getManufactureRequestData = async () => {
         await axios.get('api/dmms/request').then((res) => {
             console.log(res.data);
             setManufactureReqData(res.data);
         })
+    }
+
+    const formatDate = (dateString: string | number | Date | dayjs.Dayjs | null | undefined) => {
+        // Parse the date string using dayjs
+        const date = dayjs(dateString);
+        // Format the date using dayjs (you can adjust the format string as needed)
+        return date.format('DD/MM/YYYY HH:mm:ss');
     }
 
     useEffect(() => {
@@ -77,16 +84,27 @@ function ManageManufactureRequest() {
             })
     }
 
+    // print the component as a PDF
+    const { toPDF, targetRef } = usePDF({
+        filename: "Manufacture_Request_Table.pdf"
+    });
+
     return (
         <div>
             <Typography color='primary' align="center" variant="h5">
                 Manage Manufacture Requests
             </Typography>
-            <Box sx={{ display: "flex" }} my={2} mx={2} >
-                <SearchBar onSearch={search} />
+            <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }} my={2} mx={2} >
+                <SearchBar onChange={(q) => setSearchQuery(q)} />
+                <Tooltip title="Download table as PDF" arrow>
+                    <PictureAsPdfIcon fontSize='large' htmlColor='rgba(0, 58, 43, 0.8)' onClick={() => toPDF()} />
+                </Tooltip>
             </Box>
-            <Box flexGrow={1}></Box>
-            <Paper sx={{ marginTop: '2rem', width: '100%', overflow: 'hidden' }}>
+            {/* <Box flexGrow={1}></Box> */}
+            <Paper sx={{ marginTop: '2rem', width: '100%', overflow: 'hidden' }} ref={targetRef} >
+                <Typography color='primary' align="center" variant="h6" gutterBottom>
+                    Manage Manufacture Requests Table
+                </Typography>
                 <TableContainer sx={{ maxHeight: 440 }}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
@@ -96,7 +114,7 @@ function ManageManufactureRequest() {
                                 <TableCell>Amount</TableCell>
                                 <TableCell>Requested Date</TableCell>
                                 <TableCell>Manufactured Date</TableCell>
-                                <TableCell>Status</TableCell>
+                                <TableCell>Progress</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -106,7 +124,7 @@ function ManageManufactureRequest() {
 
                                 .filter((row: any) => {
                                     if (searchQuery) {
-                                        return (row.Medicine.Item.name.startsWith(searchQuery));
+                                        return (row.Medicine.Item.name.search(searchQuery) !== -1);
                                     }
 
                                     else {
@@ -124,8 +142,9 @@ function ManageManufactureRequest() {
                                             <TableCell>{row.id}</TableCell>
                                             <TableCell>{row.Medicine?.Item?.name}</TableCell>
                                             <TableCell>{row.amount}</TableCell>
-                                            <TableCell>{row.createdAt.slice(0, 19)}</TableCell>
-                                            <TableCell>{row.progress === "Completed" ? row.updatedAt.slice(0, 19) : ''}</TableCell>
+                                            <TableCell>{formatDate(row.createdAt)}</TableCell>
+                                            <TableCell>{row.progress === "Completed" || row.progress === "Rejected" || row.progress === "Manufacture Error" ?
+                                                formatDate(row.updatedAt) : ''}</TableCell>
                                             <TableCell>{row.progress}</TableCell>
                                         </TableRow>
                                     );
@@ -145,7 +164,7 @@ function ManageManufactureRequest() {
             </Paper>
             <MedicineRequestModal open={open} handleClose={handleClose} updateRequest={updateRequest} updateProgress={updateProgress} /*deleteManufactureRequest={deleteManufactureRequest}*/ />
 
-        </div>
+        </div >
     )
 }
 

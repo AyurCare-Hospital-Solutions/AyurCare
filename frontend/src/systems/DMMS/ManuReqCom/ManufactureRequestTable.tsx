@@ -9,6 +9,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import IconButton from '@mui/material/IconButton/IconButton';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import dayjs from 'dayjs';
 
 
 export default function ManufactureRequestTable({ manufactureReqData, deleteManufactureRequest }: { manufactureReqData: any, deleteManufactureRequest: (arg: number) => any }) {
@@ -31,6 +32,13 @@ export default function ManufactureRequestTable({ manufactureReqData, deleteManu
         } else if (progress === 'Completed') {
             return '#4aee78';
         }
+    }
+
+    const formatDate = (dateString: string | number | Date | dayjs.Dayjs | null | undefined) => {
+        // Parse the date string using dayjs
+        const date = dayjs(dateString);
+        // Format the date using dayjs (you can adjust the format string as needed)
+        return date.format('DD/MM/YYYY HH:mm:ss');
     }
 
     return (
@@ -61,8 +69,9 @@ export default function ManufactureRequestTable({ manufactureReqData, deleteManu
                                         <TableCell>{row.id}</TableCell>
                                         <TableCell>{row.Medicine.Item?.name}</TableCell>
                                         <TableCell>{row.amount}</TableCell>
-                                        <TableCell>{row.createdAt.slice(0, 19)}</TableCell>
-                                        <TableCell>{row.progress === "Completed" ? row.updatedAt.slice(0, 19) : ''}</TableCell>
+                                        <TableCell>{formatDate(row.createdAt)}</TableCell>
+                                        <TableCell>{row.progress === "Completed" || row.progress === "Rejected" || row.progress === "Manufacture Error" ?
+                                            formatDate(row.updatedAt) : ''}</TableCell>
                                         <TableCell>{row.progress}</TableCell>
                                         <center><IconButton
                                             color='secondary'

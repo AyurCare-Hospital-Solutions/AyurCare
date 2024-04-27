@@ -3,6 +3,8 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useEffect, useState } from 'react';
 import { Button, MenuItem, Stack, TextField } from '@mui/material';
+import dayjs from 'dayjs';
+
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -17,6 +19,14 @@ const style = {
 };
 
 export default function ManufactureRequestModal({ open, handleClose, updateRequest, updateProgress }: { open: boolean, handleClose: () => any, updateRequest: any, updateProgress: (arg1: number, arg2: string) => any }) {
+
+    const formatDate = (dateString: string | number | Date | dayjs.Dayjs | null | undefined) => {
+        // Parse the date string using dayjs
+        const date = dayjs(dateString);
+        // Format the date using dayjs (you can adjust the format string as needed)
+        return date.format('DD/MM/YYYY HH:mm:ss');
+    }
+
     const [request, setRequest] = useState<any>();
     useEffect(() => {
         setRequest(updateRequest);
@@ -45,7 +55,7 @@ export default function ManufactureRequestModal({ open, handleClose, updateReque
                         Amount : {request?.amount}
                     </Typography>
                     <Typography variant="h6" >
-                        Requested Date : {request?.createdAt}
+                        Requested Date : {formatDate(request?.createdAt)}
                     </Typography>
                     <Typography variant='h6'>
                         Priority : {request?.isPriority}

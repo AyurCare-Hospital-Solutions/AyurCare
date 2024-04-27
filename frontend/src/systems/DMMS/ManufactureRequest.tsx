@@ -54,7 +54,7 @@ function ManufactuureRequest() {
     }
     confirm({ description: "Confirm Manufacture Request" })
       .then(async () => {
-        await axios.post('api/dmms/request', { MedicineId: reqMedicine, amount: reqAmount, isPriority: Boolean(priority) })
+        await axios.post('api/dmms/request/createReq', { MedicineId: reqMedicine, amount: reqAmount, isPriority: Boolean(priority) })
           .then((res) => {
             enqueueSnackbar("Manufacture Request Added Successfuly...", { variant: "success" });
             console.log(res);
