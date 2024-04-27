@@ -6,9 +6,18 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Typography,
 } from "@mui/material";
-import { Assessment, Category, Dashboard, Event, Groups } from "@mui/icons-material";
+import {
+  Assessment,
+  Category,
+  ConfirmationNumber,
+  Dashboard,
+  Email,
+  Event,
+  Group,
+  Groups,
+  QueryBuilder,
+} from "@mui/icons-material";
 
 const HRMS = () => {
   return (
@@ -23,8 +32,28 @@ const HRMS = () => {
           </ListItemButton>
         </ListItem>
       </Link>
-      <Divider sx={{mt: 2, mb:1}}/>
-      <Typography color="textSecondary" sx={{ fontWeight: 550, ml:-2, fontSize:"0.99rem", textAlign: "center"}}>Leave Management </Typography>
+      <Divider sx={{ mt: 2, mb: 1 }} />
+      {/* <Typography
+        color="textSecondary"
+        sx={{
+          fontWeight: 550,
+          ml: -2,
+          fontSize: "0.99rem",
+          textAlign: "center",
+        }}
+      >
+        Leave Management{" "}
+      </Typography> */}
+      <Link to="myLeaveRequests">
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <ConfirmationNumber />
+            </ListItemIcon>
+            <ListItemText primary="My Leave Requests" />
+          </ListItemButton>
+        </ListItem>
+      </Link>
       <Link to="leaveRequests">
         <ListItem disablePadding>
           <ListItemButton>
@@ -39,15 +68,15 @@ const HRMS = () => {
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
-              <Category/>
+              <Category />
             </ListItemIcon>
             <ListItemText primary="Leave Types" />
           </ListItemButton>
         </ListItem>
       </Link>
-      <Divider sx={{mt: 2, mb:1}}/>
-      
-      <Link to="/HRMS/Dashboard">
+      <Divider sx={{ mt: 2, mb: 1 }} />
+
+      <Link to="rosterManagement">
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
@@ -57,8 +86,30 @@ const HRMS = () => {
           </ListItemButton>
         </ListItem>
       </Link>
-      
-      <Link to="/HRMS/Dashboard">
+
+      <Link to="shiftTypes">
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <Group />
+            </ListItemIcon>
+            <ListItemText primary="Shift Types" />
+          </ListItemButton>
+        </ListItem>
+      </Link>
+
+      <Link to="shifts">
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <QueryBuilder />
+            </ListItemIcon>
+            <ListItemText primary="My Shifts" />
+          </ListItemButton>
+        </ListItem>
+      </Link>
+
+      <Link to="reports">
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
@@ -68,8 +119,19 @@ const HRMS = () => {
           </ListItemButton>
         </ListItem>
       </Link>
+
+      <Link to="chat">
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <Email />
+            </ListItemIcon>
+            <ListItemText primary="Chat" />
+          </ListItemButton>
+        </ListItem>
+      </Link>
     </DashboardPage>
   );
 };
 
-export default HRMS
+export default HRMS;

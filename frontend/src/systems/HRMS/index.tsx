@@ -1,22 +1,51 @@
 import { RouteObject } from "react-router-dom";
 import HRMS from "./HRMS";
-import Leave from "./components/Leave";
 import LeaveType from "./components/LeaveType";
+import LeaveRequest from "./components/LeaveRequest";
+import MyLeaveRequest from "./components/MyLeaveRequest";
+import RosterManagement from "./components/RosterManagement";
+import Shifts from "./components/Shifts";
+import Reports from "./components/Reports";
+import Chat from "./components/Chat";
+import ShiftTypes from "./ShiftTypes";
 
-const routes: { name: string, root: React.ReactNode, routes: RouteObject[] } = {
-    name: "HRMS",
-    root: <HRMS/>, 
-    routes: [
-        {
-            path: "leaveRequests",
-            element: <Leave/>,
-        },
-        {
-            path: "leaveTypes",
-            element: <LeaveType />,
-        }
-
-    ],
-}
+const routes: { name: string; root: React.ReactNode; routes: RouteObject[] } = {
+  name: "HRMS",
+  root: <HRMS />,
+  routes: [
+    {
+      path: "leaveRequests",
+      element: <LeaveRequest />,
+    },
+    {
+      path: "leaveTypes",
+      element: <LeaveType />,
+    },
+    {
+      path: "myLeaveRequests",
+      element: <MyLeaveRequest />,
+    },
+    {
+      path: "rosterManagement",
+      element: <RosterManagement />,
+    },
+    {
+      path: "shifts",
+      element: <Shifts />,
+    },
+    {
+      path: "reports",
+      element: <Reports />,
+    },
+    {
+      path: "chat",
+      element: <Chat />,
+    },
+    {
+      path: "shiftTypes",
+      element: <ShiftTypes />,
+    },
+  ],
+};
 
 export default routes;

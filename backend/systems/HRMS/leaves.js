@@ -1,15 +1,17 @@
 const LeaveRequest = require("../../model/LeaveRequest");
 const express = require("express");
 const yup = require("yup");
-
+const { getUserID } = require("../../middleware/auth");
+const LeaveType = require("../../model/LeaveType");
+const Staff = require("../../model/Staff");
 const leaveRequestValidator = yup
   .object({
-    type: yup.string().required(),
+    type: yup.number().required(),
     reason: yup.string().required(),
-    date: yup.date().required(),
+    startDate: yup.date().required(),
+    endDate: yup.date().required().nullable(),
     registration: yup.string().required(),
-    hours: yup.number().required(),
-    status: yup.string().required(),
+    hours: yup.number().required().nullable(),
   })
   .noUnknown();
 
@@ -19,7 +21,9 @@ const leaveRequestValidator = yup
  * @param {express.Response} res
  */
 const getAllLeaveRequests = async (req, res) => {
-  res.status(200).json(await LeaveRequest.findAll());
+  res
+    .status(200)
+    .json(await LeaveRequest.findAll({ include: [LeaveType, Staff] }));
 };
 
 /**
@@ -55,16 +59,23 @@ const createLeaveRequest = async (req, res) => {
     return;
   }
 
+  let leaveType = await LeaveType.findByPk(data.type);
+  if (leaveType === null) {
+    res.status(400).send({ msg: "Invalid leave type" });
+    return;
+  }
+
   let leaveRequest = await LeaveRequest.create({
-    type: data.type,
+    LeaveTypeId: leaveType.id,
     reason: data.reason,
-    date: data.date,
+    start_date: data.startDate,
+    end_date: data.endDate,
     registration: data.registration,
     hours: data.hours,
     status: data.status,
-    StaffId: 1,
+    StaffId: getUserID(res),
   });
-  res.status(200).json({ data: leaveRequest });
+  res.status(200).json({ ...leaveRequest.toJSON(), LeaveType: leaveType });
 };
 
 /**
@@ -94,8 +105,49 @@ const updateLeaveRequest = async (req, res) => {
     return;
   }
 
-  await leaveRequest.update(data);
-  res.sendStatus(204);
+  let leaveType = await LeaveType.findByPk(data.type);
+  if (leaveType === null) {
+    res.status(400).send({ msg: "Invalid leave type" });
+    return;
+  }
+
+  await leaveRequest.update({
+    LeaveTypeId: data.type,
+    reason: data.reason,
+    start_date: data.startDate,
+    end_date: data.endDate,
+    registration: data.registration,
+    hours: data.hours,
+  });
+  res.status(200).json({ ...leaveRequest.toJSON(), LeaveType: leaveType });
+};
+
+/**
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+
+const updateLeaveRequestStatus = async (req, res) => {
+  let id = Number.parseInt(req.params.id);
+
+  if (!Number.isInteger(id)) {
+    res.status(400).json({ msg: "Invalid leave request number" });
+    return;
+  }
+
+  let leaveRequest = await LeaveRequest.findByPk(id, { include: LeaveType });
+  if (leaveRequest === null) {
+    res.status(404).json({ msg: "The leave request does not exist" });
+    return;
+  }
+
+  const status = req.body.status;
+
+  await leaveRequest.update({
+    status: status,
+  });
+  res.status(200).json({ ...leaveRequest.toJSON() });
 };
 
 /**
@@ -122,10 +174,31 @@ const deleteLeaveRequest = async (req, res) => {
   res.sendStatus(204);
 };
 
+/**
+ * Get leave request by id
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+const getLeaveRequestByUser = async (req, res) => {
+  const userId = getUserID(res);
+
+  let leaveRequest = await LeaveRequest.findAll({
+    where: { StaffId: userId },
+    include: LeaveType,
+  });
+  if (leaveRequest === null) {
+    res.status(404).json({ message: "Leave request not found" });
+    return;
+  }
+  res.status(200).json(leaveRequest);
+};
+
 module.exports = {
   getAllLeaveRequests,
   getLeaveRequestById,
   createLeaveRequest,
   updateLeaveRequest,
   deleteLeaveRequest,
+  getLeaveRequestByUser,
+  updateLeaveRequestStatus,
 };

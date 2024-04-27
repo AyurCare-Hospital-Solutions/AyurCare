@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import LeaveTypeDialog from "./leaveType/NewLeaveTypeDialog";
 import axios from "axios";
 import LeaveTypeTable from "./leaveType/LeaveTypeTable";
@@ -27,13 +27,18 @@ const LeaveType = () => {
   };
 
   const addLeaveType = async (data: any) => {
-    console.log(data);
-    const res = await axios.post("/api/hrms/leaveType", {
-      name: data.name,
-      hours: data.duration,
-    });
+    try {
+      const response = await axios.post("/api/hrms/leaveType", {
+        name: data.name,
+        hours: data.duration,
+      });
 
-    setRows([...rows, res.data]);
+      setRows([...rows, response.data]);
+      enqueueSnackbar("Leave type added successfully", { variant: "success" });
+    } catch (error) {
+      console.error("Error adding leave type:", error);
+      enqueueSnackbar("Error adding leave type", { variant: "error" });
+    }
   };
 
   const deleteLeaveType = async (id: number) => {
@@ -80,24 +85,41 @@ const LeaveType = () => {
 
   return (
     <div className="LeaveType">
-      <Box sx={{ display: "flex" }} my={2} mx={2}>
-        {/* <LeaveTypeSearch /> */}
-        <Box flexGrow={1} />
-        <Button variant="outlined" onClick={() => setAddDialogOpen(true)}>
+      <Box sx={{ display: "flex", mx: "auto", m: 4 }}>
+        <Box>
+          <Typography variant="h5" gutterBottom>
+            Leave Types
+          </Typography>
+          <Typography variant="body2" sx={{}}>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+          </Typography>
+        </Box>
+        <Button
+          sx={{ ml: "auto", my: "auto" }}
+          variant="outlined"
+          onClick={() => setAddDialogOpen(true)}
+        >
           Add Leave Type
         </Button>
-        <LeaveTypeDialog
-          addLeaveType={addLeaveType}
-          open={addDialogOpen}
-          onClose={() => setAddDialogOpen(false)}
-        />
       </Box>
 
-      <LeaveTypeTable
-        rows={rows}
-        deleteLeaveType={deleteLeaveType}
-        updateLeaveType={updateLeaveType}
-      />
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <Box sx={{ display: "flex", mx: "auto" }}>
+          {/* <LeaveTypeSearch /> */}
+          <Box flexGrow={1} />
+          <LeaveTypeDialog
+            addLeaveType={addLeaveType}
+            open={addDialogOpen}
+            onClose={() => setAddDialogOpen(false)}
+          />
+        </Box>
+
+        <LeaveTypeTable
+          rows={rows}
+          deleteLeaveType={deleteLeaveType}
+          updateLeaveType={updateLeaveType}
+        />
+      </Box>
     </div>
   );
 };
