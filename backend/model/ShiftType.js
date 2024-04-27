@@ -11,4 +11,4 @@ const ShiftDesignation = sequelize.define("ShiftDesignation", { minAmount: DataT
 
 ShiftType.belongsToMany(Designation, { through: ShiftDesignation });
 
-module.exports = ShiftType;
+module.exports = { ShiftType, ShiftDesignation };
