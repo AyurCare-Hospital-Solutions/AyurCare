@@ -1,13 +1,18 @@
+const Patient = require("../../model/Patient");
 const Prescription = require("../../model/Prescription");
 const express = require("express");
 
 // Create a prescription
 const createPrescription = async (req, res) => {
   try {
+    console.log(req.body);
     const prescription = await Prescription.create(req.body);
     res.status(201).json(prescription);
   } catch (error) {
-    res.status(500).json({ error: `Error creating prescription: ${error.message}` });
+    console.log(error);
+    res
+      .status(500)
+      .json({ error: `Error creating prescription: ${error.message}` });
   }
 };
 
@@ -17,7 +22,9 @@ const getAllPrescriptions = async (req, res) => {
     const prescriptions = await Prescription.findAll();
     res.json(prescriptions);
   } catch (error) {
-    res.status(500).json({ error: `Error getting prescriptions: ${error.message}` });
+    res
+      .status(500)
+      .json({ error: `Error getting prescriptions: ${error.message}` });
   }
 };
 
@@ -31,7 +38,9 @@ const getPrescriptionById = async (req, res) => {
     }
     res.json(prescription);
   } catch (error) {
-    res.status(500).json({ error: `Error getting prescription by ID: ${error.message}` });
+    res
+      .status(500)
+      .json({ error: `Error getting prescription by ID: ${error.message}` });
   }
 };
 
@@ -50,7 +59,9 @@ const updatePrescription = async (req, res) => {
     }
     res.status(200).json({ message: "Prescription updated successfully" });
   } catch (error) {
-    res.status(500).json({ error: `Error updating prescription: ${error.message}` });
+    res
+      .status(500)
+      .json({ error: `Error updating prescription: ${error.message}` });
   }
 };
 
@@ -68,7 +79,29 @@ const deletePrescription = async (req, res) => {
     }
     res.status(204).json({ message: "Prescription deleted successfully" });
   } catch (error) {
-    res.status(500).json({ error: `Error deleting prescription: ${error.message}` });
+    res
+      .status(500)
+      .json({ error: `Error deleting prescription: ${error.message}` });
+  }
+};
+
+const getPrescriptionByPatientId = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const prescription = await Prescription.findAll({
+      where:{
+        PatientId: id,
+      }
+    });
+    if (!prescription) {
+      return res.status(404).json({ error: "Prescription not found" });
+    }
+    console.log(prescription);
+    res.status(200).json(prescription);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: `Error getting prescription by ID: ${error.message}` });
   }
 };
 
@@ -78,4 +111,5 @@ module.exports = {
   getPrescriptionById,
   updatePrescription,
   deletePrescription,
+  getPrescriptionByPatientId,
 };

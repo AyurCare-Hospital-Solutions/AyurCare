@@ -8,6 +8,7 @@ const getAllOPDAppointments = async (req, res) => {
     const appointments = await OPDAppointment.findAll({
       include: Patient, // Include related patient model
     });
+    console.log(appointments);
     res.json(appointments);
   } catch (error) {
     res
