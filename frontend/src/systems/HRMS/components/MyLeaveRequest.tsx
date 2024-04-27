@@ -44,7 +44,6 @@ const MyLeaveRequest = () => {
     setLeaveTypes(leaveTypeData);
   };
 
-
   //Adding a leave request
   const addLeaveRequest = async (data: any) => {
     try {
@@ -83,7 +82,6 @@ const MyLeaveRequest = () => {
         variant: "success",
       });
     } catch (error) {
-      // Handle error here
       console.error("Error deleting leave request:", error);
       enqueueSnackbar("Failed to delete leave request", {
         variant: "error",
@@ -94,7 +92,7 @@ const MyLeaveRequest = () => {
   const updateLeaveRequest = async (id: number, data: any) => {
     try {
       let updated = await axios.put(`api/hrms/leave/${id}`, data);
-      console.log(rows, updated.data)
+      console.log(rows, updated.data);
       const index = rows.findIndex((v) => v.id == updated.data.id);
       if (index === -1) {
         console.error("Failed to find request");
@@ -102,12 +100,14 @@ const MyLeaveRequest = () => {
         rows[index] = updated.data;
         setRows([...rows]);
       }
-      enqueueSnackbar("Leave request updated successfully", { variant: "success", });
+      enqueueSnackbar("Leave request updated successfully", {
+        variant: "success",
+      });
     } catch (e) {
-      enqueueSnackbar("Failed to update leave request", { variant: "error", });
+      enqueueSnackbar("Failed to update leave request", { variant: "error" });
       console.log(e);
     }
-  }
+  };
 
   return (
     <div className="MyLeaveRequest">
@@ -116,8 +116,7 @@ const MyLeaveRequest = () => {
           <Typography variant="h5" gutterBottom>
             My Leave Requests
           </Typography>
-          <Typography variant="body2">
-          </Typography>
+          <Typography variant="body2"></Typography>
         </Box>
         <Button
           sx={{ ml: "auto", my: "auto" }}
@@ -138,9 +137,7 @@ const MyLeaveRequest = () => {
             onClose={() => setRequestDialogOpen(false)}
           />
         </Box>
-        <Paper sx={{ display: "flex", m: 4 }}>
-          {/* <MyLeaveRequestSearch /> */}
-        </Paper>
+        <Paper sx={{ display: "flex", m: 4 }}></Paper>
         <Box sx={{ display: "flex", mx: 4 }}>
           <MyLeaveRequestTable
             updateLeaveRequest={updateLeaveRequest}

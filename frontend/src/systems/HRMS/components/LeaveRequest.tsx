@@ -2,16 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Box, Typography, Tabs, Tab } from "@mui/material";
 import LeaveRequestTable from "./leaveManagement/LeaveRequestTable";
 import axios from "axios";
+import { enqueueSnackbar } from "notistack";
+import { LeaveRequestData } from "../types";
 
 const LeaveRequest: React.FC = () => {
   useEffect(() => {
     fetchAllLeaveRequests();
   }, []);
 
-  const [rows, setRows] = useState([]);
-  const [tabValue, setTabValue] = useState(0);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rows, setRows] = useState<LeaveRequestData[]>([]);
+  const [tabValue, setTabValue] = useState<"Pending" | "Processed" | "All">(
+    "Pending"
+  );
 
   const fetchAllLeaveRequests = async () => {
     try {
@@ -22,22 +24,48 @@ const LeaveRequest: React.FC = () => {
     }
   };
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleAction = async (id: number, approve: boolean) => {
+    try {
+      const leaveRequest = rows.find((v) => v.id == id);
+      if (!leaveRequest) return;
+
+      const status = approve ? "Approved" : "Rejected";
+
+      const response = await axios.put(
+        `/api/hrms/leave/approve/${leaveRequest.id}`,
+        { status: status }
+      );
+      if (response.status === 200) {
+        leaveRequest.status = status;
+        setRows([...rows]);
+
+        enqueueSnackbar("Leave request approved", { variant: "success" });
+      }
+    } catch (error) {
+      enqueueSnackbar("Error approving leave request", { variant: "error" });
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    try {
+      const leaveIndex = rows.findIndex((v) => v.id == id);
+      if (leaveIndex === -1) return;
+
+      const leaveRequest = rows[leaveIndex];
+
+      const response = await axios.delete(`/api/hrms/leave/${leaveRequest.id}`);
+      if (response.status === 204) {
+        rows.splice(leaveIndex, 1);
+        setRows([...rows]);
+        enqueueSnackbar("Leave request deleted", { variant: "success" });
+      }
+    } catch (error) {
+      enqueueSnackbar("Error deleting leave request", { variant: "error" });
+    }
+  };
+
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: any) => {
     setTabValue(newValue);
-  };
-
-  const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
-    newPage: number
-  ) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
   };
 
   return (
@@ -54,17 +82,16 @@ const LeaveRequest: React.FC = () => {
       </Box>
       <Box sx={{ mx: 4 }}>
         <Tabs value={tabValue} onChange={handleTabChange}>
-          <Tab label="Pending Requests" />
-          <Tab label="Processed Leaves" />
-          <Tab label="All Leave Requests" />
+          <Tab label="Pending Requests" value="Pending" />
+          <Tab label="Processed Leaves" value="Processed" />
+          <Tab label="All Leave Requests" value="All" />
         </Tabs>
         <Box sx={{ mt: 2 }}>
           <LeaveRequestTable
             leaveRequests={rows}
-            onPageChange={handleChangePage}
-            page={page}
-            rowsPerPage={rowsPerPage}
-            pendingView={tabValue === 0}
+            handleAction={handleAction}
+            handleDelete={handleDelete}
+            type={tabValue}
           />
         </Box>
       </Box>

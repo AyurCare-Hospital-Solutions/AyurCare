@@ -6,7 +6,6 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Typography,
 } from "@mui/material";
 import {
   Assessment,
@@ -15,8 +14,8 @@ import {
   Dashboard,
   Email,
   Event,
+  Group,
   Groups,
-  Message,
   QueryBuilder,
 } from "@mui/icons-material";
 
@@ -84,6 +83,17 @@ const HRMS = () => {
               <Groups />
             </ListItemIcon>
             <ListItemText primary="Roster Management" />
+          </ListItemButton>
+        </ListItem>
+      </Link>
+
+      <Link to="shiftTypes">
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <Group />
+            </ListItemIcon>
+            <ListItemText primary="Shift Types" />
           </ListItemButton>
         </ListItem>
       </Link>

@@ -7,6 +7,7 @@ import RosterManagement from "./components/RosterManagement";
 import Shifts from "./components/Shifts";
 import Reports from "./components/Reports";
 import Chat from "./components/Chat";
+import ShiftTypes from "./ShiftTypes";
 
 const routes: { name: string; root: React.ReactNode; routes: RouteObject[] } = {
   name: "HRMS",
@@ -39,6 +40,10 @@ const routes: { name: string; root: React.ReactNode; routes: RouteObject[] } = {
     {
       path: "chat",
       element: <Chat />,
+    },
+    {
+      path: "shiftTypes",
+      element: <ShiftTypes />,
     },
   ],
 };

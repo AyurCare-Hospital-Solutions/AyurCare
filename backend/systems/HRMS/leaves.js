@@ -123,6 +123,34 @@ const updateLeaveRequest = async (req, res) => {
 };
 
 /**
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+
+const updateLeaveRequestStatus = async (req, res) => {
+  let id = Number.parseInt(req.params.id);
+
+  if (!Number.isInteger(id)) {
+    res.status(400).json({ msg: "Invalid leave request number" });
+    return;
+  }
+
+  let leaveRequest = await LeaveRequest.findByPk(id, { include: LeaveType });
+  if (leaveRequest === null) {
+    res.status(404).json({ msg: "The leave request does not exist" });
+    return;
+  }
+
+  const status = req.body.status;
+
+  await leaveRequest.update({
+    status: status,
+  });
+  res.status(200).json({ ...leaveRequest.toJSON() });
+};
+
+/**
  * Delete leave request by id
  * @param {express.Request} req
  * @param {express.Response} res
@@ -172,4 +200,5 @@ module.exports = {
   updateLeaveRequest,
   deleteLeaveRequest,
   getLeaveRequestByUser,
+  updateLeaveRequestStatus,
 };
