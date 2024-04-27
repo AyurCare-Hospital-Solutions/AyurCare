@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from "react";
 import {
-  Box,
   Table,
   TableBody,
   TableCell,
@@ -23,6 +22,7 @@ interface LeaveRequestTableProps {
   handleAction: (index: number, approve: boolean) => void;
   handleDelete: (index: number) => void;
   type: "Pending" | "Processed" | "All";
+  query?: RegExp;
 }
 
 const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({
@@ -30,6 +30,7 @@ const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({
   handleAction,
   handleDelete,
   type,
+  query,
 }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -45,12 +46,21 @@ const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({
       );
     }
 
+    if (query) {
+      data = data.filter(
+        (v) =>
+          v.reason.search(query) !== -1 ||
+          v.Staff.name.search(query) !== -1 ||
+          v.LeaveType.name.search(query) !== -1
+      );
+    }
+
     if (rowsPerPage > 0) {
       data = data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
     }
 
     return data;
-  }, [leaveRequests, page, rowsPerPage, type]);
+  }, [leaveRequests, page, rowsPerPage, type, query]);
 
   console.log(rows);
   const emptyRows =
@@ -97,7 +107,7 @@ const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({
               <TableCell align="center">{row.start_date}</TableCell>
               <TableCell align="center">{row.end_date}</TableCell>
               <TableCell align="center">{row.registration}</TableCell>
-              <TableCell align="center">{row.hours}</TableCell>
+              <TableCell align="center">{row.hours || "N/A"}</TableCell>
               <TableCell align="center">
                 <Chip
                   label={row.status}

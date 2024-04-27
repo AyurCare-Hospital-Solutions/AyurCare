@@ -4,6 +4,7 @@ import LeaveRequestTable from "./leaveManagement/LeaveRequestTable";
 import axios from "axios";
 import { enqueueSnackbar } from "notistack";
 import { LeaveRequestData } from "../types";
+import SearchBar from "./SearchBar";
 
 const LeaveRequest: React.FC = () => {
   useEffect(() => {
@@ -14,6 +15,7 @@ const LeaveRequest: React.FC = () => {
   const [tabValue, setTabValue] = useState<"Pending" | "Processed" | "All">(
     "Pending"
   );
+  const [query, setQuery] = useState<RegExp>();
 
   const fetchAllLeaveRequests = async () => {
     try {
@@ -80,6 +82,9 @@ const LeaveRequest: React.FC = () => {
           </Typography>
         </Box>
       </Box>
+      <Box sx={{ display: "flex", justifyContent: "flex-end", mr: 4 }}>
+        <SearchBar onChange={setQuery} />
+      </Box>
       <Box sx={{ mx: 4 }}>
         <Tabs value={tabValue} onChange={handleTabChange}>
           <Tab label="Pending Requests" value="Pending" />
@@ -92,6 +97,7 @@ const LeaveRequest: React.FC = () => {
             handleAction={handleAction}
             handleDelete={handleDelete}
             type={tabValue}
+            query={query}
           />
         </Box>
       </Box>

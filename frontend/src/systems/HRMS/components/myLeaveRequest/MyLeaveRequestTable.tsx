@@ -18,13 +18,15 @@ import UpdateLeaveRequestDialog from "./UpdateLeaveRequestDialog"; // Import you
 import { LeaveTypeData, MyLeaveRequestData } from "../../types";
 
 export default function MyLeaveRequestTable({
-  rows, leaveTypes,
-  deleteLeaveRequest, updateLeaveRequest
+  rows,
+  leaveTypes,
+  deleteLeaveRequest,
+  updateLeaveRequest,
 }: {
   leaveTypes: LeaveTypeData[];
   rows: MyLeaveRequestData[];
   deleteLeaveRequest: (id: number) => void;
-  updateLeaveRequest: (id: number, v: any) => void,
+  updateLeaveRequest: (id: number, v: any) => void;
 }) {
   const [page, setPage] = useState(0);
   const [rowDataPerPage, setrowDataPerPage] = useState(5);
@@ -83,9 +85,9 @@ export default function MyLeaveRequestTable({
           <TableBody>
             {(rowDataPerPage > 0
               ? rowData.slice(
-                page * rowDataPerPage,
-                page * rowDataPerPage + rowDataPerPage
-              )
+                  page * rowDataPerPage,
+                  page * rowDataPerPage + rowDataPerPage
+                )
               : rows
             ).map((row) => (
               <TableRow key={row.id}>
@@ -94,7 +96,7 @@ export default function MyLeaveRequestTable({
                 </TableCell>
                 <TableCell align="right">{row.reason}</TableCell>
                 <TableCell align="right">{row.LeaveType?.name}</TableCell>
-                <TableCell align="right">{row.hours}</TableCell>
+                <TableCell align="right">{row.hours || "N/A"}</TableCell>
                 <TableCell align="right">
                   <Chip
                     label={row.status}
@@ -102,10 +104,10 @@ export default function MyLeaveRequestTable({
                       row.status === "Approved"
                         ? "success"
                         : row.status === "Rejected"
-                          ? "error"
-                          : row.status === "Pending"
-                            ? "warning"
-                            : "default"
+                        ? "error"
+                        : row.status === "Pending"
+                        ? "warning"
+                        : "default"
                     }
                   />
                 </TableCell>

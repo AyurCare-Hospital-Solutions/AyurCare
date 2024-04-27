@@ -1,31 +1,32 @@
-import { Box, Button, Typography } from "@mui/material";
-import { useState } from "react";
-import axios from "axios";
+import { Box, Paper, Typography } from "@mui/material";
+import LeaveReuqestByType from "./reports/leaveManagment/LeaveRequestByType";
+import ReportGenerator from "../../../components/ReportGenerator";
 
 const Reports = () => {
-  const [rows, setRows] = useState([]);
-
-  const fetchAllLeaveRequests = async () => {
-    try {
-      const response = await axios.get("/api/hrms/leave");
-      setRows(response.data);
-    } catch (error) {
-      console.error("Error fetching leave requests:", error);
-    }
-  };
-
   return (
     <>
-      <Box sx={{ display: "flex", maxWidth: "1024px", mx: "auto", mb: 4 }}>
+      <Box sx={{ display: "flex", mx: "auto", m: 4 }}>
         <Box>
           <Typography variant="h5" gutterBottom>
-            Leave Types
+            Reports
           </Typography>
           <Typography variant="body2" sx={{}}>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit.
           </Typography>
         </Box>
       </Box>
+
+      <ReportGenerator title="" filename="Leave_Request_Report" visible>
+        <Paper>
+          <Typography variant="h5" sx={{ ml: 4, textAlign: "center", pt: 4 }}>
+            Leave Request Report
+          </Typography>
+
+          <Box sx={{ m: 4 }}>
+            <LeaveReuqestByType />
+          </Box>
+        </Paper>
+      </ReportGenerator>
     </>
   );
 };

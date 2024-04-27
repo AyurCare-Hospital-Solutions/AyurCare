@@ -85,7 +85,7 @@ const LeaveType = () => {
 
   return (
     <div className="LeaveType">
-      <Box sx={{ display: "flex", maxWidth: "1024px", mx: "auto", mb: 4 }}>
+      <Box sx={{ display: "flex", mx: "auto", m: 4 }}>
         <Box>
           <Typography variant="h5" gutterBottom>
             Leave Types
@@ -104,7 +104,7 @@ const LeaveType = () => {
       </Box>
 
       <Box sx={{ display: "flex", flexDirection: "column" }}>
-        <Box sx={{ display: "flex", maxWidth: "1024px", mx: "auto" }}>
+        <Box sx={{ display: "flex", mx: "auto" }}>
           {/* <LeaveTypeSearch /> */}
           <Box flexGrow={1} />
           <LeaveTypeDialog
