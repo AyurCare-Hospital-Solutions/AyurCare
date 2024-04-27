@@ -8,9 +8,9 @@ const OPDAppointment = sequelize.define("OPDAppointment", {
 });
 
 Patient.hasMany(OPDAppointment, { onDelete: 'CASCADE', foreignKey: { allowNull: false } });
-OPDAppointment.hasOne(Patient);
+OPDAppointment.belongsTo(Patient);
 
 Prescription.belongsTo(OPDAppointment, { onDelete: 'CASCADE', foreignKey: { allowNull: false } });
-OPDAppointment.hasOne(Prescription);
+OPDAppointment.belongsTo(Prescription);
 
 module.exports = OPDAppointment;

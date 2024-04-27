@@ -28,7 +28,6 @@ const PrescriptionMedicine = sequelize.define("PrescriptionMedicines", {
 });
 
 
-Prescription.belongsToMany(ConditionType, { through: PrescriptionConditions });   // remove condition type
 Prescription.belongsToMany(Medicine, { through: PrescriptionMedicine });  
 Prescription.belongsTo(Staff, { as: "DispensedBy" });  // remove dispensed by
 Prescription.belongsTo(Staff, { as: "Doctor" });

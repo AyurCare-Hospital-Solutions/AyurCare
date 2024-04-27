@@ -1,12 +1,12 @@
 const OPDAppointment = require("../../model/OPDAppointment");
 const Patient = require("../../model/Patient");
-const express = require("express"); 
+const express = require("express");
 
 // Get all OPD appointments
 const getAllOPDAppointments = async (req, res) => {
   try {
     const appointments = await OPDAppointment.findAll({
-      include: [Patient], // Include related patient model
+      include: Patient, // Include related patient model
     });
     res.json(appointments);
   } catch (error) {
@@ -33,7 +33,6 @@ const getOPDAppointmentById = async (req, res) => {
       .json({ error: `Error getting OPD appointment by ID: ${error.message}` });
   }
 };
-
 
 // Update an OPD appointment
 const updateOPDAppointment = async (req, res) => {

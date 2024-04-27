@@ -1,10 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+} from "@mui/material";
 
 interface Appointment {
   id: number;
-  patient: {
+  Patient: {
     id: number;
     name: string;
   };
@@ -15,16 +24,18 @@ interface Props {
   onProfileClick: (patientId: number) => void;
 }
 
-const AppointmentsTable: React.FC<Props> = ({ onProfileClick }) => {
+const AppointmentsTable = ({ onProfileClick }:Props) => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
 
   useEffect(() => {
-    axios.get<Appointment[]>('/api/opdAppointments')
-      .then(res => {
+    axios
+      .get<Appointment[]>("/api/opcms/opdAppointments")
+      .then((res) => {
         setAppointments(res.data);
       })
-      .catch(err => console.error(err));
+      .catch((err) => console.error(err));
   }, []);
+  
 
   return (
     <TableContainer component={Paper}>
@@ -37,12 +48,14 @@ const AppointmentsTable: React.FC<Props> = ({ onProfileClick }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {appointments.map(appointment => (
+          {appointments.map((appointment) => (
             <TableRow key={appointment.id}>
-              <TableCell>{appointment.patient.name}</TableCell>
+              <TableCell>{appointment.Patient.name}</TableCell>
               <TableCell>{appointment.status}</TableCell>
               <TableCell>
-                <Button onClick={() => onProfileClick(appointment.patient.id)}>View Profile</Button>
+                <Button onClick={() => onProfileClick(appointment.Patient.id)}>
+                  View Profile
+                </Button>
               </TableCell>
             </TableRow>
           ))}
