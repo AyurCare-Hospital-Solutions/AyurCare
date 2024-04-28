@@ -2,6 +2,11 @@ const Patient = require("../../model/Patient");
 const Prescription = require("../../model/Prescription");
 const express = require("express");
 
+const Prescription = require("../../model/Prescription");
+const Patient = require("../../model/Patient");
+const { Op } = require("sequelize");
+
+
 // Create a prescription
 const createPrescription = async (req, res) => {
   try {
@@ -85,6 +90,7 @@ const deletePrescription = async (req, res) => {
   }
 };
 
+//  
 const getPrescriptionByPatientId = async (req, res) => {
   const id = req.params.id;
 
@@ -113,6 +119,38 @@ const getPrescriptionByPatientId = async (req, res) => {
   }
 };
 
+// Search medical records by patient name and date range
+const searchMedicalRecords = async (req, res) => {
+  const { name, startDate, endDate } = req.query;
+  try {
+    let prescriptions;
+    if (name && startDate && endDate) {
+      prescriptions = await Prescription.findAll({
+        where: {
+          dispensed_date: {
+            [Op.between]: [startDate, endDate],
+          },
+        },
+        include: [{ model: Patient, where: { name: { [Op.like]: `%${name}%` } } }],
+      });
+    } else if (startDate && endDate) {
+      prescriptions = await Prescription.findAll({
+        where: {
+          dispensed_date: {
+            [Op.between]: [startDate, endDate],
+          },
+        },
+        include: Patient,
+      });
+    } else {
+      return res.status(400).json({ error: "Invalid search parameters" });
+    }
+    res.json(prescriptions);
+  } catch (error) {
+    res.status(500).json({ error: `Error searching medical records: ${error.message}` });
+  }
+};
+
 module.exports = {
   createPrescription,
   getAllPrescriptions,
@@ -120,4 +158,5 @@ module.exports = {
   updatePrescription,
   deletePrescription,
   getPrescriptionByPatientId,
+  searchMedicalRecords,
 };

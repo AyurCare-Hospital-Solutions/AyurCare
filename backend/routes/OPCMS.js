@@ -16,4 +16,7 @@ router.put("/patients/:id/prescriptions", prescriptionsService.updatePrescriptio
 router.delete("/prescriptions/:id", prescriptionsService.deletePrescription);
 router.get("/patientPrescriptions/:id",prescriptionsService.getPrescriptionByPatientId);
 
+// Search medical records by patient name and date range
+router.get("/searchMedicalRecords", prescriptionsService.searchMedicalRecords);
+
 module.exports = router;

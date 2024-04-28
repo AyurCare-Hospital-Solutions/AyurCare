@@ -5,6 +5,7 @@ const Records = () => {
         <div>
             <h1>Medical Records</h1>
             {/* Add your medical records-related components and logic here */}
+            
         </div>
     );
 }
