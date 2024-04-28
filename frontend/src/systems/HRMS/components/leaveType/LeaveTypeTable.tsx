@@ -9,7 +9,7 @@ import Paper from "@mui/material/Paper";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
-import UpdateLeaveTypeDialog from "./UpdateLeaveTypeDialog"; // Import the UpdateLeaveTypeDialog component
+import UpdateLeaveTypeDialog from "./UpdateLeaveTypeDialog";
 import { LeaveTypeData } from "../../types";
 import { Box } from "@mui/material";
 
@@ -22,18 +22,17 @@ export default function LeaveTypeTable({
   deleteLeaveType: (id: number) => void;
   updateLeaveType: (row: LeaveTypeData, name: string, duration: number) => void;
 }) {
-  const [open, setOpen] = useState(false); // State for modal
-  const [selectedRow, setSelectedRow] = useState<LeaveTypeData | null>(null); // State for selected row ID
-
+  const [open, setOpen] = useState(false);
+  const [selectedRow, setSelectedRow] = useState<LeaveTypeData | null>(null);
   const handleEdit = (row: LeaveTypeData) => {
-    setSelectedRow(row); // Set the selected row ID
-    setOpen(true); // Open the modal
+    setSelectedRow(row);
+    setOpen(true);
   };
 
   const handleUpdate = (name: string, duration: number) => {
     if (selectedRow !== null) {
-      updateLeaveType(selectedRow, name, duration); // Call updateLeaveType function
-      setOpen(false); // Close the modal
+      updateLeaveType(selectedRow, name, duration);
+      setOpen(false);
     }
   };
 
@@ -82,12 +81,11 @@ export default function LeaveTypeTable({
           </Table>
         </TableContainer>
 
-        {/* Render UpdateLeaveTypeDialog component with props */}
         <UpdateLeaveTypeDialog
-          selectedRow={selectedRow} // Pass selected row ID as prop
-          handleClose={() => setOpen(false)} // Pass handleClose function
-          open={open} // Pass open state
-          onSubmit={handleUpdate} // Pass handleUpdate function
+          selectedRow={selectedRow}
+          handleClose={() => setOpen(false)}
+          open={open}
+          onSubmit={handleUpdate}
         />
       </Box>
     </>
