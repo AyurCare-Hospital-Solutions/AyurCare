@@ -1,5 +1,10 @@
 import { ReactElement } from "react";
-import { Link, RouteObject, RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  Link,
+  RouteObject,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
 
 import acs from "./systems/ACS";
 import dmms from "./systems/DMMS";
@@ -11,7 +16,6 @@ import pms from "./systems/PMS";
 import prs from "./systems/PRS";
 import { Box, Drawer } from "@mui/material";
 
-
 let routes: Map<String, RouteObject> = new Map();
 
 const importedRoutes = [acs, dmms, hrms, icms, ims, ocms, pms, prs];
@@ -19,24 +23,30 @@ importedRoutes.forEach((route) => {
   routes.set(route.name, {
     path: "/" + route.name.toLowerCase(),
     element: route.root,
-    children: route.routes
-  })
+    children: route.routes,
+  });
 });
 
 function TempMain() {
   let links: ReactElement[] = [];
   routes.forEach((v, k) => {
-    links.push(<div><Link to={v.path!}>{k}</Link></div>)
-  })
+    links.push(
+      <div>
+        <Link to={v.path!}>{k}</Link>
+      </div>
+    );
+  });
 
   return links;
 }
 
-const domRouter = createBrowserRouter([{
-  path: "/",
-  element: <TempMain />
-}, ...routes.values()])
-
+const domRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <TempMain />,
+  },
+  ...routes.values(),
+]);
 
 function App() {
   return (
@@ -45,7 +55,7 @@ function App() {
       <RouterProvider router={domRouter} />
 
     </>
-  )
+  );
 }
 
 export default App;
