@@ -11,7 +11,7 @@ dayjs.extend(AdvancedFormat)
 const cardStyle = { display: "flex", px: "16px", py: "12px" }
 
 export const LinkCard = ({ name, desc, link }: { name: string, desc: string, link: string }) => {
-    return <Link to={link} style={{ textDecoration: "none" }}>
+    return <Link to={link} style={{ textDecoration: "none", overflow: "hidden" }}>
         <Paper elevation={3} sx={{ ...cardStyle, mt: 2, height: "94px", mr: "auto", minWidth: "80%" }}>
             <Box sx={{ my: "auto" }}>
                 <Typography sx={{ fontSize: "1.75rem", fontWeight: 500 }}>{name}</Typography>

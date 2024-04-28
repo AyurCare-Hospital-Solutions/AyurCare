@@ -1,6 +1,5 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
-const ConditionType = require("./ConditionType");
 const Medicine = require("./Medicine");
 const Staff = require("./Staff");
 const Patient = require("./Patient");
@@ -28,7 +27,6 @@ const PrescriptionMedicine = sequelize.define("PrescriptionMedicines", {
 });
 
 
-Prescription.belongsToMany(ConditionType, { through: PrescriptionConditions });
 Prescription.belongsToMany(Medicine, { through: PrescriptionMedicine });
 Prescription.belongsTo(Staff, { as: "DispensedBy" });
 Prescription.belongsTo(Staff, { as: "Doctor" });
