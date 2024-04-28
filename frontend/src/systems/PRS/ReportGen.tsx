@@ -2,6 +2,7 @@ import { Box, Container, Divider, Stack, Typography } from "@mui/material";
 import { PieChart } from "@mui/x-charts/PieChart";
 import React from "react";
 import PatientGenderAnalysis from "./components/reports/PatientGenderAnalysis";
+import AppointmentReports from "./components/reports/AppointmentReports";
 
 export default function ReportGen() {
   return (
@@ -14,6 +15,7 @@ export default function ReportGen() {
           (Patient Registration System & Appointment Scheduling Sub System)
         </Typography>
         <PatientGenderAnalysis />
+        <AppointmentReports />
       </Stack>
     </div>
   );
