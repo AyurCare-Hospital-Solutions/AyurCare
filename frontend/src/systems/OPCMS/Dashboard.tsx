@@ -5,6 +5,7 @@ import { DateCard, LinkCard, LinkCard2, WelcomeCard } from "../../components/Das
 
 dayjs.extend(AdvancedFormat)
 
+
 const Dashboard = () => {
     return <>
         <Grid container spacing={2} justifyContent="space-evenly">
@@ -19,12 +20,11 @@ const Dashboard = () => {
             </Grid>
             <Grid item xs={6}>
                 <Box flexGrow="3" display="flex" flexDirection="column">
-                    <LinkCard name="Medical Records" desc="Find Medical Record details" link="/opcms/medicalRecords" /> 
+                    <LinkCard name="Medical Records" desc="Find Medical Record details" link="/opcms/records" /> 
                     <LinkCard name="Reports" desc="Generate reports" link="/opcms/reports" />
                     <LinkCard name="Analytics" desc="Patient Analysis and Medical States Analysis" link="/opcms/analytics" />
                 </Box>
             </Grid>
-
         </Grid >
     </>
 };

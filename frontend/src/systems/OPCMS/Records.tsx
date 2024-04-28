@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Search } from "@mui/icons-material";
 import SearchForm from "./components/SearchForm";
 import SearchResults from "./components/SearchResults";
 

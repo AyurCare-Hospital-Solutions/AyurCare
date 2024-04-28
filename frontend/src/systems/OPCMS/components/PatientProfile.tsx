@@ -10,6 +10,7 @@ import {
   TableRow,
   Paper,
   Button,
+  Box,
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import CreatePrescriptionForm from "./CreatePrescriptionForm";
@@ -96,12 +97,18 @@ const PatientProfile = () => {
 
   return (
     <div>
-      <Typography variant="h4">{patient?.name}</Typography>
-      <Typography variant="h6">Patient ID: {id}</Typography>
-      <Typography variant="h6">
-      Age: {calculateAge(patient?.dob || '')} years
-      </Typography>
-      <Button onClick={handleClickOpen}>Add Prescription</Button>
+      <Box sx={{mb:3}}>
+        <Typography variant="h4">{patient?.name}</Typography>
+        <Typography variant="h6">Patient ID: {id}</Typography>
+        
+        <Box sx={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+          <Typography variant="h6">
+            Age: {calculateAge(patient?.dob || '')} years
+          </Typography>
+          <Button variant="contained" onClick={handleClickOpen}>Add Prescription</Button>
+        </Box>
+      </Box>
+
       <TableContainer component={Paper}>
         <Table>
           <TableHead>

@@ -10,6 +10,7 @@ import {
   TableRow,
   Paper,
   Button,
+  Typography,
 } from "@mui/material";
 
 interface Appointment {
@@ -36,6 +37,8 @@ const AppointmentsTable: React.FC = () => {
   }, []);
 
   return (
+    <div>
+    <Typography sx={{mb:2}} variant="h4">Appointments</Typography>
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
@@ -51,7 +54,7 @@ const AppointmentsTable: React.FC = () => {
               <TableCell>{appointment.Patient.name}</TableCell>
               <TableCell>{appointment.status}</TableCell>
               <TableCell>
-                <Button
+                <Button variant="outlined"
                   onClick={() =>
                     navigate(
                       `./profile/${appointment.Patient.id}/prescriptions/${appointment.id}`
@@ -66,6 +69,7 @@ const AppointmentsTable: React.FC = () => {
         </TableBody>
       </Table>
     </TableContainer>
+    </div>
   );
 };
 
