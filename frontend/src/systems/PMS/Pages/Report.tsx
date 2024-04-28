@@ -9,6 +9,8 @@ import SingleComponent from "../Components/Report/SummarySections/SingleComponet
 import { BlobProvider } from "@react-pdf/renderer";
 import GeneratePDF from "../Components/Report/GeneratePDF";
 import axios from "axios";
+import Mousetrap from "mousetrap";
+import { useNavigate } from "react-router-dom";
 
 const Report = () => {
   const [pdfUrl, setPdfUrl] = useState("");
@@ -245,6 +247,94 @@ const Report = () => {
     getTotalUserConcerns();
   }, []);
 
+  const navigate = useNavigate();
+
+  // assign keyboard shortcuts -----------------------------------------------------
+  // 1. dashboard
+  useEffect(() => {
+    // Bind the 'm' key to navigate to the medicines page
+    Mousetrap.bind("d", () => navigate("/pms/dashboard"));
+
+    // Cleanup the binding when the component unmounts
+    return () => {
+      Mousetrap.unbind("d");
+    };
+  }, [navigate]);
+
+  // 2. medicine
+  useEffect(() => {
+    // Bind the 'm' key to navigate to the medicines page
+    Mousetrap.bind("m", () => navigate("/pms/medicines"));
+
+    // Cleanup the binding when the component unmounts
+    return () => {
+      Mousetrap.unbind("m");
+    };
+  }, [navigate]);
+
+  // 3. report
+  useEffect(() => {
+    // Bind the 'm' key to navigate to the medicines page
+    Mousetrap.bind("r", () => navigate("/pms/reports"));
+
+    // Cleanup the binding when the component unmounts
+    return () => {
+      Mousetrap.unbind("r");
+    };
+  }, [navigate]);
+
+  // 4. customer concern
+  useEffect(() => {
+    // Bind the 'm' key to navigate to the medicines page
+    Mousetrap.bind("c", () => navigate("/pms/userconcerns"));
+
+    // Cleanup the binding when the component unmounts
+    return () => {
+      Mousetrap.unbind("c");
+    };
+  }, [navigate]);
+
+  // 5. keep
+  useEffect(() => {
+    // Bind the 'm' key to navigate to the medicines page
+    Mousetrap.bind("k", () => navigate("/pms/keep"));
+
+    // Cleanup the binding when the component unmounts
+    return () => {
+      Mousetrap.unbind("k");
+    };
+  }, [navigate]);
+
+  // 6. user guide
+  useEffect(() => {
+    Mousetrap.bind("u", () => navigate("/pms/userguide"));
+
+    // Cleanup the binding when the component unmounts
+    return () => {
+      Mousetrap.unbind("u");
+    };
+  }, [navigate]);
+
+  // 7. external prescription
+  useEffect(() => {
+    Mousetrap.bind("e", () => navigate("/pms/receivedprescription"));
+
+    // Cleanup the binding when the component unmounts
+    return () => {
+      Mousetrap.unbind("e");
+    };
+  }, [navigate]);
+
+  // 8. inernal prescription
+  useEffect(() => {
+    // Bind the 'm' key to navigate to the medicines page
+    Mousetrap.bind("i", () => navigate("/pms/prescriptionmanagement"));
+
+    // Cleanup the binding when the component unmounts
+    return () => {
+      Mousetrap.unbind("i");
+    };
+  }, [navigate]);
   return (
     <div>
       {/* report generation */}
@@ -276,11 +366,27 @@ const Report = () => {
               setPdfUrl(url);
               setLoading(false);
             }
+
+            // Function to handle the action
+            const handleAction = () => {
+              if (url && !loading) {
+                window.open(url, "_blank");
+              }
+            };
+
+            useEffect(() => {
+              // Bind the 'p' key to the handleAction function
+              Mousetrap.bind("p", handleAction);
+
+              // Cleanup the binding when the component unmounts
+              return () => {
+                Mousetrap.unbind("p");
+              };
+            }, [url, loading]); // Dependencies are url and loading to ensure up-to-date functionality
+
             return (
               <Button
-                onClick={() => {
-                  if (url) window.open(url, "_blank");
-                }}
+                onClick={handleAction}
                 disabled={loading}
                 sx={{
                   backgroundColor: "#0d4838",

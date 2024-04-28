@@ -95,29 +95,40 @@ const ExternalPrescriptionTable = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell> No</TableCell>
+              <TableCell>No</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Phone</TableCell>
               <TableCell>Email</TableCell>
               <TableCell>Uploaded Date</TableCell>
               <TableCell>Status</TableCell>
+              <TableCell>Special Notes</TableCell>
               <TableCell>File</TableCell>
               <TableCell>Update Status</TableCell>
               <TableCell>Remove</TableCell>
+              {/* <TableCell>test</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
             {externalPrescription ? (
               externalPrescription.map((row: any) => (
                 <TableRow key={row.id}>
+                  {/* show the id */}
                   <TableCell>{row.id}</TableCell>
+                  {/* show name */}
                   <TableCell>{row.name}</TableCell>
+                  {/* shwo phone */}
                   <TableCell>{row.phone}</TableCell>
+                  {/* show email */}
                   <TableCell>{row.email}</TableCell>
+                  {/* show date  */}
                   <TableCell>
-                    {new Date(Date.parse(row.createdAt)).toLocaleDateString()}
+                    {new Date(Date.parse(row.createdAt)).toLocaleDateString()}{" "}
                   </TableCell>
+                  {/* shwo status [pending, approve, reject] */}
                   <TableCell>{row.status}</TableCell>
+                  {/* show notes  */}
+                  <TableCell>{row.notes}</TableCell>
+                  {/* show button */}
                   <TableCell>
                     <Button
                       onClick={() => {
@@ -139,7 +150,9 @@ const ExternalPrescriptionTable = () => {
                       Show
                     </Button>
                   </TableCell>
-                  <TableCell>
+
+                  {/* show button for approve or reject */}
+                  <TableCell sx={{ display: "flex", direction: "column" }}>
                     <Button
                       onClick={() =>
                         updateExternalPrescriptionStatus(row.id, "Approved")
@@ -149,6 +162,7 @@ const ExternalPrescriptionTable = () => {
                         fontSize: 10,
                         color: "white",
                         mr: 2,
+                        mb: 1,
                         transition: "opacity 0.3s ease",
                         "&:hover": {
                           backgroundColor: "#0d4838",
@@ -165,6 +179,7 @@ const ExternalPrescriptionTable = () => {
                       sx={{
                         backgroundColor: "red",
                         fontSize: 10,
+                        mb: 1,
                         color: "white",
                         transition: "opacity 0.3s ease",
                         "&:hover": {
@@ -176,11 +191,15 @@ const ExternalPrescriptionTable = () => {
                       Reject
                     </Button>
                   </TableCell>
+
                   <TableCell>
                     <Button onClick={() => handleClickOpen(row.id)}>
                       <DeleteIcon sx={{ color: "#0d4838" }} />
                     </Button>
                   </TableCell>
+
+                  {/* show test  */}
+                  {/* <TableCell>{row.test}</TableCell> */}
                 </TableRow>
               ))
             ) : (

@@ -54,7 +54,7 @@ const Pms = () => {
           </ListItem>
         </Link>
 
-        <Link to="/pms/inventoryrequest">
+        {/* <Link to="/pms/inventoryrequest">
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -63,7 +63,7 @@ const Pms = () => {
               <ListItemText primary="Inventory Request" />
             </ListItemButton>
           </ListItem>
-        </Link>
+        </Link> */}
 
         <Link to="/pms/prescriptionmanagement">
           <ListItem disablePadding>

@@ -12,19 +12,65 @@ const externalPrescriptionValidator = yup
     address: yup.string().min(10).max(200).required(),
     email: yup.string().email().required(),
     phone: yup.string().min(10).max(10).required(),
-    specialNotes: yup.string().min(0).max(200),
+    notes: yup.string().min(0).max(200),
+    test: yup.string().min(0).max(200),
   })
   .strict();
-// .noUnknown();
 
+// api for the set the user prescription
+/**
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+async function uploadPrescription(req, res) {
+  try {
+    // X2 check the validation
+    var data = await externalPrescriptionValidator.validate(req.body);
+  } catch (validationError) {
+    res.status(400).send({ msg: validationError.errors[0] });
+    return;
+  }
+
+  if (!req.file) {
+    res.status(400).send({ msg: "No prescription file given" });
+    return;
+  }
+
+  try {
+    // X3. create a precription object
+    let prescription = await externalPrescription.create({
+      name: data.name,
+      age: data.age,
+      address: data.address,
+      email: data.email,
+      phone: data.phone,
+      notes: data.notes,
+      file: req.file.filename,
+      test: data.test,
+    });
+    res.status(200).json(prescription);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ msg: "External precription data is invalid!" });
+  }
+}
+
+// get all the user prescriptions
 /**
  *
  * @param {express.Request} req
  * @param {express.Response} res
  */
 async function getAllUserPrescriptions(req, res) {
-  const userPrescriptions = await externalPrescription.findAll();
-  res.status(200).json(userPrescriptions);
+  try {
+    const userPrescriptions = await externalPrescription.findAll();
+    console.log(userPrescriptions);
+    res.status(200).json(userPrescriptions);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: "can not get the prescriptions" });
+  }
 }
 
 // () for update the external prescrition status
@@ -52,43 +98,6 @@ async function updateExternalPrescriptionStatus(req, res) {
     res.status(500).json({ msg: "Failed to update prescription status" });
   }
 }
-
-/**
- *
- * @param {express.Request} req
- * @param {express.Response} res
- */
-async function uploadPrescription(req, res) {
-  try {
-    var data = await externalPrescriptionValidator.validate(req.body);
-  } catch (validationError) {
-    res.status(400).send({ msg: validationError.errors[0] });
-    return;
-  }
-
-  if (!req.file) {
-    res.status(400).send({ msg: "No prescription file given" });
-    return;
-  }
-
-  try {
-    let prescription = await externalPrescription.create({
-      name: data.name,
-      age: data.age,
-      address: data.address,
-      email: data.email,
-      phone: data.phone,
-      notes: data.specialNotes,
-      file: req.file.filename,
-    });
-    res.status(200).json(prescription);
-  } catch (error) {
-    console.log(error);
-    res.status(400).json({ msg: "External precription data is invalid!" });
-  }
-}
-
-module.exports = { uploadPrescription };
 
 // Delete the external prescription
 // Delete the external prescription
@@ -332,6 +341,8 @@ async function getTotalUserConcerns(req, res) {
     res.status(500).json({ error: error.message });
   }
 }
+
+module.exports = { uploadPrescription };
 
 module.exports = {
   getAllUserPrescriptions,

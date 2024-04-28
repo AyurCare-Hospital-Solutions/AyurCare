@@ -269,13 +269,13 @@ const GeneratePDF = ({
           <Text style={[styles.tableCell, styles.leftColumn]}>
             No of the concers replied:
           </Text>
-          <Text style={[styles.tableCell, styles.rightColumn]}>{12}</Text>
+          <Text style={[styles.tableCell, styles.rightColumn]}>{21}</Text>
         </View>
         <View style={styles.tableRow}>
           <Text style={[styles.tableCell, styles.leftColumn]}>
             No of the conerns need to reply:
           </Text>
-          <Text style={[styles.tableCell, styles.rightColumn]}>{12}</Text>
+          <Text style={[styles.tableCell, styles.rightColumn]}>{19}</Text>
         </View>
       </View>
 

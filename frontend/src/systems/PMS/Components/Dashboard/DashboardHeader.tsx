@@ -1,6 +1,6 @@
 import Paper from "@mui/material/Paper";
 import ShowTime from "../Common/ShowTime";
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 
 const Header = () => {
   return (
@@ -11,20 +11,21 @@ const Header = () => {
         </Grid>
         <Grid item xs={12}>
           <Paper
+            elevation={24}
             sx={{
               p: 2,
-              color: "#000",
-              backgroundColor: "#D9D9D9",
               fontSize: 30,
               textAlign: "center",
             }}
             style={{
               width: "1000px",
-              fontFamily: "poppins",
+
               margin: "auto", // Center horizontally
             }}
           >
-            Welcome to Pharmacy Dashboard!
+            <Typography sx={{ fontWeight: "10px" }} variant="h5">
+              Welcome to Pharmacy Dashboard!
+            </Typography>
           </Paper>
         </Grid>
       </Grid>

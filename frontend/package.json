@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "@types/dom-to-image": "^2.6.7",
+    "@types/mousetrap": "^1.6.15",
     "@types/react": "^18.2.55",
     "@types/react-color": "^3.0.12",
     "@types/react-dom": "^18.2.19",
@@ -54,6 +55,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "postcss": "^8.4.36",
+    "react-styleguidist": "^13.1.2",
     "typescript": "^5.2.2",
     "vite": "^5.1.0"
   }

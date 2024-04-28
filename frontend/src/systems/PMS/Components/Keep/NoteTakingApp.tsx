@@ -1,4 +1,10 @@
-import React, { useState, useEffect, ChangeEvent, KeyboardEvent } from "react";
+import React, {
+  useState,
+  useEffect,
+  ChangeEvent,
+  KeyboardEvent,
+  useRef,
+} from "react";
 import {
   Button,
   TextField,
@@ -17,6 +23,7 @@ import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CalendarComponent from "./CalendarComponent";
 import { enqueueSnackbar } from "notistack";
+import Mousetrap from "mousetrap";
 
 interface Note {
   id: number;
@@ -82,6 +89,25 @@ const NoteTakingApp: React.FC = () => {
     }
     setOpen(false);
   };
+  const inputRef = useRef<HTMLInputElement>(null); // Specify the type of element
+
+  useEffect(() => {
+    // Bind the '/' key to focus the input
+    Mousetrap.bind("/", () => {
+      console.log("clciked");
+      if (inputRef.current) {
+        // Check if the input element is not null
+        inputRef.current.focus(); // Focus the input only if it's not null
+      }
+      return false; // Prevent the default action of the '/' key
+    });
+
+    // Cleanup function to unbind the event listener when the component unmounts
+    return () => {
+      Mousetrap.unbind("/");
+    };
+  }, []); // Empty dependency array to ensure this effect runs only once on mount
+
 
   return (
     <>
@@ -102,6 +128,9 @@ const NoteTakingApp: React.FC = () => {
             onKeyPress={handleKeyPress}
             margin="normal"
             fullWidth
+            InputProps={{
+              inputRef: inputRef, // Use InputProps to pass ref to the actual input element
+            }}
           />
           <Button
             variant="contained"

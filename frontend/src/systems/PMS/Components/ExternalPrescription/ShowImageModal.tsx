@@ -40,9 +40,20 @@ export default function MedicineDialog({
 
         <img src={baseURL + image} alt="" />
         <DialogActions>
-          <a href={baseURL + image} download>
+          <Button
+            href={`${baseURL}${image}`} // Construct the download link
+            download // Enable the download attribute
+            variant="contained" // Use the contained button style
+            color="error" // Use the theme's error color which is often red
+            sx={{
+              color: "white", // Ensure text color is white for better contrast
+              "&:hover": {
+                backgroundColor: "darkred", // Darker red on hover for better UX
+              },
+            }}
+          >
             Download
-          </a>
+          </Button>
 
           <Button onClick={handleClose}>Cancel</Button>
         </DialogActions>
