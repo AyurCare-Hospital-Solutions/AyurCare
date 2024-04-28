@@ -106,8 +106,6 @@ const ExternalPrescriptionTable = () => {
               <TableCell>Update Status</TableCell>
               <TableCell>Remove</TableCell>
 
-
-
             </TableRow>
           </TableHead>
           <TableBody>
