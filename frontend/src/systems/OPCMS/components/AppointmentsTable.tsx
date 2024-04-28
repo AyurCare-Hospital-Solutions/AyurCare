@@ -22,7 +22,7 @@ interface Appointment {
   status: string;
 }
 
-const AppointmentsTable: React.FC = () => {
+const AppointmentsTable = ({search}:{search:string}) => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const navigate = useNavigate(); // Get the history object from useHistory hook
 
@@ -38,7 +38,6 @@ const AppointmentsTable: React.FC = () => {
 
   return (
     <div>
-    <Typography sx={{mb:2}} variant="h4">Appointments</Typography>
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
@@ -49,7 +48,19 @@ const AppointmentsTable: React.FC = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {appointments.map((appointment) => (
+          {appointments
+          
+          .filter((appointment: any) => {
+            if (search) {
+                return (appointment.Patient.name.startsWith(search));
+            }
+
+            else {
+                return appointment;
+            }
+        })
+          
+          .map((appointment) => (
             <TableRow key={appointment.id}>
               <TableCell>{appointment.Patient.name}</TableCell>
               <TableCell>{appointment.status}</TableCell>

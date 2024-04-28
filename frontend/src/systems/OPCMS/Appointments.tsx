@@ -1,17 +1,20 @@
-import AppointmentsTable from './components/AppointmentsTable';
-import SearchBar from './components/SearchBar';
+import { useState } from "react";
+import AppointmentsTable from "./components/AppointmentsTable";
+import SearchInput from "./components/SearchInput";
+import { Typography } from "@mui/material";
 
 const Appointments = () => {
-    
+    const [search, setSearch] = useState<string>("");
 
     return (
         <div>
-            <SearchBar onSearch={function (_results: any[]): void {
-                throw new Error('Function not implemented.');
-            } }/>
-            <AppointmentsTable />
+            <Typography sx={{ mb: 2 }} variant="h4">
+                Appointments
+            </Typography>
+            <SearchInput onSearch={(s) => setSearch(s)} />
+            <AppointmentsTable search={search} />
         </div>
     );
-}
+};
 
 export default Appointments;
