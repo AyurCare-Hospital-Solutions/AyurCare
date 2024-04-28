@@ -85,7 +85,7 @@ const LeaveRequest: React.FC = () => {
             Leave Request Management
           </Typography>
           <Typography variant="body2" sx={{}}>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Use this to approve or reject pending leave requests.
           </Typography>
         </Box>
       </Box>

@@ -115,7 +115,9 @@ const MyLeaveRequest = () => {
           <Typography variant="h5" gutterBottom>
             My Leave Requests
           </Typography>
-          <Typography variant="body2"></Typography>
+          <Typography variant="body2">
+            Here you can view and manage your leave requests.
+          </Typography>
         </Box>
         <Button
           sx={{ ml: "auto", my: "auto" }}

@@ -91,7 +91,8 @@ const LeaveType = () => {
             Leave Types
           </Typography>
           <Typography variant="body2" sx={{}}>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Here you can manage the different types of leave available to
+            employees.
           </Typography>
         </Box>
         <Button
