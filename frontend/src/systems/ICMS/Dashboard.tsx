@@ -23,22 +23,20 @@ const Dashboard = () => {
             <Grid item xs={5}>
                 <DateCard />
             </Grid>
-            <Grid item xs={6}>
-                <Paper sx={{ ...cardStyle }}>
-                    Waiting list
-                </Paper>
-            </Grid>
+
             <Grid item xs={4}>
 
-                <Box flexGrow="3" display="flex" flexDirection="column" >
-                    <LinkCard name="Care Plans" desc="View Patient Care Plans" link="/icms/care_plan"></LinkCard>
-                    <LinkCard name="Nursing Logs" desc="View Nursing Logs" link="/icms/nursing_log"></LinkCard>
-                    <LinkCard name="Reports" desc="Generate Reports" link="/icms/reports"></LinkCard>
 
-                </Box>
             </Grid>
 
         </Grid >
+
+        <Box display="flex" flexDirection="row" justifyContent="space-between" >
+            <LinkCard name="Patient List" desc="View Patient List" link="/icms/care_plan" />
+            <LinkCard name="Wait List" desc="View Waiting List" link="/icms/nursing_log"></LinkCard>
+            <LinkCard name="Reports" desc="Generate Reports" link="/icms/reports"></LinkCard>
+
+        </Box>
     </>
 };
 

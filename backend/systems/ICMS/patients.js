@@ -11,6 +11,15 @@ const { sequelize } = require("../../model");
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
+const getAllPatients = async (req, res) => {
+    res.status(200).json(await Patient.findAll());
+};
+
+/**
+ * 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
 const getPatients = async (req, res) => {
     let where = undefined;
     if (req.query.admitted === "true") {
@@ -67,4 +76,4 @@ const dischargePatient = async (req, res) => {
     res.status(204).json({ msg: "Patient discharged successfully" });
 }
 
-module.exports = { getPatients, dischargePatient }
+module.exports = { getPatients, dischargePatient, getAllPatients }
