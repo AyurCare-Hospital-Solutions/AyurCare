@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { TextField, Button, Typography, Box } from "@mui/material";
 import axios from "axios";
+import { enqueueSnackbar } from "notistack";
 
 interface SearchFormProps {
     onSearch: (results: any[]) => void; // Function to handle search results
-  }
+}
 
 function SearchForm({ onSearch }: SearchFormProps) {
     const [patientId, setPatientId] = useState("");
@@ -16,11 +17,10 @@ function SearchForm({ onSearch }: SearchFormProps) {
 
     try {
         const response = await axios.get(`/api/opcms/medicalRecords/${patientId}`);
-
-      onSearch(response.data); // Pass search results to parent component
+        onSearch(response.data);
     } catch (error) {
         console.error(error);
-        
+        enqueueSnackbar("Failed to fetch medical records", { variant: "error" });
     }
     };
 
