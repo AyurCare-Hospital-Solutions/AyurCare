@@ -18,10 +18,10 @@ const style = {
 };
 
 export default function AddMedicineModal({ open, onClose, addMedicine }: { open: boolean, onClose: () => any, addMedicine: (data: any) => any }) {
-    const [name, setName] = React.useState("");
-    const [buffer, setBuffer] = React.useState(0);
-    const [unit, setUnit] = React.useState("");
-    const [origin, setOrigin] = React.useState("");
+    const [name, setName] = React.useState<string>("");
+    const [buffer, setBuffer] = React.useState<number>(0);
+    const [unit, setUnit] = React.useState<string>("");
+    const [origin, setOrigin] = React.useState<string>("");
     return (
         <Modal
             open={open}

@@ -37,7 +37,6 @@ function Medicine() {
   const getMedicineData = async () => {
     await axios.get('api/ims/medicine').then((res) => {
       setTimeout(() => setMedicineData(res.data), 1000);
-      console.log(res.data);
     })
   }
 
@@ -78,7 +77,6 @@ function Medicine() {
     })
       .then((res) => {
         enqueueSnackbar("Medicine Added Successfuly...", { variant: "success" });
-        console.log(res);
         getMedicineData();
       })
       .catch((err) => {

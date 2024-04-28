@@ -29,8 +29,7 @@ function Material() {
   // Fetch material data 
   const getMaterialData = async () => {
     await axios.get("api/ims/material").then((res) => {
-      setTimeout(() => setMaterialData(res.data), 1000)
-      console.log(res.data);
+      setTimeout(() => setMaterialData(res.data), 1000);
     })
   }
 
@@ -78,7 +77,6 @@ function Material() {
     })
       .then((res) => {
         enqueueSnackbar("Material Added Successfuly...", { variant: "success" });
-        console.log(res);
         getMaterialData();
       })
       .catch((err) => {
@@ -142,7 +140,6 @@ function Material() {
     confirm({ description: "Confirm Update Material Details" })
       .then(async () => {
         try {
-          console.log(data);
           await axios.put(`api/ims/material/updateMaterial/${data.updateId}`, { materialName: data.updateName, amount: data.amount, buffer: data.updateReOrderBuffer, unit: data.updateUnit });
           enqueueSnackbar(`Material ${data.updateName} Updated Successfuly...`, { variant: "success" });
           getMaterialData();

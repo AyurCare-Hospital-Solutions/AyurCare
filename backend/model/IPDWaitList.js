@@ -4,7 +4,8 @@ const Patient = require("./Patient");
 
 const IPDWaitList = sequelize.define("IPDWaitList", {
     is_priority: DataTypes.BOOLEAN,
-    reason: DataTypes.STRING
+    reason: DataTypes.STRING,
+    was_admitted: DataTypes.BOOLEAN,
 });
 
 IPDWaitList.belongsTo(Patient, {

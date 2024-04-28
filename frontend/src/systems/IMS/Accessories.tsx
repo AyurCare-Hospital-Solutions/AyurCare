@@ -77,8 +77,6 @@ function Accessories() {
                 setTimeout(() => {
                     setAccessorydata(res.data);
                 }, 1000);
-                console.log(res.data);
-
             })
     }
 
@@ -123,9 +121,6 @@ function Accessories() {
         // Validate amount (required, positive integer)
         if (!amount) {
             enqueueSnackbar("Amount is required...", { variant: "error" });
-            return;
-        } else if (isNaN(Number(amount)) || Number(amount) <= 0) {
-            enqueueSnackbar("Amount must be a positive integer...", { variant: "error" });
             return;
         }
         // Validate reorder buffer (required, positive integer)

@@ -7,7 +7,8 @@ import MaterialRequestTable from './materialRequestComponent/MaterialRequestTabl
 
 function MaterialRequest() {
     const [reqMaterial, setReqMaterial] = useState<any>({});
-    const [reqMatrialAmount, setReqMaterialAmount] = useState<number>(0);
+    const [reqMatrialAmount, setReqMaterialAmount] = useState<number | string>();
+    const [selectOption, setSelectOption] = useState<string>()
 
 
     const [materialData, setMaterialData] = useState<any>([]);
@@ -58,9 +59,11 @@ function MaterialRequest() {
                     })
                     .catch((err) => {
                         enqueueSnackbar("Failed to Add Material Request...", { variant: "error" });
-                        console.log(err)
+                        console.log(err);
                     })
             })
+        setSelectOption("");
+        setReqMaterialAmount("");
     }
 
     return (
@@ -89,10 +92,15 @@ function MaterialRequest() {
                     sx={{ width: 300 }}
                     onChange={(e, v: any) => setReqMaterial(v.material.id)}
                     renderInput={(params) => <TextField {...params} label="Materials" />}
+                    value={selectOption}
                 />
-                <TextField type="number" id="outlined-basic" label="Amount" variant="outlined" onChange={(e) => {
-                    setReqMaterialAmount(Number(e.target.value));
-                }} />
+                <TextField type="number" id="outlined-basic" label="Amount"
+                    variant="outlined"
+                    onChange={(e) => {
+                        setReqMaterialAmount(Number(e.target.value));
+                    }}
+                    value={reqMatrialAmount}
+                />
                 <Button variant="contained" color="primary" type='submit'>Add Request</Button>
             </Box>
             <Typography color='primary' align="center" variant="h5">

@@ -16,8 +16,8 @@ const style = {
 function UpdateMaterialModal({ open, onClose, updatedMaterial, updateMaterial }: { open: boolean, onClose: () => any, updatedMaterial: any, updateMaterial: any }) {
     const [updateId, setUpdateId] = useState(updatedMaterial.id);
     const [updateName, setUpdateName] = useState(updatedMaterial.Item.name ?? "");
-    const [updateAmount, setUpdateAmount] = useState(updatedMaterial.amount ?? "");
-    const [updateReOrderBuffer, setUpdateReOrderBuffer] = useState(updatedMaterial.Item.reOrderBuffer ?? "");
+    const [updateAmount, setUpdateAmount] = useState(updatedMaterial.amount ?? 0);
+    const [updateReOrderBuffer, setUpdateReOrderBuffer] = useState(updatedMaterial.Item.reOrderBuffer ?? 0);
     const [updateUnit, setUpdateUnit] = useState(updatedMaterial.Item.unit ?? "");
 
     // error handle
