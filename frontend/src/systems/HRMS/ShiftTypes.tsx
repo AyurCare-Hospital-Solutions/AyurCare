@@ -1,7 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
 import { useState } from "react";
 import NewShiftTypeDialog from "./components/shiftType/NewShiftTypeDialog";
-import NewShiftTypeTable from "./components/shiftType/ShiftTypeTable";
 import ShiftTypeTable from "./components/shiftType/ShiftTypeTable";
 
 const ShiftTypes = () => {

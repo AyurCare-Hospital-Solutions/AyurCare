@@ -3,6 +3,7 @@ import { Box, Divider, Stack, Typography } from "@mui/material";
 import { PieChart } from "@mui/x-charts/PieChart";
 import axios from "axios";
 import { Gauge, gaugeClasses } from "@mui/x-charts";
+import ReportGenerator from "../../../../components/ReportGenerator";
 
 interface Gender {
   id: number;
@@ -76,61 +77,67 @@ function PatientGenderAnalysis() {
         Patient Registration Sub System
       </Typography>
       <Divider />
-      <Stack
-        direction='row'
-        alignItems='center'
-        spacing={2}
-        justifyContent='space-evenly'
-        p={4}
+      <ReportGenerator
+        title='Patient Registration Analysis'
+        filename='PatientAnalysis.pdf'
+        visible
       >
-        <Stack direction='column' alignItems='center' gap={3}>
-          <PieChart
-            series={[
-              {
-                data,
-                highlightScope: { faded: "global", highlighted: "item" },
-                faded: {
-                  innerRadius: 30,
-                  additionalRadius: -30,
-                  color: "gray",
+        <Stack
+          direction='row'
+          alignItems='center'
+          spacing={2}
+          justifyContent='space-evenly'
+          p={4}
+        >
+          <Stack direction='column' alignItems='center' gap={3}>
+            <PieChart
+              series={[
+                {
+                  data,
+                  highlightScope: { faded: "global", highlighted: "item" },
+                  faded: {
+                    innerRadius: 30,
+                    additionalRadius: -30,
+                    color: "gray",
+                  },
                 },
-              },
-            ]}
-            height={200}
-          />
-          <Typography variant='h6' sx={{ alignSelf: "left" }} gutterBottom>
-            Pie chart: Total patient count analysis between genders
-          </Typography>
-        </Stack>
+              ]}
+              height={200}
+            />
+            <Typography variant='h6' sx={{ alignSelf: "left" }} gutterBottom>
+              Pie chart: Total patient count analysis between genders
+            </Typography>
+          </Stack>
 
-        <Stack direction='column' alignItems='center'>
-          <Gauge
-            {...settings}
-            value={totalPatientCount?.todayCount}
-            valueMax={totalPatientCount?.totalCount}
-            startAngle={-120}
-            endAngle={120}
-            cornerRadius='50%'
-            sx={(theme) => ({
-              [`& .${gaugeClasses.valueText}`]: {
-                fontSize: 30,
-                fontFamily: theme.typography.fontFamily,
-                transform: "translate(0px, 0px)",
-              },
-              [`& .${gaugeClasses.valueArc}`]: {
-                fill: "#52b202",
-              },
-              [`& .${gaugeClasses.referenceArc}`]: {
-                fill: theme.palette.text.disabled,
-              },
-            })}
-            text={({ value, valueMax }) => `${value} / ${valueMax}`}
-          />
-          <Typography variant='h6' sx={{ alignSelf: "left" }} gutterBottom>
-            Line chart: Recent registrated patient precentage
-          </Typography>
+          <Stack direction='column' alignItems='center'>
+            <Gauge
+              {...settings}
+              value={totalPatientCount?.todayCount}
+              valueMax={totalPatientCount?.totalCount}
+              startAngle={-120}
+              endAngle={120}
+              cornerRadius='50%'
+              sx={(theme) => ({
+                [`& .${gaugeClasses.valueText}`]: {
+                  fontSize: 30,
+                  fontFamily: theme.typography.fontFamily,
+                  transform: "translate(0px, 0px)",
+                },
+                [`& .${gaugeClasses.valueArc}`]: {
+                  fill: "#52b202",
+                },
+                [`& .${gaugeClasses.referenceArc}`]: {
+                  fill: theme.palette.text.disabled,
+                },
+              })}
+              text={({ value, valueMax }) => `${value} / ${valueMax}`}
+            />
+            <Typography variant='h6' sx={{ alignSelf: "left" }} gutterBottom>
+              Line chart: Recent registrated patient precentage
+            </Typography>
+          </Stack>
         </Stack>
-      </Stack>
+      </ReportGenerator>
     </Box>
   );
 }
