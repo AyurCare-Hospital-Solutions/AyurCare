@@ -4,7 +4,7 @@ const { sequelize } = require(".");
 // X1
 const ExternalPresription = sequelize.define("ExternalPrescription", {
   name: DataTypes.STRING(100),
-  age: DataTypes.NUMBER(),
+  age: DataTypes.INTEGER(),
   phone: DataTypes.STRING(14),
   address: DataTypes.STRING(200),
   email: {
