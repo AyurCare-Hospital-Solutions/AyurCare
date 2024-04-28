@@ -1,7 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
 const Medicine = require("./Medicine");
-const Item = require("./Item");
 
 const ManufactureRequest = sequelize.define("ManufactureRequest", {
     amount: {
@@ -17,11 +16,11 @@ const ManufactureRequest = sequelize.define("ManufactureRequest", {
         type: DataTypes.STRING,
         defaultValue: "Pending",
         validate: {
-            isIn: [["Success", "Pending", "Reject"]]
+            isIn: [["Completed", "Pending", "Rejected", "In Progress", "Manufacture Error"]]
         }
     }
 });
 
-ManufactureRequest.belongsTo(Item);
-
+ManufactureRequest.belongsTo(Medicine);
+ManufactureRequest.sync({ alter: true })
 module.exports = ManufactureRequest;

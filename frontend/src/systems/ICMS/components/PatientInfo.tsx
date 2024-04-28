@@ -46,11 +46,11 @@ const PatientInfo = ({ admission }: { admission: Admission | undefined }) => {
                     </TableRow>
                     <TableRow>
                         <TableCell>Ward</TableCell>
-                        <TableCell>{admission?.Bed.Ward.name}</TableCell>
+                        <TableCell>{admission?.Bed?.Ward?.name}</TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell sx={{ borderBottomStyle: "none" }}>Bed No</TableCell>
-                        <TableCell sx={{ borderBottomStyle: "none" }}>{admission?.Bed.id}</TableCell>
+                        <TableCell sx={{ borderBottomStyle: "none" }}>{admission?.Bed?.number}</TableCell>
                     </TableRow>
 
                 </TableBody>

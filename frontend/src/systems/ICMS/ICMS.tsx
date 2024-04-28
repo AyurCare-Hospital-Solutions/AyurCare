@@ -1,4 +1,4 @@
-import { Assessment, Bed, Dashboard, HourglassTop, House, People } from '@mui/icons-material';
+import { Assessment, Dashboard, HourglassTop, House, People } from '@mui/icons-material';
 import { Divider, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { Link } from 'react-router-dom'
 import DashboardPage from '../../components/DashboardPage';
@@ -42,24 +42,13 @@ function ICMS() {
 
             <Divider sx={{ mt: 1, mb: 1 }} />
 
-            <Link to="/icms/wards">
+            <Link to="/icms/ward">
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
                             < House />
                         </ListItemIcon>
                         <ListItemText primary="Manage Wards" />
-                    </ListItemButton>
-                </ListItem>
-            </Link>
-
-            <Link to="/icms/beds">
-                <ListItem disablePadding>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <Bed />
-                        </ListItemIcon>
-                        <ListItemText primary="Manage Beds" />
                     </ListItemButton>
                 </ListItem>
             </Link>
