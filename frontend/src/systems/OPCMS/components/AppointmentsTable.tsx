@@ -12,6 +12,7 @@ import {
   Button,
   Typography,
 } from "@mui/material";
+import ReportGenerator from "../../../components/ReportGenerator";
 
 interface Appointment {
   id: number;
@@ -38,7 +39,8 @@ const AppointmentsTable = ({search}:{search:string}) => {
 
   return (
     <div>
-    <TableContainer component={Paper}>
+      <ReportGenerator visible titleHidden title="OPD Appointments" filename="opd_appointments.pdf">
+      <TableContainer component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
@@ -80,6 +82,8 @@ const AppointmentsTable = ({search}:{search:string}) => {
         </TableBody>
       </Table>
     </TableContainer>
+      </ReportGenerator>
+    
     </div>
   );
 };
