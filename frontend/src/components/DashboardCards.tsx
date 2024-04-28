@@ -12,8 +12,8 @@ const cardStyle = { display: "flex", px: "16px", py: "12px" }
 
 export const LinkCard = ({ name, desc, link }: { name: string, desc: string, link: string }) => {
     return <Link to={link} style={{ textDecoration: "none", overflow: "hidden" }}>
-        <Paper elevation={1} sx={{ ...cardStyle, mt: 2, height: "max-content", mr: "auto", minWidth: "80%", borderRadius: "15px" }}>
-            <Box sx={{ my: "auto" }}>
+        <Paper elevation={1} sx={{ ...cardStyle, my:2 , height: "max-content", mx:2 ,p:2, minWidth: "80%", borderRadius: "15px" }}>
+            <Box sx={{ my: "auto"}}>
                 <Typography sx={{ fontSize: "1.75rem", fontWeight: 500 }}>{name}</Typography>
                 <Typography sx={{ fontWeight: 500, }}>{desc}</Typography>
             </Box>
