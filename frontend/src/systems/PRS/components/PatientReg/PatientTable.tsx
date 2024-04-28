@@ -16,6 +16,8 @@ import QueueIcon from "@mui/icons-material/Queue";
 import { Box, ThemeProvider, Tooltip } from "@mui/material";
 import PatientRegForm from "./PatientRegForm";
 import { enqueueSnackbar } from "notistack";
+import SearchInput from "../SearchInput";
+import { Search } from "@mui/icons-material";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -34,6 +36,9 @@ function DataGridTest() {
       setData(res.data);
     });
   }
+
+  // search state tracking search
+  const [search, setSearch] = useState<RegExp>();
 
   useEffect(() => {
     getPatients();
@@ -124,16 +129,18 @@ function DataGridTest() {
   }
 
   // set the rows
-  const rows = data.map((row: any, index = 0) => ({
-    id: index++,
-    tracking_no: row.tracking_no,
-    name: row.name,
-    nic: row.nic,
-    gender: row.gender,
-    phone: row.phone,
-    idDb: row.id,
-    // email: row.email,
-  }));
+  const rows = data
+    .filter((v: any) => v.name.search(search) !== -1)
+    .map((row: any, index = 0) => ({
+      id: index++,
+      tracking_no: row.tracking_no,
+      name: row.name,
+      nic: row.nic,
+      gender: row.gender,
+      phone: row.phone,
+      idDb: row.id,
+      // email: row.email,
+    }));
 
   // dialog box
   const [open, setOpen] = React.useState(false);
@@ -165,193 +172,201 @@ function DataGridTest() {
 
   return (
     <div>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pagination
-        getRowId={(row) => row.id}
-        pageSizeOptions={[5, 10, 25]}
-        initialState={{
-          pagination: { paginationModel: { pageSize: 10, page: 0 } },
-          columns: {
-            columnVisibilityModel: {
-              id: false,
-              idDb: false,
-              email: false,
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <SearchInput
+          onChange={(e) => {
+            setSearch(e);
+          }}
+        />
+        <DataGrid
+          sx={{ marginTop: 2 }}
+          rows={rows}
+          columns={columns}
+          pagination
+          getRowId={(row) => row.id}
+          pageSizeOptions={[5, 10, 25]}
+          initialState={{
+            pagination: { paginationModel: { pageSize: 10, page: 0 } },
+            columns: {
+              columnVisibilityModel: {
+                id: false,
+                idDb: false,
+                email: false,
+              },
             },
-          },
-        }}
-      />
-      <React.Fragment>
-        <BootstrapDialog
-          onClose={handleClose}
-          aria-labelledby='customized-dialog-title'
-          open={open}
-        >
-          <DialogTitle sx={{ m: 0, p: 2 }} id='customized-dialog-title'>
-            Patient's Details
-          </DialogTitle>
-          <IconButton
-            aria-label='close'
-            onClick={handleClose}
-            sx={{
-              position: "absolute",
-              right: 8,
-              top: 8,
-              color: (theme) => theme.palette.grey[500],
-            }}
+          }}
+        />
+        <React.Fragment>
+          <BootstrapDialog
+            onClose={handleClose}
+            aria-labelledby='customized-dialog-title'
+            open={open}
           >
-            <CloseIcon />
-          </IconButton>
-          <DialogContent
-            dividers
-            sx={{ justifyContent: "left", display: "flex", gap: 2 }}
-          >
-            <AccountCircleIcon
+            <DialogTitle sx={{ m: 0, p: 2 }} id='customized-dialog-title'>
+              Patient's Details
+            </DialogTitle>
+            <IconButton
+              aria-label='close'
+              onClick={handleClose}
               sx={{
-                color: "#1e3620",
-                fontSize: 100,
-              }}
-            />
-            <ThemeProvider
-              theme={{
-                palette: {
-                  primary: {
-                    main: "#ffffff",
-                    dark: "#dce3e2",
-                  },
-                },
+                position: "absolute",
+                right: 8,
+                top: 8,
+                color: (theme) => theme.palette.grey[500],
               }}
             >
-              <Box
-                boxShadow={3}
+              <CloseIcon />
+            </IconButton>
+            <DialogContent
+              dividers
+              sx={{ justifyContent: "left", display: "flex", gap: 2 }}
+            >
+              <AccountCircleIcon
                 sx={{
-                  width: "100%",
-                  height: "auto",
-                  borderRadius: 3,
-                  bgcolor: "primary.main",
-                  "&:hover": {
-                    bgcolor: "primary.dark",
+                  color: "#1e3620",
+                  fontSize: 100,
+                }}
+              />
+              <ThemeProvider
+                theme={{
+                  palette: {
+                    primary: {
+                      main: "#ffffff",
+                      dark: "#dce3e2",
+                    },
                   },
                 }}
-                pl={2}
-                pt={1}
               >
-                <Typography
-                  gutterBottom
-                  variant='h4'
-                  sx={{ fontWeight: "semibold" }}
+                <Box
+                  boxShadow={3}
+                  sx={{
+                    width: "100%",
+                    height: "auto",
+                    borderRadius: 3,
+                    bgcolor: "primary.main",
+                    "&:hover": {
+                      bgcolor: "primary.dark",
+                    },
+                  }}
+                  pl={2}
+                  pt={1}
                 >
-                  {selectedRowData && selectedRowData.name}
-                  <Typography color='text.secondary'>
-                    {selectedRowData &&
-                    selectedRowData.gender.toLowerCase() === "male"
-                      ? "Mr."
-                      : "Mrs."}
+                  <Typography
+                    gutterBottom
+                    variant='h4'
+                    sx={{ fontWeight: "semibold" }}
+                  >
+                    {selectedRowData && selectedRowData.name}
+                    <Typography color='text.secondary'>
+                      {selectedRowData &&
+                      selectedRowData.gender.toLowerCase() === "male"
+                        ? "Mr."
+                        : "Mrs."}
+                    </Typography>
+                    <Typography color='text.secondary'>
+                      Tracking No:{" "}
+                      {selectedRowData && selectedRowData.tracking_no}
+                    </Typography>
                   </Typography>
-                  <Typography color='text.secondary'>
-                    Tracking No:{" "}
-                    {selectedRowData && selectedRowData.tracking_no}
-                  </Typography>
-                </Typography>
-              </Box>
-            </ThemeProvider>
-          </DialogContent>
-          <DialogContent
-            sx={{ justifyContent: "left", display: "flex", gap: 1 }}
-          >
-            <ThemeProvider
-              theme={{
-                palette: {
-                  primary: {
-                    main: "#ffffff",
-                    dark: "#dce3e2",
-                  },
-                },
-              }}
+                </Box>
+              </ThemeProvider>
+            </DialogContent>
+            <DialogContent
+              sx={{ justifyContent: "left", display: "flex", gap: 1 }}
             >
-              <Box
-                boxShadow={3}
-                sx={{
-                  width: 500,
-                  height: "auto",
-                  borderRadius: 3,
-                  bgcolor: "primary.main",
-                  "&:hover": {
-                    bgcolor: "primary.dark",
+              <ThemeProvider
+                theme={{
+                  palette: {
+                    primary: {
+                      main: "#ffffff",
+                      dark: "#dce3e2",
+                    },
                   },
                 }}
-                pl={2}
-                pt={1}
-                pr={2}
-                pb={1}
               >
-                <Typography color='text.secondary'>
-                  <b>Gender:</b> {selectedRowData && selectedRowData.gender}
-                </Typography>
-                <Typography color='text.secondary'>
-                  <b>National ID No: </b>
-                  {selectedRowData && selectedRowData.nic}
-                </Typography>
-                <Typography color='text.secondary'>
-                  <b>BirthDay: </b>
-                  {selectedRowData && selectedRowData.dob}
-                </Typography>
-                <Typography color='text.secondary'>
-                  <b>Phone No: </b>
-                  {selectedRowData && selectedRowData.phone}
-                </Typography>
-                <Typography color='text.secondary'>
-                  <b>Email: </b>
-                  {selectedRowData && selectedRowData.email}
-                </Typography>
-                <Typography color='text.secondary'>
-                  <b>Address: </b>
-                  {selectedRowData && selectedRowData.address}
-                </Typography>
-                <Typography color='text.secondary'>
-                  <b>Profile Created: </b>
-                  {selectedRowData &&
-                    new Date(selectedRowData.createdAt).toLocaleString()}
-                </Typography>
-                <Typography color='text.secondary'>
-                  <b>Profile Updated: </b>
-                  {selectedRowData &&
-                    new Date(selectedRowData.updatedAt).toLocaleString()}
-                </Typography>
-              </Box>
-            </ThemeProvider>
-          </DialogContent>
-        </BootstrapDialog>
-      </React.Fragment>
-      <React.Fragment>
-        <BootstrapDialog
-          onClose={handleEditClose}
-          aria-labelledby='customized-dialog-title'
-          open={openEdit}
-        >
-          <DialogTitle sx={{ m: 0, p: 2 }} id='customized-dialog-title'>
-            Edit Patient's Details
-          </DialogTitle>
-          <IconButton
-            aria-label='close'
-            onClick={handleEditClose}
-            sx={{
-              position: "absolute",
-              right: 8,
-              top: 8,
-              color: (theme) => theme.palette.grey[500],
-            }}
+                <Box
+                  boxShadow={3}
+                  sx={{
+                    width: 500,
+                    height: "auto",
+                    borderRadius: 3,
+                    bgcolor: "primary.main",
+                    "&:hover": {
+                      bgcolor: "primary.dark",
+                    },
+                  }}
+                  pl={2}
+                  pt={1}
+                  pr={2}
+                  pb={1}
+                >
+                  <Typography color='text.secondary'>
+                    <b>Gender:</b> {selectedRowData && selectedRowData.gender}
+                  </Typography>
+                  <Typography color='text.secondary'>
+                    <b>National ID No: </b>
+                    {selectedRowData && selectedRowData.nic}
+                  </Typography>
+                  <Typography color='text.secondary'>
+                    <b>BirthDay: </b>
+                    {selectedRowData && selectedRowData.dob}
+                  </Typography>
+                  <Typography color='text.secondary'>
+                    <b>Phone No: </b>
+                    {selectedRowData && selectedRowData.phone}
+                  </Typography>
+                  <Typography color='text.secondary'>
+                    <b>Email: </b>
+                    {selectedRowData && selectedRowData.email}
+                  </Typography>
+                  <Typography color='text.secondary'>
+                    <b>Address: </b>
+                    {selectedRowData && selectedRowData.address}
+                  </Typography>
+                  <Typography color='text.secondary'>
+                    <b>Profile Created: </b>
+                    {selectedRowData &&
+                      new Date(selectedRowData.createdAt).toLocaleString()}
+                  </Typography>
+                  <Typography color='text.secondary'>
+                    <b>Profile Updated: </b>
+                    {selectedRowData &&
+                      new Date(selectedRowData.updatedAt).toLocaleString()}
+                  </Typography>
+                </Box>
+              </ThemeProvider>
+            </DialogContent>
+          </BootstrapDialog>
+        </React.Fragment>
+        <React.Fragment>
+          <BootstrapDialog
+            onClose={handleEditClose}
+            aria-labelledby='customized-dialog-title'
+            open={openEdit}
           >
-            <CloseIcon />
-          </IconButton>
-          <DialogContent
-            sx={{ justifyContent: "left", display: "flex", gap: 1 }}
-          >
-            <PatientRegForm patientDetails={selectedRowData} />
-          </DialogContent>
-        </BootstrapDialog>
-      </React.Fragment>
+            <DialogTitle sx={{ m: 0, p: 2 }} id='customized-dialog-title'>
+              Edit Patient's Details
+            </DialogTitle>
+            <IconButton
+              aria-label='close'
+              onClick={handleEditClose}
+              sx={{
+                position: "absolute",
+                right: 8,
+                top: 8,
+                color: (theme) => theme.palette.grey[500],
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+            <DialogContent
+              sx={{ justifyContent: "left", display: "flex", gap: 1 }}
+            >
+              <PatientRegForm patientDetails={selectedRowData} />
+            </DialogContent>
+          </BootstrapDialog>
+        </React.Fragment>
+      </Box>
     </div>
   );
 }

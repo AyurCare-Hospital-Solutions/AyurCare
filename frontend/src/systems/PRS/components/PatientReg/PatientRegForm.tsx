@@ -1,7 +1,4 @@
 import { Typography, TextField, Box, Stack, Button } from "@mui/material";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import SendIcon from "@mui/icons-material/Send";
 import React, { useEffect, useState } from "react";
@@ -67,6 +64,9 @@ export default function PatientRegForm({
       dob: formattedDate,
     };
 
+    // validate the form
+    validate(patientData);
+
     try {
       if (patientDetails) {
         await axios.put(
@@ -125,6 +125,50 @@ export default function PatientRegForm({
       setadobValue(dayjs(patientDetails.dob));
     }
   }, [patientDetails]);
+
+  // get the error message
+  const [errorMessage, setErrorMessage] = useState({});
+
+  // validate function
+  const validate = (patient: Patient) => {
+    console.log(patient);
+    if (
+      !patient.name ||
+      !patient.nic ||
+      !patient.phone ||
+      !patient.dob ||
+      !patient.gender ||
+      !patient.email ||
+      !patient.address
+    ) {
+      setErrorMessage({
+        error: "All fields are required",
+      });
+      return enqueueSnackbar("All fields are required", { variant: "error" });
+    }
+    if (patient.phone.length !== 10) {
+      setErrorMessage({
+        error: "Phone number should be 10 digits",
+      });
+      return enqueueSnackbar("Phone number should be 10 digits", {
+        variant: "error",
+      });
+    }
+    if (patient.nic.search(/^(\d{12}|\d{9}[vx])$/gm) === -1) {
+      setErrorMessage({
+        error: "NIC number should be 10 digits",
+      });
+      return enqueueSnackbar("NIC number should be 10 digits", {
+        variant: "error",
+      });
+    }
+    if (patient.email.search(/\S+@\S+\.\S+/) === -1) {
+      setErrorMessage({
+        error: "Invalid email",
+      });
+      return enqueueSnackbar("Invalid email", { variant: "error" });
+    }
+  };
 
   return (
     <div>
