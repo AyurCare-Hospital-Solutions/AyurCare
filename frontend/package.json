@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@date-io/date-fns": "^3.0.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
     "@fullcalendar/daygrid": "^6.1.11",
@@ -20,28 +19,31 @@
     "@mui/icons-material": "^5.15.13",
     "@mui/material": "^5.15.13",
     "@mui/x-charts": "^7.3.0",
+    "@mui/x-data-grid": "^7.3.0",
     "@mui/x-date-pickers": "^7.2.0",
-    "@react-pdf/renderer": "^3.4.3",
-    "@types/chart.js": "^2.9.41",
+    "@react-pdf/renderer": "^3.4.4",
     "axios": "^1.6.8",
     "chart.js": "^4.4.2",
     "date-fns": "^3.6.0",
     "dayjs": "^1.11.10",
     "dom-to-image": "^2.6.0",
-    "express": "^4.18.2",
     "html2canvas": "^1.4.1",
     "material-ui-confirm": "^3.0.11",
     "mousetrap": "^1.6.5",
-    "nodemon": "^3.0.3",
     "notistack": "^3.0.1",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.51.3",
     "react-pdf": "^7.7.1",
-    "react-router-dom": "^6.22.3"
+    "react-router-dom": "^6.22.3",
+    "react-to-pdf": "^1.0.1",
+    "styled-components": "^6.1.8",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@types/chart.js": "^2.9.41",
     "@types/dom-to-image": "^2.6.7",
     "@types/mousetrap": "^1.6.15",
     "@types/react": "^18.2.55",
@@ -55,7 +57,6 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "postcss": "^8.4.36",
-    "react-styleguidist": "^13.1.2",
     "typescript": "^5.2.2",
     "vite": "^5.1.0"
   }
