@@ -1,5 +1,5 @@
 const express = require("express");
-const userConcern = require("../../model/userConcern");
+const userConcern = require("../../model/UserConcern");
 const externalPrescription = require("../../model/ExternalPresription");
 const yup = require("yup");
 const fs = require("fs");
