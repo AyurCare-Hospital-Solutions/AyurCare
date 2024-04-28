@@ -7,20 +7,20 @@ interface SearchResultsProps {
 }
 
 const Records: React.FC = () => {
-    const [searchResults, setSearchResults] = useState<SearchResultsProps["results"]>([]); // Initialize empty search results
+  const [searchResults, setSearchResults] = useState<
+    SearchResultsProps["results"]
+  >([]); // Initialize empty search results
 
-    const handleSearch = (results: any[]) => {
-        setSearchResults(results);
-    };
+  const handleSearch = (results: any[]) => {
+    setSearchResults(results);
+  };
 
-    return (
-        <div>
-            <SearchForm onSearch={handleSearch} />
-            <SearchResults results={searchResults} />
-        </div>
-    );
+  return (
+    <div>
+      <SearchForm onSearch={handleSearch} />
+      <SearchResults results={searchResults} />
+    </div>
+  );
 };
 
 export default Records;
-
-
