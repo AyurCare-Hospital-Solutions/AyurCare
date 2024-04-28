@@ -105,7 +105,9 @@ const ExternalPrescriptionTable = () => {
               <TableCell>File</TableCell>
               <TableCell>Update Status</TableCell>
               <TableCell>Remove</TableCell>
-              {/* <TableCell>test</TableCell> */}
+
+
+
             </TableRow>
           </TableHead>
           <TableBody>
@@ -191,15 +193,16 @@ const ExternalPrescriptionTable = () => {
                       Reject
                     </Button>
                   </TableCell>
-
+                  {/* delete button */}
                   <TableCell>
                     <Button onClick={() => handleClickOpen(row.id)}>
                       <DeleteIcon sx={{ color: "#0d4838" }} />
                     </Button>
                   </TableCell>
 
-                  {/* show test  */}
-                  {/* <TableCell>{row.test}</TableCell> */}
+
+
+
                 </TableRow>
               ))
             ) : (
