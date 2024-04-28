@@ -16,7 +16,17 @@ router.put("/patients/:id/prescriptions", prescriptionsService.updatePrescriptio
 router.delete("/prescriptions/:id", prescriptionsService.deletePrescription);
 router.get("/patientPrescriptions/:id",prescriptionsService.getPrescriptionByPatientId);
 
-// Search medical records by patient name and date range
-router.get("/searchMedicalRecords", prescriptionsService.searchMedicalRecords);
+
+// Prescriptions router
+router.get("/prescriptions/search", async (req, res) => {
+    const { patientId, startDate, endDate } = req.query;
+    try {
+        const prescriptions = await prescriptionsService.searchPrescriptions(patientId, startDate, endDate);
+      res.json(prescriptions); // Return search results
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error searching prescriptions" });
+    }
+});
 
 module.exports = router;

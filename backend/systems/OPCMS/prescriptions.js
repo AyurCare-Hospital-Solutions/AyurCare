@@ -115,36 +115,19 @@ const getPrescriptionByPatientId = async (req, res) => {
 };
 
 // Search medical records by patient name and date range
-const searchMedicalRecords = async (req, res) => {
-  const { name, startDate, endDate } = req.query;
-  try {
-    let prescriptions;
-    if (name && startDate && endDate) {
-      prescriptions = await Prescription.findAll({
-        where: {
-          dispensed_date: {
-            [Op.between]: [startDate, endDate],
-          },
-        },
-        include: [{ model: Patient, where: { name: { [Op.like]: `%${name}%` } } }],
-      });
-    } else if (startDate && endDate) {
-      prescriptions = await Prescription.findAll({
-        where: {
-          dispensed_date: {
-            [Op.between]: [startDate, endDate],
-          },
-        },
-        include: Patient,
-      });
-    } else {
-      return res.status(400).json({ error: "Invalid search parameters" });
-    }
-    res.json(prescriptions);
-  } catch (error) {
-    res.status(500).json({ error: `Error searching medical records: ${error.message}` });
+async function searchPrescriptions(patientId, startDate, endDate) {
+  const whereClause = {};
+  if (patientId) {
+    whereClause.patientId = patientId;
   }
-};
+  if (startDate && endDate) {
+    whereClause.dispensed_date = {
+      [Op.gte]: startDate,
+      [Op.lte]: endDate,
+    };
+  }
+  return await Prescription.findAll({ where: whereClause, include: { model: Prescription.Patient } }); // Include Patient model to access patient data
+}
 
 module.exports = {
   createPrescription,
@@ -153,5 +136,5 @@ module.exports = {
   updatePrescription,
   deletePrescription,
   getPrescriptionByPatientId,
-  searchMedicalRecords,
+  searchPrescriptions,
 };
