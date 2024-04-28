@@ -8,6 +8,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { AccountCircle, ArrowDropDown, ConfirmationNumber, Event, Logout, Mail } from '@mui/icons-material';
 import { ListItemIcon } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 
 function TopNavBar() {
@@ -25,7 +26,7 @@ function TopNavBar() {
     return <>
         <AppBar position="fixed">
             <Toolbar disableGutters={true} sx={{ px: "8px" }}>
-                <Box sx={{ flexGrow: 0 }}>
+                <Box sx={{ flexGrow: 0 }} onClick={() => { window.location.href = "/" }}>
                     <img src="/assets/logo.png" alt="AyurCare Logo" style={{ height: "50px" }} />
                 </Box>
                 <Box sx={{ flexGrow: 1 }}></Box>
