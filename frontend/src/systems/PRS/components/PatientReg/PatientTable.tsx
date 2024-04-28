@@ -17,6 +17,7 @@ import { Box, ThemeProvider, Tooltip } from "@mui/material";
 import PatientRegForm from "./PatientRegForm";
 import { enqueueSnackbar } from "notistack";
 import SearchInput from "../SearchInput";
+import { Search } from "@mui/icons-material";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -35,6 +36,9 @@ function DataGridTest() {
       setData(res.data);
     });
   }
+
+  // search state tracking search
+  const [search, setSearch] = useState<RegExp>();
 
   useEffect(() => {
     getPatients();
@@ -125,16 +129,18 @@ function DataGridTest() {
   }
 
   // set the rows
-  const rows = data.map((row: any, index = 0) => ({
-    id: index++,
-    tracking_no: row.tracking_no,
-    name: row.name,
-    nic: row.nic,
-    gender: row.gender,
-    phone: row.phone,
-    idDb: row.id,
-    // email: row.email,
-  }));
+  const rows = data
+    .filter((v: any) => v.name.search(search) !== -1)
+    .map((row: any, index = 0) => ({
+      id: index++,
+      tracking_no: row.tracking_no,
+      name: row.name,
+      nic: row.nic,
+      gender: row.gender,
+      phone: row.phone,
+      idDb: row.id,
+      // email: row.email,
+    }));
 
   // dialog box
   const [open, setOpen] = React.useState(false);
@@ -167,7 +173,11 @@ function DataGridTest() {
   return (
     <div>
       <Box sx={{ display: "flex", flexDirection: "column" }}>
-        <SearchInput onChange={() => {}} />
+        <SearchInput
+          onChange={(e) => {
+            setSearch(e);
+          }}
+        />
         <DataGrid
           sx={{ marginTop: 2 }}
           rows={rows}
