@@ -15,7 +15,7 @@ import dayjs from 'dayjs';
 function IMSAnalytics() {
   const getDate = () => {
     const date = dayjs().format('YYYY-MM-DD');
-    const time = dayjs().format('HH:MM');
+    const time = dayjs().format('HH:mm');
     return { date, time };
   }
   return (
