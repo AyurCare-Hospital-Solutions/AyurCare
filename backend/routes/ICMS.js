@@ -33,4 +33,7 @@ router.get("/beds/:ward", bedService.getBeds);
 router.delete("/beds/:bed", bedService.deleteBed)
 router.post("/beds", bedService.createBed);
 
+const reportService = require("../systems/ICMS/reports");
+router.get("/reports", reportService.getReports)
+
 module.exports = router;

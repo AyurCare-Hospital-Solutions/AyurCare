@@ -6,6 +6,7 @@ import PatientDetails from "./PatientDetails";
 import PatientList from "./PatientManagement";
 import WaitListManager from "./WaitListManager";
 import WardDetails from "./WardDetails";
+import Reports from "./Reports";
 
 const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
     name: "ICMS",
@@ -26,6 +27,10 @@ const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
         {
             element: <WaitListManager />,
             path: "wait_list"
+        },
+        {
+            element: <Reports />,
+            path: "reports"
         },
         {
             path: "patient",
