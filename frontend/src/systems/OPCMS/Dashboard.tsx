@@ -18,12 +18,13 @@ const Dashboard = () => {
                 <LinkCard2 name="Appointments" desc="Patient Analysis and Medical States Analysis" link="/opcms/appointments"></LinkCard2>
             </Grid>
             <Grid item xs={6}>
-                <Box flexGrow="3" display="flex" flexDirection="column" >
-                    <LinkCard name="Medical Records" desc="Find Medical Record details" link="/icms/care_plan"></LinkCard>
-                    <LinkCard name="Reports" desc="Generate reports" link="/icms/nursing_log"></LinkCard>
-                    <LinkCard name="Analytics" desc="Patient Analysis and Medical States Analysis" link="/opcms/analytics"></LinkCard>
+                <Box flexGrow="3" display="flex" flexDirection="column">
+                    <LinkCard name="Medical Records" desc="Find Medical Record details" link="/opcms/medicalRecords" /> 
+                    <LinkCard name="Reports" desc="Generate reports" link="/opcms/reports" />
+                    <LinkCard name="Analytics" desc="Patient Analysis and Medical States Analysis" link="/opcms/analytics" />
                 </Box>
             </Grid>
+
         </Grid >
     </>
 };
