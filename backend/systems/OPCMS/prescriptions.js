@@ -115,18 +115,23 @@ const getPrescriptionByPatientId = async (req, res) => {
 };
 
 // Search medical records by patient name and date range
-async function searchPrescriptions(patientId, startDate, endDate) {
+async function searchPrescriptions(req,res) {
+  const {patientId}=req.params;
+  console.log(patientId);
   const whereClause = {};
   if (patientId) {
     whereClause.patientId = patientId;
   }
-  if (startDate && endDate) {
-    whereClause.dispensed_date = {
-      [Op.gte]: startDate,
-      [Op.lte]: endDate,
-    };
-  }
-  return await Prescription.findAll({ where: whereClause, include: { model: Prescription.Patient } }); // Include Patient model to access patient data
+  // if (startDate && endDate) {
+  //   whereClause.dispensed_date = {
+  //     [Op.gte]: startDate,
+  //     [Op.lte]: endDate,
+  //   };
+  // }
+  return await Prescription.findAll({
+    where: whereClause,
+    include: { model: Prescription.Patient },
+  }); // Include Patient model to access patient data
 }
 
 module.exports = {

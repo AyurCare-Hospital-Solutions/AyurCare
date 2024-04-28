@@ -1,4 +1,3 @@
-import React from "react";
 import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Button } from "@mui/material";
 
 interface Prescription {

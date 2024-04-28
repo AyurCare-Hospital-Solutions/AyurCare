@@ -15,13 +15,7 @@ function SearchForm({ onSearch }: SearchFormProps) {
     e.preventDefault();
 
     try {
-        const response = await axios.get("/api/opcms/medicalRecords", {
-            params: {
-            patientId,
-            startDate,
-            endDate,
-            },
-        });
+        const response = await axios.get(`/api/opcms/medicalRecords/${patientId}`);
 
       onSearch(response.data); // Pass search results to parent component
     } catch (error) {

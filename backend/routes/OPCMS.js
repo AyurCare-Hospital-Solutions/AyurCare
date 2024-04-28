@@ -8,6 +8,7 @@ const prescriptionsService = require("../systems/OPCMS/prescriptions"); // Impor
 router.get("/opdAppointments", appointmentsService.getAllOPDAppointments);
 router.put("/opdAppointments/:id", appointmentsService.updateOPDAppointment);
 
+
 // Prescriptions
 router.post("/patients/:id/prescriptions",prescriptionsService.createPrescription);
 router.get("/prescriptions", prescriptionsService.getAllPrescriptions);
