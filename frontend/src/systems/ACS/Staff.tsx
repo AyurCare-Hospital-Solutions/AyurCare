@@ -5,9 +5,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import InfoIcon from '@mui/icons-material/Info';
 import { Link, useNavigate } from 'react-router-dom';
 import FormDialog from './AddStaff';
-import { IconButton, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
+import { IconButton, Dialog, DialogTitle, DialogContent, DialogActions, Button, Box } from '@mui/material';
 import axios from 'axios';
-import PreviewStaff from './PreviewStaff'; // Import the PreviewStaff component
 
 interface Row {
   id: number;
@@ -22,9 +21,8 @@ interface Row {
 
 const Staff = () => {
   const navigate = useNavigate();
-  const [staffData,setStaffData] = useState<any>([]);
   const [rows, setRows] = useState<Row[]>([]);
-  const [selectedRow, setSelectedRow] = useState<number | null>(null);
+  const [_selectedRow, setSelectedRow] = useState<number | null>(null);
   // ([
   //   { id: 1, name: 'Nevil Perera', speciality: 'Doctor', phoneNumber: '0712345678', homePhone: '0112345678', email: 'samantha.perera@example.com', qualification: 'Bachelor of Ayurveda Medicine and Surgery (BAMS)', dateHired: '2022-01-15' },
   //   { id: 2, name: 'Kamal Silva', speciality: 'Management', phoneNumber: '0773456789', homePhone: '0113456789', email: 'kamal.silva@example.com', qualification: 'MBA in Hospital Management', dateHired: '2022-03-20' },
@@ -35,6 +33,8 @@ const Staff = () => {
     setSelectedRow(id);
     navigate(`/previewStaff/${id}`); // Redirect to PreviewStaff component with the selected row ID
   };
+
+  
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedMemberId, setSelectedMemberId] = useState<number | null>(null);
@@ -68,9 +68,12 @@ const Staff = () => {
       width: 200,
       renderCell: (params) => (
         <>
-          <IconButton onClick={() => handlePreview(params.row.id)}>
+          {/* <IconButton onClick={() => {
+            handlePreview(params.row.id);
+            setRows(params.row.id);
+          }} >
             <InfoIcon />
-          </IconButton>
+          </IconButton> */}
 
           <Link to={`../editStaff/${params.row.id}`} style={{ textDecoration: 'none' }}>
             <IconButton>
@@ -171,8 +174,14 @@ const Staff = () => {
         </DialogActions>
       </Dialog>
       
+      {/* <Box>
+        <ViewStaffDialog  
+          row = {rows}
+          open = {}
+          handleClose={() => ()}
+        />
+      </Box> */}
     </div>
-
     
   );
 };

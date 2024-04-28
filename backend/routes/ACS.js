@@ -2,7 +2,10 @@ const express = require("express");
 const router = express.Router();
 
 const staffService = require("../systems/ACS/staff");
+const reportService = require("../systems/ACS/reports");
 
+
+router.get("/reports", reportService.generateReportData)
 // Route to get all staff members
 router.get("/staff", staffService.getAllStaff);
 
