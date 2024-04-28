@@ -11,7 +11,7 @@ dayjs.extend(AdvancedFormat)
 const cardStyle = { display: "flex", px: "16px", py: "12px" }
 
 export const LinkCard = ({ name, desc, link }: { name: string, desc: string, link: string }) => {
-    return <Link to={link} style={{ textDecoration: "none" }}>
+    return <Link to={link} style={{ textDecoration: "none", overflow: "hidden" }}>
         <Paper elevation={3} sx={{ ...cardStyle, mt: 2, height: "94px", mr: "auto", minWidth: "80%" }}>
             <Box sx={{ my: "auto" }}>
                 <Typography sx={{ fontSize: "1.75rem", fontWeight: 500 }}>{name}</Typography>
@@ -45,7 +45,7 @@ export const DateCard = () => {
 }
 
 export const WelcomeCard = ({ img }: { img: string }) => {
-    return <Paper elevation={3} sx={{ ...cardStyle, backgroundColor: "#cde1b4", mb: 4, minHeight: "140px" }}>
+    return <Paper elevation={3} sx={{ ...cardStyle, backgroundColor: "#cde1b4", mb: 4, minHeight: "140px", overflowX: "hidden" }}>
         <Box sx={{ my: "auto" }}>
             <Typography sx={{ color: "#003a2b", fontWeight: 600, fontSize: "1.8rem" }} >Welcome Back!</Typography>
             <Typography sx={{ color: "#003a2b", fontSize: "1.1rem" }} >Have a Nice Day!</Typography>
