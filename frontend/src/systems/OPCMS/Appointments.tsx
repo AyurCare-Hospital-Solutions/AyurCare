@@ -1,7 +1,7 @@
 import { useState } from "react";
 import AppointmentsTable from "./components/AppointmentsTable";
 import SearchInput from "./components/SearchInput";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 const Appointments = () => {
     const [search, setSearch] = useState<string>("");
@@ -11,7 +11,9 @@ const Appointments = () => {
             <Typography sx={{ mb: 2 }} variant="h4">
                 Appointments
             </Typography>
-            <SearchInput onSearch={(s) => setSearch(s)} />
+            <Box sx={{ mb: 2 }}>
+                <SearchInput onSearch={(s) => setSearch(s)} />
+            </Box>
             <AppointmentsTable search={search} />
         </div>
     );

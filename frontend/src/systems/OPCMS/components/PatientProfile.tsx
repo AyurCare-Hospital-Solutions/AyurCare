@@ -99,12 +99,8 @@ const PatientProfile = () => {
     <div>
       <Box sx={{mb:3}}>
         <Typography variant="h4">{patient?.name}</Typography>
-        <Typography variant="h6">Patient ID: {id}</Typography>
-        
         <Box sx={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
-          <Typography variant="h6">
-            Age: {calculateAge(patient?.dob || '')} years
-          </Typography>
+          <Typography variant="h6">Patient ID: {id}</Typography> 
           <Button variant="contained" onClick={handleClickOpen}>Add Prescription</Button>
         </Box>
       </Box>
