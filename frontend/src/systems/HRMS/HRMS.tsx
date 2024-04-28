@@ -22,7 +22,7 @@ import {
 const HRMS = () => {
   return (
     <DashboardPage>
-      <Link to="/HRMS/Dashboard">
+      <Link to="/hrms/">
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
@@ -76,7 +76,7 @@ const HRMS = () => {
       </Link>
       <Divider sx={{ mt: 2, mb: 1 }} />
 
-      <Link to="rosterManagement">
+      <Link to="rosterManagement" hidden>
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
@@ -87,7 +87,7 @@ const HRMS = () => {
         </ListItem>
       </Link>
 
-      <Link to="shiftTypes">
+      <Link to="shiftTypes" hidden>
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
@@ -98,7 +98,7 @@ const HRMS = () => {
         </ListItem>
       </Link>
 
-      <Link to="shifts">
+      <Link to="shifts" hidden>
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>

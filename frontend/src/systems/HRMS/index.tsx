@@ -8,11 +8,17 @@ import Shifts from "./components/Shifts";
 import Reports from "./components/Reports";
 import Chat from "./components/Chat";
 import ShiftTypes from "./ShiftTypes";
+import Dashboard from "./components/Dashboard";
 
 const routes: { name: string; root: React.ReactNode; routes: RouteObject[] } = {
   name: "HRMS",
   root: <HRMS />,
   routes: [
+    {
+      index: true,
+      element: <Dashboard />,
+    },
+
     {
       path: "leaveRequests",
       element: <LeaveRequest />,
