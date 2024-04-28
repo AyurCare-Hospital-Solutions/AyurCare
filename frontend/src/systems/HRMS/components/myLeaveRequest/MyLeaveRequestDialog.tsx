@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import {
   Button,
   TextField,
@@ -11,9 +11,9 @@ import {
   FormControlLabel,
   Box,
   Autocomplete,
+  Typography,
 } from "@mui/material";
 import { LeaveTypeData } from "../../types";
-import axios from "axios";
 import { Dayjs } from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers";
 
@@ -30,7 +30,6 @@ export default function MyLeaveRequestDialog({
 }) {
   const [reason, setReason] = useState("");
   const [hours, setHours] = useState<string>("");
-  const [status, setStatus] = useState<string>("");
   const [start_date, setStartDate] = useState<Dayjs | null>(null);
   const [end_date, setEndDate] = useState<Dayjs | null>(null);
   const [leave_type, setLeaveType] = useState<LeaveTypeData | null>(null);
@@ -43,7 +42,6 @@ export default function MyLeaveRequestDialog({
     reasonError: "",
     registrationError: "",
     hoursError: "",
-    statusError: "",
     startDateError: "",
     endDateError: "",
     leaveTypeError: "",
@@ -53,7 +51,25 @@ export default function MyLeaveRequestDialog({
 
   const updateReason = (newReason: string) => {
     let reasonErrorMessage = "";
+
+    if (newReason === "") {
+      reasonErrorMessage = "Name cannot be empty";
+    } else if (newReason.length > 50) {
+      reasonErrorMessage = "Name cannot be longer than 50 characters";
+    } else if (newReason.length < 3) {
+      reasonErrorMessage = "Name must be at least 3 characters long";
+    } else if (!/^[a-zA-Z ]+$/.test(newReason)) {
+      reasonErrorMessage = "Name must contain only letters and spaces";
+    }
+
     setReason(newReason);
+    setErrors({ ...errors, reasonError: reasonErrorMessage });
+    setCanSubmit(
+      reasonErrorMessage === "" &&
+        errors.leaveTypeError === "" &&
+        errors.startDateError === "" &&
+        errors.endDateError === ""
+    );
   };
 
   const getRegistration = () => {
@@ -67,44 +83,84 @@ export default function MyLeaveRequestDialog({
   };
 
   const updateHours = (newHours: string) => {
-    let hoursErrorMessage = "";
     setHours(newHours);
   };
 
-  const updateStartDate = (newStartDate: Dayjs) => {
+  const updateStartDate = (newStartDate: Dayjs | null) => {
     let startDateErrorMessage = "";
-    setStartDate(newStartDate); // format to YYYY-MM-DD or set to null
+
+    if (!newStartDate) {
+      startDateErrorMessage = "Start Date is required.";
+    } else {
+      setStartDate(newStartDate);
+    }
+    setErrors({ ...errors, startDateError: startDateErrorMessage });
+    setCanSubmit(
+      startDateErrorMessage === "" &&
+        errors.reasonError === "" &&
+        errors.endDateError === "" &&
+        errors.leaveTypeError === ""
+    );
   };
 
-  const updateEndDate = (newEndDate: Dayjs) => {
-    // Set a default error message (optional)
+  const updateEndDate = (newEndDate: Dayjs | null) => {
     let endDateErrorMessage = "";
 
-    // Assign start date if newEndDate is null
     const endDate = newEndDate || start_date;
 
-    // Optional validation (check if endDate is still null)
-    if (!endDate) {
-      endDateErrorMessage = "Both start and end dates are null."; // Customize message as needed
+    if (isMultipleDays && !endDate) {
+      endDateErrorMessage = "End Date is required";
+    } else if (isMultipleDays && endDate && endDate.isBefore(start_date)) {
+      endDateErrorMessage = "End Date cannot be before Start Date";
+    } else if (endDate && endDate.isSame(start_date, "day")) {
+      endDateErrorMessage =
+        "End Date cannot be the same as Start Date. If so disbale Multiple Days.";
     }
 
-    // Format and set endDate
     setEndDate(endDate);
+    setErrors({ ...errors, endDateError: endDateErrorMessage });
+    setCanSubmit(
+      endDateErrorMessage === "" &&
+        errors.reasonError === "" &&
+        errors.startDateError === "" &&
+        errors.leaveTypeError === ""
+    );
   };
 
   const updateLeaveTypeId = (newLeaveTypeId: LeaveTypeData | null) => {
+    let leaveTypeErrorMessage = "";
+
+    if (!newLeaveTypeId) {
+      leaveTypeErrorMessage = "Leave type cannot be empty";
+    }
+
     if (newLeaveTypeId) {
       setLeaveType(newLeaveTypeId);
+
+      // Update hours based on leave type and full day status
+      if (!isFullDay) {
+        if (newLeaveTypeId.name.toLowerCase().trim() === "short leave") {
+          setHours("1.5");
+        } else {
+          setHours("4.0");
+        }
+      }
     }
+
+    setErrors({ ...errors, leaveTypeError: leaveTypeErrorMessage });
+    setCanSubmit(
+      leaveTypeErrorMessage === "" &&
+        errors.reasonError === "" &&
+        errors.startDateError === "" &&
+        errors.endDateError === ""
+    );
   };
 
   const handleSubmit = () => {
-
     addLeaveRequest({
       reason,
       registration: getRegistration(),
       hours: Number.parseFloat(hours),
-      status,
       start_date,
       end_date: end_date ?? start_date,
       leave_type,
@@ -112,12 +168,10 @@ export default function MyLeaveRequestDialog({
   };
 
   useEffect(() => {
-    // Reset errors and submission state when leave types change
     setErrors({
       reasonError: "",
       registrationError: "",
       hoursError: "",
-      statusError: "",
       startDateError: "",
       endDateError: "",
       leaveTypeError: "",
@@ -169,6 +223,8 @@ export default function MyLeaveRequestDialog({
             label="Leave Reason"
             type="text"
             variant="standard"
+            error={errors.reasonError !== ""}
+            helperText={errors.reasonError}
             onChange={(e) => updateReason(e.target.value)}
           />
           <Box
@@ -222,6 +278,9 @@ export default function MyLeaveRequestDialog({
                   <TextField {...params} label="Leave Type" />
                 )}
               />
+              <Typography variant="caption" color="#d32f2f">
+                {errors.leaveTypeError}
+              </Typography>
             </Box>
 
             <TextField
@@ -245,17 +304,26 @@ export default function MyLeaveRequestDialog({
               mt: 3,
             }}
           >
-            <DatePicker
-              label={isMultipleDays ? "Start Date" : "Date"}
-              onChange={(e: any) => updateStartDate(e)}
-            />
-            {isMultipleDays && (
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
               <DatePicker
-                label="End Date"
-                onChange={(e: any) => updateEndDate(e)}
+                label={isMultipleDays ? "Start Date" : "Date"}
+                onChange={(e: any) => updateStartDate(e)}
               />
+            </Box>
+            {isMultipleDays && (
+              <Box>
+                <DatePicker
+                  sx={{ mx: 1 }}
+                  label="End Date"
+                  onChange={(e: any) => updateEndDate(e)}
+                />
+              </Box>
             )}
           </Box>
+          <Typography variant="caption" color="#d32f2f" sx={{ pt: 1 }}>
+            {errors.startDateError}
+            {errors.endDateError}
+          </Typography>
           {!isFullDay && (
             <TextField
               autoFocus
@@ -266,14 +334,19 @@ export default function MyLeaveRequestDialog({
               type="text"
               variant="standard"
               value={hours}
-              onChange={(e) => setHours(e.target.value)}
+              disabled={true}
+              error={errors.hoursError !== ""}
+              helperText={errors.hoursError}
+              onChange={(e) => updateHours(e.target.value)}
               sx={{ mt: 3 }}
             />
           )}
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose}>Cancel</Button>
-          <Button type="submit">Request Leave</Button>
+          <Button type="submit" disabled={!canSubmit}>
+            Request Leave
+          </Button>
         </DialogActions>
       </Dialog>
     </>

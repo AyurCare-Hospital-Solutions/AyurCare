@@ -1,6 +1,7 @@
 import { Box, Paper, Typography } from "@mui/material";
-import LeaveReuqestByType from "./reports/leaveManagment/LeaveRequestByType";
+import LeaveRequestByType from "./reports/leaveManagment/LeaveRequestByType";
 import ReportGenerator from "../../../components/ReportGenerator";
+import LeaveRequestByStatus from "./reports/leaveManagment/LeaveRequestByStatus";
 
 const Reports = () => {
   return (
@@ -23,7 +24,8 @@ const Reports = () => {
           </Typography>
 
           <Box sx={{ m: 4 }}>
-            <LeaveReuqestByType />
+            <LeaveRequestByType />
+            <LeaveRequestByStatus />
           </Box>
         </Paper>
       </ReportGenerator>
