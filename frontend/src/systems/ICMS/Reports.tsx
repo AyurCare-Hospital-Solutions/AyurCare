@@ -1,9 +1,8 @@
-import { Box, CircularProgress, Skeleton, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import ReportGenerator from "../../components/ReportGenerator";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { ChartContainer, LineChart, PieChart } from "@mui/x-charts"
-import { BarChart } from "@mui/icons-material";
+import { LineChart, PieChart } from "@mui/x-charts"
 
 const Reports = () => {
     const [reports, setReports] = useState({ discharge_per_day: [], admissions_per_day: [], priority_wait_list: [], beds_per_ward: [] });
