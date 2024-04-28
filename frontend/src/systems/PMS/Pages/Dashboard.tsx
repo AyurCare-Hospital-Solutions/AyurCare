@@ -46,14 +46,14 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <>
+    <div>
       <Header />
       <ReportBox
         medicinesCount={medicinesCount}
         prescriptionsCount={prescriptionsCount}
         externalPrescriptionsCount={externalPrescriptionsCount}
       />
-    </>
+    </div>
   );
 };
 
