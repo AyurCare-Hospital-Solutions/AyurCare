@@ -34,7 +34,7 @@ function connect() {
             }
         }
 
-        console.log(`Using ${process.env.MYSQL_DB} on ${process.env.MYSQL_HOST}`)
+        console.log(`Using mysql database ${process.env.MYSQL_DATABASE} on ${process.env.MYSQL_HOST}`)
     }
 
     if (!Number.parseInt(process.env.SQL_LOG_QUERY)) {
@@ -65,12 +65,17 @@ async function createAll() {
         syncConfig.force = true;
     }
 
+    if (Number.parseInt(process.env.SQL_SYNC_ALTER)) {
+        console.log("Altering existing tables")
+        syncConfig.alter = true;
+    }
+
     if (!Number.parseInt(process.env.SQL_SYNC_DEBUG)) {
         syncConfig.logging = () => { }
     }
 
     console.log("Synchronizing database with models...");
-    //await sequelize.sync(syncConfig);
+    await sequelize.sync(syncConfig);
     console.log("Finished synchronizing database.")
 }
 

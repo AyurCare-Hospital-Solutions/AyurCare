@@ -4,7 +4,6 @@ import Medicine from "./Medicine";
 import Material from "./Material";
 import Accessories from "./Accessories";
 import MedicineRequest from "./MedicineRequest";
-import ManageMadicineRequests from "./ManageMedicineRequests";
 import MaterialRequest from "./MaterialRequest";
 import ManageMedicineRequests from "./ManageMedicineRequests";
 import ManageMaterialRequests from "./ManageMatarialRequest";

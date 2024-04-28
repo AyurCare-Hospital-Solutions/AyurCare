@@ -140,7 +140,6 @@ function Material() {
     confirm({ description: "Confirm Update Material Details" })
       .then(async () => {
         try {
-          console.log(data);
           await axios.put(`api/ims/material/updateMaterial/${data.updateId}`, { materialName: data.updateName, amount: data.amount, buffer: data.updateReOrderBuffer, unit: data.updateUnit });
           enqueueSnackbar(`Material ${data.updateName} Updated Successfuly...`, { variant: "success" });
           getMaterialData();
