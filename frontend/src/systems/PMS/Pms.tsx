@@ -21,7 +21,7 @@ const Pms = () => {
   return (
     <SnackbarProvider>
       <DashboardPage>
-        <Link to="/pms/dashboard">
+        <Link to="/pms/">
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
