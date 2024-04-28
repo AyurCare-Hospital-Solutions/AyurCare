@@ -21,10 +21,12 @@ router.post("/nursinglog/:aid", nursingLogService.createNursingLog);
 
 const patientAdmissions = require("../systems/ICMS/patients");
 router.get("/patients", patientAdmissions.getPatients);
+router.get("/patients/all", patientAdmissions.getAllPatients);
 router.post("/patient/:aid/discharge", patientAdmissions.dischargePatient);
 
 const waitListService = require("../systems/ICMS/waitlist");
 router.get("/waitlist", waitListService.getWaitList);
+router.post("/waitlist", waitListService.addToWaitList);
 router.post("/waitlist/admit/:waitID", waitListService.admitPatient);
 
 const bedService = require("../systems/ICMS/beds");

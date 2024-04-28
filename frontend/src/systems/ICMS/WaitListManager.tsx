@@ -1,18 +1,21 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Bed, WaitList, WaitListArraySchema, Ward, WardArraySchema } from "./types";
+import { Bed, WaitList, WaitListArraySchema, WaitListSchema, Ward, WardArraySchema } from "./types";
 import WaitListTable from "./components/WaitListTable";
 import WaitListDialog from "./components/WaitListDialog";
 import { enqueueSnackbar } from "notistack";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import SearchInput from "./components/SearchInput";
 import ReportGenerator from "../../components/ReportGenerator";
+import { Add } from "@mui/icons-material";
+import WaitListAddDialog from "./components/WaitListAddDialog";
 
 const WaitListManager = () => {
     const [waitList, setWaitList] = useState<WaitList[]>([]);
     const [wards, setWards] = useState<Ward[]>([]);
     const [loading, setLoading] = useState(true);
     const [modelOpen, setModalOpen] = useState(false);
+    const [modelAddOpen, setAddModalOpen] = useState(false);
     const [selected, setSelected] = useState<WaitList>();
 
     const [search, setSearch] = useState<RegExp>();
@@ -62,16 +65,35 @@ const WaitListManager = () => {
         })
     }
 
+    const handleAddPatient = async (reason: string, patientId: number, isPriority: boolean) => {
+        try {
+            let resp = await axios.post("/api/icms/waitlist", { reason: reason, patient: patientId, priority: isPriority });
+            setWaitList([...waitList, WaitListSchema.cast(resp.data)])
+        } catch (e) {
+            enqueueSnackbar("Failed to add patient to wait list", { variant: "error" });
+            console.error(e);
+            return;
+        }
+
+        enqueueSnackbar("Successfully added patient to wait list", { variant: "success" });
+
+    }
+
     return <>
         <Typography variant="h5" mx={1} my={2}>Waiting List</Typography>
         <Box sx={{ display: "flex" }} my={4} mx={2}>
             <SearchInput onChange={(s) => setSearch(s)} />
+            <Button variant="outlined" startIcon={<Add />} sx={{ ml: "auto" }} onClick={() => setAddModalOpen(true)}>
+                Add to List
+            </Button>
         </Box>
         <ReportGenerator title="Wait List" filename="WaitList.pdf">
             <WaitListTable data={waitList} loading={loading} onSelect={handleSelect} print search={search} />
         </ReportGenerator>
         <WaitListTable data={waitList} loading={loading} onSelect={handleSelect} search={search} />
         <WaitListDialog open={modelOpen} row={selected} wards={wards} onAdmit={handleAdmit} onClose={() => setModalOpen(false)} />
+
+        <WaitListAddDialog open={modelAddOpen} onClose={() => { setAddModalOpen(false) }} onAdd={handleAddPatient} />
     </>
 }
 

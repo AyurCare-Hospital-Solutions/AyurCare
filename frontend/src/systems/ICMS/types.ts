@@ -1,6 +1,6 @@
 import { InferType, array, date, number, object, string, bool } from "yup";
 
-const PatientSchema = object({
+export const PatientSchema = object({
     id: number().required(),
     name: string().required(),
     tracking_no: string().required(),
@@ -14,7 +14,7 @@ export const WardSchema = object({
 });
 
 
-const WaitListSchema = object({
+export const WaitListSchema = object({
     id: number().required(),
     reason: string().required(),
     is_priority: bool().required(),
@@ -67,6 +67,7 @@ export const WardArraySchema = array(WardSchema).required();
 export const BedArraySchema = array(BedSchema).required();
 export const WaitListArraySchema = array(WaitListSchema).required();
 export const AdmissionListSchema = array(AdmissionSchema).required();
+export const PatientListSchema = array(PatientSchema).required();
 
 export type Admission = InferType<typeof AdmissionSchema>;
 export type CarePlan = InferType<typeof CarePlanSchema>;
@@ -75,3 +76,4 @@ export type NursingLog = InferType<typeof NursingLogSchema>;
 export type WaitList = InferType<typeof WaitListSchema>;
 export type Ward = InferType<typeof WardSchema>;
 export type Bed = InferType<typeof BedSchema>;
+export type Patient = InferType<typeof PatientSchema>;
