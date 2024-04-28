@@ -15,7 +15,7 @@ function SearchForm({ onSearch }: SearchFormProps) {
     e.preventDefault();
 
     try {
-        const response = await axios.get("/prescriptions/search", {
+        const response = await axios.get("/api/opcms/medicalRecords", {
             params: {
             patientId,
             startDate,
@@ -33,7 +33,7 @@ function SearchForm({ onSearch }: SearchFormProps) {
     return (
         <form onSubmit={handleSubmit}>
             <Typography variant="h4" sx={{mb:3}}>Medical Records</Typography>
-            <Box sx={{mb:2}}>
+            <Box sx={{mb:5, display:"flex", justifyContent:"space-around"}} >
             <TextField label="Patient ID" value={patientId} onChange={(e) => setPatientId(e.target.value)} />
             <TextField
                 label="Start Date"

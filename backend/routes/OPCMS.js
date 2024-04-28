@@ -18,7 +18,7 @@ router.get("/patientPrescriptions/:id",prescriptionsService.getPrescriptionByPat
 
 
 // Prescriptions router
-router.get("/prescriptions/search", async (req, res) => {
+router.get("/medicalRecords", async (req, res) => {
     const { patientId, startDate, endDate } = req.query;
     try {
         const prescriptions = await prescriptionsService.searchPrescriptions(patientId, startDate, endDate);
