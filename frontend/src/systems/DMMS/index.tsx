@@ -3,8 +3,6 @@ import DMMS from "./DMMS";
 import ManufactureRequest from "./ManufactureRequest";
 import ManageManufactureRequest from "./ManageManufactureRequest";
 import Dashboard from "../DMMS/Dashboard";
-import AddMedicineMaterials from "./MedicineMaterial/AddMedicineMaterial";
-import MedicineMaterialTable from "./MedicineMaterial/MedicineMaterialTable";
 import DMMSAnalyse from "./DMMSAnalyse";
 
 const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
@@ -28,12 +26,7 @@ const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
         },
 
         {
-            path: "reports",
-            element: <AddMedicineMaterials />
-        },
-
-        {
-            path: "report02",
+            path: "report",
             element: <DMMSAnalyse />
         },
 

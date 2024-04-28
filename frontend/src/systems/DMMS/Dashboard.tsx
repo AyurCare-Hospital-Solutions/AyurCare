@@ -17,16 +17,10 @@ function Dashboard() {
             <Box width="100%">
                 <Stack direction="row" spacing={6} alignItems="center" justifyContent="center" >
                     <Box>
-                        <LinkCard name={"New Orders"} desc={""} link={"./medicine"} />
+                        <LinkCard name={"Production Table"} desc={""} link={"./mgMedicine"} />
                     </Box>
                     <Box>
-                        <LinkCard name={"Production Table"} desc={""} link={"./material"} />
-                    </Box>
-                    <Box>
-                        <LinkCard name={"Manufacturing Data"} desc={""} link={"./accessories"} />
-                    </Box>
-                    <Box>
-                        <LinkCard name={"Reports"} desc={""} link={"./accessories"} />
+                        <LinkCard name={"Reports"} desc={""} link={"./report"} />
                     </Box>
                 </Stack>
             </Box>

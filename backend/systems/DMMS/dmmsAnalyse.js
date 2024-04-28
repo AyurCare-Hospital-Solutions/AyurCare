@@ -1,5 +1,6 @@
 const express = require("express");
-const ManufactureRequest = require('../../model/ManufactureRequest')
+const ManufactureRequest = require('../../model/ManufactureRequest');
+const { sequelize } = require('../../model');
 
 // get manufacture request analysis
 /**
@@ -45,7 +46,7 @@ const manufactureRequestData = async (req, res) => {
     completedCount = completedCount[0] ? completedCount[0].count : 0;
     rejectCount = rejectCount[0] ? rejectCount[0].count : 0;
     pendingCount = pendingCount[0] ? pendingCount[0].count : 0;
-    inprogressCount = inprogressCount[0] ? inprogressCount.count : 0;
+    inprogressCount = inprogressCount[0] ? inprogressCount[0].count : 0;
     manufactureerrorCount = manufactureerrorCount[0] ? manufactureerrorCount[0].count : 0;
     totalCount = totalCount[0] ? totalCount[0].count : 0;
 

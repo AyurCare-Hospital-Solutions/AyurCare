@@ -4,9 +4,9 @@ import axios from "axios"
 import { useEffect, useState } from "react";
 
 
-const getManufactureRequetData = async () => {
+const getmanufactureRequestData = async () => {
     try {
-        const response = await axios.get('api/dmms/analyseS/manufactureRequestData');
+        const response = await axios.get('api/dmms/analyse/manufactureRequestData');
         console.log(response.data);
         return response.data;
     }
@@ -19,7 +19,7 @@ export const ManufactureRequestStatusPieChart = () => {
     const [requestData, setRequestData] = useState<any>();
 
     useEffect(() => {
-        getManufactureRequetData()
+        getmanufactureRequestData()
             .then((data) => {
                 setRequestData(data);
             })
@@ -31,14 +31,15 @@ export const ManufactureRequestStatusPieChart = () => {
     const data =
         [
             { id: 0, value: requestData ? requestData.completedCount : 0, label: 'Completed', color: '#32CD32' },
-            { id: 1, value: requestData ? requestData.rejectCount : 0, label: 'Rejected', color: '#FF6347' },
-            { id: 2, value: requestData ? requestData.pendingCount : 0, label: 'Pending', color: '#FFCC00' },
+            { id: 1, value: requestData ? requestData.rejectCount : 0, label: 'Rejected', color: '#FF0000' },
+            { id: 2, value: requestData ? requestData.pendingCount : 0, label: 'Pending', color: '#00FFB2' },
             { id: 3, value: requestData ? requestData.inprogressCount : 0, label: 'In Progress', color: '#FFCC00' },
-            { id: 4, value: requestData ? requestData.manufactureerrorCount : 0, label: 'Manufacture Error', color: '#FFCC00' },
+            { id: 4, value: requestData ? requestData.manufactureerrorCount : 0, label: 'Error', color: '#FF5733' },
         ];
 
     return (
-        <Box width={400} height={300}>
+
+        <Box width={500} height={250}>
             <PieChart
                 series={[
                     {
@@ -57,9 +58,10 @@ export const ManufactureRequestStatusPieChart = () => {
                 height={300}
             />
             <Typography align="center">
-                pie chart: Medicine Request Status
+                Medicine Manufacture Request Progress
             </Typography>
         </Box>
+
     );
 }
 
@@ -67,7 +69,7 @@ export const MedicineRequestStatusBarChart = () => {
     const [requestData, setRequestData] = useState<any>();
 
     useEffect(() => {
-        getManufactureRequetData()
+        getmanufactureRequestData()
             .then((data) => {
                 setRequestData(data);
             })
@@ -104,15 +106,15 @@ export const MedicineRequestStatusBarChart = () => {
         <Box width={500} height={300}>
             <BarChart
                 colors={['#1ABC9C']}
-                xAxis={[{ scaleType: 'band', dataKey: 'status', label: "Status" }]}
+                xAxis={[{ scaleType: 'band', dataKey: 'status', label: "Progress" }]}
                 yAxis={[{ label: "Count" }]}
                 dataset={data}
-                series={[{ dataKey: 'count', label: 'Medicine request status distribution' }]}
+                series={[{ dataKey: 'count', label: 'Manufacture request status distribution' }]}
                 width={500}
                 height={300}
             />
             <Typography align="center">
-                bar chart: Medicine Request Status
+                Medicine Manufacturing Request Progress in Bar graph
             </Typography>
         </Box>
     );

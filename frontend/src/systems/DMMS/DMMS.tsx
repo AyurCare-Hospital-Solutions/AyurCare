@@ -41,7 +41,7 @@ function DMMS() {
             </Link>
 
 
-            <Link to="/dmms/reports">
+            {/* <Link to="/dmms/reports">
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
@@ -50,15 +50,15 @@ function DMMS() {
                         <ListItemText primary="Reports" />
                     </ListItemButton>
                 </ListItem>
-            </Link>
+            </Link> */}
 
-            <Link to="/dmms/report02">
+            <Link to="/dmms/report">
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
                             <Assessment />
                         </ListItemIcon>
-                        <ListItemText primary="02" />
+                        <ListItemText primary="Analyse Reports" />
                     </ListItemButton>
                 </ListItem>
             </Link>

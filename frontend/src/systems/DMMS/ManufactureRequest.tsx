@@ -6,15 +6,12 @@ import { Box, Button, FormControl, InputLabel, MenuItem, Select, Typography } fr
 import { useConfirm } from 'material-ui-confirm';
 import { enqueueSnackbar } from 'notistack';
 import ManufactureRequestTable from './ManuReqCom/ManufactureRequestTable';
-import AddManufactureRequest from './manufactureRequestComponent/AddManufactureRequest';
-import React from 'react';
 
 
 function ManufactuureRequest() {
   const [reqMedicine, setReqMedicine] = useState<any>({});
-  const [reqAmount, setReqAmout] = useState<number | string>("");
-  const [selectOption, setSelectOption] = useState<string>("")
-  const [priority, setPriority] = useState<boolean | string>("");
+  const [reqAmount, setReqAmout] = useState<number>(0)
+  const [priority, setpriority] = useState<boolean>();
 
   const [medicineData, setMedicineData] = useState<any>([]);
   // fetch medicine data
@@ -46,7 +43,12 @@ function ManufactuureRequest() {
   const confirm = useConfirm();
   // add manufacture request
   const addManufactureRequest = () => {
-    //
+    //Validate Medicine
+    if (!reqMedicine) {
+      enqueueSnackbar("Medicine Name is required...", { variant: "error" });
+      return;
+    }
+
     // Validate amount (required, positive integer)
     if (!reqAmount) {
       enqueueSnackbar("Amount is required...", { variant: "error" });
@@ -55,6 +57,8 @@ function ManufactuureRequest() {
       enqueueSnackbar("Amount must be a positive integer...", { variant: "error" });
       return;
     }
+
+
     confirm({ description: "Confirm Manufacture Request" })
       .then(async () => {
         await axios.post('api/dmms/request/createReq', { MedicineId: reqMedicine, amount: reqAmount, isPriority: Boolean(priority) })
@@ -62,10 +66,8 @@ function ManufactuureRequest() {
             enqueueSnackbar("Manufacture Request Added Successfuly...", { variant: "success" });
             console.log(res);
             getManufactureRequestData();
-            setSelectOption("");
-            setReqAmout('');
-            setPriority('');
-            reqMedicine('')
+            setReqAmout(0);
+            setReqMedicine("null");
           })
           .catch((err) => {
             enqueueSnackbar("Failed to Add Manufacture Request...", { variant: "error" });
@@ -90,30 +92,58 @@ function ManufactuureRequest() {
       })
   }
 
-
-  // Add modal
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   return (
     <div>
-      <Button
-        onClick={handleClickOpen}
-      >Add Request</Button>
-
+      <Typography color='primary' align="center" variant="h5">
+        Add Manufacture Request
+      </Typography>
+      <Box
+        display="flex"
+        component="form"
+        sx={{
+          '& > :not(style)': { m: 1, width: '25ch' },
+        }}
+        noValidate
+        autoComplete="on"
+        onSubmit={(e) => {
+          e.preventDefault();
+          addManufactureRequest()
+        }}
+      >
+        <Autocomplete
+          disablePortal
+          id="combo-box-demo"
+          options={medicineNames}
+          sx={{ width: 300 }}
+          onChange={(_e, v: any) => setReqMedicine(v.medicine.id)}
+          renderInput={(params) => <TextField {...params} label="Medicine" />}
+        />
+        <TextField type="number" id="outlined-basic" label="Amount" variant="outlined" onChange={(e) => {
+          setReqAmout(Number(e.target.value));
+        }} />
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Priority</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={priority}
+            label="Priority"
+            onChange={(event) => {
+              setpriority(event.target.value as boolean)
+            }}
+          >
+            <MenuItem value={1}>Is priority</MenuItem>
+            <MenuItem value={0}>Not Priority</MenuItem>
+          </Select>
+        </FormControl>
+        <Button variant="contained" color="primary" type='submit'>Add Request</Button>
+      </Box>
       <Typography color='primary' align="center" variant="h5">
         Manufacture Request Details
       </Typography>
 
       <ManufactureRequestTable manufactureReqData={ManufactureReqData} deleteManufactureRequest={deleteManufactureRequest} />
-      <AddManufactureRequest handleClose={handleClose} open={open} addManufactureRequest={addManufactureRequest} medicineNames={medicineNames} setReqMedicine={setReqMedicine} selectOption={selectOption} setReqAmout={setReqAmout} reqAmount={reqAmount} priority={priority} setPriority={setPriority} />
+
     </div>
   );
 }

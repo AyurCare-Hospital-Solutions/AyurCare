@@ -33,7 +33,7 @@ function ManageManufactureRequest() {
         // Parse the date string using dayjs
         const date = dayjs(dateString);
         // Format the date using dayjs (you can adjust the format string as needed)
-        return date.format('DD/MM/YYYY HH:mm:ss');
+        return date.format('YYYY/MM/DD HH:mm:ss');
     }
 
     useEffect(() => {
