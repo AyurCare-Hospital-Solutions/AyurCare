@@ -14,7 +14,7 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useState, useEffect, ChangeEvent, MouseEvent } from "react";
-import UpdateLeaveRequestDialog from "./UpdateLeaveRequestDialog"; // Import your update dialog component
+import UpdateLeaveRequestDialog from "./UpdateLeaveRequestDialog";
 import { LeaveTypeData, MyLeaveRequestData } from "../../types";
 
 export default function MyLeaveRequestTable({

@@ -33,17 +33,6 @@ const HRMS = () => {
         </ListItem>
       </Link>
       <Divider sx={{ mt: 2, mb: 1 }} />
-      {/* <Typography
-        color="textSecondary"
-        sx={{
-          fontWeight: 550,
-          ml: -2,
-          fontSize: "0.99rem",
-          textAlign: "center",
-        }}
-      >
-        Leave Management{" "}
-      </Typography> */}
       <Link to="myLeaveRequests">
         <ListItem disablePadding>
           <ListItemButton>

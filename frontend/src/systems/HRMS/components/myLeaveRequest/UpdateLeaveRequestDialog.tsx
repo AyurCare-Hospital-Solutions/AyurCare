@@ -290,7 +290,7 @@ export default function UpdateLeaveRequestDialog({
                   onChange={() => setIsFullDay(!isFullDay)}
                   name="fullDay"
                   color="primary"
-                  disabled={isMultipleDays} // Disable Full Day when Multiple Days is enabled
+                  disabled={isMultipleDays}
                 />
               }
               label="Full Day"
@@ -302,7 +302,6 @@ export default function UpdateLeaveRequestDialog({
                     checked={isMultipleDays}
                     onChange={() => {
                       setIsMultipleDays(!isMultipleDays);
-                      // If turning off Multiple Days, ensure Full Day is enabled
                       if (isMultipleDays) {
                         setIsFullDay(true);
                       }

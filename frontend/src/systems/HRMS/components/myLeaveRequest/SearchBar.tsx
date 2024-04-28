@@ -1,5 +1,4 @@
-import React from "react";
-import { IconButton, InputAdornment } from "@mui/material";
+import { IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 const SearchBar = () => {
@@ -19,7 +18,7 @@ const SearchBar = () => {
         style={{
           position: "absolute",
           top: "50%",
-          right: "0", // Align to the right edge
+          right: "0",
           transform: "translateY(-50%)",
         }}
         aria-label="search"
