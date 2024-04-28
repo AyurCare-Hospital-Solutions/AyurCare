@@ -8,8 +8,9 @@ const yup = require("yup");
 const { getUserID } = require("../../middleware/auth");
 
 const careplanValidator = yup.object({
-    condition: yup.string().min(4).max(50).required(),
-    diagnosis: yup.string().min(4).max(50).required(),
+    id: yup.number().nullable(),
+    condition: yup.string().min(4).max(100).required(),
+    diagnosis: yup.string().min(4).max(100).required(),
     treatmentPlan: yup.string().min(4).max(1000).required(),
 }).required().noUnknown();
 
@@ -47,7 +48,6 @@ const getCarePlan = async (req, res) => {
 
     let carePlan = await CarePlan.findOne({
         where: { IPDAdmissionId: admission.id },
-        order: [["id", "DESC"]]
     })
 
     res.status(200).json({ admission, carePlan })
@@ -78,15 +78,29 @@ const createCarePlan = async (req, res) => {
         return;
     }
 
-    const userId = getUserID(res)
+    const userId = getUserID(res);
 
-    let plan = await CarePlan.create({
-        condition: data.condition,
-        diagnosis: data.diagnosis,
-        treatmentPlan: data.treatmentPlan,
-        IPDAdmissionId: admission.id,
-        StaffId: userId,
-    });
+    if (data.id) {
+        var plan = await CarePlan.findOne({ where: { IPDAdmissionId: admission.id } });
+        if (plan === null) {
+            res.status(404).json({ msg: "care plan not found" })
+            return;
+        }
+        await plan.update({
+            condition: data.condition,
+            diagnosis: data.diagnosis,
+            treatmentPlan: data.treatmentPlan,
+        })
+    } else {
+        var plan = await CarePlan.create({
+            condition: data.condition,
+            diagnosis: data.diagnosis,
+            treatmentPlan: data.treatmentPlan,
+            IPDAdmissionId: admission.id,
+            StaffId: userId,
+        });
+    }
+
 
     res.status(200).json(plan);
 }
