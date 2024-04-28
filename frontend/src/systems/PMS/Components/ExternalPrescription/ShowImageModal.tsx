@@ -4,11 +4,9 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import ImageIcon from "@mui/icons-material/Image";
 import { Box, Typography } from "@mui/material";
+import { baseURL } from "../../../../config";
 
-// "http://localhost:5000/api/pms/getExternalPrescriptionImage/filename
-
-const baseURL =
-  import.meta.env.VITE_BACKEND_URL + "api/pms/getExternalPrescriptionImage/";
+const path = baseURL + "api/pms/getExternalPrescriptionImage/";
 
 export default function MedicineDialog({
   open,
@@ -38,7 +36,7 @@ export default function MedicineDialog({
           <Typography>Prescription Viewer </Typography>
         </Box>
 
-        <img src={baseURL + image} alt="" />
+        <img src={path + image} alt="" />
         <DialogActions>
           <Button
             href={`${baseURL}${image}`} // Construct the download link

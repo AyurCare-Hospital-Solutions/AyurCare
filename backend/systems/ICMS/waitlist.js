@@ -19,7 +19,7 @@ const waitListValidator = yup.object({
  */
 const getWaitList = async (req, res) => {
     res.status(200).json(await IPDWaitList.findAll({
-        where: { was_admitted: false },
+        where: { was_admitted: null },
         include: {
             model: Patient,
             attributes: ["name", "tracking_no", "dob", "gender", "id"]
