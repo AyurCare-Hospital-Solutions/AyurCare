@@ -153,6 +153,8 @@ async function getpendingAppointment(req, res) {
   // get the pending appointment count
   const pendingAppointmentCount = pendingAppointments.length;
 
+  console.log(allAppointments, pendingAppointmentCount);
+
   return res.status(200).json({ allAppointments, pendingAppointmentCount });
 }
 

@@ -52,11 +52,11 @@ export default function Appointment() {
               borderRadius: 1,
             }}
           >
-            <Box boxShadow={5} padding={2} borderRadius={2}>
-              <PendingAppointment />
-            </Box>
             <Box height='auto' boxShadow={5} padding={2} borderRadius={2}>
               <TodayAppointmentCount />
+            </Box>
+            <Box boxShadow={5} padding={2} borderRadius={2}>
+              <PendingAppointment />
             </Box>
           </Box>
         </Grid>

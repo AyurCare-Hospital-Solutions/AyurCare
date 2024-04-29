@@ -67,6 +67,8 @@ export default function PatientRegForm({
     // validate the form
     validate(patientData);
 
+    console.log(patientData);
+
     try {
       if (patientDetails) {
         await axios.put(

@@ -59,7 +59,7 @@ function TodayAppointmentCount() {
           </Box>
         </Typography>
         <Typography variant='h5' component='div'>
-          Today Patient Count
+          Today Appointment Count
         </Typography>
       </Box>
     </div>
