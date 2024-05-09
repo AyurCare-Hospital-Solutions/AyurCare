@@ -84,7 +84,7 @@ const admitPatient = async (req, res) => {
         res.status(404).json({ msg: "Waitlist entry not found" });
         return;
     }
-    const bed = await Bed.findOne({ where: { id: bedId, IPDAdmissionId: null } });
+    const bed = await Bed.findOne({ where: { id: bedId, occupied: false } });
     if (!bed) {
         res.status(404).json({ msg: "Bed not found" });
         return;
@@ -97,7 +97,7 @@ const admitPatient = async (req, res) => {
         }, { transaction: t });
 
 
-        await bed.update({ IPDAdmissionId: admission.id }, { transaction: t });
+        await bed.update({ occupied: true }, { transaction: t });
         await waitList.update({ was_admitted: true }, { transaction: t });
     });
 

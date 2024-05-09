@@ -93,7 +93,7 @@ const getAvailableBeds = async (req, res) => {
         return;
     }
 
-    res.status(200).json(await Bed.findAll({ where: { WardId: wardID, IPDAdmissionId: null }, include: Ward }));
+    res.status(200).json(await Bed.findAll({ where: { WardId: wardID, occupied: false }, include: Ward }));
 }
 
 

@@ -67,7 +67,7 @@ const dischargePatient = async (req, res) => {
     }
 
     await sequelize.transaction(async t => {
-        await admission.Bed.update({ IPDAdmissionId: null }, { transaction: t });
+        await admission.Bed.update({ occupied: false }, { transaction: t });
         await admission.update({ discharge_date: new Date() }, { transaction: t });
     })
 
