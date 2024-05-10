@@ -21,7 +21,6 @@ export const MedicineLotBarChart = () => {
         getMedicineLotGroups()
             .then((data) => {
                 setMedicineDeistribution(data);
-                console.log(data);
             })
             .catch((e) => {
                 console.log(e);
