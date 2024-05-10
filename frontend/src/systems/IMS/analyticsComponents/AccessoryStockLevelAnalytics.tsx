@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 const getAccessoryStockLevels = async () => {
     try {
         const response = await axios.get('api/ims/analytics/accessoryStockLevel');
-        console.log(response.data);
         return response.data;
     }
     catch (e) {
@@ -22,7 +21,6 @@ export const AccessoryStockLevelPieChart = () => {
         getAccessoryStockLevels()
             .then((data) => {
                 setStockData(data);
-                console.log(data.outOfStock);
 
             })
             .catch((e) => {
@@ -70,7 +68,6 @@ export const AccessoryStockLevelBarChart = () => {
         getAccessoryStockLevels()
             .then((data) => {
                 setStockData(data);
-                console.log(data.outOfStock);
 
             })
             .catch((e) => {
