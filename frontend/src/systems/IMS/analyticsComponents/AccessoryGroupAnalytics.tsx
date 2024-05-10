@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 const getAccessoryGroups = async () => {
     try {
         const response = await axios.get('api/ims/analytics/accessoryGroups');
-        console.log(response.data);
         return response.data;
     }
     catch (e) {
