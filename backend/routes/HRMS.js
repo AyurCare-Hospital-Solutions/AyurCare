@@ -5,6 +5,7 @@ const leaveService = require("../systems/HRMS/leaves");
 const leaveTypeService = require("../systems/HRMS/leaveType");
 const reportService = require("../systems/HRMS/reports");
 const shiftService = require("../systems/HRMS/shift")
+const shiftTypeService = require("../systems/HRMS/shiftTypes")
 
 router.get("/leave", leaveService.getAllLeaveRequests);
 
@@ -27,7 +28,7 @@ router.get("/shift/:id", shiftService.getShiftById);
 router.put("/shift/:id", shiftService.updateShift);
 router.delete("/shift/:id", shiftService.deleteShift);
 
-
+router.get("/shiftType", shiftTypeService.getAllShiftTypes)
 
 router.get("/reports", reportService.generateReportData);
 

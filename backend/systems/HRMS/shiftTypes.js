@@ -1,5 +1,5 @@
 const yup = require("yup");
-const { ShiftType, ShiftDesignation } = require("../models");
+const { ShiftType } = require("../../model/ShiftType");
 
 const shiftTypeValidator = yup
   .object({
