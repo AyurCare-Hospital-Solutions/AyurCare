@@ -21,7 +21,6 @@ export const TotalCountPieChart = () => {
         getTotalCount()
             .then((data) => {
                 setTotalCountData(data);
-                console.log(data);
             })
             .catch((error) => {
                 console.error("Error:", error);
@@ -68,7 +67,6 @@ export const TotalCountBarChart = () => {
         getTotalCount()
             .then((data) => {
                 setTotalCountData(data);
-                console.log(data);
             })
             .catch((error) => {
                 console.error("Error:", error);
