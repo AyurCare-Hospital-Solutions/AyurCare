@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 const getMaterialStockLevels = async () => {
     try {
         const response = await axios.get('api/ims/analytics/materialStockLevel');
-        console.log(response.data);
         return response.data;
     }
     catch (e) {
@@ -22,7 +21,6 @@ export const MaterialStockLevelPieChart = () => {
         getMaterialStockLevels()
             .then((data) => {
                 setStockData(data);
-                console.log(data.outOfStock);
 
             })
             .catch((e) => {
@@ -70,8 +68,6 @@ export const MaterialStockLevelBarChart = () => {
         getMaterialStockLevels()
             .then((data) => {
                 setStockData(data);
-                console.log(data.outOfStock);
-
             })
             .catch((e) => {
                 console.log(e);
