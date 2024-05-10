@@ -1,11 +1,45 @@
 import { RouteObject } from "react-router-dom";
+import ICMS from "./ICMS";
+import WardManager from "./WardManager";
+import Dashboard from "./Dashboard";
+import PatientDetails from "./PatientDetails";
+import PatientList from "./PatientManagement";
+import WaitListManager from "./WaitListManager";
+import WardDetails from "./WardDetails";
+import Reports from "./Reports";
 
 const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
     name: "ICMS",
-    root: <p>ICMS</p>, // replace with main element
+    root: <ICMS />,
     routes: [
-        // Register routes here
-
+        {
+            path: "ward",
+            element: <WardManager />
+        },
+        {
+            path: "ward/:wardId",
+            element: <WardDetails />
+        },
+        {
+            element: <Dashboard />,
+            index: true,
+        },
+        {
+            element: <WaitListManager />,
+            path: "wait_list"
+        },
+        {
+            element: <Reports />,
+            path: "reports"
+        },
+        {
+            path: "patient",
+            element: <PatientList />,
+        },
+        {
+            path: "patient/:admissionId",
+            element: <PatientDetails />
+        }
     ],
 }
 
