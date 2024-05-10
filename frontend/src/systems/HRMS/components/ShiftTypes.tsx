@@ -13,7 +13,9 @@ const ShiftTypes = () => {
           <Typography variant="h5" gutterBottom>
             Shift Types
           </Typography>
-          <Typography variant="body2"></Typography>
+          <Typography variant="body2">
+            Add, Remove and Edit Shift Types
+          </Typography>
         </Box>
         <Button
           sx={{ ml: "auto", my: "auto" }}

@@ -9,12 +9,6 @@ const shiftTypeValidator = yup
   })
   .noUnknown();
 
-const shiftDesignationValidator = yup
-  .object({
-    minAmount: yup.number().required(),
-  })
-  .noUnknown();
-
 /**
  * Get all shift types
  * @param {express.Request} req
