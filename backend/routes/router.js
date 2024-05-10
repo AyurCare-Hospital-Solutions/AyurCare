@@ -21,6 +21,7 @@ const register = (systemName, path) => {
     }
 }
 
+register("/auth", "./auth");
 register("/acs", "./ACS");
 register("/dmms", "./DMMS");
 register("/hrms", "./HRMS");

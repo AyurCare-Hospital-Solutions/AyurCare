@@ -9,6 +9,7 @@ import ims from "./systems/IMS";
 import ocms from "./systems/OCMS";
 import pms from "./systems/PMS";
 import prs from "./systems/PRS";
+import Login from "./Login";
 
 
 let routes: Map<String, RouteObject> = new Map();
@@ -33,8 +34,11 @@ function TempMain() {
 
 const domRouter = createBrowserRouter([{
   path: "/",
+  element: <Login />
+}, {
+  path: "/dev",
   element: <TempMain />
-}, ...routes.values()])
+}, ...routes.values()],)
 
 
 function App() {
