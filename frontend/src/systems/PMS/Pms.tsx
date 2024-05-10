@@ -21,7 +21,7 @@ const Pms = () => {
   return (
     <SnackbarProvider>
       <DashboardPage>
-        <Link to="/pms/">
+        <Link to="/pms/dashboard">
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -32,7 +32,7 @@ const Pms = () => {
           </ListItem>
         </Link>
 
-        <Link to="/pms/medicines">
+        {/* <Link to="/pms/medicines">
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -41,7 +41,7 @@ const Pms = () => {
               <ListItemText primary="Medicines" />
             </ListItemButton>
           </ListItem>
-        </Link>
+        </Link> */}
 
         <Link to="/pms/keep">
           <ListItem disablePadding>
@@ -65,7 +65,7 @@ const Pms = () => {
           </ListItem>
         </Link> */}
 
-        <Link to="/pms/prescriptionmanagement">
+        {/* <Link to="/pms/prescriptionmanagement">
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -74,7 +74,7 @@ const Pms = () => {
               <ListItemText primary="Prescription Management" />
             </ListItemButton>
           </ListItem>
-        </Link>
+        </Link> */}
 
         <Link to="/pms/receivedprescription">
           <ListItem disablePadding>

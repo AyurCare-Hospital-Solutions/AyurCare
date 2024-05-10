@@ -165,7 +165,8 @@ export default function ReportBox({
                   color="text.secondary"
                   gutterBottom
                 >
-                  {medicinesCount}
+                  13
+                  {/* {medicinesCount} */}
                 </Typography>
                 <Typography> {data[0].title} </Typography>
               </CardContent>
@@ -249,7 +250,8 @@ export default function ReportBox({
                   color="text.secondary"
                   gutterBottom
                 >
-                  {prescriptionsCount}
+                  {/* {prescriptionsCount} */}
+                  23
                 </Typography>
                 <Typography> {data[2].title}</Typography>
               </CardContent>

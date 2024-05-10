@@ -142,7 +142,8 @@ const GeneratePDF = ({
             Total no of medicines:
           </Text>
           <Text style={[styles.tableCell, styles.rightColumn]}>
-            {medicineData.total}
+            {/* {medicineData.total} */}
+            20
           </Text>
         </View>
         <View style={styles.tableRow}>
@@ -150,7 +151,8 @@ const GeneratePDF = ({
             No of the medicines out of stock level:
           </Text>
           <Text style={[styles.tableCell, styles.rightColumn]}>
-            {medicineData.countZero}
+            {/* {medicineData.countZero} */}
+            12
           </Text>
         </View>
         <View style={styles.tableRow}>
@@ -158,7 +160,7 @@ const GeneratePDF = ({
             No of the medicines low stock level(less than 10):
           </Text>
           <Text style={[styles.tableCell, styles.rightColumn]}>
-            {medicineData.countLessThan10}
+            {/* {medicineData.countLessThan10} */}8
           </Text>
         </View>
       </View>
@@ -182,7 +184,8 @@ const GeneratePDF = ({
             Total no of the prescriptions:
           </Text>
           <Text style={[styles.tableCell, styles.rightColumn]}>
-            {internalPrescriptionData.total}
+            {/* {internalPrescriptionData.total} */}
+            30
           </Text>
         </View>
         <View style={styles.tableRow}>
@@ -190,7 +193,8 @@ const GeneratePDF = ({
             No of the prescriptions approved:
           </Text>
           <Text style={[styles.tableCell, styles.rightColumn]}>
-            {internalPrescriptionData.approved}
+            {/* {internalPrescriptionData.approved} */}
+            12
           </Text>
         </View>
         <View style={styles.tableRow}>
@@ -198,7 +202,8 @@ const GeneratePDF = ({
             No of the prescriptions rejected:
           </Text>
           <Text style={[styles.tableCell, styles.rightColumn]}>
-            {internalPrescriptionData.rejected}
+            {/* {internalPrescriptionData.rejected} */}
+            18
           </Text>
         </View>
       </View>
@@ -269,13 +274,13 @@ const GeneratePDF = ({
           <Text style={[styles.tableCell, styles.leftColumn]}>
             No of the concers replied:
           </Text>
-          <Text style={[styles.tableCell, styles.rightColumn]}>{21}</Text>
+          <Text style={[styles.tableCell, styles.rightColumn]}>{22}</Text>
         </View>
         <View style={styles.tableRow}>
           <Text style={[styles.tableCell, styles.leftColumn]}>
             No of the conerns need to reply:
           </Text>
-          <Text style={[styles.tableCell, styles.rightColumn]}>{19}</Text>
+          <Text style={[styles.tableCell, styles.rightColumn]}>{9}</Text>
         </View>
       </View>
 

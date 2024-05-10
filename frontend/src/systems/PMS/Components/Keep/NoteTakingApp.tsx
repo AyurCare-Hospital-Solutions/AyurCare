@@ -8,10 +8,7 @@ import React, {
 import {
   Button,
   TextField,
-  Snackbar,
   Box,
-  Alert,
-  AlertColor,
   Card,
   CardContent,
   Typography,
@@ -37,7 +34,7 @@ const NoteTakingApp: React.FC = () => {
     const savedNotes = localStorage.getItem("notes");
     return savedNotes ? JSON.parse(savedNotes) : [];
   });
-  const [open, setOpen] = useState<boolean>(false);
+  const [, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
     localStorage.setItem("notes", JSON.stringify(notes));
@@ -108,7 +105,6 @@ const NoteTakingApp: React.FC = () => {
     };
   }, []); // Empty dependency array to ensure this effect runs only once on mount
 
-
   return (
     <>
       <Box
@@ -167,6 +163,7 @@ const NoteTakingApp: React.FC = () => {
             ))}
           </Grid>
         </Box>
+
         <CalendarComponent
           events={notes.map((note) => ({
             title: note.content,

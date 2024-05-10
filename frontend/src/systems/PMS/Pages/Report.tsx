@@ -418,7 +418,7 @@ const Report = () => {
         </Grid>
         <Grid item xs={6}>
           <Grid item xs={12}>
-            <SingleComponent PrescriptionData={internalPrescriptionData} />
+            {/* <SingleComponent PrescriptionData={internalPrescriptionData} /> */}
           </Grid>
           <PrescriptionSummary PrescriptionData={internalPrescriptionData} />
         </Grid>

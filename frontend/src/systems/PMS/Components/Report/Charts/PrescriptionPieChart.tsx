@@ -1,3 +1,4 @@
+import { Approval } from "@mui/icons-material";
 import { PieChart } from "@mui/x-charts/PieChart";
 
 const PrescriptionPieChart = ({
@@ -5,7 +6,8 @@ const PrescriptionPieChart = ({
 }: {
   PrescriptionData: any;
 }) => {
-  const { approved, rejected } = PrescriptionData;
+  // const { approved, rejected } = PrescriptionData;
+  
   return (
     <>
       <PieChart
@@ -13,8 +15,8 @@ const PrescriptionPieChart = ({
         series={[
           {
             data: [
-              { id: 0, value: approved, label: "Approved", color: "orange" },
-              { id: 1, value: rejected, label: "Rejected" },
+              { id: 0, value: 2, label: "Approved", color: "orange" },
+              { id: 1, value: 3, label: "Rejected" },
             ],
           },
         ]}

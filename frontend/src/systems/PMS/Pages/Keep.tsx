@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 const Keep = () => {
+  
+  //here
   const navigate = useNavigate();
 
   // assign keyboard shortcuts -----------------------------------------------------
@@ -94,6 +96,8 @@ const Keep = () => {
       Mousetrap.unbind("i");
     };
   }, [navigate]);
+
+  // there
   return (
     <div>
       <Box

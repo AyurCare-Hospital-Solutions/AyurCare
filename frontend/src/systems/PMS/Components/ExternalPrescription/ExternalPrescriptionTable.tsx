@@ -105,7 +105,7 @@ const ExternalPrescriptionTable = () => {
               <TableCell>File</TableCell>
               <TableCell>Update Status</TableCell>
               <TableCell>Remove</TableCell>
-
+              <TableCell>ID</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -197,10 +197,8 @@ const ExternalPrescriptionTable = () => {
                       <DeleteIcon sx={{ color: "#0d4838" }} />
                     </Button>
                   </TableCell>
-
-
-
-
+                  {/* show notes  */}
+                  <TableCell>{row.test}</TableCell>
                 </TableRow>
               ))
             ) : (
