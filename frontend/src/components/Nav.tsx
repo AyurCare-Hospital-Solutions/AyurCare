@@ -10,7 +10,7 @@ import { AccountCircle, ArrowDropDown, ConfirmationNumber, Event, Logout, Mail }
 import { ListItemIcon } from '@mui/material';
 
 
-function TopNavBar() {
+function TopNavBar(props: { title?: string }) {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -27,6 +27,9 @@ function TopNavBar() {
             <Toolbar disableGutters={true} sx={{ px: "8px" }}>
                 <Box sx={{ flexGrow: 0 }} onClick={() => { window.location.href = "/" }}>
                     <img src="/assets/logo.png" alt="AyurCare Logo" style={{ height: "50px" }} />
+                </Box>
+                <Box sx={{ mx: 1 }}>
+                    <Typography>{props.title}</Typography>
                 </Box>
                 <Box sx={{ flexGrow: 1 }}></Box>
                 <Box>
