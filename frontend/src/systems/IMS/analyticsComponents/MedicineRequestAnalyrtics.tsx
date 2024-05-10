@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 const getMedicineRequetsData = async () => {
     try {
         const response = await axios.get('api/ims/analytics/medicineRequestData');
-        console.log(response.data);
         return response.data;
     }
     catch (e) {
