@@ -9,25 +9,41 @@ import MenuItem from '@mui/material/MenuItem';
 import { AccountCircle, ArrowDropDown, ConfirmationNumber, Event, Logout, Mail } from '@mui/icons-material';
 import { ListItemIcon } from '@mui/material';
 import { getUser } from '../util/user';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 
-function TopNavBar() {
+function TopNavBar(props: { title?: string }) {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const navigate = useNavigate();
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
 
 
+
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const logoutClick = () => {
+        localStorage.clear();
+        navigate("/");
+    }
+
+    useEffect(() => {
+        if (getUser() === null) navigate("/");
+    })
 
     return <>
         <AppBar position="fixed">
             <Toolbar disableGutters={true} sx={{ px: "8px" }}>
                 <Box sx={{ flexGrow: 0 }} onClick={() => { window.location.href = "/" }}>
                     <img src="/assets/logo.png" alt="AyurCare Logo" style={{ height: "50px" }} />
+                </Box>
+                <Box sx={{ mx: 1 }}>
+                    <Typography>{props.title}</Typography>
                 </Box>
                 <Box sx={{ flexGrow: 1 }}></Box>
                 <Box>
@@ -40,7 +56,7 @@ function TopNavBar() {
                         <IconButton sx={{ p: 0 }}>
                             <AccountCircle sx={{ color: "#ffffff", fontSize: "40px" }}></AccountCircle>
                         </IconButton>
-                        <Typography sx={{ color: "#ffffff", my: "auto", ml: 2 }}>{getUser()?.user}</Typography>
+                        <Typography sx={{ color: "#ffffff", my: "auto", ml: 2 }}>{getUser()?.name}</Typography>
                         <ArrowDropDown sx={{ color: "#ffffff", my: "auto", fontSize: "28px" }}></ArrowDropDown>
                     </Box>
                     <Menu
@@ -78,7 +94,7 @@ function TopNavBar() {
                             </ListItemIcon>
                             <Typography>Support Tickets</Typography>
                         </MenuItem>
-                        <MenuItem>
+                        <MenuItem onClick={logoutClick}>
                             <ListItemIcon>
                                 <Logout></Logout>
                             </ListItemIcon>

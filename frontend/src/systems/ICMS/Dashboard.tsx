@@ -1,12 +1,9 @@
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import dayjs from "dayjs";
 import AdvancedFormat from "dayjs/plugin/advancedFormat";
 import { DateCard, LinkCard, WelcomeCard } from "../../components/DashboardCards";
 
 dayjs.extend(AdvancedFormat)
-
-
-const cardStyle = { display: "flex", px: "16px", py: "12px" }
 
 
 const Dashboard = () => {
