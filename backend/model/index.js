@@ -65,6 +65,11 @@ async function createAll() {
         syncConfig.force = true;
     }
 
+    if (Number.parseInt(process.env.SQL_SYNC_ALTER)) {
+        console.log("Altering existing tables")
+        syncConfig.alter = true;
+    }
+
     if (!Number.parseInt(process.env.SQL_SYNC_DEBUG)) {
         syncConfig.logging = () => { }
     }
