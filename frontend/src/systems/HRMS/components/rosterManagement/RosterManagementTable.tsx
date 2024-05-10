@@ -9,7 +9,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
 interface Column {
-  id: "id" | "date" | "type" | "doctor" | "nurse" | "others" | "status"; // New column IDs
+  id: "id" | "date" | "type" | "startTime" | "endTime" | "status"; // Updated column IDs
   label: string;
   minWidth?: number;
   align?: "right";
@@ -20,9 +20,8 @@ const columns: readonly Column[] = [
   { id: "id", label: "ID", minWidth: 100 },
   { id: "date", label: "Date", minWidth: 170 },
   { id: "type", label: "Type", minWidth: 170 },
-  { id: "doctor", label: "Doctor", minWidth: 170 },
-  { id: "nurse", label: "Nurse", minWidth: 170 },
-  { id: "others", label: "Others", minWidth: 170 },
+  { id: "startTime", label: "Start Time", minWidth: 170 },
+  { id: "endTime", label: "End Time", minWidth: 170 },
   { id: "status", label: "Status", minWidth: 170 },
 ];
 
@@ -30,9 +29,8 @@ interface Data {
   id: number;
   date: string;
   type: string;
-  doctor: number;
-  nurse: number;
-  others: number;
+  startTime: string;
+  endTime: string;
   status: string;
 }
 
@@ -40,30 +38,17 @@ function createData(
   id: number,
   date: string,
   type: string,
-  doctor: number,
-  nurse: number,
-  others: number,
+  startTime: string,
+  endTime: string,
   status: string
 ): Data {
-  return { id, date, type, doctor, nurse, others, status };
+  return { id, date, type, startTime, endTime, status };
 }
 
 const rows = [
-  createData(1, "2024-05-10", "Surgery", 5, 8, 2, "Completed"),
-  createData(2, "2024-05-09", "Checkup", 3, 6, 1, "Pending"),
-  createData(3, "2024-05-08", "Emergency", 7, 4, 3, "In Progress"),
-  createData(4, "2024-05-07", "Consultation", 4, 5, 2, "Completed"),
-  createData(5, "2024-05-06", "Routine", 6, 7, 2, "Pending"),
-  createData(6, "2024-05-05", "Treatment", 5, 3, 2, "In Progress"),
-  createData(7, "2024-05-04", "Follow-up", 2, 4, 1, "Completed"),
-  createData(8, "2024-05-03", "Therapy", 3, 6, 2, "Pending"),
-  createData(9, "2024-05-02", "Medication", 4, 5, 3, "In Progress"),
-  createData(10, "2024-05-01", "Diagnostic", 6, 7, 2, "Completed"),
-  createData(11, "2024-04-30", "Screening", 5, 3, 2, "Pending"),
-  createData(12, "2024-04-29", "Rehabilitation", 2, 4, 1, "In Progress"),
-  createData(13, "2024-04-28", "Counseling", 3, 6, 2, "Completed"),
-  createData(14, "2024-04-27", "Observation", 4, 5, 3, "Pending"),
-  createData(15, "2024-04-26", "Intervention", 6, 7, 2, "In Progress"),
+  createData(1, "2024-05-10", "Surgery", "10:00", "12:00", "Completed"),
+  createData(2, "2024-05-09", "Checkup", "09:30", "10:30", "Pending"),
+  // Add more rows as needed
 ];
 
 export default function RosterManagementTable() {
@@ -104,9 +89,7 @@ export default function RosterManagementTable() {
                       const value = row[column.id];
                       return (
                         <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
+                          {value}
                         </TableCell>
                       );
                     })}

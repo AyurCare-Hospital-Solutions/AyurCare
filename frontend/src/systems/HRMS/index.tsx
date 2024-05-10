@@ -7,7 +7,7 @@ import RosterManagement from "./components/RosterManagement";
 import Shifts from "./components/Shifts";
 import Reports from "./components/Reports";
 import Chat from "./components/Chat";
-import ShiftTypes from "./ShiftTypes";
+import ShiftTypes from "./components/ShiftTypes";
 import Dashboard from "./components/Dashboard";
 
 const routes: { name: string; root: React.ReactNode; routes: RouteObject[] } = {

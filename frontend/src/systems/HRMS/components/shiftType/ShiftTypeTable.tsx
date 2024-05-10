@@ -39,7 +39,6 @@ const ShiftTypeTable = () => {
             <TableCell style={{ flexGrow: 1 }}>Name</TableCell>
             <TableCell style={{ flexGrow: 1 }}>Start Time</TableCell>
             <TableCell style={{ flexGrow: 1 }}>End Time</TableCell>
-            <TableCell style={{ flexGrow: 1 }}>Designation</TableCell>
             <TableCell align="right">Action</TableCell>
           </TableRow>
         </TableHead>
@@ -50,7 +49,6 @@ const ShiftTypeTable = () => {
               <TableCell style={{ flexGrow: 1 }}>{row.name}</TableCell>
               <TableCell style={{ flexGrow: 1 }}>{row.startTime}</TableCell>
               <TableCell style={{ flexGrow: 1 }}>{row.endTime}</TableCell>
-              <TableCell style={{ flexGrow: 1 }}>{row.designation}</TableCell>
               <TableCell align="right">
                 <IconButton aria-label="edit" style={{ color: "black" }}>
                   <EditIcon />

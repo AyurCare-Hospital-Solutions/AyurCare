@@ -1,11 +1,12 @@
 import RosterManagementTable from "./rosterManagement/RosterManagementTable";
 import RosterCard from "./rosterManagement/RosterCard";
 import { Box, Typography } from "@mui/material";
+import NewRosterDialog from "./rosterManagement/NewRosterDialog";
 
 const RosterManagement = () => {
   return (
     <>
-      <Box sx={{ display: "flex", mx: 4, mb: 4 }}>
+      <Box sx={{ display: "flex", mx: "auto", m: 4 }}>
         <Box>
           <Typography variant="h5" gutterBottom>
             Staff Duty Roster Management
@@ -14,6 +15,7 @@ const RosterManagement = () => {
             Lorem ipsum dolor sit amet, consectetur adipisicing elit.
           </Typography>
         </Box>
+        <NewRosterDialog />
       </Box>
       <Box
         sx={{
