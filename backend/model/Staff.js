@@ -29,6 +29,9 @@ const Staff = sequelize.define("Staff", {
     type: {
         // TODO: fix data type in db
         type: DataTypes.ENUM(Object.keys(roles))
+    },
+    password: {
+        type: DataTypes.STRING
     }
 })
 

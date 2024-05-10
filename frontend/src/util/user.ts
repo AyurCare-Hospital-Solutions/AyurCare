@@ -1,17 +1,25 @@
+import { jwtDecode } from "jwt-decode";
+
 export interface UserToken {
-    user: string,
+    name: string,
     role: string,
-    expires: number
+    system: string,
+    exp: number,
 }
 
 export const getUser = (): UserToken | null => {
-    let tokenData = localStorage.getItem("user");
+    let tokenData = localStorage.getItem("jwt");
     if (!tokenData) {
         return null;
     }
 
-    let token: UserToken = JSON.parse(tokenData);
-    if (token.expires < Date.now()) {
+    try {
+        var token: UserToken = jwtDecode<UserToken>(tokenData);
+    } catch (e) {
+        return null;
+    }
+
+    if (token.exp < Date.now() / 1000) {
         return null;
     }
 

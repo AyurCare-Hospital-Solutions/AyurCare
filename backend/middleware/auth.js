@@ -1,24 +1,25 @@
 
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const fs = require("fs");
 const { randomBytes } = require("crypto");
+const Staff = require("../model/Staff")
 
-const secret = randomBytes(64)
+// FIXME: use random bytes 
+const secret = Buffer.from("test1234")//randomBytes(64)
 
 let roles = {
-    role1: { name: "Role 1" },
-    role2: { name: "Role 2" },
+    doctor: { name: "Doctor", home: "opcms" },
+    medicalStaff: { name: "Medical Staff", home: "icms", perms: ["test"] },
+    hrAdmin: { name: "HR Administrator", home: "hrms" }
 }
 
 
 /**
  * 
- * @param {string[]} allowedRoles 
- * @returns 
+ * @param {string} permission permission required to access the route 
+ * @returns a middleware that check user permissions
  */
-const auth = (allowedRoles) => {
-
+const auth = (permission) => {
     /**
     * 
     * @param {express.Request} req 
@@ -26,7 +27,7 @@ const auth = (allowedRoles) => {
     * @param {()=>any} next 
     */
     return (req, res, next) => {
-        const tokenHeader = req.headers["authorization"];
+        const tokenHeader = req.headers.authorization;
 
         if (!tokenHeader) {
             res.status(401).json({ "msg": "JWT token is missing" });
@@ -34,24 +35,30 @@ const auth = (allowedRoles) => {
         }
 
         try {
-            let token = jwt.verify(tokenHeader, secret, { algorithms: ["HS512"] });
-
-            if (allowedRoles.indexOf(token.role) === -1) {
-                res.status(401).json({ msg: "Unauthorized" });
-                return;
-            }
-
-            let userID = !Number.isInteger(token.id);
-            if (!Number.isInteger(userID)) {
-                res.status(401).json({ msg: "Invalid user id" });
-                return;
-            }
-
-            res.locals["userId"] = userID;
+            var token = jwt.verify(tokenHeader, secret, { algorithms: ["HS512"] });
         } catch (e) {
             res.status(401).json({ "msg": "Invalid JWT authorization" });
             return;
         }
+
+        const rolePerms = roles[token.role];
+        if (!rolePerms || !rolePerms.name || !rolePerms.perms) {
+            res.status(401).json({ msg: "Invalid role" });
+            return;
+        }
+
+        if (rolePerms.perms.indexOf(permission) === -1) {
+            res.status(401).json({ msg: "Unauthorized" });
+            return;
+        }
+
+        let userID = Number(token.id);
+        if (!Number.isInteger(userID)) {
+            res.status(401).json({ msg: "Invalid user id" });
+            return;
+        }
+
+        res.locals["userId"] = userID;
 
         next()
     }
@@ -60,15 +67,20 @@ const auth = (allowedRoles) => {
 
 /**
  * 
- * @param {number} id 
- * @param {string} user 
- * @param {string} role 
+ * @param {Staff} staff - the staff member to create the token for.
  */
-const createToken = (id, user, role) => {
-    return jwt.sign({ id: id, user: user, role: role }, secret, {
-        algorithm: "HS512",
-        expiresIn: "6h"
-    })
+const createToken = (staff) => {
+    const role = roles[staff.type];
+
+    const home = role ? role.home : "/";
+    const name = role ? role.name : staff.type;
+
+    return {
+        jwt: jwt.sign({ id: staff.id, role: staff.type, name: staff.name, role: name, system: home }, secret, {
+            algorithm: "HS512",
+            expiresIn: "6h"
+        })
+    }
 }
 
 /**
