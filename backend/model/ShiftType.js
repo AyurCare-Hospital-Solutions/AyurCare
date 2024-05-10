@@ -5,7 +5,7 @@ const Designation = require("./Designation");
 const ShiftType = sequelize.define(
   "ShiftType",
   {
-    name: DataTypes.TEXT, // Name for a shift
+    name: DataTypes.TEXT,
     startTime: DataTypes.TIME,
     endTime: DataTypes.TIME,
   },

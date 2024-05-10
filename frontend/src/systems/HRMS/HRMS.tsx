@@ -65,7 +65,7 @@ const HRMS = () => {
       </Link>
       <Divider sx={{ mt: 2, mb: 1 }} />
 
-      <Link to="rosterManagement" hidden>
+      <Link to="rosterManagement">
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
@@ -76,7 +76,7 @@ const HRMS = () => {
         </ListItem>
       </Link>
 
-      <Link to="shiftTypes" hidden>
+      <Link to="shiftTypes">
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
@@ -87,7 +87,7 @@ const HRMS = () => {
         </ListItem>
       </Link>
 
-      <Link to="shifts" hidden>
+      <Link to="shifts">
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
