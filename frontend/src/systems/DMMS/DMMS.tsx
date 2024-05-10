@@ -62,6 +62,17 @@ function DMMS() {
                     </ListItemButton>
                 </ListItem>
             </Link>
+
+            <Link to="/dmms/test">
+                <ListItem disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <Assessment />
+                        </ListItemIcon>
+                        <ListItemText primary="New Imp" />
+                    </ListItemButton>
+                </ListItem>
+            </Link>
         </DashboardPage>
     )
 }

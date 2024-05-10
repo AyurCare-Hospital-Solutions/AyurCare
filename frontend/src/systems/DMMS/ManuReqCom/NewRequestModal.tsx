@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useEffect, useState } from 'react';
-import { Button, MenuItem, Stack, TextField } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import dayjs from 'dayjs';
 
 
@@ -18,7 +18,7 @@ const style = {
     p: 4,
 };
 
-export default function ManufactureRequestModal({ open, handleClose, updateRequest, updateProgress }: { open: boolean, handleClose: () => any, updateRequest: any, updateProgress: (arg1: number, arg2: string) => any }) {
+export default function NewRequestModal({ open, handleClose, updateRequest, updateProgress }: { open: boolean, handleClose: () => any, updateRequest: any, updateProgress: (arg1: number, arg2: string) => any }) {
 
     const formatDate = (dateString: string | number | Date | dayjs.Dayjs | null | undefined) => {
         // Parse the date string using dayjs
@@ -43,7 +43,7 @@ export default function ManufactureRequestModal({ open, handleClose, updateReque
                 <Box sx={style}>
 
                     <Typography align="center" id="modal-modal-title" variant="h5" component="h2">
-                        Update Manufacture Request
+                        Check Manufacture Request
                     </Typography>
                     <Typography variant="h6" >
                         Order ID : {request?.id}
@@ -60,7 +60,7 @@ export default function ManufactureRequestModal({ open, handleClose, updateReque
                     <Typography variant='h6'>
                         Priority : {request?.isPriority}
                     </Typography>
-                    <Typography variant="h6" >Progress :
+                    {/* <Typography variant="h6" >Progress :
                         <Box>
                             <TextField
                                 id="outlined-select3"
@@ -84,7 +84,7 @@ export default function ManufactureRequestModal({ open, handleClose, updateReque
                                 </MenuItem>
                             </TextField>
                         </Box>
-                    </Typography>
+                    </Typography> */}
                     <Stack mt={5} alignContent="center" direction="row" spacing={4}>
                         <Button sx={{ backgroundColor: "#4aee78" }} variant="contained" disabled={request?.progress === "Completed" || request?.progress === "In Progress"} onClick={() => {
                             updateProgress(request.id, "In Progress");

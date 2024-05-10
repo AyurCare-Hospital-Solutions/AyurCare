@@ -4,6 +4,7 @@ import ManufactureRequest from "./ManufactureRequest";
 import ManageManufactureRequest from "./ManageManufactureRequest";
 import Dashboard from "../DMMS/Dashboard";
 import DMMSAnalyse from "./DMMSAnalyse";
+import NewRequests from "./ManuReqCom/NewRequests";
 
 const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
 
@@ -29,6 +30,12 @@ const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
             path: "report",
             element: <DMMSAnalyse />
         },
+
+        {
+            path: "test",
+            element: <NewRequests />
+        },
+
 
     ],
 }

@@ -8,16 +8,17 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { useEffect, useState } from 'react';
-import MedicineRequestModal from './ManuReqCom/ManufactureRequestModal';
-import SearchBar from './SearchBar';
+// import MedicineRequestModal from './ManuReqCom/ManufactureRequestModal';
+// import SearchBar from './SearchBar';
 import { useConfirm } from 'material-ui-confirm';
-import { enqueueSnackbar } from 'notistack';
 import { Box, Tooltip, Typography } from '@mui/material';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { usePDF } from 'react-to-pdf';
 import dayjs from 'dayjs';
+import NewRequestModal from '../../DMMS/ManuReqCom/NewRequestModal';
+import { enqueueSnackbar } from 'notistack';
 
-function ManageManufactureRequest() {
+function NewRequests() {
     const [manufactureReqData, setManufactureReqData] = useState<any>([]);
     const [searchQuery, setSearchQuery] = useState<RegExp>();  // for search query
 
@@ -40,16 +41,6 @@ function ManageManufactureRequest() {
         getManufactureRequestData();
     }, []);
 
-    const colorIndicator = (progress: string) => {
-        if (progress === 'Rejected') {
-            return '#ff7979';
-        } else if (progress === 'Completed') {
-            return '#4aee78';
-        } else if (progress === 'Manufacture Error') {
-            return '#FF5733';
-        }
-    }
-
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -70,6 +61,7 @@ function ManageManufactureRequest() {
 
     // confirm handle
     const confirm = useConfirm();
+
     // update status
     const updateProgress = (id: number, progress: string) => {
         confirm({ description: 'Confirm Progress Type change' })
@@ -94,10 +86,10 @@ function ManageManufactureRequest() {
     return (
         <div>
             <Typography color='primary' align="center" variant="h5">
-                Manage Manufacture Requests
+                New Manufacture Requests
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }} my={2} mx={2} >
-                <SearchBar onChange={(q) => setSearchQuery(q)} />
+                {/* <SearchBar onChange={(q) => setSearchQuery(q)} /> */}
                 <Tooltip title="Download table as PDF" arrow>
                     <PictureAsPdfIcon fontSize='large' htmlColor='rgba(0, 58, 43, 0.8)' onClick={() => toPDF()} />
                 </Tooltip>
@@ -105,7 +97,7 @@ function ManageManufactureRequest() {
             {/* <Box flexGrow={1}></Box> */}
             <Paper sx={{ marginTop: '2rem', width: '100%', overflow: 'hidden' }} ref={targetRef} >
                 <Typography color='primary' align="center" variant="h6" gutterBottom>
-                    Manage Manufacture Requests Table
+                    New Manufacture Requests Table
                 </Typography>
                 <TableContainer sx={{ maxHeight: 440 }}>
                     <Table stickyHeader aria-label="sticky table">
@@ -115,7 +107,7 @@ function ManageManufactureRequest() {
                                 <TableCell>Medicine Name</TableCell>
                                 <TableCell>Amount</TableCell>
                                 <TableCell>Requested Date</TableCell>
-                                <TableCell>Manufactured Date</TableCell>
+                                <TableCell>Priority</TableCell>
                                 <TableCell>Progress</TableCell>
                             </TableRow>
                         </TableHead>
@@ -134,20 +126,18 @@ function ManageManufactureRequest() {
                                     }
                                 })
                                 .map((row: any) => {
-                                    if (row.progress !== "Pending") {
+                                    if (row.progress === "Pending") {
                                         return (
-                                            <TableRow hover role="checkbox" key={row.id} sx={{ backgroundColor: colorIndicator(row.progress) }}
+                                            <TableRow hover role="checkbox" key={row.id}
                                                 onClick={() => {
                                                     setUpdateRequest(row);
                                                     handleOpen();
-                                                }}
-                                            >
+                                                }}>
                                                 <TableCell>{row.id}</TableCell>
                                                 <TableCell>{row.Medicine?.Item?.name}</TableCell>
                                                 <TableCell>{row.amount}</TableCell>
                                                 <TableCell>{formatDate(row.createdAt)}</TableCell>
-                                                <TableCell>{row.progress === "Completed" || row.progress === "Rejected" || row.progress === "Manufacture Error" ?
-                                                    formatDate(row.updatedAt) : ''}</TableCell>
+                                                <TableCell>{row.isPriority}</TableCell>
                                                 <TableCell>{row.progress}</TableCell>
                                             </TableRow>
                                         );
@@ -166,10 +156,10 @@ function ManageManufactureRequest() {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Paper>
-            <MedicineRequestModal open={open} handleClose={handleClose} updateRequest={updateRequest} updateProgress={updateProgress} /*deleteManufactureRequest={deleteManufactureRequest}*/ />
+            <NewRequestModal open={open} handleClose={handleClose} updateRequest={updateRequest} updateProgress={updateProgress} />
 
         </div >
     )
 }
 
-export default ManageManufactureRequest;
+export default NewRequests;
