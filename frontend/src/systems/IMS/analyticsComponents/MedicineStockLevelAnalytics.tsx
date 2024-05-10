@@ -6,12 +6,10 @@ import { useEffect, useState } from "react";
 const getMedicineStockLevels = async () => {
     try {
         const response = await axios.get('api/ims//analytics/medicineStockLevel');
-        console.log(response.data);
         return response.data;
     }
     catch (e) {
         console.log(e);
-
     }
 }
 
