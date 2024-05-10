@@ -6,10 +6,10 @@ import Nav from './Nav';
 
 const drawerWidth = 275;
 
-const DashboardPage = (props: { children: ReactElement[] }) => {
+const DashboardPage = (props: { children: ReactElement[], title?: string }) => {
     return (
         <>
-            <Nav />
+            <Nav title={props.title} />
             <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1 }} >
                 <Drawer variant="permanent"
                     elevation={0}
