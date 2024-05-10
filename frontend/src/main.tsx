@@ -23,8 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <SnackbarProvider autoHideDuration={3000} >
           <ConfirmProvider>
-            <Nav></Nav>
-            <App></App>
+            <App />
           </ConfirmProvider>
         </SnackbarProvider>
       </LocalizationProvider>
