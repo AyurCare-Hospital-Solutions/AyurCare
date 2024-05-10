@@ -17,7 +17,6 @@ IPDAdmission.belongsTo(Patient, {
 
 Patient.hasMany(IPDAdmission);
 
-IPDAdmission.belongsTo(Bed, { foreignKey: { allowNull: false }, onDelete: 'RESTRICT' });
-Bed.hasOne(IPDAdmission,);
+IPDAdmission.belongsTo(Bed, { foreignKey: { allowNull: false }, onDelete: 'SET NULL' });
 
 module.exports = IPDAdmission;
