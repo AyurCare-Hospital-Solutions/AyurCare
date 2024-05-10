@@ -10,7 +10,7 @@ const MedicineRequest = sequelize.define("MedicineRequest", {
         type: DataTypes.STRING,
         defaultValue: "Pending",
         validate: {
-            isIn: [["Success", "Pending", "Reject"]]
+            isIn: [["Accepted", "Pending", "Rejected"]]
         }
     },
 

@@ -23,4 +23,4 @@ MedicineLot.belongsTo(Medicine, {
 Medicine.hasMany(MedicineLot);
 
 
-module.exports = Medicine;
+module.exports = MedicineLot;
