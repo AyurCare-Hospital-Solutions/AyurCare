@@ -87,36 +87,6 @@ const CreatePrescriptionForm: React.FC<Props> = ({
         </DialogActions>
       </Dialog>
     </React.Fragment>
-
-
-
-
-
-
-    // <Dialog open={open} onClose={handleClose}>
-    //   <DialogTitle>Create Prescription</DialogTitle>
-    //   <Typography>Patient ID : {PatientId}</Typography>
-    //   <DialogContent>
-    //     <Typography variant="subtitle1">Diagnosis</Typography>
-        // <TextField
-        //   value={diagnosis}
-        //   onChange={(e) => setDiagnosis(e.target.value)}
-        //   variant="outlined"
-        //   fullWidth
-        // />
-        // <Typography variant="subtitle1">Note</Typography>
-        // <TextField
-        //   value={note}
-        //   onChange={(e) => setNote(e.target.value)}
-        //   variant="outlined"
-        //   fullWidth
-        // />
-    //   </DialogContent>
-    //   <DialogActions>
-        // <Button onClick={handleClose}>Cancel</Button>
-        // <Button onClick={handleSubmit}>Create</Button>
-    //   </DialogActions>
-    // </Dialog>
   );
 };
 

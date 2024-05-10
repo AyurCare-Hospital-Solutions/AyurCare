@@ -10,8 +10,8 @@ import {
 
 interface Prescription {
   id: number;
-  patientId: string;
-  patient: { name: string }; // Interface for associated Patient object
+  PatientId: string;
+  Patient: { name: string }; // Interface for associated Patient object
   dispensed_date: Date;
   // ... other prescription details (diagnosis, note, etc.)
 }
@@ -36,11 +36,11 @@ function SearchResults({ results }: SearchResultsProps) {
         <TableBody>
           {results.map((prescription) => (
             <TableRow key={prescription.id}>
-              <TableCell>{prescription.patientId}</TableCell>
+              <TableCell>{prescription.PatientId}</TableCell>
               <TableCell>{prescription.id}</TableCell>
-              <TableCell>{prescription.patient.name}</TableCell>
+              <TableCell>{prescription.Patient.name}</TableCell>
               <TableCell>
-                {prescription.dispensed_date.toLocaleDateString()}
+                {prescription.dispensed_date?.toLocaleDateString()}
               </TableCell>
               <TableCell>
                 <Button variant="contained" size="small">

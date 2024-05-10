@@ -7,9 +7,8 @@ interface SearchResultsProps {
 }
 
 const Records: React.FC = () => {
-  const [searchResults, setSearchResults] = useState<
-    SearchResultsProps["results"]
-  >([]); // Initialize empty search results
+  const [searchResults, setSearchResults] =
+    useState<SearchResultsProps["results"]>(); // Initialize empty search results
 
   const handleSearch = (results: any[]) => {
     setSearchResults(results);
@@ -18,7 +17,9 @@ const Records: React.FC = () => {
   return (
     <div>
       <SearchForm onSearch={handleSearch} />
-      <SearchResults results={searchResults} />
+      {searchResults !== undefined ? (
+        <SearchResults results={searchResults} />
+      ) : null}
     </div>
   );
 };
