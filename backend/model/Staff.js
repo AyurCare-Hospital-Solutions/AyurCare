@@ -26,7 +26,7 @@ const Staff = sequelize.define("Staff", {
     homePhone: {
         type: DataTypes.STRING(14)
     },
-    type: {
+    stfType: {
         // TODO: fix data type in db
         type: DataTypes.ENUM(Object.keys(roles))
     },

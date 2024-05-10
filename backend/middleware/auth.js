@@ -70,13 +70,16 @@ const auth = (permission) => {
  * @param {Staff} staff - the staff member to create the token for.
  */
 const createToken = (staff) => {
-    const role = roles[staff.type];
+    const role = roles[staff.stfType];
+    if (!role) {
+        throw "Invalid role type"
+    }
 
-    const home = role ? role.home : "/";
-    const name = role ? role.name : staff.type;
+    const home = role.home;
+    const name = role.name;
 
     return {
-        jwt: jwt.sign({ id: staff.id, role: staff.type, name: staff.name, role: name, system: home }, secret, {
+        jwt: jwt.sign({ id: staff.id, role: staff.stfType, name: staff.name, role: name, system: home }, secret, {
             algorithm: "HS512",
             expiresIn: "6h"
         })
