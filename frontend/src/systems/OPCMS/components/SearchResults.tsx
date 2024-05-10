@@ -43,7 +43,7 @@ function SearchResults({ results }: SearchResultsProps) {
                 {prescription.dispensed_date?.toLocaleDateString()}
               </TableCell>
               <TableCell>
-                <Button variant="contained" size="small">
+                <Button variant="contained" size="small" sx={{mr:1}}>
                   Show More
                 </Button>
                 <Button variant="contained" size="small">

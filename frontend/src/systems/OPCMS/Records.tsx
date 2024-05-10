@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import SearchForm from "./components/SearchForm";
 import SearchResults from "./components/SearchResults";
+import { Typography } from "@mui/material";
 
 interface SearchResultsProps {
   results: any[]; // Placeholder for search results type (update based on your data structure)
@@ -19,7 +20,11 @@ const Records: React.FC = () => {
       <SearchForm onSearch={handleSearch} />
       {searchResults !== undefined ? (
         <SearchResults results={searchResults} />
-      ) : null}
+      ) : (
+        <Typography variant="h5" sx={{ m: 5, textAlign: "center", color: "rgba(0, 0, 0, 0.5)" }}>
+          No records found
+        </Typography>
+      )}
     </div>
   );
 };

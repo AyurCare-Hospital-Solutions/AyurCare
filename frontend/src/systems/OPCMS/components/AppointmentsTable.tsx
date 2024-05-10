@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
@@ -10,7 +10,6 @@ import {
   TableRow,
   Paper,
   Button,
-  Typography,
 } from "@mui/material";
 import ReportGenerator from "../../../components/ReportGenerator";
 
@@ -39,7 +38,6 @@ const AppointmentsTable = ({search}:{search:string}) => {
 
   return (
     <div>
-      <ReportGenerator visible titleHidden title="OPD Appointments" filename="opd_appointments.pdf">
       <TableContainer component={Paper}>
       <Table>
         <TableHead>
@@ -82,8 +80,6 @@ const AppointmentsTable = ({search}:{search:string}) => {
         </TableBody>
       </Table>
     </TableContainer>
-      </ReportGenerator>
-    
     </div>
   );
 };
