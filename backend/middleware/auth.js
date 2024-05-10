@@ -10,7 +10,8 @@ const secret = Buffer.from("test1234")//randomBytes(64)
 let roles = {
     doctor: { name: "Doctor", home: "opcms" },
     medicalStaff: { name: "Medical Staff", home: "icms", perms: ["test"] },
-    hrAdmin: { name: "HR Administrator", home: "hrms" }
+    hrAdmin: { name: "HR Administrator", home: "hrms" },
+    imsAdmin: { name: "IMS Manager", home: "ims" }
 }
 
 
