@@ -133,7 +133,7 @@ function PatientGenderAnalysis() {
               text={({ value, valueMax }) => `${value} / ${valueMax}`}
             />
             <Typography variant='h6' sx={{ alignSelf: "left" }} gutterBottom>
-              Line chart: Recent registrated patient precentage
+              Gauge chart: Recent registrated patient precentage
             </Typography>
           </Stack>
         </Stack>

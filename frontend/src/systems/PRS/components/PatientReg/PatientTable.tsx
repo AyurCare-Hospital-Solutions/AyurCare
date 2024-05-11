@@ -13,11 +13,12 @@ import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import QueueIcon from "@mui/icons-material/Queue";
-import { Box, ThemeProvider, Tooltip } from "@mui/material";
+import { Box, Stack, ThemeProvider, Tooltip } from "@mui/material";
 import PatientRegForm from "./PatientRegForm";
 import { enqueueSnackbar } from "notistack";
 import SearchInput from "../SearchInput";
-import { Search } from "@mui/icons-material";
+// import { Search } from "@mui/icons-material";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -170,16 +171,84 @@ function DataGridTest() {
     setSelectedRowData(null);
   };
 
+  // print the patient details to a csv
+  const printPatientDetails = () => {
+    // define the headers
+    const Headers = [
+      "Tracking No",
+      "Name",
+      "NIC",
+      "Phone No",
+      "Date Of Birth",
+      "Gender",
+      "Address",
+      "Email",
+    ];
+
+    // Create csv content headers
+    let csvContent = "data:text/csv;charset=utf-8," + Headers.join(",") + "\n";
+
+    // Add row to the csv
+    csvContent += data
+      .map((row: any) => {
+        const fomattedRow = [
+          row.tracking_no.toLocaleUpperCase(),
+          row.name,
+          row.nic,
+          row.phone,
+          row.dob,
+          row.gender,
+          row.address,
+          row.email,
+        ].join(",");
+        return fomattedRow;
+      })
+      .join(",");
+
+    // Encode CSV content URI
+    const encodedUri = encodeURI(csvContent);
+
+    // Create a link element and trigger
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "patient_details.csv");
+    document.body.appendChild(link);
+    link.click();
+  };
+
   return (
     <div>
       <Box sx={{ display: "flex", flexDirection: "column" }}>
-        <SearchInput
-          onChange={(e) => {
-            setSearch(e);
+        <Stack
+          spacing={{ xs: 1, sm: 2 }}
+          direction='row'
+          useFlexGap
+          flexWrap='wrap'
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
           }}
-        />
+        >
+          <SearchInput
+            onChange={(e) => {
+              setSearch(e);
+            }}
+          />
+          <Tooltip title='Download Patient Data' arrow>
+            <FileDownloadIcon
+              sx={{
+                margin: 1,
+              }}
+              onClick={printPatientDetails}
+            />
+          </Tooltip>
+        </Stack>
         <DataGrid
-          sx={{ marginTop: 2 }}
+          sx={{
+            marginTop: 2,
+            minHeight: 400,
+          }}
           rows={rows}
           columns={columns}
           pagination

@@ -5,6 +5,7 @@ const router = express.Router();
 const Patient = require("../systems/PRSS/patientReg");
 const Appointment = require("../systems/PRSS/appointmentReg");
 const Analysis = require("../systems/PRSS/analysis");
+const AppointmentAnalysis = require("../systems/PRSS/reqAnalysis");
 
 // Register routes here
 // patient registration related APIs
@@ -27,5 +28,12 @@ router.get("/today-appointments", Appointment.getpendingAppointment);
 // Analysis related APIs
 router.get("/gender-count", Analysis.getGenderCount);
 router.get("/get-patient-stat", Analysis.getNewPatientCount);
+
+// Analysis related status OPDAppointment
+router.get("/appointmentsData", AppointmentAnalysis.appointmentsData);
+router.get(
+  "/dailyAppointmentCount",
+  AppointmentAnalysis.dailyAppointementCount
+);
 
 module.exports = router;

@@ -1,6 +1,4 @@
 import { Box, Container, Divider, Stack, Typography } from "@mui/material";
-import { PieChart } from "@mui/x-charts/PieChart";
-import React from "react";
 import PatientGenderAnalysis from "./components/reports/PatientGenderAnalysis";
 import AppointmentReports from "./components/reports/AppointmentReports";
 

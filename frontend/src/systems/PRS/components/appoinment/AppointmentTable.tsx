@@ -221,7 +221,10 @@ function AppointmentTable({ appointments }: { appointments?: Appointment[] }) {
   return (
     <div>
       <DataGrid
-        autoHeight
+        sx={{
+          marginTop: 2,
+          minHeight: 596,
+        }}
         rows={rows}
         columns={columns}
         pagination

@@ -1,5 +1,6 @@
 import { Box, Divider, Typography } from "@mui/material";
 import ReportGenerator from "../../../../components/ReportGenerator";
+import StatusPieChart from "./statusRep";
 
 export default function AppointmentReports() {
   return (
@@ -13,9 +14,7 @@ export default function AppointmentReports() {
         filename='AppointmentAnalisys.pdf'
         visible
       >
-        <Typography variant='h6' sx={{ alignSelf: "left" }} gutterBottom>
-          Appointment Reports yet to be implemented
-        </Typography>
+        <StatusPieChart />
       </ReportGenerator>
     </Box>
   );

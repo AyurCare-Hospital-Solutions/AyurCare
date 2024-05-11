@@ -64,12 +64,10 @@ export default function PatientRegForm({
       dob: formattedDate,
     };
 
-    // validate the form
-    validate(patientData);
-
-    console.log(patientData);
-
     try {
+      // validate the form
+      validate(patientData);
+
       if (patientDetails) {
         await axios.put(
           `/api/prss/update-patient/${patientDetails.id}`,
@@ -77,9 +75,8 @@ export default function PatientRegForm({
         );
         enqueueSnackbar("Patient Updated Successfully", { variant: "success" });
       } else {
-        const res = await axios.post("/api/prss/create-patient", patientData);
-        const data = res.data;
-        enqueueSnackbar(data.msg, { variant: "success" });
+        await axios.post("/api/prss/create-patient", patientData);
+        enqueueSnackbar("Data Successfully Added", { variant: "success" });
       }
       // Reset the form after successful submission
       setPatient({
@@ -103,8 +100,6 @@ export default function PatientRegForm({
   const refreshPage = () => {
     navigate(0);
   };
-
-  // console.log(patientData);
 
   // handle date change
   const [dobValue, setadobValue] = React.useState<Dayjs | null>(dayjs(null));
@@ -133,7 +128,6 @@ export default function PatientRegForm({
 
   // validate function
   const validate = (patient: Patient) => {
-    console.log(patient);
     if (
       !patient.name ||
       !patient.nic ||
@@ -143,32 +137,22 @@ export default function PatientRegForm({
       !patient.email ||
       !patient.address
     ) {
-      setErrorMessage({
-        error: "All fields are required",
-      });
-      return enqueueSnackbar("All fields are required", { variant: "error" });
+      throw new Error("All fields are required");
     }
+
     if (patient.phone.length !== 10) {
-      setErrorMessage({
-        error: "Phone number should be 10 digits",
-      });
-      return enqueueSnackbar("Phone number should be 10 digits", {
-        variant: "error",
-      });
+      enqueueSnackbar("Phone number should be 10 digits", { variant: "error" });
+      throw new Error("Phone number should be 10 digits");
     }
+
     if (patient.nic.search(/^(\d{12}|\d{9}[vx])$/gm) === -1) {
-      setErrorMessage({
-        error: "NIC number should be 10 digits",
-      });
-      return enqueueSnackbar("NIC number should be 10 digits", {
-        variant: "error",
-      });
+      enqueueSnackbar("Invalid NIC", { variant: "error" });
+      throw new Error("Invalid NIC");
     }
+
     if (patient.email.search(/\S+@\S+\.\S+/) === -1) {
-      setErrorMessage({
-        error: "Invalid email",
-      });
-      return enqueueSnackbar("Invalid email", { variant: "error" });
+      enqueueSnackbar("Invalid email", { variant: "error" });
+      throw new Error("Invalid email");
     }
   };
 

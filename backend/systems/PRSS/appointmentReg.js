@@ -32,8 +32,6 @@ async function createAppointment(req, res) {
     const status = "pending";
     const final = { status, ...appointmentDetails };
 
-    console.log(final);
-
     // check the patient is already have an appointment
     const oldPatient = await OPDAppointment.findOne({
       where: {
@@ -96,8 +94,6 @@ async function editAppointment(req, res) {
     return res.status(404).json({ msg: "The patient does not exist" });
   }
 
-  console.log(result, data);
-
   const final = await result.update({
     status: data.status,
   });
@@ -115,7 +111,6 @@ async function deleteAppointment(req, res) {
 
   // delete the appointment
   const appointment = await OPDAppointment.findByPk(id);
-  console.log(appointment.id);
   await appointment.destroy();
   return res.status(200).json({ msg: "Appointment deleted successfully" });
 }
@@ -152,8 +147,6 @@ async function getpendingAppointment(req, res) {
 
   // get the pending appointment count
   const pendingAppointmentCount = pendingAppointments.length;
-
-  console.log(allAppointments, pendingAppointmentCount);
 
   return res.status(200).json({ allAppointments, pendingAppointmentCount });
 }
