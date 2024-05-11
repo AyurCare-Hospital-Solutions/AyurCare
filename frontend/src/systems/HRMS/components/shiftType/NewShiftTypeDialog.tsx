@@ -19,8 +19,8 @@ export default function NewShiftTypeDialog({
   addShiftType: (data: any) => void;
 }) {
   const [name, setName] = useState("");
-  const [startTime, setStartTime] = useState<Date | null>(null);
-  const [endTime, setEndTime] = useState<Date | null>(null);
+  const [startTime, setStartTime] = useState<Dayjs | null>(null);
+  const [endTime, setEndTime] = useState<Dayjs | null>(null);
   const [error, setError] = useState({
     nameError: "",
     timeError: "",
@@ -75,7 +75,7 @@ export default function NewShiftTypeDialog({
               label="Start Time"
               value={startTime ? dayjs(startTime) : null}
               onChange={(newValue: Dayjs | null) => {
-                setStartTime(newValue ? newValue.toDate() : null);
+                setStartTime(newValue ? newValue : null);
                 setError({ ...error, timeError: "" });
               }}
             />
@@ -84,7 +84,7 @@ export default function NewShiftTypeDialog({
               label="End Time"
               value={endTime ? dayjs(endTime) : null}
               onChange={(newValue: Dayjs | null) => {
-                setEndTime(newValue ? newValue.toDate() : null);
+                setEndTime(newValue ? newValue : null);
                 setError({ ...error, timeError: "" });
               }}
             />

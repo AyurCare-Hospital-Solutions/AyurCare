@@ -13,6 +13,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import UpdateShiftTypeDialog from "./UpdateShiftTypeDialog";
 import { ShiftTypeData } from "../../types";
+import { Dayjs } from "dayjs";
 
 const ShiftTypeTable = ({
   rows,
@@ -24,8 +25,8 @@ const ShiftTypeTable = ({
   updateShiftType: (
     row: ShiftTypeData,
     name: string,
-    startTime: Date,
-    endTime: Date
+    startTime: Dayjs,
+    endTime: Dayjs
   ) => void;
 }) => {
   const [open, setOpen] = useState(false);
@@ -36,7 +37,7 @@ const ShiftTypeTable = ({
     setOpen(true);
   };
 
-  const handleUpdate = (name: string, startTime: Date, endTime: Date) => {
+  const handleUpdate = (name: string, startTime: Dayjs, endTime: Dayjs) => {
     if (selectedRow !== null) {
       updateShiftType(selectedRow, name, startTime, endTime);
       setOpen(false);

@@ -19,11 +19,11 @@ export default function UpdateShiftTypeDialog({
   shiftData: ShiftTypeData | null;
   handleClose: () => void;
   open: boolean;
-  onSubmit: (name: string, startTime: Date, endTime: Date) => void;
+  onSubmit: (name: string, startTime: Dayjs, endTime: Dayjs) => void;
 }) {
   const [name, setName] = useState("");
-  const [startTime, setStartTime] = useState<Date | null>(null);
-  const [endTime, setEndTime] = useState<Date | null>(null);
+  const [startTime, setStartTime] = useState<Dayjs | null>(null);
+  const [endTime, setEndTime] = useState<Dayjs | null>(null);
   const [error, setError] = useState({
     nameError: "",
     timeError: "",
@@ -32,8 +32,8 @@ export default function UpdateShiftTypeDialog({
   useEffect(() => {
     if (shiftData !== null) {
       setName(shiftData.name);
-      setStartTime(new Date(shiftData.startTime));
-      setEndTime(new Date(shiftData.endTime));
+      setStartTime(dayjs(shiftData.startTime, "HH:mm"));
+      setEndTime(dayjs(shiftData.endTime, "HH:mm"));
     }
   }, [shiftData]);
 
@@ -85,7 +85,7 @@ export default function UpdateShiftTypeDialog({
               label="Start Time"
               value={startTime ? dayjs(startTime) : null}
               onChange={(newValue: Dayjs | null) => {
-                setStartTime(newValue ? newValue.toDate() : null);
+                setStartTime(newValue ? newValue : null);
                 setError({ ...error, timeError: "" });
               }}
             />
@@ -94,7 +94,7 @@ export default function UpdateShiftTypeDialog({
               label="End Time"
               value={endTime ? dayjs(endTime) : null}
               onChange={(newValue: Dayjs | null) => {
-                setEndTime(newValue ? newValue.toDate() : null);
+                setEndTime(newValue ? newValue : null);
                 setError({ ...error, timeError: "" });
               }}
             />

@@ -6,6 +6,7 @@ import axios from "axios";
 import { ShiftTypeData } from "../types";
 import { enqueueSnackbar } from "notistack";
 import { useConfirm } from "material-ui-confirm";
+import { Dayjs } from "dayjs";
 
 const ShiftTypes = () => {
   const [newShiftDialogOpen, setNewShiftDialogOpen] = useState(false);
@@ -29,8 +30,8 @@ const ShiftTypes = () => {
     try {
       const response = await axios.post("/api/hrms/shiftType", {
         name: data.name,
-        startTime: data.startTime,
-        endTime: data.endTime,
+        startTime: data.startTime.format("HH:mm"),
+        endTime: data.endTime.format("HH:mm"),
       });
 
       setRows([...rows, response.data]);
@@ -44,17 +45,18 @@ const ShiftTypes = () => {
   const updateShiftType = async (
     row: ShiftTypeData,
     name: string,
-    startTime: Date,
-    endTime: Date
+    startTime: Dayjs,
+    endTime: Dayjs
   ) => {
     try {
       await axios.put(`/api/hrms/leaveType/${row.id}`, {
         name: name,
-        startTime: startTime.toISOString(),
-        endTime: endTime.toISOString(),
+        startTime: startTime.format("HH:mm"),
+        endTime: endTime.format("HH:mm"),
       });
       row.name = name;
-      row.startTime = startTime.toISOString();
+      row.startTime = startTime.format("HH:mm");
+      row.endTime = endTime.format("HH:mm");
 
       setRows([...rows]);
       enqueueSnackbar("Leave type updated successfully", {
