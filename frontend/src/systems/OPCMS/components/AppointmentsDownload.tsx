@@ -1,17 +1,14 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
 } from "@mui/material";
 
-interface Appointment {
+export interface Appointment {
     id: number;
     Patient: {
         id: number;
@@ -20,17 +17,11 @@ interface Appointment {
     created_at: string;
 }
 
-const AppointmentsDownload = ({search}:{search:string}) => {
-    const [appointments, setAppointments] = useState<Appointment[]>([]);
-    const navigate = useNavigate(); // Get the history object from useHistory hook
-
-    useEffect(() => {
-        axios.get<Appointment[]>("/api/opcms/opdAppointments").then((res) => {
-            console.log(res.data);
-            setAppointments(res.data);
-        }).catch((err) => console.error(err));
-        }, []);
-
+const AppointmentsDownload = ({
+    appointments,
+}: {
+    appointments: Appointment[];
+}) => {
     return (
         <div>
             <TableContainer component={Paper}>
@@ -40,24 +31,15 @@ const AppointmentsDownload = ({search}:{search:string}) => {
                         <TableCell>Patient ID</TableCell>
                         <TableCell>Created At</TableCell>
                     </TableHead>
-                    <TableBody>
-                        {appointments.filter((appointment: any) => {
-                            if (search) {
-                                return (appointment.Patient.name.startsWith(search));
-                            }
-                            else {
-                                return appointment;
-                            }
-                        })
-                        
-                        .map((appointment) => (
+                <TableBody>
+                    {appointments.map((appointment) => (
                         <TableRow key={appointment.id}>
                             <TableCell>{appointment.Patient.name}</TableCell>
                             <TableCell>{appointment.id}</TableCell>
-                            <TableCell>{appointment.created_at}</TableCell>
+                            <TableCell>{new Date(appointment.created_at)?.toLocaleDateString()}</TableCell>
                         </TableRow>
-                        ))}
-                    </TableBody>
+                    ))}
+                </TableBody>
                 </Table>
             </TableContainer>
         </div>
