@@ -1,4 +1,4 @@
-import { ArrowCircleRightOutlined } from "@mui/icons-material"
+import { ArrowCircleRightOutlined, Downloading } from "@mui/icons-material"
 import { Paper, Box, Typography } from "@mui/material"
 import dayjs from "dayjs"
 import { useState, useEffect } from "react"
@@ -33,6 +33,20 @@ export const LinkCard2 = ({ name, desc, link }: { name: string, desc: string, li
             </Box>
             <Box sx={{ ml: "auto", my: "auto" }}>
                 <ArrowCircleRightOutlined fontSize="large" />
+            </Box>
+        </Paper>
+    </Link>
+}
+
+export const ReportCard = ({ name, desc, link }: { name: string, desc: string, link: string }) => {
+    return <Link to={link} style={{ textDecoration: "none", overflow: "hidden" }}>
+        <Paper elevation={1} sx={{ ...cardStyle, mt: 2, height: "220px", mr: "auto", minWidth: "80%", borderRadius: "15px", backgroundColor: "#cde1b4" }}>
+            <Box sx={{ my: "auto" }}>
+                <Typography sx={{ fontSize: "1.75rem", fontWeight: 500 }}>{name}</Typography>
+                <Typography sx={{ fontWeight: 500, }}>{desc}</Typography>
+            </Box>
+            <Box sx={{ ml: "auto", my: "auto", mr:"4"}}>
+                <Downloading fontSize="large" />
             </Box>
         </Paper>
     </Link>

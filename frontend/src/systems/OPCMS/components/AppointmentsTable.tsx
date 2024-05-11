@@ -11,7 +11,6 @@ import {
   Paper,
   Button,
 } from "@mui/material";
-import ReportGenerator from "../../../components/ReportGenerator";
 
 interface Appointment {
   id: number;
