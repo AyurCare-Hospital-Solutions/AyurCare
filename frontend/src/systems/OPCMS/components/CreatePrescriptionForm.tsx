@@ -35,6 +35,7 @@ const CreatePrescriptionForm: React.FC<Props> = ({
         note,
         OPDAppointmentId,
         PatientId,
+        
       });
       handleClose();
       setDiagnosis(null);
@@ -48,7 +49,8 @@ const CreatePrescriptionForm: React.FC<Props> = ({
   return (
     <React.Fragment>
       <Dialog
-        sx={{p:10}}
+        fullWidth={true}
+        maxWidth="sm"
         open={open}
         onClose={handleClose}
         PaperProps={{
@@ -65,7 +67,8 @@ const CreatePrescriptionForm: React.FC<Props> = ({
       >
         <DialogTitle>Add Prescription</DialogTitle>
         <DialogContent>
-          <Typography>Patient ID : {PatientId}</Typography>
+          <Typography variant="subtitle1">Patient Name: {}</Typography>
+          <Typography variant="subtitle1" style={{ fontStyle: 'italic', color: 'gray', fontSize: 'small' }}>Patient ID : {PatientId}</Typography>
           <Typography variant="subtitle1">Diagnosis</Typography>
           <TextField
             value={diagnosis}
@@ -79,6 +82,8 @@ const CreatePrescriptionForm: React.FC<Props> = ({
             onChange={(e) => setNote(e.target.value)}
             variant="outlined"
             fullWidth
+            multiline
+            rows={4}
           />
         </DialogContent>
         <DialogActions>

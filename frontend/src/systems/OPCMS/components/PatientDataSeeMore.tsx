@@ -4,11 +4,9 @@ import { enqueueSnackbar } from "notistack";
 import {
   Typography,
   TextField,
-  Button,
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
 } from "@mui/material";
 
 interface Prescription {
@@ -17,14 +15,14 @@ interface Prescription {
   note: string;
 }
 
-interface EditPrescriptionFormProps {
+interface PatientDataSeeMoreProps {
   open: boolean;
   handleClose: () => void;
   initialData: any; // Pass initial prescription data as prop
   getPatientPrescription: () => void;
 }
 
-const EditPrescriptionForm: React.FC<EditPrescriptionFormProps> = ({
+const PatientDataSeeMore: React.FC<PatientDataSeeMoreProps> = ({
   open,
   handleClose,
   initialData,
@@ -59,14 +57,18 @@ const EditPrescriptionForm: React.FC<EditPrescriptionFormProps> = ({
       maxWidth="sm"
       open={open} 
       onClose={handleClose}>
-      <DialogTitle>Edit Prescription</DialogTitle>
+      <DialogTitle fontSize={36}>Medical Report</DialogTitle>
       <DialogContent>
+        <Typography variant="subtitle1">Patient Name:  </Typography>
+        <Typography variant="subtitle1" style={{ fontStyle: 'italic', color: 'gray', fontSize: 'small' }} sx={{pb:2}}>Patient ID : {}</Typography>
+        <Typography variant="subtitle1" sx={{pb:2}}>Created At: </Typography>
         <Typography variant="subtitle1">Diagnosis</Typography>
         <TextField
           value={diagnosis}
           onChange={(e) => setDiagnosis(e.target.value)}
           variant="outlined"
           fullWidth
+          disabled
         />
         <Typography variant="subtitle1">Note</Typography>
         <TextField
@@ -76,14 +78,11 @@ const EditPrescriptionForm: React.FC<EditPrescriptionFormProps> = ({
           fullWidth
           multiline
           rows={4}
+          disabled
         />
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleEdit}>Save</Button>
-      </DialogActions>
     </Dialog>
   );
 };
 
-export default EditPrescriptionForm;
+export default PatientDataSeeMore;

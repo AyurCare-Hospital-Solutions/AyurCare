@@ -7,6 +7,8 @@ import {
   TableCell,
   Button,
 } from "@mui/material";
+import PatientDataSeeMore from "./PatientDataSeeMore";
+import { useState } from "react";
 
 interface Prescription {
   id: number;
@@ -21,40 +23,56 @@ interface SearchResultsProps {
 }
 
 function SearchResults({ results }: SearchResultsProps) {
+  const [moreOpen, setOpen] = useState(false);
+  const handleMoreOpen = () => {
+    setOpen(true);
+  };
+  const handleMoreClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <TableContainer>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Patient ID</TableCell>
-            <TableCell>Prescription ID</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Dispensed Date</TableCell>
-            <TableCell>Actions</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {results.map((prescription) => (
-            <TableRow key={prescription.id}>
-              <TableCell>{prescription.PatientId}</TableCell>
-              <TableCell>{prescription.id}</TableCell>
-              <TableCell>{prescription.Patient.name}</TableCell>
-              <TableCell>
-                {prescription.dispensed_date?.toLocaleDateString()}
-              </TableCell>
-              <TableCell>
-                <Button variant="contained" size="small" sx={{mr:1}}>
-                  Show More
-                </Button>
-                <Button variant="contained" size="small">
-                  Download
-                </Button>
-              </TableCell>
+    <div>
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Patient ID</TableCell>
+              <TableCell>Prescription ID</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Dispensed Date</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {results.map((prescription) => (
+              <TableRow key={prescription.id}>
+                <TableCell>{prescription.PatientId}</TableCell>
+                <TableCell>{prescription.id}</TableCell>
+                <TableCell>{prescription.Patient.name}</TableCell>
+                <TableCell>
+                  {prescription.dispensed_date?.toLocaleDateString()}
+                </TableCell>
+                <TableCell>
+                  <Button 
+                    variant="contained" 
+                    size="small" 
+                    sx={{mr:1}}
+                    onClick={handleMoreOpen}
+                  >
+                    Show More
+                  </Button>
+                  <Button>
+                    Download
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <PatientDataSeeMore open={moreOpen} handleClose={handleMoreClose} initialData={results[0]} getPatientPrescription={() => {}} /> 
+    </div>
   );
 }
 
