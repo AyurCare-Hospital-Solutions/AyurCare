@@ -9,8 +9,10 @@ const RosterManagement = () => {
   const [newRosterDialogOpen, setNewRosterDialogOpen] = useState(false);
 
   const addNewRoster = async (data: any) => {
+    console.log(data);
+
     try {
-      const response = await axios.post("", {});
+      const response = await axios.post("/api/hrms/shift", data);
     } catch (error) {
       console.error("Error adding roster:", error);
     }
@@ -37,9 +39,7 @@ const RosterManagement = () => {
         </Box>
         <NewRosterDialog
           open={newRosterDialogOpen}
-          addNewRoster={() => {
-            addNewRoster;
-          }}
+          addNewRoster={addNewRoster}
           onClose={() => setNewRosterDialogOpen(false)}
         />
       </Box>

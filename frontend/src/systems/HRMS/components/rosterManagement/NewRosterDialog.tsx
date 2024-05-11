@@ -18,6 +18,8 @@ import axios from "axios";
 import { ShiftTypeData, EmployeeData } from "../../types";
 import ShiftEmployeeTable from "./ShiftEmployeeTable";
 import { Box } from "@mui/material";
+import { GridRowId } from "@mui/x-data-grid";
+import { Dayjs } from "dayjs";
 
 export default function NewRosterDialog({
   open,
@@ -44,10 +46,24 @@ export default function NewRosterDialog({
   }, []);
 
   const [employees, setEmployees] = useState<EmployeeData[]>([]);
-  const [selectedEmployees, setSelectedEmployees] = useState([]);
+  const [selectedEmployees, setSelectedEmployees] = useState<GridRowId[]>([]);
 
   const [shiftTypes, setShiftTypes] = useState<ShiftTypeData[]>([]);
+  const [shiftType, setShiftType] = useState<ShiftTypeData | null>(null);
+  const [date, setDate] = useState<Dayjs | null>(null);
 
+  // const selectedRowsData = selectedEmployees.map((id) =>
+  //   employees.find((row) => row.id === id)
+  // );
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    addNewRoster({
+      date: date?.toISOString(),
+      type: shiftType?.id,
+      employees: selectedEmployees,
+    });
+  };
   return (
     <>
       <Dialog fullWidth open={open} onClose={onClose}>
@@ -58,9 +74,15 @@ export default function NewRosterDialog({
           <DialogContentText>
             Please enter the shift details below:
           </DialogContentText>
-          <DatePicker sx={{ my: 1, width: "100%" }} />
+          <DatePicker
+            sx={{ my: 1, width: "100%" }}
+            onChange={setDate}
+            value={date}
+          />
           <Autocomplete
             options={shiftTypes}
+            onChange={(e, value) => setShiftType(value)}
+            value={shiftType}
             getOptionLabel={(option) => option.name}
             renderInput={(params) => (
               <TextField
@@ -76,12 +98,18 @@ export default function NewRosterDialog({
             )}
           />
           <Box sx={{ mt: 2 }}>
-            <ShiftEmployeeTable />
+            <ShiftEmployeeTable
+              employees={employees}
+              selected={selectedEmployees}
+              setSelected={setSelectedEmployees}
+            />
           </Box>
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose}>Cancel</Button>
-          <Button type="submit">Submit</Button>
+          <Button type="submit" onClick={handleSubmit}>
+            Submit
+          </Button>
         </DialogActions>
       </Dialog>
     </>

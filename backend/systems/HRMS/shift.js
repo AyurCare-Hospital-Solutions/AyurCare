@@ -2,11 +2,15 @@
 const yup = require("yup");
 const Shift = require("../../model/Shift");
 const Staff = require("../../model/Staff");
+const { ShiftType } = require("../../model/ShiftType");
+const { sequelize } = require("../../model");
 
 
 const shiftValidator = yup
   .object({
     date: yup.date().required(),
+    type: yup.number().required(),
+    employees: yup.array().of(yup.number()).required(),
   })
   .noUnknown();
 
@@ -50,12 +54,24 @@ const getShiftById = async (req, res) => {
  */
 const createShift = async (req, res) => {
   try {
-    const data = await shiftValidator.validate(req.body);
-    const shift = await Shift.create(data);
-    res.status(201).json(shift);
+    var data = await shiftValidator.validate(req.body);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
+
+  await sequelize.transaction(async (t) => {
+    const shift = await Shift.create({ ShiftTypeId: data.type, date: data.date }, { transaction: t });
+    for (let i = 0; i < data.employees.length; i++) {
+      const staff = await Staff.findByPk(data.employees[i]);
+      if (!staff) {
+        throw new Error("Staff not found");
+      }
+      console.log(staff.id, shift.id)
+      await staff.addShift(shift, { transaction: t });
+    };
+  });
+  res.status(201).json({ message: "Shift created" });
+
 };
 
 /**
