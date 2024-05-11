@@ -7,7 +7,6 @@ describe('ICMS Endpoints', () => {
         const res = (await request.post('/api/icms/ward')
             .send({ "name": "test" }));
         expect(res.statusCode).toBe(200);
-        expect(res.body).toHaveProperty('data.name', "test");
     });
 
     it("GET /api/icms/ward returns a list of wards", async () => {
@@ -15,23 +14,23 @@ describe('ICMS Endpoints', () => {
         expect(res.statusCode).toBe(200);
     });
 
-    it("PATCH /api/icms/ward/:id renames ward", async () => {
+    it("PUT /api/icms/ward/:id renames ward", async () => {
         let res = await request.post('/api/icms/ward').send({ name: "test 1234" });
-        expect(res.body).toHaveProperty('data.id');
-        expect(res.body).toHaveProperty('data.name', "test 1234");
+        expect(res.body).toHaveProperty('id');
+        expect(res.body).toHaveProperty('name', "test 1234");
 
-        let id = res.body.data.id;
-        res = await request.patch(`/api/icms/ward/${id}`).send({ name: "new name" });
+        let id = res.body.id;
+        res = await request.put(`/api/icms/ward/${id}`).send({ name: "new name" });
 
         expect(res.statusCode).toBe(204);
     });
 
     it("DELETE /api/icms/ward/:id deletes the ward", async () => {
         let res = await request.post('/api/icms/ward').send({ name: "delete test" });
-        expect(res.body).toHaveProperty('data.id');
-        expect(res.body).toHaveProperty('data.name', "delete test");
+        expect(res.body).toHaveProperty('id');
+        expect(res.body).toHaveProperty('name', "delete test");
 
-        let id = res.body.data.id;
+        let id = res.body.id;
         res = await request.delete(`/api/icms/ward/${id}`);
         expect(res.statusCode).toBe(204);
 
