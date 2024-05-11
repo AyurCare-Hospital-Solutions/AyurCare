@@ -32,12 +32,17 @@ const getAllPrescriptions = async (req, res) => {
 const getPrescriptionById = async (req, res) => {
   const id = req.params.id;
   try {
-    const prescription = await Prescription.findByPk(id);
+    const prescription = await Prescription.findAll({
+      where: { id: id },
+      include: { model: Patient },
+    });
+    console.log(prescription);
     if (!prescription) {
       return res.status(404).json({ error: "Prescription not found" });
     }
     res.json(prescription);
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .json({ error: `Error getting prescription by ID: ${error.message}` });
