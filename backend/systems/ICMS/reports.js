@@ -6,9 +6,9 @@ const { sequelize } = require("../../model")
  * @param {express.Response} res 
  */
 const getReports = async (req, res) => {
-    const discharge_per_day = await sequelize.query(`SELECT STRFTIME('%d/%m/%Y', discharge_date) as label, COUNT(*) as value FROM IPDAdmissions WHERE discharge_date is not NULL GROUP BY STRFTIME('%d/%m/%Y', discharge_date);`, { type: QueryTypes.SELECT });
+    const discharge_per_day = await sequelize.query(`SELECT DATE_FORMAT(discharge_date, '%d/%m/%Y') as label, COUNT(*) as value FROM IPDAdmissions WHERE discharge_date is not NULL GROUP BY DATE_FORMAT(discharge_date, '%d/%m/%Y');`, { type: QueryTypes.SELECT });
 
-    const admissions_per_day = await sequelize.query(`SELECT STRFTIME('%d/%m/%Y', createdAt) as label, COUNT(*) as value FROM IPDAdmissions GROUP BY STRFTIME('%d/%m/%Y', createdAt);`, { type: QueryTypes.SELECT });
+    const admissions_per_day = await sequelize.query(`SELECT DATE_FORMAT(createdAt, '%d/%m/%Y') as label, COUNT(*) as value FROM IPDAdmissions GROUP BY DATE_FORMAT(createdAt, '%d/%m/%Y');`, { type: QueryTypes.SELECT });
 
     const priority_wait_list = (await sequelize.query(`SELECT is_priority as label, COUNT(*) as value FROM IPDWaitLists WHERE was_admitted = 0 GROUP BY is_priority`, { type: QueryTypes.SELECT })).map(v => { return { label: v.label ? "Priority" : "Normal", value: v.value } });
 
