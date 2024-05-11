@@ -10,11 +10,13 @@ import TableRow from '@mui/material/TableRow';
 import IconButton from '@mui/material/IconButton/IconButton';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import dayjs from 'dayjs';
+import { useState } from 'react';
 
 
 export default function ManufactureRequestTable({ manufactureReqData, deleteManufactureRequest }: { manufactureReqData: any, deleteManufactureRequest: (arg: number) => any }) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [searchQuery, setSearchQuery] = useState<RegExp>();
 
 
     const handleChangePage = (_event: unknown, newPage: number) => {
@@ -52,7 +54,7 @@ export default function ManufactureRequestTable({ manufactureReqData, deleteManu
                             <TableCell>Amount</TableCell>
                             <TableCell>Requested Date</TableCell>
                             <TableCell>Manufactured Date</TableCell>
-                            <TableCell>Status</TableCell>
+                            <TableCell>Progress</TableCell>
                             <center><TableCell>Action</TableCell></center>
 
                         </TableRow>
@@ -61,6 +63,13 @@ export default function ManufactureRequestTable({ manufactureReqData, deleteManu
                         {manufactureReqData
                             .toReversed()
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                            .filter((row: any) => {
+                                if (searchQuery) {
+                                    return (row.Medicine.Item.name.search(searchQuery) !== -1);
+                                } else {
+                                    return row;
+                                }
+                            })
                             .map((row: any) => {
                                 console.log(row);
 

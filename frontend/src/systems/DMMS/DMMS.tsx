@@ -1,5 +1,7 @@
 import { Assessment, Bed, Dashboard, House } from '@mui/icons-material';
 import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import FiberNewSharpIcon from '@mui/icons-material/FiberNewSharp';
+import CommentSharpIcon from '@mui/icons-material/CommentSharp';
 import { Link } from 'react-router-dom'
 import DashboardPage from '../../components/DashboardPage';
 
@@ -33,7 +35,7 @@ function DMMS() {
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
-                            <Bed />
+                            <CommentSharpIcon />
                         </ListItemIcon>
                         <ListItemText primary="Manage Requests" />
                     </ListItemButton>
@@ -67,9 +69,9 @@ function DMMS() {
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
-                            <Assessment />
+                            <FiberNewSharpIcon />
                         </ListItemIcon>
-                        <ListItemText primary="New Imp" />
+                        <ListItemText primary="New Requests" />
                     </ListItemButton>
                 </ListItem>
             </Link>

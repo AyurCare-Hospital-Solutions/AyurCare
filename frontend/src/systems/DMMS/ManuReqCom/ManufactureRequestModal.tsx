@@ -58,7 +58,7 @@ export default function ManufactureRequestModal({ open, handleClose, updateReque
                         Requested Date : {formatDate(request?.createdAt)}
                     </Typography>
                     <Typography variant='h6'>
-                        Priority : {request?.isPriority}
+                        Priority : {request?.isPriority ? 'Is Priority' : 'Not Priority'}
                     </Typography>
                     <Typography variant="h6" >Progress :
                         <Box>

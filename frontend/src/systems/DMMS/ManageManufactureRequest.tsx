@@ -12,14 +12,19 @@ import MedicineRequestModal from './ManuReqCom/ManufactureRequestModal';
 import SearchBar from './SearchBar';
 import { useConfirm } from 'material-ui-confirm';
 import { enqueueSnackbar } from 'notistack';
-import { Box, Tooltip, Typography } from '@mui/material';
+import { Box, Tooltip, Typography, IconButton } from '@mui/material';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { usePDF } from 'react-to-pdf';
 import dayjs from 'dayjs';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import AssignmentReturnedSharpIcon from '@mui/icons-material/AssignmentReturnedSharp';
 
 function ManageManufactureRequest() {
     const [manufactureReqData, setManufactureReqData] = useState<any>([]);
     const [searchQuery, setSearchQuery] = useState<RegExp>();  // for search query
+    const [sortByRequestedDate, setSortByRequestedDate] = useState<boolean>(false);
+    const [sortByProgress, setSortByProgress] = useState<boolean>(false);
 
     // fetch medicine request data
     const getManufactureRequestData = async () => {
@@ -86,10 +91,57 @@ function ManageManufactureRequest() {
             })
     }
 
+
     // print the component as a PDF
     const { toPDF, targetRef } = usePDF({
         filename: "Manufacture_Request_Table.pdf"
     });
+
+    // 
+    const handleSortByRequestedDate = () => {
+        setSortByRequestedDate(!sortByRequestedDate);
+    };
+
+    const handleSortByProgress = () => {
+        setSortByProgress(!sortByProgress);
+    };
+
+    //Export whole Table as a CSV
+    const exportToCSV = () => {
+        // Define column headers in desired order
+        const headers = ["Order ID", "Medicine ID", "Medicine Name", "Priority", "Amount", "Requested Date", "Manufactured Date", "Progress"];
+
+        // Create CSV content with headers
+        let csvContent = "data:text/csv;charset=utf-8," + headers.join(",") + "\n";
+
+        // Add rows to CSV content
+        csvContent += manufactureReqData
+            .map((row: any) => {
+                const formattedRow = [
+                    row.id,
+                    row.Medicine?.Item?.id,
+                    row.Medicine?.Item?.name,
+                    row.isPriority ? 'Is Priority' : 'Not Priority',
+                    row.amount,
+                    row.createdAt ? formatDate(row.createdAt) : '',
+                    row.progress === "Completed" || row.progress === "Rejected" || row.progress === "Manufacture Error" ?
+                        formatDate(row.updatedAt) : '',
+                    row.progress
+                ].join(",");
+                return formattedRow;
+            })
+            .join("\n");
+
+        // Encode CSV content URI
+        const encodedUri = encodeURI(csvContent);
+
+        // Create link element and trigger download
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "all_manufacture_requests.csv");
+        document.body.appendChild(link);
+        link.click();
+    };
 
     return (
         <div>
@@ -98,9 +150,16 @@ function ManageManufactureRequest() {
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }} my={2} mx={2} >
                 <SearchBar onChange={(q) => setSearchQuery(q)} />
-                <Tooltip title="Download table as PDF" arrow>
-                    <PictureAsPdfIcon fontSize='large' htmlColor='rgba(0, 58, 43, 0.8)' onClick={() => toPDF()} />
-                </Tooltip>
+                <Box>
+                    <Tooltip title="Download table as PDF" arrow>
+                        <PictureAsPdfIcon fontSize='large' htmlColor='rgba(0, 58, 43, 0.8)' onClick={() => toPDF()} />
+                    </Tooltip>
+                    <Tooltip title="Export table as CSV" arrow>
+                        <IconButton onClick={exportToCSV}>
+                            <AssignmentReturnedSharpIcon fontSize='large' />
+                        </IconButton>
+                    </Tooltip>
+                </Box>
             </Box>
             {/* <Box flexGrow={1}></Box> */}
             <Paper sx={{ marginTop: '2rem', width: '100%', overflow: 'hidden' }} ref={targetRef} >
@@ -114,9 +173,17 @@ function ManageManufactureRequest() {
                                 <TableCell>Order ID</TableCell>
                                 <TableCell>Medicine Name</TableCell>
                                 <TableCell>Amount</TableCell>
-                                <TableCell>Requested Date</TableCell>
+                                <TableCell>Requested Date
+                                    <IconButton onClick={handleSortByRequestedDate}>
+                                        {sortByRequestedDate ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
+                                    </IconButton>
+                                </TableCell>
                                 <TableCell>Manufactured Date</TableCell>
-                                <TableCell>Progress</TableCell>
+                                <TableCell>Progress
+                                    <IconButton onClick={handleSortByProgress}>
+                                        {sortByProgress ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
+                                    </IconButton>
+                                </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -132,6 +199,15 @@ function ManageManufactureRequest() {
                                     else {
                                         return row;
                                     }
+                                })
+                                .sort((a: any, b: any) => {
+                                    if (sortByRequestedDate) {
+                                        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+                                    }
+                                    if (sortByProgress) {
+                                        return a.progress.localeCompare(b.progress);
+                                    }
+                                    return 0;
                                 })
                                 .map((row: any) => {
                                     if (row.progress !== "Pending") {

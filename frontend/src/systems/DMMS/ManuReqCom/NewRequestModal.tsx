@@ -58,33 +58,8 @@ export default function NewRequestModal({ open, handleClose, updateRequest, upda
                         Requested Date : {formatDate(request?.createdAt)}
                     </Typography>
                     <Typography variant='h6'>
-                        Priority : {request?.isPriority}
+                        Priority : {request?.isPriority ? 'Is Priority' : 'Not Priority'}
                     </Typography>
-                    {/* <Typography variant="h6" >Progress :
-                        <Box>
-                            <TextField
-                                id="outlined-select3"
-                                disabled={request?.progress === "Completed" || request?.progress === "Rejected" || request?.progress === "Manufacture Error"}
-                                value={updateProgress}
-                                select
-                                label={request?.progress}
-                                required
-                                defaultValue=""
-                                helperText="Please select current progress of manufacture progress"
-                                onChange={(e) => {
-                                    updateProgress(request.id, e.target.value);
-                                    handleClose();
-                                }}
-                            >
-                                <MenuItem value="Manufacture Error">
-                                    Manufacture Error
-                                </MenuItem>
-                                <MenuItem value="Completed">
-                                    Completed
-                                </MenuItem>
-                            </TextField>
-                        </Box>
-                    </Typography> */}
                     <Stack mt={5} alignContent="center" direction="row" spacing={4}>
                         <Button sx={{ backgroundColor: "#4aee78" }} variant="contained" disabled={request?.progress === "Completed" || request?.progress === "In Progress"} onClick={() => {
                             updateProgress(request.id, "In Progress");

@@ -4,6 +4,7 @@ import { MedicineRequestStatusBarChart } from "./Analyse/ProductionAnalyse";
 import { usePDF } from 'react-to-pdf';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
+
 function DMMSAnalyse() {
 
     // print the component as a PDF
