@@ -66,59 +66,58 @@ const ShiftTypes = () => {
         variant: "error",
       });
     }
-
-    const deleteShiftType = async (id: number) => {
-      await confirm({
-        description: "Are you sure you want to delete this shift type?",
-      });
-      try {
-        await axios.delete(`/api/hrms/shiftType/${id}`);
-        setRows((prevRows) => prevRows.filter((row) => row.id !== id));
-        enqueueSnackbar("Shift type deleted successfully", {
-          variant: "success",
-        });
-      } catch (error) {
-        console.error("Error deleting row:", error);
-        enqueueSnackbar("Error deleting leave type", {
-          variant: "error",
-        });
-      }
-    };
-
-    return (
-      <div className="shiftType">
-        <Box sx={{ display: "flex", mx: 4 }}>
-          <Box>
-            <Typography variant="h5" gutterBottom>
-              Shift Types
-            </Typography>
-            <Typography variant="body2">
-              Add, Remove and Edit Shift Types
-            </Typography>
-          </Box>
-          <Button
-            sx={{ ml: "auto", my: "auto" }}
-            variant="outlined"
-            onClick={() => setNewShiftDialogOpen(true)}
-          >
-            Add Shift Type
-          </Button>
-        </Box>
-        <Box flexGrow={1} />
-        <NewShiftTypeDialog
-          open={newShiftDialogOpen}
-          addShiftType={addShiftType}
-          onClose={() => setNewShiftDialogOpen(false)}
-        />
-        <Box sx={{ m: 4 }}>
-          <ShiftTypeTable
-            rows={rows}
-            deleteShiftType={deleteShiftType}
-            updateShiftType={updateShiftType}
-          />
-        </Box>
-      </div>
-    );
   };
+  const deleteShiftType = async (id: number) => {
+    await confirm({
+      description: "Are you sure you want to delete this shift type?",
+    });
+    try {
+      await axios.delete(`/api/hrms/shiftType/${id}`);
+      setRows((prevRows) => prevRows.filter((row) => row.id !== id));
+      enqueueSnackbar("Shift type deleted successfully", {
+        variant: "success",
+      });
+    } catch (error) {
+      console.error("Error deleting row:", error);
+      enqueueSnackbar("Error deleting leave type", {
+        variant: "error",
+      });
+    }
+  };
+
+  return (
+    <div className="shiftType">
+      <Box sx={{ display: "flex", mx: 4 }}>
+        <Box>
+          <Typography variant="h5" gutterBottom>
+            Shift Types
+          </Typography>
+          <Typography variant="body2">
+            Add, Remove and Edit Shift Types
+          </Typography>
+        </Box>
+        <Button
+          sx={{ ml: "auto", my: "auto" }}
+          variant="outlined"
+          onClick={() => setNewShiftDialogOpen(true)}
+        >
+          Add Shift Type
+        </Button>
+      </Box>
+      <Box flexGrow={1} />
+      <NewShiftTypeDialog
+        open={newShiftDialogOpen}
+        addShiftType={addShiftType}
+        onClose={() => setNewShiftDialogOpen(false)}
+      />
+      <Box sx={{ m: 4 }}>
+        <ShiftTypeTable
+          rows={rows}
+          deleteShiftType={deleteShiftType}
+          updateShiftType={updateShiftType}
+        />
+      </Box>
+    </div>
+  );
 };
 export default ShiftTypes;

@@ -109,7 +109,7 @@ const HRMS = () => {
         </ListItem>
       </Link>
 
-      <Link to="chat">
+      {/* <Link to="chat">
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
@@ -118,7 +118,7 @@ const HRMS = () => {
             <ListItemText primary="Chat" />
           </ListItemButton>
         </ListItem>
-      </Link>
+      </Link> */}
     </DashboardPage>
   );
 };
