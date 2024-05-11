@@ -12,7 +12,6 @@ import {
   Category,
   ConfirmationNumber,
   Dashboard,
-  Email,
   Event,
   Group,
   Groups,

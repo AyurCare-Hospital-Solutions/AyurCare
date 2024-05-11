@@ -1,56 +1,58 @@
+import { Box, Button, Typography } from "@mui/material";
+import { useState } from "react";
+import NewRosterDialog from "./rosterManagement/NewRosterDialog";
+import axios from "axios";
 import RosterManagementTable from "./rosterManagement/RosterManagementTable";
 import RosterCard from "./rosterManagement/RosterCard";
-import { Box, Typography } from "@mui/material";
-import NewRosterDialog from "./rosterManagement/NewRosterDialog";
 
 const RosterManagement = () => {
+  const [newRosterDialogOpen, setNewRosterDialogOpen] = useState(false);
+
+  const addNewRoster = async (data: any) => {
+    try {
+      const response = await axios.post("", {});
+    } catch (error) {
+      console.error("Error adding roster:", error);
+    }
+  };
+
   return (
-    <>
-      <Box sx={{ display: "flex", mx: "auto", m: 4 }}>
+    <div className="RosterManagement">
+      <Box sx={{ display: "flex", mx: 4 }}>
         <Box>
           <Typography variant="h5" gutterBottom>
-            Staff Duty Roster Management
+            Roster Management
           </Typography>
-          <Typography variant="body2" sx={{}}>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+          <Typography variant="body2" gutterBottom>
+            Add, Remove and Edit Rosters
           </Typography>
         </Box>
-        <NewRosterDialog />
-      </Box>
-      <Box
-        sx={{
-          mx: 4,
-          display: "flex",
-          height: "calc(100vh - 250px)",
-        }}
-      >
-        <Box
-          sx={{
-            flex: "1",
-            minWidth: "1024px",
-            maxWidth: "1280px",
-            display: "flex",
-            flexDirection: "column",
+        <Box sx={{ ml: "auto", my: "auto" }}>
+          <Button
+            variant="outlined"
+            onClick={() => setNewRosterDialogOpen(true)}
+          >
+            Add Duty List
+          </Button>
+        </Box>
+        <NewRosterDialog
+          open={newRosterDialogOpen}
+          addNewRoster={() => {
+            addNewRoster;
           }}
-        >
+          onClose={() => setNewRosterDialogOpen(false)}
+        />
+      </Box>
+
+      <Box sx={{ display: "flex" }}>
+        <Box sx={{ m: 4, flex: 2 }}>
           <RosterManagementTable />
         </Box>
-        <Box sx={{ flex: "1", maxHeight: "100%", p: 4 }}>
-          <RosterCard
-            key="1"
-            id="2"
-            date="2024-05-11"
-            type="Night Shift"
-            allocated={{
-              doctor: 3,
-              nurse: 3,
-              others: 2,
-            }}
-            status="incomplete"
-          />
+        <Box sx={{ flex: 1, m: 4 }}>
+          <RosterCard />
         </Box>
       </Box>
-    </>
+    </div>
   );
 };
 

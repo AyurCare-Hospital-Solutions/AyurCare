@@ -1,4 +1,3 @@
-import * as React from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -6,7 +5,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { DatePicker, TimePicker } from "@mui/x-date-pickers";
+import { DatePicker } from "@mui/x-date-pickers";
 import Autocomplete from "@mui/material/Autocomplete";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -14,59 +13,38 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { ShiftTypeData } from "../../types";
 
-// Sample options for the autocomplete
-const shiftTypes = [
-  { label: "Morning Shift", value: "morning" },
-  { label: "Afternoon Shift", value: "afternoon" },
-  { label: "Night Shift", value: "night" },
-];
+export default function NewRosterDialog({
+  open,
+  onClose,
+  addNewRoster,
+}: {
+  open: boolean;
+  onClose: () => void;
+  addNewRoster: (data: any) => void;
+}) {
+  useEffect(() => {
+    axios
+      .get("/api/hrms/shiftType")
+      .then((res) => {
+        setShiftTypes(res.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching shift types:", error);
+      });
+  }, []);
 
-export default function NewRosterDialog() {
-  const [open, setOpen] = React.useState(false);
-  const [searchedEmployees, setSearchedEmployees] = React.useState([]);
-  const [selectedEmployees, setSelectedEmployees] = React.useState([]);
+  const [searchedEmployees, setSearchedEmployees] = useState([]);
+  const [selectedEmployees, setSelectedEmployees] = useState([]);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleEmployeeSearch = (event, value) => {
-    // Perform employee search logic here and set the results to searchedEmployees state
-    setSearchedEmployees([
-      { name: "John Doe" },
-      { name: "Jane Doe" },
-      { name: "Michael Smith" },
-    ]);
-  };
-
-  const handleAddEmployee = (event, values) => {
-    setSelectedEmployees(values);
-  };
+  const [shiftTypes, setShiftTypes] = useState<ShiftTypeData[]>([]);
 
   return (
-    <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Add new Shift
-      </Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          component: "form",
-          onSubmit: (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries(formData.entries());
-            console.log(formJson);
-            handleClose();
-          },
-        }}
-      >
+    <>
+      <Dialog open={open} onClose={onClose}>
         <DialogTitle>Enter Shift Table</DialogTitle>
         <DialogContent sx={{ width: 400 }}>
           {" "}
@@ -74,11 +52,10 @@ export default function NewRosterDialog() {
           <DialogContentText>
             Please enter the shift details below:
           </DialogContentText>
-          <DatePicker sx={{ my: 2 }} />
+          <DatePicker sx={{ my: 1, width: "100%" }} />
           <Autocomplete
-            multiple
             options={shiftTypes}
-            getOptionLabel={(option) => option.label}
+            getOptionLabel={(option) => option.name}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -96,9 +73,6 @@ export default function NewRosterDialog() {
             multiple
             freeSolo
             options={searchedEmployees}
-            getOptionLabel={(option) => option.name}
-            onInputChange={handleEmployeeSearch}
-            onChange={handleAddEmployee}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -123,10 +97,10 @@ export default function NewRosterDialog() {
           </TableContainer>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={onClose}>Cancel</Button>
           <Button type="submit">Submit</Button>
         </DialogActions>
       </Dialog>
-    </React.Fragment>
+    </>
   );
 }

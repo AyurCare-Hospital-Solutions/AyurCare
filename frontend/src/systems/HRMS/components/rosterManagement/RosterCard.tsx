@@ -1,48 +1,38 @@
-import { Paper, Typography } from "@mui/material";
+import { Box, Divider, Paper, Typography, IconButton } from "@mui/material";
+import { Edit, Delete } from "@mui/icons-material";
 
-interface RosterCardProps {
-  id: string;
-  date: string;
-  type: string;
-  allocated: {
-    doctor: number;
-    nurse: number;
-    others: number;
-  };
-  status: string;
-}
-
-const RosterCard: React.FC<RosterCardProps> = ({
-  id,
-  date,
-  type,
-  allocated,
-  status,
-}) => {
-  const isIncomplete = status === "incomplete";
-
+const RosterCard = () => {
   return (
-    <Paper
-      style={{ backgroundColor: isIncomplete ? "yellow" : "white" }}
-      sx={{ p: 2, my: 2, maxWidth: "250px" }}
-    >
-      <Typography variant="body2">ID: {id}</Typography>
-      <Typography variant="body2">Date: {date}</Typography>
-      <Typography variant="body2">Type: {type}</Typography>
-      <Typography variant="body2">Allocated No of Employees:</Typography>
-      <ul>
-        <li>
-          <Typography variant="body2">Doctor: {allocated.doctor}</Typography>
-        </li>
-        <li>
-          <Typography variant="body2">Nurse: {allocated.nurse}</Typography>
-        </li>
-        <li>
-          <Typography variant="body2">Others: {allocated.others}</Typography>
-        </li>
-      </ul>
-      <Typography variant="body2">Status: {status}</Typography>
-    </Paper>
+    <>
+      <Paper>
+        <Box sx={{ display: "flex", justifyContent: "center", p: 2 }}>
+          <Typography variant="h6">Roster ID : 1</Typography>
+        </Box>
+        <Box sx={{ p: 2 }}>
+          <Typography variant="body1">Date : 2024 - 05 -06</Typography>
+          <Divider sx={{ my: 1 }} />
+          <Typography variant="body1">Type : Surgery</Typography>
+          <Divider sx={{ my: 1 }} />
+          <Typography variant="body1">Start time : 12:00</Typography>
+          <Divider sx={{ my: 1 }} />
+          <Typography variant="body1">End time : 12:00</Typography>
+          <Divider sx={{ my: 1 }} />
+          <Typography variant="body1">Status : Done</Typography>
+        </Box>
+        <Box sx={{ display: "flex", p: 2, justifyContent: "space-between" }}>
+          <IconButton color="primary" aria-label="edit">
+            <Edit />
+          </IconButton>
+          <IconButton
+            color="error"
+            aria-label="delete"
+            sx={{ borderColor: "error.main" }}
+          >
+            <Delete />
+          </IconButton>
+        </Box>
+      </Paper>
+    </>
   );
 };
 

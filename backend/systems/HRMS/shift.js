@@ -1,6 +1,6 @@
 
 const yup = require("yup");
-const { Shift } = require("../../model/Shift");
+const Shift = require("../../model/Shift");
 
 const shiftValidator = yup
   .object({
