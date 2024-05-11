@@ -5,7 +5,6 @@ dotenv.config({ path: ['.env.local', '.env'] });
 const db = require("./model");
 db.createAll().then(() => {
     const app = require("./server");
-    console.log("server loaded");
     const server = app.listen(process.env.PORT, () => {
         console.log(`Server is running on ${server.address().port}`);
     });

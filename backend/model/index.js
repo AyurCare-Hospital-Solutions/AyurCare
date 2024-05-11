@@ -22,7 +22,7 @@ function connect() {
             database: process.env.MYSQL_DATABASE,
             username: process.env.MYSQL_USERNAME,
             password: process.env.MYSQL_PASSWORD,
-            logging : false
+            logging: false
         };
 
         let emptyOk = ["password", "port"];
@@ -55,7 +55,6 @@ async function createAll() {
     glob.sync('./model/*.js').forEach(function (file) {
         require(path.resolve(file));
     });
-    console.log("loaded")
 
     console.log("Loaded all models.")
 
