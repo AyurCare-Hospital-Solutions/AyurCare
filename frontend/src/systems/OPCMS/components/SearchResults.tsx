@@ -9,12 +9,13 @@ import {
 } from "@mui/material";
 import PatientDataSeeMore from "./PatientDataSeeMore";
 import { useState } from "react";
+import dayjs from "dayjs";
 
 interface Prescription {
   id: number;
   PatientId: string;
   Patient: { name: string }; // Interface for associated Patient object
-  dispensed_date: Date;
+  dispensed_date: string;
   // ... other prescription details (diagnosis, note, etc.)
 }
 
@@ -30,6 +31,8 @@ function SearchResults({ results }: SearchResultsProps) {
   const handleMoreClose = () => {
     setOpen(false);
   };
+
+  const [pId,setPId] = useState<number>()
 
   return (
     <div>
@@ -51,14 +54,17 @@ function SearchResults({ results }: SearchResultsProps) {
                 <TableCell>{prescription.id}</TableCell>
                 <TableCell>{prescription.Patient.name}</TableCell>
                 <TableCell>
-                  {prescription.dispensed_date?.toLocaleDateString()}
+                  {prescription.dispensed_date && dayjs(prescription.dispensed_date).format('YYYY-MM-DD')}
                 </TableCell>
                 <TableCell>
                   <Button 
                     variant="contained" 
                     size="small" 
                     sx={{mr:1}}
-                    onClick={handleMoreOpen}
+                    onClick={()=>{
+                      handleMoreOpen();
+                      setPId(prescription.id);
+                    }}
                   >
                     Show More
                   </Button>
@@ -71,7 +77,7 @@ function SearchResults({ results }: SearchResultsProps) {
           </TableBody>
         </Table>
       </TableContainer>
-      <PatientDataSeeMore open={moreOpen} handleClose={handleMoreClose} initialData={results[0]} getPatientPrescription={() => {}} /> 
+      <PatientDataSeeMore open={moreOpen} handleClose={handleMoreClose} initialData={pId}  /> 
     </div>
   );
 }
