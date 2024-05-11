@@ -1,0 +1,34 @@
+1. About useEffect()
+    LINK: https://www.freecodecamp.org/news/how-to-perform-crud-operations-using-react/
+    The useEffect Hook allows you to perform side effects in your components.
+    Some examples of side effects are: fetching data, directly updating the DOM, and timers.
+    useEffect accepts two arguments. The second argument is optional.
+    useEffect(<function>, <dependency>)
+
+        *****In the useEffect Hook, let's send the GET Request.
+
+        useEffect(() => {
+        axios.get(`https://60fbca4591156a0017b4c8a7.mockapi.io/fakeData`)
+            .then((response) => {
+                setAPIData(response.data);
+            })
+        }, [])
+
+        *****So, we are using axios.get to send the GET request to the API. Then, if the request is fulfilled, we are setting the response data in our APIData state.
+
+
+
+2. useHistory   <-- Hook
+
+
+
+
+ERRORS:
+    1. ReferenceError: OPDAppointment is not defined <-- FILE IS NOT IMPORTED.
+    2. Parsing error: Identifier 'Router' has already been declared. (7:26) <-- MEANS Router packages declares two times in the page.
+        find where it installed and remove it. ERROR STARTS FROM LINE NO 7.
+
+
+
+
+        test
