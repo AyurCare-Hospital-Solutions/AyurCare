@@ -3,7 +3,8 @@ const { sequelize } = require(".");
 const Ward = require("./Ward");
 
 const Bed = sequelize.define("Bed", {
-    number: DataTypes.INTEGER
+    number: DataTypes.INTEGER,
+    occupied: { type: DataTypes.BOOLEAN, defaultValue: false }
 },
     {
         timestamps: false, indexes: [

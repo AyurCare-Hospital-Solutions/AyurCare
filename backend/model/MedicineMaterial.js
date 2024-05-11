@@ -4,7 +4,7 @@ const Medicine = require("./Medicine");
 const Material = require("./Material");
 
 const MedicineMaterial = sequelize.define("MedicineMaterial", {
-    amount: DataTypes.NUMBER
+    amount: DataTypes.INTEGER
 }, { timestamps: false });
 
 MedicineMaterial.belongsTo(Medicine, {
