@@ -11,7 +11,8 @@ let roles = {
     doctor: { name: "Doctor", home: "opcms" },
     medicalStaff: { name: "Medical Staff", home: "icms", perms: ["test"] },
     hrAdmin: { name: "HR Administrator", home: "hrms" },
-    imsAdmin: { name: "IMS Manager", home: "ims" }
+    imsAdmin: { name: "IMS Manager", home: "ims" },
+    pharmacist: { name: "Pharmacist", home: "pms" }
 }
 
 
