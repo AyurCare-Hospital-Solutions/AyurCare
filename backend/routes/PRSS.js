@@ -17,6 +17,7 @@ router.put("/update-patient/:id", Patient.updatePatientDetails);
 router.delete("/delete-patient/:id", Patient.deletePatient);
 router.get("/recent-patient", Patient.getRecentPatient);
 router.get("/tolCount-patient", Patient.getPatientCountPerDay);
+router.get("/next-trackingNo", Patient.getNextTrackingNo);
 
 // Appointment registration related APIs
 router.post("/create-appointment", Appointment.createAppointment);

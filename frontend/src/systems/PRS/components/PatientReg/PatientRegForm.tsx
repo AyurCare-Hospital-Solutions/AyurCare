@@ -107,6 +107,14 @@ export default function PatientRegForm({
   // get the current date
   const [time, setTime] = useState(new Date());
 
+  // get next tracking no
+  const [nextTrackingNo, setNextTrackingNo] = useState<String>();
+
+  const getNxtTrackingNo = async () => {
+    const res = await axios.get("/api/prss/next-trackingNo");
+    setNextTrackingNo(res.data);
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       setTime(new Date());
@@ -122,6 +130,12 @@ export default function PatientRegForm({
       setadobValue(dayjs(patientDetails.dob));
     }
   }, [patientDetails]);
+
+  useEffect(() => {
+    if (!nextTrackingNo) {
+      getNxtTrackingNo();
+    }
+  }, [nextTrackingNo]);
 
   // get the error message
   const [errorMessage, setErrorMessage] = useState({});
@@ -161,6 +175,10 @@ export default function PatientRegForm({
       <form>
         <Typography mb={3} variant='h5'>
           Add Patient Details
+        </Typography>
+        <Typography mb={3} variant='h6'>
+          Next tracking No:{" "}
+          {nextTrackingNo && nextTrackingNo ? nextTrackingNo : "Loading..."}
         </Typography>
         <Box
           mb={2}

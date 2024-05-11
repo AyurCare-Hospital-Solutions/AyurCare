@@ -35,10 +35,6 @@ export default function BasicCard() {
   // patient details useState
   const [recentPatientDetails, setRecentPatientDetails] = useState<any>();
 
-  // console log
-  console.log(recentPatientDetails);
-  // console.log(learnMore);
-
   async function getRecentPatient() {
     try {
       const response = await axios.get(`/api/prss/recent-patient`);

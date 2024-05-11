@@ -229,6 +229,26 @@ async function getPatientCountPerDay(req, res) {
   res.status(200).json(data.count);
 }
 
+/**
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+
+async function getNextTrackingNo(req, res) {
+  // get date
+  const date = new Date();
+
+  // get the trackingnumber column count
+  const num = await Patient.count({
+    where: { tracking_no: { [Op.like]: `${date.getFullYear()}%` } },
+  });
+
+  // get the next available tracking number
+  const nxt_tracking_no = createTrackingNumber(num + 1);
+
+  res.status(200).json(nxt_tracking_no);
+}
+
 module.exports = {
   test,
   createNewPatient,
@@ -238,4 +258,5 @@ module.exports = {
   deletePatient,
   getRecentPatient,
   getPatientCountPerDay,
+  getNextTrackingNo,
 };

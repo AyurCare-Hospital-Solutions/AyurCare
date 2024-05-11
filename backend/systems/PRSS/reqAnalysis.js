@@ -1,6 +1,6 @@
 const express = require("express");
 const OPDAppointment = require("../../model/OPDAppointment");
-const { Op, Sequelize } = require("sequelize");
+const { Op } = require("sequelize");
 const { sequelize } = require("../../model");
 
 // get manufacture request analysis
