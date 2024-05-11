@@ -1,6 +1,7 @@
 import { Box, Container, Divider, Stack, Typography } from "@mui/material";
 import PatientGenderAnalysis from "./components/reports/PatientGenderAnalysis";
 import AppointmentReports from "./components/reports/AppointmentReports";
+import AgeAnalysis from "./components/reports/AgeAnalysis";
 
 export default function ReportGen() {
   return (
@@ -14,6 +15,7 @@ export default function ReportGen() {
         </Typography>
         <PatientGenderAnalysis />
         <AppointmentReports />
+        <AgeAnalysis />
       </Stack>
     </div>
   );

@@ -6,6 +6,7 @@ const Patient = require("../systems/PRSS/patientReg");
 const Appointment = require("../systems/PRSS/appointmentReg");
 const Analysis = require("../systems/PRSS/analysis");
 const AppointmentAnalysis = require("../systems/PRSS/reqAnalysis");
+const PredictiveAnalysis = require("../systems/PRSS/predictiveAnalysis");
 
 // Register routes here
 // patient registration related APIs
@@ -36,5 +37,8 @@ router.get(
   "/dailyAppointmentCount",
   AppointmentAnalysis.dailyAppointementCount
 );
+
+// predictive analytics
+router.get("/predictive-details", PredictiveAnalysis.getPredictiveDetails);
 
 module.exports = router;

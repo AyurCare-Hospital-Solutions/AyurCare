@@ -137,7 +137,6 @@ function AppointmentTable({ appointments }: { appointments?: Appointment[] }) {
     },
   ];
 
-  console.log("data", appointmentData);
   const rows = (appointmentData ?? []).map((row: any, index = 1) => ({
     id: index++,
     Aid: row.id,

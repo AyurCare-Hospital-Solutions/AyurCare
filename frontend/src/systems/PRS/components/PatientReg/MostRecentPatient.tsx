@@ -9,7 +9,6 @@ import QueueIcon from "@mui/icons-material/Queue";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import axios from "axios";
 import { enqueueSnackbar } from "notistack";
-// import { Document, Page, Text } from "react-pdf";
 import { usePDF } from "react-to-pdf";
 
 interface recentPatientDetails {
