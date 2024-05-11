@@ -1,4 +1,3 @@
-// MyLeaveRequest.tsx
 import { Box, Button, Paper, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import MyLeaveRequestDialog from "./myLeaveRequest/MyLeaveRequestDialog";
@@ -51,7 +50,7 @@ const MyLeaveRequest = () => {
         startDate: data.start_date,
         endDate: data.end_date,
         hours: data.hours,
-        type: data.leave_type?.id, // Fixed property access
+        type: data.leave_type?.id,
         registration: data.registration,
       });
 

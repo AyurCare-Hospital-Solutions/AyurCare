@@ -34,6 +34,7 @@ router.post("/shiftType", shiftTypeService.createShiftType)
 router.put("/shiftType/:id", shiftTypeService.updateShiftType)
 router.delete("/shiftType/:id", shiftTypeService.deleteShiftType)
 
+
 router.get("/reports", reportService.generateReportData);
 
 module.exports = router;
