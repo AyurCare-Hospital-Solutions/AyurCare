@@ -116,36 +116,6 @@ async function changeStockLevel(req, res) {
   res.sendStatus(200);
 }
 
-/**
- *
- * @param {express.Request} req
- * @param {express.Response} res
- */
-async function changeStockLevel(req, res) {
-  const value = Number.parseInt(req.params.id);
-  const amount = Number.parseInt(req.body.amount);
-
-  if (!Number.isInteger(value)) {
-    res.status(400).json({ msg: "Invalid medicine number" });
-    return;
-  }
-
-  if (!Number.isInteger(amount) && amount >= 0) {
-    res.status(400).json({ msg: "Invalid stock count" });
-    return;
-  }
-
-  const medicine = await PharmacyMedicine.findByPk(value);
-
-  if (medicine == null) {
-    res.sendStatus(404).json({ msg: "Medicine not found" });
-    return;
-  }
-
-  medicine.update({ amount: amount });
-
-  res.sendStatus(200);
-}
 
 /**
  *get the medicine  names from inventory database
