@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -8,15 +8,18 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { TimePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
+import { ShiftTypeData } from "../../types";
 
-export default function NewShiftTypeDialog({
+export default function UpdateShiftTypeDialog({
+  shiftData,
+  handleClose,
   open,
-  onClose,
-  addShiftType,
+  onSubmit,
 }: {
+  shiftData: ShiftTypeData | null;
+  handleClose: () => void;
   open: boolean;
-  onClose: () => void;
-  addShiftType: (data: any) => void;
+  onSubmit: (name: string, startTime: Date, endTime: Date) => void;
 }) {
   const [name, setName] = useState("");
   const [startTime, setStartTime] = useState<Date | null>(null);
@@ -25,6 +28,14 @@ export default function NewShiftTypeDialog({
     nameError: "",
     timeError: "",
   });
+
+  useEffect(() => {
+    if (shiftData !== null) {
+      setName(shiftData.name);
+      setStartTime(new Date(shiftData.startTime));
+      setEndTime(new Date(shiftData.endTime));
+    }
+  }, [shiftData]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -39,18 +50,17 @@ export default function NewShiftTypeDialog({
       });
       return;
     }
-    const shiftData = { name, startTime, endTime };
-    addShiftType(shiftData);
-    onClose();
+    onSubmit(name, startTime, endTime);
+    handleClose();
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={open} onClose={handleClose}>
       <form onSubmit={handleSubmit}>
-        <DialogTitle>Add New Shift Type</DialogTitle>
+        <DialogTitle>Update Shift Type</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Please fill in the details for the new shift type:
+            Update the details for the shift type:
           </DialogContentText>
 
           <TextField
@@ -96,7 +106,7 @@ export default function NewShiftTypeDialog({
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose}>Cancel</Button>
+          <Button onClick={handleClose}>Cancel</Button>
           <Button type="submit">Save</Button>
         </DialogActions>
       </form>

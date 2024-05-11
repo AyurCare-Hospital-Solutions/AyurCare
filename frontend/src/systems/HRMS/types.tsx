@@ -28,3 +28,10 @@ export interface LeaveRequestData {
   status: string;
   reason: string;
 }
+
+export interface ShiftTypeData {
+  id: number;
+  name: string;
+  startTime: string;
+  endTime: string;
+}

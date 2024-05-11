@@ -29,6 +29,10 @@ router.put("/shift/:id", shiftService.updateShift);
 router.delete("/shift/:id", shiftService.deleteShift);
 
 router.get("/shiftType", shiftTypeService.getAllShiftTypes)
+router.get("/shiftType/:id", shiftTypeService.getShiftTypeById)
+router.post("/shiftType", shiftTypeService.createShiftType)
+router.put("/shiftType/:id", shiftTypeService.updateShiftType)
+router.delete("/shiftType/:id", shiftTypeService.deleteShiftType)
 
 router.get("/reports", reportService.generateReportData);
 
