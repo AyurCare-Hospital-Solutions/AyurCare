@@ -28,6 +28,8 @@ router.get("/shift/:id", shiftService.getShiftById);
 router.put("/shift/:id", shiftService.updateShift);
 router.delete("/shift/:id", shiftService.deleteShift);
 
+router.get("/employees", shiftService.getAllEmployees)
+
 router.get("/shiftType", shiftTypeService.getAllShiftTypes)
 router.get("/shiftType/:id", shiftTypeService.getShiftTypeById)
 router.post("/shiftType", shiftTypeService.createShiftType)

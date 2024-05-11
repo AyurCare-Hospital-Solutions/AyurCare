@@ -35,3 +35,8 @@ export interface ShiftTypeData {
   startTime: string;
   endTime: string;
 }
+
+export interface EmployeeData {
+  id: number;
+  name: string;
+}

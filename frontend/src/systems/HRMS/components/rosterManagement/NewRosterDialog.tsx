@@ -15,7 +15,9 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { ShiftTypeData } from "../../types";
+import { ShiftTypeData, EmployeeData } from "../../types";
+import ShiftEmployeeTable from "./ShiftEmployeeTable";
+import { Box } from "@mui/material";
 
 export default function NewRosterDialog({
   open,
@@ -35,18 +37,22 @@ export default function NewRosterDialog({
       .catch((error) => {
         console.error("Error fetching shift types:", error);
       });
+
+    axios.get("/api/hrms/employees").then((res) => {
+      setEmployees(res.data);
+    });
   }, []);
 
-  const [searchedEmployees, setSearchedEmployees] = useState([]);
+  const [employees, setEmployees] = useState<EmployeeData[]>([]);
   const [selectedEmployees, setSelectedEmployees] = useState([]);
 
   const [shiftTypes, setShiftTypes] = useState<ShiftTypeData[]>([]);
 
   return (
     <>
-      <Dialog open={open} onClose={onClose}>
+      <Dialog fullWidth open={open} onClose={onClose}>
         <DialogTitle>Enter Shift Table</DialogTitle>
-        <DialogContent sx={{ width: 400 }}>
+        <DialogContent>
           {" "}
           {/* Adjust the width value as needed */}
           <DialogContentText>
@@ -69,32 +75,9 @@ export default function NewRosterDialog({
               />
             )}
           />
-          <Autocomplete
-            multiple
-            freeSolo
-            options={searchedEmployees}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                margin="dense"
-                id="employee-search"
-                label="Search Employee"
-                fullWidth
-                variant="outlined"
-              />
-            )}
-          />
-          <TableContainer component={Paper}>
-            <Table>
-              <TableBody>
-                {selectedEmployees.map((employee, index) => (
-                  <TableRow key={index}>
-                    <TableCell>{employee.name}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          <Box sx={{ mt: 2 }}>
+            <ShiftEmployeeTable />
+          </Box>
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose}>Cancel</Button>

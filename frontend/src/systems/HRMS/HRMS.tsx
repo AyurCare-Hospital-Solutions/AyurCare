@@ -20,7 +20,7 @@ import {
 
 const HRMS = () => {
   return (
-    <DashboardPage>
+    <DashboardPage title="Human Resource Management">
       <Link to="/hrms/">
         <ListItem disablePadding>
           <ListItemButton>

@@ -1,6 +1,8 @@
 
 const yup = require("yup");
 const Shift = require("../../model/Shift");
+const Staff = require("../../model/Staff");
+
 
 const shiftValidator = yup
   .object({
@@ -97,10 +99,25 @@ const deleteShift = async (req, res) => {
   }
 };
 
+/**
+ * Get all employees
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+const getAllEmployees = async (req, res) => {
+  try {
+    const staff = await Staff.findAll({ attributes: ['id', 'name'] });
+    res.status(200).json(staff);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getAllShifts,
   getShiftById,
   createShift,
   updateShift,
   deleteShift,
+  getAllEmployees,
 };
