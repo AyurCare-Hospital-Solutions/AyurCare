@@ -48,10 +48,10 @@ const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
         //     path: "reqMedicine",
         //     element: <MedicineRequest />
         // },
-        {
-            path: "reqMaterial",
-            element: <MaterialRequest />
-        },
+        // {
+        //     path: "reqMaterial",
+        //     element: <MaterialRequest />
+        // },
         {
             path: "reqMedicine",
             element: <ManufactureRequest />
