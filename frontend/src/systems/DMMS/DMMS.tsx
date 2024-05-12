@@ -66,7 +66,7 @@ function DMMS() {
                 <ListItemText primary="Reports" />
             </ListItem>
 
-            <Link to="/ims/reqMaterial">
+            <Link to="/dmms/reqMaterial">
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
