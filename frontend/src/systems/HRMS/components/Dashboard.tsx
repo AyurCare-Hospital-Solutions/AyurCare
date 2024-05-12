@@ -27,6 +27,17 @@ const Dashboard = () => {
             desc="Use this to manage leave types"
             link="/hrms/leaveRequests"
           />
+
+          <LinkCard
+            name="Shift Type Management"
+            desc="Use this to approve or reject leave requests "
+            link="/hrms/shiftTypes"
+          />
+          <LinkCard
+            name="Roster Management"
+            desc="Use this to manage leave types"
+            link="/hrms/rosterManagement"
+          />
         </Grid>
         <Grid item xs={6}>
           <Box flexGrow="3" display="flex" flexDirection="column">
