@@ -5,12 +5,15 @@ import {
   View,
   StyleSheet,
   Font,
+  Image,
 } from "@react-pdf/renderer";
 // Register a font
 Font.register({
   family: "Helvetica",
   src: "http://path.to/Helvetica.ttf", // Ensure you have the right to use and distribute the font
 });
+import {} from "../../../../../public/pmsassests/report/Header.png";
+import { fontFamily } from "html2canvas/dist/types/css/property-descriptors/font-family";
 
 // Define styles
 const styles = StyleSheet.create({
@@ -18,10 +21,12 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     backgroundColor: "#ffffff",
     position: "relative",
-    paddingTop: 50,
-    paddingLeft: 30,
-    paddingRight: 30,
     alignItems: "center", // Centers the content horizontally
+  },
+  headerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 20,
   },
   watermark: {
     position: "absolute",
@@ -31,6 +36,11 @@ const styles = StyleSheet.create({
     color: "#aaaaaa", // Light gray color for the watermark
     opacity: 0.5, // Semi-transparent
     transform: "rotate(-45deg)", // Rotates the watermark text
+  },
+  logo: {
+    width: 60, // Set as needed height: 60, // Set as needed
+    height: 60,
+    marginRight: 10,
   },
   table: {
     display: "flex",
@@ -79,7 +89,7 @@ const styles = StyleSheet.create({
   reportTitle: {
     fontSize: 15,
     fontFamily: "Helvetica",
-    textAlign: "center",
+    textAlign: "left",
     fontWeight: 5,
     marginBottom: "30px",
   },
@@ -93,12 +103,45 @@ const styles = StyleSheet.create({
     marginTop: "270px",
     fontFamily: "Helvetica",
   },
+  contentTitle: {
+    fontSize: 7,
+    fontWeight: 5,
+    flexDirection: "column", // Items will be laid out in a column
+    alignItems: "flex-start", // Align items to the left
+    justifyContent: "flex-start",
+    marginRight: 318,
+    marginTop: 12,
+    marginBottom: 12, // Space below this section
+  },
+  text: {
+    fontSize: 10, // Example font size, adjust as needed
+    marginBottom: 5, // Space between the rows
+  },
+  footer: {
+    flexDirection: "column",
+    justifyContent: "flex-end",
+    marginLeft: 340,
+    alignItems: "center",
+    marginTop: 12,
+  },
+  footerText: {
+    fontSize: 10, // Example font size, adjust as needed
+    marginBottom: 8,
+  },
+  image: {
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 0,
+    margin: 0,
+  },
 });
 
 const getCurrentDateTime = () => {
   const now = new Date();
   return now.toLocaleString(); // Converts to local date and time string
 };
+
+const pharmacist = "Vinushan.V";
 
 // Document Component
 const GeneratePDF = ({
@@ -118,11 +161,15 @@ const GeneratePDF = ({
       <Text style={styles.watermark}>
         AyurCare's <br /> Pharmacy Report
       </Text>
-      {/* title */}
-      <View style={styles.reportTitle}>
-        <Text>Pharmacy Performance Report</Text>
-      </View>
 
+      <Image
+        style={styles.image}
+        src="../../../../../public/pmsassests/report/Header.png" // Change this to the path or URL of your logo
+      />
+      <View style={styles.contentTitle}>
+        <Text style={styles.text}>Pharmacist: {pharmacist}</Text> br
+        <Text style={styles.text}>Date and Time: {getCurrentDateTime()}</Text>
+      </View>
       {/* medicine summary */}
       <View style={styles.table}>
         {/* Table Header */}
@@ -283,10 +330,12 @@ const GeneratePDF = ({
           <Text style={[styles.tableCell, styles.rightColumn]}>{9}</Text>
         </View>
       </View>
-
-      <Text style={styles.reportTime}>
-        Report generated on: {getCurrentDateTime()}
-      </Text>
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>
+          Signature <br />
+        </Text>
+        <Text style={styles.footerText}>. . . . . . . . . . . . . . . . .</Text>
+      </View>
     </Page>
   </Document>
 );

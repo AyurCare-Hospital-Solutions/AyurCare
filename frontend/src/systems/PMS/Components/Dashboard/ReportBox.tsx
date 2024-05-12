@@ -11,11 +11,12 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import EventBusyIcon from "@mui/icons-material/EventBusy";
-
 import { Grid, Paper } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import Mousetrap from "mousetrap";
 import { useEffect } from "react";
+import { playAudio } from "../Common/audioUtils";
+import fhfh from "../../../../../public/pmsassests/sounds/click.mp3";
 
 const data = [
   {
@@ -48,13 +49,19 @@ export default function ReportBox({
   prescriptionsCount: any;
   externalPrescriptionsCount: any;
 }) {
+  const handleButtonClick = () => {
+    playAudio("../../../../../public/pmsassests/sounds/click.mp3");
+  };
   const navigate = useNavigate();
 
   // assign keyboard shortcuts -----------------------------------------------------
   // 1. dashboard
   useEffect(() => {
     // Bind the 'm' key to navigate to the medicines page
-    Mousetrap.bind("d", () => navigate("/pms/dashboard"));
+    Mousetrap.bind("d", () => {
+      playAudio("../../../../../public/pmsassests/sounds/click.mp3");
+      navigate("/pms/dashboard");
+    });
 
     // Cleanup the binding when the component unmounts
     return () => {
@@ -65,7 +72,10 @@ export default function ReportBox({
   // 2. medicine
   useEffect(() => {
     // Bind the 'm' key to navigate to the medicines page
-    Mousetrap.bind("m", () => navigate("/pms/medicines"));
+    Mousetrap.bind("m", () => {
+      playAudio("../../../../../public/pmsassests/sounds/click.mp3");
+      navigate("/pms/medicines");
+    });
 
     // Cleanup the binding when the component unmounts
     return () => {
@@ -76,7 +86,10 @@ export default function ReportBox({
   // 3. report
   useEffect(() => {
     // Bind the 'm' key to navigate to the medicines page
-    Mousetrap.bind("r", () => navigate("/pms/reports"));
+    Mousetrap.bind("r", () => {
+      playAudio("../../../../../public/pmsassests/sounds/click.mp3");
+      navigate("/pms/reports");
+    });
 
     // Cleanup the binding when the component unmounts
     return () => {
@@ -87,7 +100,10 @@ export default function ReportBox({
   // 4. customer concern
   useEffect(() => {
     // Bind the 'm' key to navigate to the medicines page
-    Mousetrap.bind("c", () => navigate("/pms/userconcerns"));
+    Mousetrap.bind("c", () => {
+      playAudio("../../../../../public/pmsassests/sounds/click.mp3");
+      navigate("/pms/userconcerns");
+    });
 
     // Cleanup the binding when the component unmounts
     return () => {
@@ -98,7 +114,10 @@ export default function ReportBox({
   // 5. keep
   useEffect(() => {
     // Bind the 'm' key to navigate to the medicines page
-    Mousetrap.bind("k", () => navigate("/pms/keep"));
+    Mousetrap.bind("k", () => {
+      playAudio("../../../../../public/pmsassests/sounds/click.mp3");
+      navigate("/pms/keep");
+    });
 
     // Cleanup the binding when the component unmounts
     return () => {
@@ -108,7 +127,10 @@ export default function ReportBox({
 
   // 6. user guide
   useEffect(() => {
-    Mousetrap.bind("u", () => navigate("/pms/userguide"));
+    Mousetrap.bind("u", () => {
+      playAudio("../../../../../public/pmsassests/sounds/click.mp3");
+      navigate("/pms/userguide");
+    });
 
     // Cleanup the binding when the component unmounts
     return () => {
@@ -118,7 +140,10 @@ export default function ReportBox({
 
   // 7. external prescription
   useEffect(() => {
-    Mousetrap.bind("e", () => navigate("/pms/receivedprescription"));
+    Mousetrap.bind("e", () => {
+      playAudio("../../../../../public/pmsassests/sounds/click.mp3");
+      navigate("/pms/receivedprescription");
+    });
 
     // Cleanup the binding when the component unmounts
     return () => {
@@ -129,7 +154,10 @@ export default function ReportBox({
   // 8. inernal prescription
   useEffect(() => {
     // Bind the 'm' key to navigate to the medicines page
-    Mousetrap.bind("i", () => navigate("/pms/prescriptionmanagement"));
+    Mousetrap.bind("i", () => {
+      playAudio("../../../../../public/pmsassests/sounds/click.mp3");
+      navigate("/pms/prescriptionmanagement");
+    });
 
     // Cleanup the binding when the component unmounts
     return () => {
@@ -165,8 +193,7 @@ export default function ReportBox({
                   color="text.secondary"
                   gutterBottom
                 >
-                  13
-                  {/* {medicinesCount} */}
+                  ⤲{/* {medicinesCount} */}
                 </Typography>
                 <Typography> {data[0].title} </Typography>
               </CardContent>
@@ -181,7 +208,11 @@ export default function ReportBox({
                 }}
               >
                 <Link to="/pms/medicines">
-                  <Button sx={{ color: "#fff" }} size="small">
+                  <Button
+                    onClick={handleButtonClick}
+                    sx={{ color: "#fff" }}
+                    size="small"
+                  >
                     View Full List <ArrowForward sx={{ marginLeft: 0 }} />
                   </Button>
                 </Link>
@@ -223,7 +254,11 @@ export default function ReportBox({
                 }}
               >
                 <Link to="/pms/inventoryrequest">
-                  <Button sx={{ color: "#fff" }} size="small">
+                  <Button
+                    onClick={handleButtonClick}
+                    sx={{ color: "#fff" }}
+                    size="small"
+                  >
                     View Full List <ArrowForward sx={{ marginLeft: 0 }} />
                   </Button>
                 </Link>
@@ -266,7 +301,11 @@ export default function ReportBox({
                 }}
               >
                 <Link to="/pms/prescriptionmanagement">
-                  <Button sx={{ color: "#fff" }} size="small">
+                  <Button
+                    onClick={handleButtonClick}
+                    sx={{ color: "#fff" }}
+                    size="small"
+                  >
                     View Full List <ArrowForward sx={{ marginLeft: 0 }} />
                   </Button>
                 </Link>
@@ -308,7 +347,11 @@ export default function ReportBox({
                   backgroundColor: "#0a4738",
                 }}
               >
-                <Button sx={{ color: "#fff" }} size="small">
+                <Button
+                  onClick={handleButtonClick}
+                  sx={{ color: "#fff" }}
+                  size="small"
+                >
                   View Full List <ArrowForward sx={{ marginLeft: 0 }} />
                 </Button>
               </CardActions>
@@ -348,7 +391,11 @@ export default function ReportBox({
                   backgroundColor: "#0a4738",
                 }}
               >
-                <Button sx={{ color: "#fff" }} size="small">
+                <Button
+                  onClick={handleButtonClick}
+                  sx={{ color: "#fff" }}
+                  size="small"
+                >
                   View Full List <ArrowForward sx={{ marginLeft: 0 }} />
                 </Button>
               </CardActions>
@@ -391,7 +438,11 @@ export default function ReportBox({
                 }}
               >
                 <Link to="/pms/receivedprescription">
-                  <Button sx={{ color: "#fff" }} size="small">
+                  <Button
+                    onClick={handleButtonClick}
+                    sx={{ color: "#fff" }}
+                    size="small"
+                  >
                     View Full List <ArrowForward sx={{ marginLeft: 0 }} />
                   </Button>
                 </Link>

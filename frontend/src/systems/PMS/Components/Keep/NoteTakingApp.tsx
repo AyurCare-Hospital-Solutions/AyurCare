@@ -21,6 +21,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CalendarComponent from "./CalendarComponent";
 import { enqueueSnackbar } from "notistack";
 import Mousetrap from "mousetrap";
+import { playAudio } from "../Common/audioUtils";
 
 interface Note {
   id: number;
@@ -42,7 +43,8 @@ const NoteTakingApp: React.FC = () => {
 
   const handleAddNote = (): void => {
     if (!note.trim()) {
-      enqueueSnackbar(`Cannot add an empty note.`, {
+      playAudio("../../../../../public/pmsassests/sounds/failure.mp3");
+      enqueueSnackbar(<Typography> Cannot add an empty note. </Typography>, {
         variant: "error",
       });
       setOpen(true);
@@ -56,7 +58,8 @@ const NoteTakingApp: React.FC = () => {
 
     setNotes([...notes, newNote]);
     setNote("");
-    enqueueSnackbar("Note added!", {
+    playAudio("../../../../../public/pmsassests/sounds/success.mp3");
+    enqueueSnackbar(<Typography> Note added!</Typography>, {
       variant: "success",
     });
     setOpen(true);
@@ -64,13 +67,15 @@ const NoteTakingApp: React.FC = () => {
 
   const handleDelete = (id: number): void => {
     setNotes(notes.filter((note) => note.id !== id));
-    enqueueSnackbar("Note deleted!", {
+    playAudio("../../../../../public/pmsassests/sounds/success.mp3");
+    enqueueSnackbar(<Typography>Note deleted! </Typography>, {
       variant: "success",
     });
     setOpen(true);
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    playAudio("../../../../../public/pmsassests/sounds/click.mp3");
     setNote(event.target.value);
   };
 
@@ -91,7 +96,7 @@ const NoteTakingApp: React.FC = () => {
   useEffect(() => {
     // Bind the '/' key to focus the input
     Mousetrap.bind("/", () => {
-      console.log("clciked");
+      playAudio("../../../../../public/pmsassests/sounds/click.mp3");
       if (inputRef.current) {
         // Check if the input element is not null
         inputRef.current.focus(); // Focus the input only if it's not null
@@ -136,7 +141,7 @@ const NoteTakingApp: React.FC = () => {
             fullWidth
             sx={{ mt: 2 }}
           >
-            Add Note
+            Add to note
           </Button>
           <Grid container spacing={5} sx={{ mt: 2 }}>
             {notes.map((note) => (

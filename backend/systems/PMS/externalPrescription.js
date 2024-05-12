@@ -13,7 +13,7 @@ const externalPrescriptionValidator = yup
     email: yup.string().email().required(),
     phone: yup.string().min(10).max(10).required(),
     notes: yup.string().min(0).max(200),
-    test: yup.string().min(0).max(200),
+    // test: yup.string().min(0).max(200),
   })
   .strict();
 
@@ -47,7 +47,7 @@ async function uploadPrescription(req, res) {
       phone: data.phone,
       notes: data.notes,
       file: req.file.filename,
-      test: data.test,
+      // test: data.test,
     });
     res.status(200).json(prescription);
   } catch (error) {
