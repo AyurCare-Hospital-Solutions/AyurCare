@@ -98,4 +98,4 @@ async function deleteMedicineMaterials(req, res) {
     res.sendStatus(204);
 }
 
-module.exports = { getMedicineMaterials, createMedicineMaterials, deleteMedicineMaterials }
+module.exports = { getMedicineMaterials, createMedicineMaterials, deleteMedicineMaterials };
