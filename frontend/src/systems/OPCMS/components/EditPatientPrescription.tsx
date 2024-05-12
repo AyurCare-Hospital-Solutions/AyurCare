@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { enqueueSnackbar } from "notistack";
+import * as yup from "yup";
 import {
   Typography,
   TextField,
@@ -11,18 +12,17 @@ import {
   DialogActions,
 } from "@mui/material";
 
-interface Prescription {
-  id: number;
-  diagnosis: string;
-  note: string;
-}
-
 interface EditPrescriptionFormProps {
   open: boolean;
   handleClose: () => void;
   initialData: any; // Pass initial prescription data as prop
   getPatientPrescription: () => void;
 }
+
+const schema = yup.object().shape({
+  diagnosis: yup.string().required("Diagnosis is required"),
+  note: yup.string().required("Note is required"),
+});
 
 const EditPrescriptionForm: React.FC<EditPrescriptionFormProps> = ({
   open,
@@ -32,6 +32,7 @@ const EditPrescriptionForm: React.FC<EditPrescriptionFormProps> = ({
 }) => {
   const [diagnosis, setDiagnosis] = useState<string>("");
   const [note, setNote] = useState<string>("");
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
     setDiagnosis(initialData?.diagnosis ?? "");
@@ -40,6 +41,7 @@ const EditPrescriptionForm: React.FC<EditPrescriptionFormProps> = ({
 
   const handleEdit = async () => {
     try {
+      await schema.validate({ diagnosis, note }, { abortEarly: false });
       await axios.put(`/api/opcms/patients/${initialData?.id}/prescriptions`, {
         diagnosis,
         note,
@@ -47,9 +49,17 @@ const EditPrescriptionForm: React.FC<EditPrescriptionFormProps> = ({
       handleClose();
       getPatientPrescription();
       enqueueSnackbar("Prescription edited successfully", { variant: "success" });
-    } catch (error) {
-      console.error("Error editing prescription:", error);
-      enqueueSnackbar("Failed to edit prescription", { variant: "error" });
+    } catch (error: any) {
+      if (error.name === "ValidationError") {
+        const validationErrors: { [key: string]: string } = {};
+        error.inner.forEach((e: any) => {
+          validationErrors[e.path] = e.message;
+        });
+        setErrors(validationErrors);
+      } else {
+        console.error("Error editing prescription:", error);
+        enqueueSnackbar("Failed to edit prescription", { variant: "error" });
+      }
     }
   };
 
@@ -67,6 +77,8 @@ const EditPrescriptionForm: React.FC<EditPrescriptionFormProps> = ({
           onChange={(e) => setDiagnosis(e.target.value)}
           variant="outlined"
           fullWidth
+          error={!!errors.diagnosis}
+          helperText={errors.diagnosis}
         />
         <Typography variant="subtitle1">Note</Typography>
         <TextField
@@ -76,6 +88,8 @@ const EditPrescriptionForm: React.FC<EditPrescriptionFormProps> = ({
           fullWidth
           multiline
           rows={4}
+          error={!!errors.note}
+          helperText={errors.note}
         />
       </DialogContent>
       <DialogActions>

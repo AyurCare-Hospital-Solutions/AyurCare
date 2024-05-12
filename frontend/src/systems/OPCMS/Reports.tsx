@@ -25,7 +25,7 @@ const Reports = () => {
   return (
     <>
       <Grid container spacing={2} justifyContent="space-evenly">
-        <Grid item xs={5} ref={appoinmentBtnRef}>
+        <Grid item xs={5} component="div" ref={appoinmentBtnRef as React.RefObject<HTMLDivElement>}>
           <ReportCard
             name="OPD Appointments"
             desc="Download OPD appointments list"

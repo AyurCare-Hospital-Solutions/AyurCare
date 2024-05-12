@@ -1,12 +1,13 @@
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Paper,
 } from "@mui/material";
+import dayjs from "dayjs";
 
 export interface Appointment {
     id: number;
@@ -36,7 +37,7 @@ const AppointmentsDownload = ({
                         <TableRow key={appointment.id}>
                             <TableCell>{appointment.Patient.name}</TableCell>
                             <TableCell>{appointment.id}</TableCell>
-                            <TableCell>{new Date(appointment.created_at)?.toLocaleDateString()}</TableCell>
+                            <TableCell>{dayjs(appointment.created_at).format('YYYY-MM-DD')}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

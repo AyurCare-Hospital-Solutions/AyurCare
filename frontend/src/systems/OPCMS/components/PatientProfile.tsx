@@ -151,8 +151,7 @@ const PatientProfile = () => {
         handleClose={handleClose}
         PatientId={id}
         OPDAppointmentId={appId}
-        getPatientPrescription={getPatientPrescription}
-      />
+        getPatientPrescription={getPatientPrescription} initialData={undefined}      />
       <EditPatientPrescription
         open={editOpen}
         handleClose={editHandleClose}
@@ -162,27 +161,5 @@ const PatientProfile = () => {
     </div>
   );
 };
-
-
-// Calculate age from date of birth
-function calculateAge(dob: string | number | Date): number {
-  const today = new Date();
-  const birthDate = new Date(dob);
-  let age = today.getFullYear() - birthDate.getFullYear();
-  const monthDiff = today.getMonth() - birthDate.getMonth();
-
-  // If the birth month is greater than the current month
-  // or if both months are the same but the birth day is greater than the current day,
-  // decrease the age by 1
-  if (
-    monthDiff < 0 ||
-    (monthDiff === 0 && today.getDate() < birthDate.getDate())
-  ) {
-    age--;
-  }
-
-  return age;
-}
-
 
 export default PatientProfile;

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import * as yup from "yup";
 import {
   Typography,
   TextField,
@@ -10,12 +11,19 @@ import {
   DialogActions,
 } from "@mui/material";
 
+// Define Yup schema for form validation
+const schema = yup.object().shape({
+  diagnosis: yup.string().required("Diagnosis is required"),
+  note: yup.string().required("Note is required"),
+});
+
 interface Props {
   open: boolean;
   handleClose: () => void;
   PatientId: any;
   OPDAppointmentId: any;
   getPatientPrescription: () => any;
+  initialData: any;
 }
 
 const CreatePrescriptionForm: React.FC<Props> = ({
@@ -24,25 +32,55 @@ const CreatePrescriptionForm: React.FC<Props> = ({
   PatientId,
   OPDAppointmentId,
   getPatientPrescription,
+  initialData
 }) => {
   const [diagnosis, setDiagnosis] = useState<string | null>("");
   const [note, setNote] = useState<string | null>("");
+  const [prescriptionData, setPrescriptionData] = useState<any>();
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  const getPrescriptionData = async (id: number) => {
+    try {
+      const res = await axios.get(`api/opcms/prescriptions/${id}`);
+      console.log(res.data[0]);
+      setPrescriptionData(res.data[0]);
+    }
+    catch (e) {
+      console.error();
+    }
+  }
+
+  useEffect(() => {
+    console.log("hello");
+    initialData && getPrescriptionData(initialData);
+    console.log(initialData);
+
+  }, [open]);
+
 
   const handleSubmit = async () => {
     try {
+      await schema.validate({ diagnosis, note }, { abortEarly: false });
       await axios.post(`/api/opcms/patients/${PatientId}/prescriptions`, {
         diagnosis,
         note,
         OPDAppointmentId,
         PatientId,
-        
       });
       handleClose();
       setDiagnosis(null);
       setNote(null);
       getPatientPrescription();
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      if (error.name === "ValidationError") {
+        const validationErrors: { [key: string]: string } = {};
+        error.inner.forEach((e: any) => {
+          validationErrors[e.path] = e.message;
+        });
+        setErrors(validationErrors);
+      } else {
+        console.error(error);
+      }
     }
   };
 
@@ -57,17 +95,13 @@ const CreatePrescriptionForm: React.FC<Props> = ({
           component: 'form',
           onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries((formData as any).entries());
-            const email = formJson.email;
-            console.log(email);
-            handleClose();
+            handleSubmit();
           },
         }}
       >
         <DialogTitle>Add Prescription</DialogTitle>
         <DialogContent>
-          <Typography variant="subtitle1">Patient Name: {}</Typography>
+          <Typography variant="subtitle1">Patient Name: {prescriptionData?.Patient?.name}</Typography>
           <Typography variant="subtitle1" style={{ fontStyle: 'italic', color: 'gray', fontSize: 'small' }}>Patient ID : {PatientId}</Typography>
           <Typography variant="subtitle1">Diagnosis</Typography>
           <TextField
@@ -75,6 +109,8 @@ const CreatePrescriptionForm: React.FC<Props> = ({
             onChange={(e) => setDiagnosis(e.target.value)}
             variant="outlined"
             fullWidth
+            error={!!errors.diagnosis}
+            helperText={errors.diagnosis}
           />
           <Typography variant="subtitle1">Note</Typography>
           <TextField
@@ -84,6 +120,8 @@ const CreatePrescriptionForm: React.FC<Props> = ({
             fullWidth
             multiline
             rows={4}
+            error={!!errors.note}
+            helperText={errors.note}
           />
         </DialogContent>
         <DialogActions>
