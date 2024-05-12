@@ -10,6 +10,7 @@ import { SnackbarProvider } from "notistack";
 
 import { Dashboard, Assessment } from "@mui/icons-material";
 import {
+  Divider,
   ListItem,
   ListItemButton,
   ListItemIcon,
@@ -53,6 +54,13 @@ const Pms = () => {
             </ListItemButton>
           </ListItem>
         </Link>
+
+        <hr
+          style={{
+            width: "80%" /* Responsive width based on the container size */,
+            margin: "10px auto",
+          }}
+        />
 
         {/* <Link to="/pms/inventoryrequest">
           <ListItem disablePadding>
@@ -109,6 +117,12 @@ const Pms = () => {
           </ListItem>
         </Link>
 
+        <hr
+          style={{
+            width: "80%" /* Responsive width based on the container size */,
+            margin: "10px auto",
+          }}
+        />
         <Link to="/pms/userguide">
           <ListItem disablePadding>
             <ListItemButton>

@@ -18,7 +18,7 @@ const ExternalPresription = sequelize.define("ExternalPrescription", {
     defaultValue: "pending",
   },
   notes: DataTypes.STRING(300),
-  test: DataTypes.STRING(300),
+  // test: DataTypes.STRING(300),
 });
 
 module.exports = ExternalPresription;

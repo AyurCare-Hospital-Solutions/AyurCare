@@ -105,7 +105,7 @@ const ExternalPrescriptionTable = () => {
               <TableCell>File</TableCell>
               <TableCell>Update Status</TableCell>
               <TableCell>Remove</TableCell>
-              <TableCell>ID</TableCell>
+              {/* <TableCell>ID</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -198,7 +198,7 @@ const ExternalPrescriptionTable = () => {
                     </Button>
                   </TableCell>
                   {/* show notes  */}
-                  <TableCell>{row.test}</TableCell>
+                  {/* <TableCell>{row.test}</TableCell> */}
                 </TableRow>
               ))
             ) : (
