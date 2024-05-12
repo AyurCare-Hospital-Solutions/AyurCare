@@ -30,7 +30,7 @@ const totalCounts = async (req, res) => {
 const medicineLotGroups = async (req, res) => {
     const [medicineGroup, metadata] = await sequelize.query(`
         SELECT ML.MedicineId, I.name, COUNT(*) AS count  
-        FROM medicinelots ML , medicines M , items I 
+        FROM MedicineLots ML , Medicines M , Items I 
         WHERE ML.MedicineID = M.id AND M.ItemId = I.id 
         GROUP BY MedicineId; 
     `);
@@ -46,22 +46,22 @@ const medicineLotGroups = async (req, res) => {
 const medicineStockLevel = async (req, res) => {
     const [expiredStock, metadata1] = await sequelize.query(`
         SELECT COUNT(*) count
-        FROM medicinelots
+        FROM MedicineLots
         WHERE expire_date <= CURDATE()
     `);
     const [outOfStock, metadata2] = await sequelize.query(`
         SELECT COUNT(*) AS count
-        FROM medicinelots 
+        FROM MedicineLots 
         WHERE amount = 0
     `)
     const [otherStock, metadata3] = await sequelize.query(`
         SELECT COUNT(*) AS count
-        FROM medicinelots 
+        FROM MedicineLots 
         WHERE amount != 0 AND expire_date > CURDATE()
     `)
     const [totalLot, metadata4] = await sequelize.query(`
         SELECT COUNT(*) AS count
-        FROM medicinelots
+        FROM MedicineLots
     `)
 
     res.status(200).json({ expiredStock, outOfStock, otherStock, totalLot });
@@ -75,7 +75,7 @@ const medicineStockLevel = async (req, res) => {
 const materialGroups = async (req, res) => {   // separate by unit
     const [materialGroup, metadata] = await sequelize.query(`
         SELECT I.unit , COUNT(*) AS count
-        FROM materials M , items I
+        FROM Materials M , Items I
         WHERE M.ItemId = I.id
         GROUP BY I.unit
     `);
@@ -91,22 +91,22 @@ const materialGroups = async (req, res) => {   // separate by unit
 const materialStockLevel = async (req, res) => {
     var [reOrderLevelReached, metadata1] = await sequelize.query(`
         SELECT COUNT(*) AS count
-        FROM materials M, items I
+        FROM Materials M, Items I
         WHERE M.ItemId = I.id AND I.reOrderBuffer >= M.amount AND M.amount > 0 
     `);
     var [outOfStock, metadata2] = await sequelize.query(`
         SELECT COUNT(*) AS count
-        FROM materials
+        FROM Materials
         WHERE amount = 0
     `);
     var [otherStock, metadata3] = await sequelize.query(`
         SELECT COUNT(*) AS count
-        FROM materials M, items I
+        FROM Materials M, Items I
         WHERE M.ItemId = I.id AND I.reOrderBuffer < M.amount
     `);
     var [totalLOt, metadata4] = await sequelize.query(`
         SELECT COUNT(*) AS count
-        FROM materials 
+        FROM Materials 
     `);
 
     // format response
@@ -126,7 +126,7 @@ const materialStockLevel = async (req, res) => {
 const accessoryGroups = async (req, res) => {
     const [accessoryGroup, metadata] = await sequelize.query(`
         SELECT I.unit, COUNT(*) AS count
-        FROM accessories A, items I
+        FROM Accessories A, Items I
         WHERE A.ItemId = I.id
         GROUP BY I.unit
     `);
@@ -142,22 +142,22 @@ const accessoryGroups = async (req, res) => {
 const accessoryStockLevel = async (req, res) => {
     var [reOrderLevelReached, metadata1] = await sequelize.query(`
         SELECT COUNT(*) AS count
-        FROM accessories A, items I
+        FROM Accessories A, Items I
         WHERE A.ItemId = I.id AND I.reOrderBuffer >= A.amount AND A.amount > 0 
     `);
     var [outOfStock, metadata2] = await sequelize.query(`
         SELECT COUNT(*) AS count
-        FROM accessories 
+        FROM Accessories 
         WHERE amount = 0
     `);
     var [otherStock, metadata3] = await sequelize.query(`
         SELECT COUNT(*) AS count
-        FROM accessories A, items I
+        FROM Accessories A, Items I
         WHERE A.ItemId = I.id AND I.reOrderBuffer < A.amount
     `);
     var [totalLOt, metadata4] = await sequelize.query(`
         SELECT COUNT(*) AS count
-        FROM accessories 
+        FROM Accessories 
     `)
 
     // format response
@@ -177,25 +177,25 @@ const accessoryStockLevel = async (req, res) => {
 const medicineRequestData = async (req, res) => {
     var [acceptCount, metadata1] = await sequelize.query(`
         SELECT status, COUNT(*) AS count
-        FROM medicinerequests
+        FROM MedicineRequests
         WHERE status = 'Accepted'
         GROUP BY status
     `);
     var [rejectCount, metadata2] = await sequelize.query(`
         SELECT status, COUNT(*) AS count
-        FROM medicinerequests
+        FROM MedicineRequests
         WHERE status = 'Rejected'
         GROUP BY status
     `);
     var [pendingCount, metadata3] = await sequelize.query(`
         SELECT status, COUNT(*) AS count
-        FROM medicinerequests
+        FROM MedicineRequests
         WHERE status = 'Pending'
         GROUP BY status
     `);
     var [totalCount, metadata3] = await sequelize.query(`
         SELECT COUNT(*) AS count
-        FROM medicinerequests
+        FROM MedicineRequests
     `);
 
     acceptCount = acceptCount[0] ? acceptCount[0].count : 0;
@@ -214,25 +214,25 @@ const medicineRequestData = async (req, res) => {
 const materialRequestData = async (req, res) => {
     var [acceptCount, metadata1] = await sequelize.query(`
         SELECT status, COUNT(*) AS count
-        FROM materialrequests
+        FROM MaterialRequests
         WHERE status = 'Accepted'
         GROUP BY status
     `);
     var [rejectCount, metadata2] = await sequelize.query(`
         SELECT status, COUNT(*) AS count
-        FROM materialrequests
+        FROM MaterialRequests
         WHERE status = 'Rejected'
         GROUP BY status
     `);
     var [pendingCount, metadata3] = await sequelize.query(`
         SELECT status, COUNT(*) AS count
-        FROM materialrequests
+        FROM MaterialRequests
         WHERE status = 'Pending'
         GROUP BY status
     `);
     var [totalCount, metadata3] = await sequelize.query(`
         SELECT COUNT(*) AS count
-        FROM materialrequests
+        FROM MaterialRequests
     `);
 
     acceptCount = acceptCount[0] ? acceptCount[0].count : 0;
