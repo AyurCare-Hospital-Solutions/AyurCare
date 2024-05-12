@@ -10,37 +10,37 @@ const { sequelize } = require('../../model');
 const manufactureRequestData = async (req, res) => {
     var [completedCount, metadata1] = await sequelize.query(`
         SELECT progress, COUNT(*) AS count
-        FROM manufacturerequests
+        FROM ManufactureRequests
         WHERE progress = 'Completed'
         GROUP BY progress
     `);
     var [rejectCount, metadata2] = await sequelize.query(`
         SELECT progress, COUNT(*) AS count
-        FROM manufacturerequests
+        FROM ManufactureRequests
         WHERE progress = 'Rejected'
         GROUP BY progress
     `);
     var [pendingCount, metadata3] = await sequelize.query(`
         SELECT progress, COUNT(*) AS count
-        FROM manufacturerequests
+        FROM ManufactureRequests
         WHERE progress = 'Pending'
         GROUP BY progress
     `);
     var [inprogressCount, metadata4] = await sequelize.query(`
         SELECT progress, COUNT(*) AS count
-        FROM manufacturerequests
+        FROM ManufactureRequests
         WHERE progress = 'In Progress'
         GROUP BY progress
     `);
     var [manufactureerrorCount, metadata5] = await sequelize.query(`
         SELECT progress, COUNT(*) AS count
-        FROM manufacturerequests
+        FROM ManufactureRequests
         WHERE progress = 'Manufacture Error'
         GROUP BY progress
     `);
     var [totalCount, metadata6] = await sequelize.query(`
         SELECT COUNT(*) AS count
-        FROM manufacturerequests
+        FROM ManufactureRequests
     `);
 
     completedCount = completedCount[0] ? completedCount[0].count : 0;
