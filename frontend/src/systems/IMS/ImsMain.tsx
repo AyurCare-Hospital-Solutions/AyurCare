@@ -1,5 +1,5 @@
 
-import { Dashboard, Inbox, Mail } from '@mui/icons-material';
+import { Dashboard, House, Inbox, Mail } from '@mui/icons-material';
 import VaccinesIcon from '@mui/icons-material/Vaccines';
 import ScienceIcon from '@mui/icons-material/Science';
 import HealingIcon from '@mui/icons-material/Healing';
@@ -92,6 +92,18 @@ function ImsMain() {
                 </ListItem>
             </Link>
             <Divider />
+
+            <Link to="/ims/reqMedicine">
+                <ListItem disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            < House />
+                        </ListItemIcon>
+                        <ListItemText primary="Manufacture Request" />
+                    </ListItemButton>
+                </ListItem>
+            </Link>
+
             <Link to="/ims/reqMedicine">
                 <ListItem disablePadding>
                     <ListItemButton>

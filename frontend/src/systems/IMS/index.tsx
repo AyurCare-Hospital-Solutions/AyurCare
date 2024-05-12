@@ -9,6 +9,7 @@ import ManageMedicineRequests from "./ManageMedicineRequests";
 import ManageMaterialRequests from "./ManageMatarialRequest";
 import IMSHome from "./IMSHome";
 import IMSAnalytics from "./IMSAnalytics";
+import ManufactureRequest from "../DMMS/ManufactureRequest";
 
 const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
     name: "IMS",
@@ -43,14 +44,18 @@ const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
             path: "analytics",
             element: <IMSAnalytics />
         },
-        {
-            path: "reqMedicine",
-            element: <MedicineRequest />
-        },
+        // {
+        //     path: "reqMedicine",
+        //     element: <MedicineRequest />
+        // },
         {
             path: "reqMaterial",
             element: <MaterialRequest />
-        }
+        },
+        {
+            path: "reqMedicine",
+            element: <ManufactureRequest />
+        },
     ],
 }
 
