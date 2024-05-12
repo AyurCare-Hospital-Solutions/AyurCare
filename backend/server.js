@@ -1,4 +1,5 @@
 const express = require('express');
+const { authNoOp } = require('./middleware/auth');
 
 // patch express to allow handling exceptions thrown by async functions
 require('express-async-errors');
@@ -9,6 +10,7 @@ const errorhandler = require('./middleware/errorhandler')
 const cors = require("cors");
 
 app.use(express.urlencoded({ extended: false }));
+app.use(authNoOp)
 app.use(express.json());
 app.use(cors());
 

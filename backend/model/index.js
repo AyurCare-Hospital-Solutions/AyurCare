@@ -57,6 +57,11 @@ async function createAll() {
     });
 
     console.log("Loaded all models.")
+    if (Number.parseInt(process.env.SQL_SYNC_SKIP)) {
+        console.log('Skipping Database Sync.')
+        return;
+    }
+
 
     let syncConfig = { force: false };
     if (Number.parseInt(process.env.SQL_SYNC_FORCE)) {
@@ -72,6 +77,7 @@ async function createAll() {
     if (!Number.parseInt(process.env.SQL_SYNC_DEBUG)) {
         syncConfig.logging = () => { }
     }
+
 
     console.log("Synchronizing database with models...");
     await sequelize.sync(syncConfig);

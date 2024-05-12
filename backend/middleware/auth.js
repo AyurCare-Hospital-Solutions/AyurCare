@@ -16,6 +16,31 @@ let roles = {
     dmmsAdmin: { name: "DMMS Manager", home: "dmms" }
 }
 
+const authNoOp = (req, res, next) => {
+    const tokenHeader = req.headers.authorization;
+
+    if (!tokenHeader) {
+        res.status(401).json({ "msg": "JWT token is missing" });
+        return;
+    }
+
+    try {
+        var token = jwt.verify(tokenHeader, secret, { algorithms: ["HS512"] });
+    } catch (e) {
+        res.status(401).json({ "msg": "Invalid JWT authorization" });
+        return;
+    }
+
+    let userID = Number(token.id);
+    if (!Number.isInteger(userID)) {
+        res.status(401).json({ msg: "Invalid user id" });
+        return;
+    }
+
+    res.locals["userId"] = userID;
+
+    next()
+}
 
 /**
  * 
@@ -97,4 +122,4 @@ const getUserID = (res) => {
     return res.locals["userId"];
 }
 
-module.exports = { roles, getUserID, createToken, auth };
+module.exports = { roles, getUserID, createToken, auth, authNoOp };
