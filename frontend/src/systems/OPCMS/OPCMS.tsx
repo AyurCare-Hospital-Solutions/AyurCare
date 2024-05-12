@@ -63,17 +63,6 @@ function OPCMS() {
         </ListItem>
       </Link>
       <Divider />
-
-      <Link to="analytics">
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <Assessment />
-            </ListItemIcon>
-            <ListItemText primary="Analytics" />
-          </ListItemButton>
-        </ListItem>
-      </Link>
     </DashboardPage>
   );
 }

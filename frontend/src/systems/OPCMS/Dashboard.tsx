@@ -22,7 +22,6 @@ const Dashboard = () => {
                 <Box flexGrow="3" display="flex" flexDirection="column">
                     <LinkCard name="Medical Records" desc="Find Medical Record details" link="/opcms/records" /> 
                     <LinkCard name="Reports" desc="Generate reports" link="/opcms/reports" />
-                    <LinkCard name="Analytics" desc="Patient Analysis and Medical States Analysis" link="/opcms/analytics" />
                 </Box>
             </Grid>
         </Grid >
