@@ -52,7 +52,7 @@ function Material() {
     if (!data.materialAmount) {
       enqueueSnackbar("Amount is required...", { variant: "error" });
       return;
-    } else if (isNaN(Number(data.materialAmount)) || Number(data.amount) <= 0) {
+    } else if (isNaN(Number(data.materialAmount)) || Number(data.materialAmount) <= 0) {
       enqueueSnackbar("Amount must be a positive integer...", { variant: "error" });
       return;
     }
