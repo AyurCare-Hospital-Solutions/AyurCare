@@ -1,12 +1,20 @@
-import { useEffect, useState } from 'react';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import InfoIcon from '@mui/icons-material/Info';
-import { Link, useNavigate } from 'react-router-dom';
-import FormDialog from './AddStaff';
-import { IconButton, Dialog, DialogTitle, DialogContent, DialogActions, Button, Box } from '@mui/material';
-import axios from 'axios';
+import { useEffect, useState } from "react";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import InfoIcon from "@mui/icons-material/Info";
+import { Link, useNavigate } from "react-router-dom";
+import FormDialog from "./AddStaff";
+import {
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  Box,
+} from "@mui/material";
+import axios from "axios";
 
 interface Row {
   id: number;
@@ -34,8 +42,6 @@ const Staff = () => {
     navigate(`/previewStaff/${id}`); // Redirect to PreviewStaff component with the selected row ID
   };
 
-  
-
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedMemberId, setSelectedMemberId] = useState<number | null>(null);
 
@@ -46,7 +52,7 @@ const Staff = () => {
 
   const confirmDelete = () => {
     // Logic for deleting the member with selectedMemberId
-    setRows(rows.filter(row => row.id !== selectedMemberId));
+    setRows(rows.filter((row) => row.id !== selectedMemberId));
     deleteStaff(selectedMemberId);
     setDeleteDialogOpen(false);
   };
@@ -57,14 +63,16 @@ const Staff = () => {
   };
 
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 40 },
-    { field: 'name', headerName: 'Name', width: 180 },
-    { field: 'speciality', headerName: 'Speciality', width: 110 },
-    { field: 'phoneNumber', headerName: 'Phone Number', width: 130 },
-    { field: 'dateHired', headerName: 'Date Hired', width: 150 },
+    { field: "id", headerName: "ID", width: 40 },
+    { field: "name", headerName: "Name", width: 180 },
+    { field: "speciality", headerName: "Speciality", width: 110 },
+    { field: "phoneNumber", headerName: "Phone Number", width: 130 },
+    { field: "email", headerName: "Email", width: 150 },
+    { field: "qualification", headerName: "Qualifications", width: 250 },
+
     {
-      field: 'actions',
-      headerName: 'Actions',
+      field: "actions",
+      headerName: "Actions",
       width: 200,
       renderCell: (params) => (
         <>
@@ -75,7 +83,10 @@ const Staff = () => {
             <InfoIcon />
           </IconButton> */}
 
-          <Link to={`../editStaff/${params.row.id}`} style={{ textDecoration: 'none' }}>
+          <Link
+            to={`../editStaff/${params.row.id}`}
+            style={{ textDecoration: "none" }}
+          >
             <IconButton>
               <EditIcon />
             </IconButton>
@@ -89,67 +100,76 @@ const Staff = () => {
     },
   ];
 
-
-  useEffect(()=>{
+  useEffect(() => {
     getStaff();
-  },[]);
-
+  }, []);
 
   // add staff member
-  const addStaff = (data:any)=>{
-    axios.post("api/acs/staff",data)
-    .then((res)=>{
-      console.log(res.data);
-      getStaff();
-    })
-    .catch((e)=>{
-      console.log(e);
-    })
-  }
+  const addStaff = (data: any) => {
+    axios
+      .post("api/acs/staff", data)
+      .then((res) => {
+        console.log(res.data);
+        getStaff();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   // get staff members details
-  const getStaff = async()=>{
-    await axios.get("api/acs/staff")
-    .then((res)=>{
+  const getStaff = async () => {
+    await axios.get("api/acs/staff").then((res) => {
       formatData(res.data);
-    })
-  }
+    });
+  };
 
   // format data for display
-  const formatData=(data:any)=>{    
-    const stf = data.map((row:any)=>{
-      return({
-          id : row.id,
-          name : row.name,
-          speciality : row.designation,
-          phoneNumber : row.phone,
-          homePhone : row.homePhone,
-          email : row.email,
-          qualification : row.qualification,
-          dateHired : row.dateHired,
-    })
-    })
+  const formatData = (data: any) => {
+    const stf = data.map((row: any) => {
+      return {
+        id: row.id,
+        name: row.name,
+        speciality: row.designation,
+        phoneNumber: row.phone,
+        homePhone: row.homePhone,
+        email: row.email,
+        qualification: row.qualification,
+        dateHired: row.dateHired,
+      };
+    });
     setRows(stf);
-  }
+  };
 
   // delete staff member
-  const deleteStaff = (id:number | null)=>{
-    axios.delete(`api/acs/staff/${id}`)
-    .then((res)=>{
+  const deleteStaff = (id: number | null) => {
+    axios.delete(`api/acs/staff/${id}`).then((res) => {
       console.log(res.data);
-      
-    })
-  }
-
+    });
+  };
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
-        <h2 style={{ fontFamily: 'Arial, sans-serif', fontSize: '18px', fontWeight: 'bold' }}>Staff Info</h2>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginBottom: "20px",
+        }}
+      >
+        <h2
+          style={{
+            fontFamily: "Arial, sans-serif",
+            fontSize: "18px",
+            fontWeight: "bold",
+          }}
+        >
+          Staff Info
+        </h2>
         {/* Render the FormDialog component */}
         <FormDialog addStaff={addStaff} />
       </div>
-      <div style={{ height: 600, width: '100%' }}>
+      <div style={{ height: 600, width: "100%" }}>
         <DataGrid
           rows={rows}
           columns={columns}
@@ -159,21 +179,24 @@ const Staff = () => {
             },
           }}
           pageSizeOptions={[10, 20]}
-          checkboxSelection
         />
       </div>
-        {/* Delete confirmation dialog */}
-        <Dialog open={deleteDialogOpen} onClose={closeDeleteDialog}>
+      {/* Delete confirmation dialog */}
+      <Dialog open={deleteDialogOpen} onClose={closeDeleteDialog}>
         <DialogTitle>Delete Member</DialogTitle>
         <DialogContent>
           <p>Are you sure you want to delete this member?</p>
         </DialogContent>
         <DialogActions>
-          <Button onClick={confirmDelete} color="error">Delete</Button>
-          <Button onClick={closeDeleteDialog} color="inherit">Cancel</Button>
+          <Button onClick={confirmDelete} color='error'>
+            Delete
+          </Button>
+          <Button onClick={closeDeleteDialog} color='inherit'>
+            Cancel
+          </Button>
         </DialogActions>
       </Dialog>
-      
+
       {/* <Box>
         <ViewStaffDialog  
           row = {rows}
@@ -182,7 +205,6 @@ const Staff = () => {
         />
       </Box> */}
     </div>
-    
   );
 };
 

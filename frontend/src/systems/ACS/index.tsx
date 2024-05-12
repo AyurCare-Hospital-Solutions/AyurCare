@@ -6,35 +6,33 @@ import SupportTickets from "./SupportTickets";
 import Reports from "./Reports";
 import EditStaff from "./EditStaff";
 
-const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
-    name: "ACS",
-    root: <ACS/>, // replace with main element
-    routes: [
-        {
-            path: "staff",
-            element: <Staff />
-        },
-        {
-            path: "dashboard",
-            element: <Dashboard />,
-        },
-        
-        {
-            path: "support_tickets",
-            element: <SupportTickets />,
-        },
-        {
-            path: "reports",
-            element: <Reports/>,
-        },
-       
-        {
-            path: "editStaff/:id",
-            element: <EditStaff />,
-        },
-        
+const routes: { name: String; root: React.ReactNode; routes: RouteObject[] } = {
+  name: "ACS",
+  root: <ACS />, // replace with main element
+  routes: [
+    {
+      index: true,
+      element: <Dashboard />,
+    },
+    {
+      path: "staff",
+      element: <Staff />,
+    },
 
-    ],
-}
+    {
+      path: "support_tickets",
+      element: <SupportTickets />,
+    },
+    {
+      path: "reports",
+      element: <Reports />,
+    },
+
+    {
+      path: "editStaff/:id",
+      element: <EditStaff />,
+    },
+  ],
+};
 
 export default routes;
