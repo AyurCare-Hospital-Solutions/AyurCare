@@ -70,7 +70,7 @@ function AddMaterialModal({ onClose, addMaterialModalOpen, addNewMaterial }: { o
                                 label="Unit"
                                 required
                                 defaultValue=""
-                                helperText="Please select mesurement unit of medine"
+                                helperText="Please select mesurement unit of material"
                                 onChange={(e) => {
                                     setMaterialUnit(e.target.value);
                                 }}

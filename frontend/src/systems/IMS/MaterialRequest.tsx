@@ -49,7 +49,7 @@ function MaterialRequest() {
             enqueueSnackbar("Amount must be a positive integer...", { variant: "error" });
             return;
         }
-        confirm({ description: "Confirm medicine request" })
+        confirm({ description: "Confirm material request" })
             .then(async () => {
                 await axios.post('api/ims/materialRequest/addMaterialRequest', { materialId: reqMaterial, amount: reqMatrialAmount })
                     .then((res) => {

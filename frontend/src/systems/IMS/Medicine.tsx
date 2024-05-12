@@ -68,6 +68,11 @@ function Medicine() {
       enqueueSnackbar("Measurement unit is required...", { variant: "error" });
       return;
     }
+    //validate
+    if (data.origin.trim() === '') {
+      enqueueSnackbar("Origin is required...", { variant: "error" });
+      return;
+    }
     // api call
     axios.post("api/ims//medicine/addMedicine", {
       medicineName: data.name,
@@ -101,7 +106,6 @@ function Medicine() {
         catch (e) {
           enqueueSnackbar("Failed to Delete medicine...", { variant: "error" });
           console.error(e);
-
         }
       })
   };
