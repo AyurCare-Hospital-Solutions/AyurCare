@@ -44,7 +44,7 @@ export default function RosterManagementTable({
           </TableHead>
           <TableBody>
             {shiftData
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
                   <TableRow
@@ -65,7 +65,7 @@ export default function RosterManagementTable({
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={shiftData.length}
+        count={shiftData?.length ?? 0}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

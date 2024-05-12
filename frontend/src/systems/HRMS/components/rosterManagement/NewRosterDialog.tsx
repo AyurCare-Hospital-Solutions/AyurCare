@@ -89,6 +89,11 @@ export default function NewRosterDialog({
         employees: selectedEmployees,
       });
     }
+
+    onClose();
+    setDate(null);
+    setShiftType(null);
+    setSelectedEmployees([]);
   };
   return (
     <>

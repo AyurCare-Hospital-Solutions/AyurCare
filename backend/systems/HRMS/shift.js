@@ -4,6 +4,8 @@ const Shift = require("../../model/Shift");
 const Staff = require("../../model/Staff");
 const { ShiftType } = require("../../model/ShiftType");
 const { sequelize } = require("../../model");
+const { getUserID } = require("../../middleware/auth");
+const { response } = require("express");
 
 
 const shiftValidator = yup
@@ -29,13 +31,12 @@ const getAllShifts = async (req, res) => {
 };
 
 const getAllShiftsByEmpId = async (req, res) => {
-  const id = req.params.id;
-  try {
-    const shifts = await Shift.findAll({ include: [ShiftType, { model: Staff, attributes: ['id', 'name'] }], where: { StaffId: id } });
-    res.status(200).json(shifts);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+  const id = getUserID(res);
+
+  const staff = await Staff.findByPk(id);
+  console.log(staff)
+  res.status(200).json(await staff.getShifts({ include: [ShiftType, { model: Staff, attributes: ['id', 'name'] }] }));
+
 
 }
 

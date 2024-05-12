@@ -6,7 +6,7 @@ import axios from "axios";
 
 const Shifts = () => {
   useEffect(() => {
-    axios.get("/api/shift/employee/:id").then((response) => {
+    axios.get("/api/hrms/shift/employee/my").then((response) => {
       setShiftData(response.data);
     });
   }, []);
