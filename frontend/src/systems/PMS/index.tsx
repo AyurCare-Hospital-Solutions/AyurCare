@@ -18,8 +18,8 @@ const routes: { name: String; root: React.ReactNode; routes: RouteObject[] } = {
   // if we want to go this section this is the Component
   routes: [
     {
-      path: "dashboard",
       element: <Dashboard />,
+      index: true
     },
     {
       path: "medicines",
