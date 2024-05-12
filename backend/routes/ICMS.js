@@ -27,7 +27,7 @@ router.post("/patient/:aid/discharge", patientAdmissions.dischargePatient);
 const waitListService = require("../systems/ICMS/waitlist");
 router.get("/waitlist", waitListService.getWaitList);
 router.post("/waitlist", waitListService.addToWaitList);
-router.post("/waitlist/admit/:waitID", waitListService.admitPatient);
+router.post("/waitlist/admit/:waitID", patientAdmissions.admitPatient);
 
 const bedService = require("../systems/ICMS/beds");
 router.get("/beds/available/:ward", bedService.getAvailableBeds);

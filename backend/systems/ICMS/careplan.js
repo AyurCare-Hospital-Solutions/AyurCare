@@ -58,7 +58,7 @@ const getCarePlan = async (req, res) => {
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-const createCarePlan = async (req, res) => {
+const createOrUpdateCarePlan = async (req, res) => {
     const admissionID = Number.parseInt(req.params.aid);
     if (!Number.isInteger(admissionID)) {
         res.status(400).json({ msg: "Invalid admission number" });
@@ -105,4 +105,4 @@ const createCarePlan = async (req, res) => {
     res.status(200).json(plan);
 }
 
-module.exports = { getCarePlan, createCarePlan }
+module.exports = { getCarePlan, createCarePlan: createOrUpdateCarePlan }
