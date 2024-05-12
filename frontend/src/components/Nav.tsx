@@ -70,13 +70,6 @@ function TopNavBar(props: { title?: string }) {
                         open={Boolean(anchorElUser)}
                         onClose={handleCloseUserMenu}
                     >
-                        <MenuItem onClick={handleCloseUserMenu}>
-                            <ListItemIcon>
-                                <AccountCircle></AccountCircle>
-                            </ListItemIcon>
-
-                            <Typography>Profile</Typography>
-                        </MenuItem>
                         <MenuItem onClick={() => navigate("/leave_request")}>
                             <ListItemIcon>
                                 <Event></Event>
