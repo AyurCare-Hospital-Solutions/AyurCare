@@ -115,7 +115,7 @@ function ImsMain() {
                 </ListItem>
             </Link>
 
-            <Link to="/ims/reqMaterial">
+            {/* <Link to="/ims/reqMaterial">
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
@@ -124,7 +124,7 @@ function ImsMain() {
                         <ListItemText primary="Request Material(temp)" />
                     </ListItemButton>
                 </ListItem>
-            </Link>
+            </Link> */}
         </DashboardPage>
     )
 }
