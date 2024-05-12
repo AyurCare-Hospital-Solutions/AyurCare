@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Bed, WaitList, WaitListArraySchema, WaitListSchema, Ward, WardArraySchema } from "./types";
 import WaitListTable from "./components/WaitListTable";
 import WaitListDialog from "./components/WaitListDialog";
@@ -11,7 +11,7 @@ import { Add } from "@mui/icons-material";
 import WaitListAddDialog from "./components/WaitListAddDialog";
 
 const WaitListManager = () => {
-    const [waitList, setWaitList] = useState<WaitList[]>([]);
+    const [waitListData, setWaitList] = useState<WaitList[]>([]);
     const [wards, setWards] = useState<Ward[]>([]);
     const [loading, setLoading] = useState(true);
     const [modelOpen, setModalOpen] = useState(false);
@@ -24,16 +24,7 @@ const WaitListManager = () => {
         axios.get("/api/icms/waitlist").then((res) => {
             const data = WaitListArraySchema.cast(res.data);
 
-            // sort wait list by date and priority.
-            data.sort((a, b) => {
-                let aKey = a.createdAt.getTime();
-                if (a.is_priority) aKey -= 2e10;
 
-                let bKey = b.createdAt.getTime();
-                if (b.is_priority) bKey -= 2e10;
-
-                return aKey - bKey;
-            });
 
             axios.get("/api/icms/ward").then(res => {
                 const wardData = WardArraySchema.cast(res.data);
@@ -44,6 +35,19 @@ const WaitListManager = () => {
             })
         })
     }, []);
+
+    // sort wait list by date and priority.
+    const waitList = useMemo(() => {
+        return waitListData.sort((a, b) => {
+            let aKey = a.createdAt.getTime();
+            if (a.is_priority) aKey -= 2e10;
+
+            let bKey = b.createdAt.getTime();
+            if (b.is_priority) bKey -= 2e10;
+
+            return aKey - bKey;
+        });
+    }, [waitListData]);
 
     const handleSelect = (v: WaitList) => {
         setSelected(v);
