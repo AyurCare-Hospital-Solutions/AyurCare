@@ -72,6 +72,7 @@ const PatientDataSeeMore: React.FC<PatientDataSeeMoreProps> = ({
         <TextField
           value={prescriptionData?.diagnosis}
           variant="outlined"
+
           fullWidth
           disabled
         />
