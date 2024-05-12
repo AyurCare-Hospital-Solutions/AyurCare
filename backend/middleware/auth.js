@@ -8,11 +8,13 @@ const secret = Buffer.from("test1234")//randomBytes(64)
 
 const roles = {
     doctor: { name: "Doctor", home: "opcms" },
-    medicalStaff: { name: "Medical Staff", home: "icms", perms: ["test"] },
+    medicalStaff: { name: "Medical Staff", home: "icms" },
     hrAdmin: { name: "HR Administrator", home: "hrms" },
     imsAdmin: { name: "IMS Manager", home: "ims" },
     pharmacist: { name: "Pharmacist", home: "pms" },
-    dmmsAdmin: { name: "DMMS Manager", home: "dmms" }
+    dmmsAdmin: { name: "DMMS Manager", home: "dmms" },
+    acsAdmin: { name: "User Manager", home: 'acs' },
+    prsAdmin: { name: "Reception", home: "prss" }
 }
 
 const authNoOp = (req, res, next) => {
