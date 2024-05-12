@@ -2,7 +2,6 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const { randomBytes } = require("crypto");
-const Staff = require("../model/Staff")
 
 // FIXME: use random bytes 
 const secret = Buffer.from("test1234")//randomBytes(64)
@@ -17,25 +16,9 @@ const roles = {
 }
 
 const authNoOp = (req, res, next) => {
-    const tokenHeader = req.headers.authorization;
 
-    if (!tokenHeader) {
-        res.status(401).json({ "msg": "JWT token is missing" });
-        return;
-    }
 
-    try {
-        var token = jwt.verify(tokenHeader, secret, { algorithms: ["HS512"] });
-        let userID = Number(token.id);
-        if (!Number.isInteger(userID)) {
-            res.status(401).json({ msg: "Invalid user id" });
-            return;
-        }
-        res.locals["userId"] = userID;
-    } catch (e) {
-        console.log("Skipped auth")
-        res.locals["userId"] = 1;
-    }
+
 
     next()
 }
@@ -117,6 +100,12 @@ const createToken = (staff) => {
  * @param {express.Response} res
  */
 const getUserID = (res) => {
+    const userId = res.locals["userId"]
+    if (!userId) {
+        console.log("Fallback auth")
+        return 1;
+    }
+
     return res.locals["userId"];
 }
 
