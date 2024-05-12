@@ -34,6 +34,7 @@ const authNoOp = (req, res, next) => {
         res.locals["userId"] = userID;
     } catch (e) {
         console.log("Skipped auth")
+        res.locals["userId"] = 1;
     }
 
     next()
