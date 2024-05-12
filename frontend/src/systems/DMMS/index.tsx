@@ -5,7 +5,6 @@ import ManageManufactureRequest from "./ManageManufactureRequest";
 import Dashboard from "../DMMS/Dashboard";
 import DMMSAnalyse from "./DMMSAnalyse";
 import NewRequests from "./ManuReqCom/NewRequests";
-import Recipe from "./Recipe";
 
 const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
 
@@ -36,11 +35,6 @@ const routes: { name: String, root: React.ReactNode, routes: RouteObject[] } = {
             path: "test",
             element: <NewRequests />
         },
-        {
-            path: "test_01",
-            element: <Recipe />
-        }
-
     ],
 }
 
