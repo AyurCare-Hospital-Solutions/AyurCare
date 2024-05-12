@@ -2,7 +2,6 @@ import { Box, Divider, Paper, Typography, IconButton } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 import { ShiftData } from "../../types";
 import dayjs from "dayjs";
-import { useConfirm } from "material-ui-confirm";
 
 const RosterCard = ({
   selectedShift,

@@ -8,6 +8,8 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { ShiftData } from "../../types";
+import SearchBar from "../SearchBar";
+import { Box } from "@mui/material";
 
 export default function RosterManagementTable({
   shiftData,
@@ -16,6 +18,7 @@ export default function RosterManagementTable({
   shiftData: ShiftData[];
   setSelectedShift: (row: ShiftData) => void;
 }) {
+  const [onSearch, setOnSearch] = React.useState<RegExp | undefined>();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -32,6 +35,9 @@ export default function RosterManagementTable({
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
+      <Box sx={{ m: 4 }}>
+        <SearchBar onChange={(e) => setOnSearch(e)} />
+      </Box>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -44,6 +50,10 @@ export default function RosterManagementTable({
           </TableHead>
           <TableBody>
             {shiftData
+              .filter((v) => {
+                if (onSearch) return v.ShiftType.name.search(onSearch) !== -1;
+                return true;
+              })
               ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (

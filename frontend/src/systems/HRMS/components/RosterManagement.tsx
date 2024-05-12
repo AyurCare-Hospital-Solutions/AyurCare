@@ -6,11 +6,16 @@ import RosterManagementTable from "./rosterManagement/RosterManagementTable.1";
 import RosterCard from "./rosterManagement/RosterCard";
 import { ShiftData } from "../types";
 import { useConfirm } from "material-ui-confirm";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 const RosterManagement = () => {
   const [newRosterDialogOpen, setNewRosterDialogOpen] = useState(false);
   const [shiftData, setShiftData] = useState<ShiftData[]>([]);
   const [selectedShift, setSelectedShift] = useState<ShiftData | null>(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success"); // or error
 
   const confirm = useConfirm();
 
@@ -31,8 +36,14 @@ const RosterManagement = () => {
   const updateRoster = async (data: any) => {
     try {
       const response = await axios.put(`/api/hrms/shift/${data.id}`, data);
+      setSnackbarMessage("Roster updated successfully");
+      setSnackbarSeverity("success");
+      setSnackbarOpen(true);
     } catch (error) {
       console.error("Error updating roster:", error);
+      setSnackbarMessage("Error updating roster");
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
     }
   };
 
@@ -43,9 +54,19 @@ const RosterManagement = () => {
       });
       const response = await axios.delete(`/api/hrms/shift/${id}`);
       setShiftData((prevRows) => prevRows.filter((row) => row.id !== id));
+      setSnackbarMessage("Roster deleted successfully");
+      setSnackbarSeverity("success");
+      setSnackbarOpen(true);
     } catch (error) {
       console.error("Error deleting roster:", error);
+      setSnackbarMessage("Error deleting roster");
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
     }
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -94,6 +115,16 @@ const RosterManagement = () => {
           />
         </Box>
       </Box>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+      >
+        <MuiAlert elevation={6} variant="filled" onClose={handleCloseSnackbar}>
+          {snackbarMessage}
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 };
