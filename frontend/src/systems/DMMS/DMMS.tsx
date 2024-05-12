@@ -1,4 +1,5 @@
 import { Assessment, Dashboard, House } from '@mui/icons-material';
+import HealingIcon from '@mui/icons-material/Healing';
 import { Divider, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import FiberNewSharpIcon from '@mui/icons-material/FiberNewSharp';
 import CommentSharpIcon from '@mui/icons-material/CommentSharp';
@@ -64,6 +65,19 @@ function DMMS() {
             <ListItem>
                 <ListItemText primary="Reports" />
             </ListItem>
+
+            <Link to="/ims/reqMaterial">
+                <ListItem disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <HealingIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Request Material" />
+                    </ListItemButton>
+                </ListItem>
+            </Link>
+
+            <Divider />
 
             <Link to="/dmms/report">
                 <ListItem disablePadding>
