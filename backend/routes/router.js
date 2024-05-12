@@ -27,7 +27,7 @@ register("/dmms", "./DMMS");
 register("/hrms", "./HRMS");
 register("/icms", "./ICMS");
 register("/ims", "./IMS");
-register("/ocms", "./OCMS");
+register("/opcms", "./OPCMS");
 register("/pms", "./PMS");
 register("/prss", "./PRSS");
 

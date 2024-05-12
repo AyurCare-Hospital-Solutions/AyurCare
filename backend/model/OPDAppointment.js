@@ -7,16 +7,10 @@ const OPDAppointment = sequelize.define("OPDAppointment", {
   status: DataTypes.STRING, // TODO: Check
 });
 
-Patient.hasMany(OPDAppointment, {
-  onDelete: "CASCADE",
-  foreignKey: { allowNull: false },
-});
+Patient.hasMany(OPDAppointment, { onDelete: 'CASCADE', foreignKey: { allowNull: false } });
 OPDAppointment.belongsTo(Patient);
 
-Prescription.belongsTo(OPDAppointment, {
-  onDelete: "CASCADE",
-  foreignKey: { allowNull: false },
-});
-OPDAppointment.hasOne(Prescription);
+Prescription.belongsTo(OPDAppointment, { onDelete: 'CASCADE', foreignKey: { allowNull: false } });
+OPDAppointment.belongsTo(Prescription);
 
 module.exports = OPDAppointment;
