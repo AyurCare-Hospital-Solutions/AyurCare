@@ -38,7 +38,7 @@ function DMMS() {
                 </ListItem>
             </Link>
 
-            <Link to="/dmms/reqMedicine">
+            {/* <Link to="/dmms/reqMedicine">
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
@@ -47,7 +47,7 @@ function DMMS() {
                         <ListItemText primary="Manufacture Request" />
                     </ListItemButton>
                 </ListItem>
-            </Link>
+            </Link> */}
 
             <Link to="/dmms/mgMedicine">
                 <ListItem disablePadding>
@@ -90,7 +90,7 @@ function DMMS() {
                 </ListItem>
             </Link>
 
-            <Link to="/dmms/test_01">
+            {/* <Link to="/dmms/test_01">
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
@@ -99,7 +99,7 @@ function DMMS() {
                         <ListItemText primary="New R" />
                     </ListItemButton>
                 </ListItem>
-            </Link>
+            </Link> */}
         </DashboardPage>
     )
 }
