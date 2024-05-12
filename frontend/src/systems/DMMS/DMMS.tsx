@@ -1,5 +1,5 @@
-import { Assessment, Bed, Dashboard, House } from '@mui/icons-material';
-import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Assessment, Dashboard, House } from '@mui/icons-material';
+import { Divider, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import FiberNewSharpIcon from '@mui/icons-material/FiberNewSharp';
 import CommentSharpIcon from '@mui/icons-material/CommentSharp';
 import { Link } from 'react-router-dom'
@@ -16,6 +16,23 @@ function DMMS() {
                             <Dashboard />
                         </ListItemIcon>
                         <ListItemText primary="Dashboard" />
+                    </ListItemButton>
+                </ListItem>
+            </Link>
+
+            <Divider />
+
+            <ListItem>
+                <ListItemText primary="Medicine Requests" />
+            </ListItem>
+
+            <Link to="/dmms/test">
+                <ListItem disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <FiberNewSharpIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="New Requests" />
                     </ListItemButton>
                 </ListItem>
             </Link>
@@ -42,17 +59,11 @@ function DMMS() {
                 </ListItem>
             </Link>
 
+            <Divider />
 
-            {/* <Link to="/dmms/reports">
-                <ListItem disablePadding>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <Assessment />
-                        </ListItemIcon>
-                        <ListItemText primary="Reports" />
-                    </ListItemButton>
-                </ListItem>
-            </Link> */}
+            <ListItem>
+                <ListItemText primary="Reports" />
+            </ListItem>
 
             <Link to="/dmms/report">
                 <ListItem disablePadding>
@@ -65,13 +76,13 @@ function DMMS() {
                 </ListItem>
             </Link>
 
-            <Link to="/dmms/test">
+            <Link to="/dmms/test_01">
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
                             <FiberNewSharpIcon />
                         </ListItemIcon>
-                        <ListItemText primary="New Requests" />
+                        <ListItemText primary="New R" />
                     </ListItemButton>
                 </ListItem>
             </Link>

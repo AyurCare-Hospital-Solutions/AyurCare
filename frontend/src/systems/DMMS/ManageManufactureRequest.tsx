@@ -97,11 +97,12 @@ function ManageManufactureRequest() {
         filename: "Manufacture_Request_Table.pdf"
     });
 
-    // 
+    // sort by Requested date
     const handleSortByRequestedDate = () => {
         setSortByRequestedDate(!sortByRequestedDate);
     };
 
+    // sort by progress
     const handleSortByProgress = () => {
         setSortByProgress(!sortByProgress);
     };
@@ -149,18 +150,21 @@ function ManageManufactureRequest() {
                 Manage Manufacture Requests
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }} my={2} mx={2} >
-                <SearchBar onChange={(q) => setSearchQuery(q)} />
+                <Box><SearchBar onChange={(q) => setSearchQuery(q)} /></Box>
                 <Box>
                     <Tooltip title="Download table as PDF" arrow>
-                        <PictureAsPdfIcon fontSize='large' htmlColor='rgba(0, 58, 43, 0.8)' onClick={() => toPDF()} />
+                        <IconButton onClick={() => toPDF()}>
+                            <PictureAsPdfIcon fontSize='large' htmlColor='rgba(0, 58, 43, 0.8)' />
+                        </IconButton>
                     </Tooltip>
                     <Tooltip title="Export table as CSV" arrow>
                         <IconButton onClick={exportToCSV}>
-                            <AssignmentReturnedSharpIcon fontSize='large' />
+                            <AssignmentReturnedSharpIcon fontSize='large' htmlColor='rgba(0, 58, 43, 0.8)' />
                         </IconButton>
                     </Tooltip>
                 </Box>
             </Box>
+
             {/* <Box flexGrow={1}></Box> */}
             <Paper sx={{ marginTop: '2rem', width: '100%', overflow: 'hidden' }} ref={targetRef} >
                 <Typography color='primary' align="center" variant="h6" gutterBottom>
