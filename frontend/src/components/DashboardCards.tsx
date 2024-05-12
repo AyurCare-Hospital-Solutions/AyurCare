@@ -85,11 +85,9 @@ export const LinkCard2 = ({
 export const ReportCard = ({
   name,
   desc,
-  link,
 }: {
   name: string;
   desc: string;
-  link: string;
 }) => {
   return (
     <Paper

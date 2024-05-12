@@ -68,9 +68,6 @@ function SearchResults({ results }: SearchResultsProps) {
                   >
                     Show More
                   </Button>
-                  <Button>
-                    Download
-                  </Button>
                 </TableCell>
               </TableRow>
             ))}

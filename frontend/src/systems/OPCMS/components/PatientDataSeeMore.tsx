@@ -9,6 +9,7 @@ import {
   DialogContent,
 } from "@mui/material";
 import dayjs from "dayjs";
+import ReportGenerator from "../../../components/ReportGenerator";
 
 // interface Prescription {
 //   id: number;
@@ -65,26 +66,28 @@ const PatientDataSeeMore: React.FC<PatientDataSeeMoreProps> = ({
       onClose={handleClose}>
       <DialogTitle fontSize={36}>Medical Report</DialogTitle>
       <DialogContent>
-        <Typography variant="subtitle1" style={{ fontStyle: 'italic', color: 'gray', fontSize: 'small' }} sx={{ pb: 2 }}>Patient ID : {prescriptionData?.PatientId}</Typography>
-        <Typography variant="subtitle1">Patient Name: {prescriptionData?.Patient?.name} </Typography>
-        <Typography variant="subtitle1" sx={{ pb: 2 }}>Created At: {dayjs(prescriptionData?.createdAt).format('YYYY-MM-DD')} </Typography>
-        <Typography variant="subtitle1">Diagnosis</Typography>
-        <TextField
-          value={prescriptionData?.diagnosis}
-          variant="outlined"
+        <ReportGenerator filename={"MedicalReport.pdf"} title={"Medical Report"} titleHidden visible>
+          <Typography variant="subtitle1" style={{ fontStyle: 'italic', color: 'gray', fontSize: 'small' }} sx={{ pb: 2 }}>Patient ID : {prescriptionData?.PatientId}</Typography>
+          <Typography variant="subtitle1">Patient Name: {prescriptionData?.Patient?.name} </Typography>
+          <Typography variant="subtitle1" sx={{ pb: 2 }}>Created At: {dayjs(prescriptionData?.createdAt).format('YYYY-MM-DD')} </Typography>
+          <Typography variant="subtitle1">Diagnosis</Typography>
+          <TextField
+            value={prescriptionData?.diagnosis}
+            variant="outlined"
 
-          fullWidth
-          disabled
-        />
-        <Typography variant="subtitle1">Note</Typography>
-        <TextField
-          value={prescriptionData?.note}
-          variant="outlined"
-          fullWidth
-          multiline
-          rows={4}
-          disabled
-        />
+            fullWidth
+            disabled
+          />
+          <Typography variant="subtitle1">Note</Typography>
+          <TextField
+            value={prescriptionData?.note}
+            variant="outlined"
+            fullWidth
+            multiline
+            rows={4}
+            disabled
+          />
+        </ReportGenerator>
       </DialogContent>
     </Dialog>
   );

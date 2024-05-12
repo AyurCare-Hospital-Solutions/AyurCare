@@ -34,14 +34,13 @@ const Reports = () => {
         <Grid item xs={5}>
           <ReportCard
             name="Analytics Report"
-            desc="Download Analytics Report"
-          />
+            desc="Download Analytics Report" />
         </Grid>
       </Grid>
       <ReportGenerator
         filename="OPD Appointments"
         title="OPD Appointments"
-        buttonRef={appoinmentBtnRef}
+        buttonRef={appoinmentBtnRef as any} 
       >
         <AppointmentsDownload appointments={appointments} />
       </ReportGenerator>
