@@ -3,6 +3,7 @@ const IPDAdmission = require("../../model/IPDAdmission");
 const Patient = require("../../model/Patient");
 const Bed = require("../../model/Bed");
 const Ward = require("../../model/Ward");
+const IPDWaitList = require("../../model/IPDWaitList")
 const { sequelize } = require("../../model");
 
 
