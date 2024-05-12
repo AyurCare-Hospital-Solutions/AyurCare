@@ -7,7 +7,7 @@ const Staff = require("../model/Staff")
 // FIXME: use random bytes 
 const secret = Buffer.from("test1234")//randomBytes(64)
 
-let roles = {
+const roles = {
     doctor: { name: "Doctor", home: "opcms" },
     medicalStaff: { name: "Medical Staff", home: "icms", perms: ["test"] },
     hrAdmin: { name: "HR Administrator", home: "hrms" },
@@ -26,18 +26,15 @@ const authNoOp = (req, res, next) => {
 
     try {
         var token = jwt.verify(tokenHeader, secret, { algorithms: ["HS512"] });
+        let userID = Number(token.id);
+        if (!Number.isInteger(userID)) {
+            res.status(401).json({ msg: "Invalid user id" });
+            return;
+        }
+        res.locals["userId"] = userID;
     } catch (e) {
-        res.status(401).json({ "msg": "Invalid JWT authorization" });
-        return;
+        console.log("Skipped auth")
     }
-
-    let userID = Number(token.id);
-    if (!Number.isInteger(userID)) {
-        res.status(401).json({ msg: "Invalid user id" });
-        return;
-    }
-
-    res.locals["userId"] = userID;
 
     next()
 }
