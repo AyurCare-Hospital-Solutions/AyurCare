@@ -31,11 +31,6 @@ const Reports = () => {
             desc="Download OPD appointments list"
           />
         </Grid>
-        <Grid item xs={5}>
-          <ReportCard
-            name="Analytics Report"
-            desc="Download Analytics Report" />
-        </Grid>
       </Grid>
       <ReportGenerator
         filename="OPD Appointments"

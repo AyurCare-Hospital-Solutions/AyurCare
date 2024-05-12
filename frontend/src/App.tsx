@@ -15,6 +15,8 @@ import opcms from "./systems/OPCMS";
 import pms from "./systems/PMS";
 import prs from "./systems/PRS";
 import Login from "./Login";
+import MyLeaveRequest from "./systems/HRMS/components/MyLeaveRequest";
+import Shifts from "./systems/HRMS/components/Shifts";
 
 let routes: Map<String, RouteObject> = new Map();
 
@@ -43,7 +45,17 @@ function TempMain() {
 const domRouter = createBrowserRouter([{
   path: "/",
   element: <Login />
-}, {
+},
+{
+  path: "/leave_request",
+  element: <MyLeaveRequest />
+},
+{
+  path: "/shifts",
+  element: <Shifts />
+
+},
+{
   path: "/dev",
   element: <TempMain />
 }, ...routes.values()],)

@@ -14,7 +14,7 @@ const roles = {
     pharmacist: { name: "Pharmacist", home: "pms" },
     dmmsAdmin: { name: "DMMS Manager", home: "dmms" },
     acsAdmin: { name: "User Manager", home: 'acs' },
-    prsAdmin: { name: "Reception", home: "prss" }
+    prsAdmin: { name: "Reception", home: "prs" }
 }
 
 const authNoOp = (req, res, next) => {

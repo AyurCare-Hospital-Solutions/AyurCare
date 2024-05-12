@@ -46,11 +46,6 @@ function TopNavBar(props: { title?: string }) {
                     <Typography>{props.title}</Typography>
                 </Box>
                 <Box sx={{ flexGrow: 1 }}></Box>
-                <Box>
-                    <IconButton sx={{ p: 0 }}>
-                        <Mail sx={{ color: "#ffffff", fontSize: "24px", mx: 2 }}></Mail>
-                    </IconButton>
-                </Box>
                 <Box sx={{ flexGrow: 0 }}>
                     <Box onClick={handleOpenUserMenu} sx={{ display: "flex" }} id="menu-opener">
                         <IconButton sx={{ p: 0 }}>
@@ -75,24 +70,17 @@ function TopNavBar(props: { title?: string }) {
                         open={Boolean(anchorElUser)}
                         onClose={handleCloseUserMenu}
                     >
-                        <MenuItem onClick={handleCloseUserMenu}>
-                            <ListItemIcon>
-                                <AccountCircle></AccountCircle>
-                            </ListItemIcon>
-
-                            <Typography>Profile</Typography>
-                        </MenuItem>
-                        <MenuItem>
+                        <MenuItem onClick={() => navigate("/leave_request")}>
                             <ListItemIcon>
                                 <Event></Event>
                             </ListItemIcon>
                             <Typography>Leave Requests</Typography>
                         </MenuItem>
-                        <MenuItem>
+                        <MenuItem onClick={() => navigate("/shifts")}>
                             <ListItemIcon>
-                                <ConfirmationNumber></ConfirmationNumber>
+                                <Event></Event>
                             </ListItemIcon>
-                            <Typography>Support Tickets</Typography>
+                            <Typography>Shifts</Typography>
                         </MenuItem>
                         <MenuItem onClick={logoutClick}>
                             <ListItemIcon>
