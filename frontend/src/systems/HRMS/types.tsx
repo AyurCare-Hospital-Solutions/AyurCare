@@ -40,3 +40,10 @@ export interface EmployeeData {
   id: number;
   name: string;
 }
+
+export interface ShiftData {
+  id: number;
+  date: string;
+  ShiftType: ShiftTypeData;
+  Staffs: EmployeeData[];
+}

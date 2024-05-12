@@ -37,8 +37,8 @@ const ShiftTypes = () => {
       setRows([...rows, response.data]);
       enqueueSnackbar("Shift type added successfully", { variant: "success" });
     } catch (error) {
-      console.error("Error adding leave type:", error);
-      enqueueSnackbar("Error adding leave type", { variant: "error" });
+      console.error("Error adding shifttype:", error);
+      enqueueSnackbar("Error adding shifttype", { variant: "error" });
     }
   };
 
@@ -63,8 +63,8 @@ const ShiftTypes = () => {
         variant: "success",
       });
     } catch (error) {
-      console.error("Error updating leave type:", error);
-      enqueueSnackbar("Error updating leave type", {
+      console.error("Error updating shifttype:", error);
+      enqueueSnackbar("Error updating shifttype", {
         variant: "error",
       });
     }
@@ -81,7 +81,7 @@ const ShiftTypes = () => {
       });
     } catch (error) {
       console.error("Error deleting row:", error);
-      enqueueSnackbar("Error deleting leave type", {
+      enqueueSnackbar("Error deleting shifttype", {
         variant: "error",
       });
     }

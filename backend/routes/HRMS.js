@@ -22,6 +22,7 @@ router.get("/leaveType/:id", leaveTypeService.getLeaveTypeById);
 router.delete("/leaveType/:id", leaveTypeService.deleteLeaveType);
 router.put("/leaveType/:id", leaveTypeService.updateLeaveType);
 
+router.get("/shift/employee/:id", shiftService.getAllShiftsByEmpId);
 router.get("/shift", shiftService.getAllShifts);
 router.post("/shift", shiftService.createShift);
 router.get("/shift/:id", shiftService.getShiftById);
@@ -29,6 +30,7 @@ router.put("/shift/:id", shiftService.updateShift);
 router.delete("/shift/:id", shiftService.deleteShift);
 
 router.get("/employees", shiftService.getAllEmployees)
+
 
 router.get("/shiftType", shiftTypeService.getAllShiftTypes)
 router.get("/shiftType/:id", shiftTypeService.getShiftTypeById)

@@ -21,12 +21,23 @@ const shiftValidator = yup
  */
 const getAllShifts = async (req, res) => {
   try {
-    const shifts = await Shift.findAll();
+    const shifts = await Shift.findAll({ include: [ShiftType, { model: Staff, attributes: ['id', 'name'] }] });
     res.status(200).json(shifts);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
+const getAllShiftsByEmpId = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const shifts = await Shift.findAll({ include: [ShiftType, { model: Staff, attributes: ['id', 'name'] }], where: { StaffId: id } });
+    res.status(200).json(shifts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+
+}
 
 /**
  * Get shift by id
@@ -82,17 +93,51 @@ const createShift = async (req, res) => {
 const updateShift = async (req, res) => {
   const id = req.params.id;
   try {
-    const data = await shiftValidator.validate(req.body);
-    const shift = await Shift.findByPk(id);
-    if (!shift) {
-      res.status(404).json({ message: "Shift not found" });
-      return;
-    }
-    await shift.update(data);
-    res.status(200).json(shift);
+    var data = await shiftValidator.validate(req.body);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
+  const shift = await Shift.findByPk(id);
+  if (!shift) {
+    res.status(404).json({ message: "Shift not found" });
+    return;
+  }
+  const employees = await shift.getStaffs()
+
+  const toAdd = [];
+  const toRemove = []
+  data.employees.forEach(e => {
+    if (employees.find(v => v.id == e) === undefined) {
+      toAdd.push(e);
+    }
+  });
+  employees.forEach(emp => {
+    if (data.employees.find(v => v === emp.id) === undefined) {
+      toRemove.push(emp)
+    }
+  })
+  console.log(toRemove)
+
+  await sequelize.transaction(async (t) => {
+
+    for (let i = 0; i < toAdd.length; i++) {
+      const staff = await Staff.findByPk(toAdd[i]);
+      if (!staff) {
+        throw new Error("Staff not found");
+      }
+      await staff.addShift(shift, { transaction: t });
+    };
+
+    for (let i = 0; i < toRemove.length; i++) {
+      await toRemove[i].removeShift(shift, { transaction: t })
+    }
+
+
+  })
+
+  await shift.update(data);
+  res.status(200).json(shift);
+
 };
 
 /**
@@ -131,6 +176,7 @@ const getAllEmployees = async (req, res) => {
 
 module.exports = {
   getAllShifts,
+  getAllShiftsByEmpId,
   getShiftById,
   createShift,
   updateShift,

@@ -1,7 +1,19 @@
 import { Box, Typography } from "@mui/material";
-import RosterManagementTable from "./rosterManagement/RosterManagementTable";
+import RosterManagementTable from "./rosterManagement/RosterManagementTable.1";
+import { useEffect, useState } from "react";
+import { ShiftData } from "../types";
+import axios from "axios";
 
 const Shifts = () => {
+  useEffect(() => {
+    axios.get("/api/shift/employee/:id").then((response) => {
+      setShiftData(response.data);
+    });
+  }, []);
+
+  const [shiftData, setShiftData] = useState<ShiftData[]>([]);
+  const [selectedShift, setSelectedShift] = useState<ShiftData | null>(null);
+
   return (
     <>
       <Box sx={{ display: "flex", mx: 4, mb: 4 }}>
@@ -15,7 +27,10 @@ const Shifts = () => {
         </Box>
       </Box>
       <Box sx={{ m: 4 }}>
-        <RosterManagementTable />
+        <RosterManagementTable
+          shiftData={shiftData}
+          setSelectedShift={setSelectedShift}
+        />
       </Box>
     </>
   );

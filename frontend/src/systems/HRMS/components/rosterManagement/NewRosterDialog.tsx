@@ -15,21 +15,44 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { ShiftTypeData, EmployeeData } from "../../types";
+import { ShiftTypeData, EmployeeData, ShiftData } from "../../types";
 import ShiftEmployeeTable from "./ShiftEmployeeTable";
 import { Box } from "@mui/material";
 import { GridRowId } from "@mui/x-data-grid";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 
 export default function NewRosterDialog({
+  selectedShift,
   open,
   onClose,
   addNewRoster,
+  updateRoster,
 }: {
   open: boolean;
   onClose: () => void;
   addNewRoster: (data: any) => void;
+  updateRoster: (data: any) => void;
+  selectedShift: ShiftData | null;
 }) {
+  const [employees, setEmployees] = useState<EmployeeData[]>([]);
+  const [selectedEmployees, setSelectedEmployees] = useState<GridRowId[]>([]);
+
+  const [shiftTypes, setShiftTypes] = useState<ShiftTypeData[]>([]);
+  const [shiftType, setShiftType] = useState<ShiftTypeData | null>(null);
+  const [date, setDate] = useState<Dayjs | null>(null);
+
+  useEffect(() => {
+    if (selectedShift && employees) {
+      setDate(selectedShift.date ? dayjs(selectedShift.date) : null);
+      setShiftType(selectedShift.ShiftType);
+      setSelectedEmployees(selectedShift.Staffs.map((row) => row.id));
+    } else {
+      setDate(null);
+      setShiftType(null);
+      setSelectedEmployees([]);
+    }
+  }, [selectedShift, employees]);
+
   useEffect(() => {
     axios
       .get("/api/hrms/shiftType")
@@ -45,29 +68,34 @@ export default function NewRosterDialog({
     });
   }, []);
 
-  const [employees, setEmployees] = useState<EmployeeData[]>([]);
-  const [selectedEmployees, setSelectedEmployees] = useState<GridRowId[]>([]);
-
-  const [shiftTypes, setShiftTypes] = useState<ShiftTypeData[]>([]);
-  const [shiftType, setShiftType] = useState<ShiftTypeData | null>(null);
-  const [date, setDate] = useState<Dayjs | null>(null);
-
   // const selectedRowsData = selectedEmployees.map((id) =>
   //   employees.find((row) => row.id === id)
   // );
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    addNewRoster({
-      date: date?.toISOString(),
-      type: shiftType?.id,
-      employees: selectedEmployees,
-    });
+    if (selectedShift) {
+      updateRoster({
+        id: selectedShift.id,
+        date: date?.toISOString(),
+        type: shiftType?.id,
+        employees: selectedEmployees,
+      });
+      return;
+    } else {
+      addNewRoster({
+        date: date?.toISOString(),
+        type: shiftType?.id,
+        employees: selectedEmployees,
+      });
+    }
   };
   return (
     <>
       <Dialog fullWidth open={open} onClose={onClose}>
-        <DialogTitle>Enter Shift Table</DialogTitle>
+        <DialogTitle>
+          {selectedShift ? "Update Shift Table" : "Enter Shift Table"}
+        </DialogTitle>
         <DialogContent>
           {" "}
           {/* Adjust the width value as needed */}
