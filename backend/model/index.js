@@ -63,7 +63,12 @@ async function createAll() {
     }
 
 
-    let syncConfig = { force: false };
+    let syncConfig = {
+        force: false, pool: {
+            acquire: 250000,
+            idle: 250000,
+        }
+    };
     if (Number.parseInt(process.env.SQL_SYNC_FORCE)) {
         console.log("Dropping existing tables")
         syncConfig.force = true;
