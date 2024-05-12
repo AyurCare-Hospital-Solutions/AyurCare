@@ -9,6 +9,7 @@ import InventeryRequest from "./Pages/InventeryRequest";
 import Report from "./Pages/Report";
 import Keep from "./Pages/Keep";
 import UserGuide from "./Pages/UserGuide";
+import MedicineRequest from "../IMS/MedicineRequest";
 
 const routes: { name: String; root: React.ReactNode; routes: RouteObject[] } = {
   name: "PMS",
@@ -51,6 +52,10 @@ const routes: { name: String; root: React.ReactNode; routes: RouteObject[] } = {
     {
       path: "userguide",
       element: <UserGuide />,
+    },
+    {
+      path: "reqMedicine",
+      element: <MedicineRequest />
     },
   ],
 };

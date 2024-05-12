@@ -6,6 +6,7 @@ import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import HelpIcon from "@mui/icons-material/Help";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import BookIcon from "@mui/icons-material/Book";
+import HealingIcon from '@mui/icons-material/Healing';
 import { SnackbarProvider } from "notistack";
 
 import { Dashboard, Assessment } from "@mui/icons-material";
@@ -62,16 +63,16 @@ const Pms = () => {
           }}
         />
 
-        {/* <Link to="/pms/inventoryrequest">
+        <Link to="/pms/reqMedicine">
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <StorageIcon />
+                <HealingIcon />
               </ListItemIcon>
-              <ListItemText primary="Inventory Request" />
+              <ListItemText primary="Request Medicine" />
             </ListItemButton>
           </ListItem>
-        </Link> */}
+        </Link>
 
         {/* <Link to="/pms/prescriptionmanagement">
           <ListItem disablePadding>
