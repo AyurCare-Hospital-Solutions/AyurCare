@@ -18,6 +18,7 @@ import {
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import Mousetrap from "mousetrap";
+import { playAudio } from "../Common/audioUtils";
 
 interface Note {
   id: number;
@@ -111,7 +112,7 @@ const ShowConcernsTable: React.FC<{ concerns?: Concerns }> = ({ concerns }) => {
   useEffect(() => {
     // Bind the '/' key to focus the input
     Mousetrap.bind("/", () => {
-      console.log("clciked");
+      playAudio("../../../../../public/pmsassests/sounds/click.mp3");
       if (inputRef.current) {
         // Check if the input element is not null
         inputRef.current.focus(); // Focus the input only if it's not null
@@ -131,7 +132,10 @@ const ShowConcernsTable: React.FC<{ concerns?: Concerns }> = ({ concerns }) => {
         label="Search"
         variant="outlined"
         value={searchText}
-        onChange={(e) => setSearchText(e.target.value)}
+        onChange={(e) => {
+          playAudio("../../../../../public/pmsassests/sounds/click.mp3");
+          setSearchText(e.target.value);
+        }}
         fullWidth
         margin="normal"
         InputProps={{
@@ -191,9 +195,12 @@ const ShowConcernsTable: React.FC<{ concerns?: Concerns }> = ({ concerns }) => {
                 <TableCell>
                   <Button
                     variant="contained"
-                    onClick={() =>
-                      handleEmailRedirect(row.id, row.email, row.concern)
-                    }
+                    onClick={() => {
+                      playAudio(
+                        "../../../../../public/pmsassests/sounds/click.mp3"
+                      );
+                      handleEmailRedirect(row.id, row.email, row.concern);
+                    }}
                     sx={{
                       backgroundColor: repliedIds.has(row.id)
                         ? "#4CAF50"
