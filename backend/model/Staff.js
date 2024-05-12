@@ -40,5 +40,6 @@ Staff.hasMany(Staff, { foreignKey: { name: "SuperID" }, as: "Supervisee" });
 Staff.belongsTo(Designation);
 
 Staff.belongsToMany(Shift, { through: "StaffShift" })
+Shift.belongsToMany(Staff, { through: "StaffShift" })
 
 module.exports = Staff;
