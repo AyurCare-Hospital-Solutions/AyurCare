@@ -48,6 +48,10 @@ function ManufactuureRequest() {
   // add manufacture request
   const addManufactureRequest = () => {
     //
+    if (!reqMedicine) {
+      enqueueSnackbar("Medicine is required...", { variant: "error" });
+      return;
+    }
     // Validate amount (required, positive integer)
     if (!reqAmount) {
       enqueueSnackbar("Amount is required...", { variant: "error" });
