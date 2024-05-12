@@ -3,6 +3,7 @@ const { sequelize } = require(".");
 const Designation = require("./Designation");
 const { roles } = require("../middleware/auth");
 const Shift = require("./Shift");
+const { sync } = require("glob");
 
 const Staff = sequelize.define("Staff", {
     name: {
@@ -15,6 +16,9 @@ const Staff = sequelize.define("Staff", {
         type: DataTypes.DATEONLY
     },
     qualification: {
+        type: DataTypes.STRING
+    },
+    designation: {
         type: DataTypes.STRING
     },
     email: {
@@ -40,6 +44,5 @@ Staff.hasMany(Staff, { foreignKey: { name: "SuperID" }, as: "Supervisee" });
 Staff.belongsTo(Designation);
 
 Staff.belongsToMany(Shift, { through: "StaffShift" })
-Shift.belongsToMany(Staff, { through: "StaffShift" })
 
 module.exports = Staff;
