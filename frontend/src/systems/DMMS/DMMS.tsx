@@ -76,7 +76,7 @@ function DMMS() {
                 </ListItem>
             </Link>
 
-            {/* <Link to="/dmms/test_01">
+            <Link to="/dmms/test_01">
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
@@ -85,7 +85,7 @@ function DMMS() {
                         <ListItemText primary="New R" />
                     </ListItemButton>
                 </ListItem>
-            </Link> */}
+            </Link>
         </DashboardPage>
     )
 }
