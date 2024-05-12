@@ -5,7 +5,6 @@ import Patients from "./PatientReg";
 import Appointment from "./Appointment";
 import ReportGen from "./ReportGen";
 import PatientAdminPg from "./components/PatientReg/PatientAdminPg";
-import DialogBoxPatient from "./components/PatientReg/DialogBoxPatient";
 
 const routes: { name: String; root: React.ReactNode; routes: RouteObject[] } = {
   name: "PRS",
@@ -31,10 +30,6 @@ const routes: { name: String; root: React.ReactNode; routes: RouteObject[] } = {
     {
       path: "patient-Admin",
       element: <PatientAdminPg />,
-    },
-    {
-      path: "test",
-      element: <DialogBoxPatient />,
     },
   ],
 };
