@@ -23,7 +23,7 @@ interface StaffFormData {
   homePhone: string;
 }
 
-export default function FormDialog({addStaff}:{addStaff:(data:any)=>void}) {
+export default function FormDialog({ addStaff }: { addStaff: (data: any) => void }) {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState<StaffFormData>({
     name: '',
@@ -60,14 +60,14 @@ export default function FormDialog({addStaff}:{addStaff:(data:any)=>void}) {
       setFormData({
         name: '',
         address: '',
-        designation:'',
+        designation: '',
         dateHired: '',
         qualification: '',
         email: '',
         phone: '',
         homePhone: '',
       });
-      
+
       handleClose();
     } catch (error) {
       console.error('Error adding staff:', error);
@@ -106,20 +106,20 @@ export default function FormDialog({addStaff}:{addStaff:(data:any)=>void}) {
             onChange={handleChange}
           />
           <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Designation</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          name='designation'
-          value={formData.designation}
-          label="Designation"
-          onChange={handleChange}
-        >
-          <MenuItem value={"Doctor"}>Doctor</MenuItem>
-          <MenuItem value={"Nurse"}>Nurse</MenuItem>
-          <MenuItem value={"Mangement"}>Mangement</MenuItem>
-        </Select>
-      </FormControl>
+            <InputLabel id="demo-simple-select-label">Designation</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              name='designation'
+              value={formData.designation}
+              label="Designation"
+              onChange={handleChange as any}
+            >
+              <MenuItem value={"Doctor"}>Doctor</MenuItem>
+              <MenuItem value={"Nurse"}>Nurse</MenuItem>
+              <MenuItem value={"Mangement"}>Mangement</MenuItem>
+            </Select>
+          </FormControl>
           <TextField
             required
             margin="dense"
@@ -141,7 +141,7 @@ export default function FormDialog({addStaff}:{addStaff:(data:any)=>void}) {
             fullWidth
             value={formData.dateHired}
             onChange={handleChange}
-            InputLabelProps={{ shrink: true, style: { fontSize: 'small' } }} 
+            InputLabelProps={{ shrink: true, style: { fontSize: 'small' } }}
           />
 
           <TextField
@@ -198,6 +198,6 @@ export default function FormDialog({addStaff}:{addStaff:(data:any)=>void}) {
       </Dialog>
     </React.Fragment>
 
-    
+
   );
 }
