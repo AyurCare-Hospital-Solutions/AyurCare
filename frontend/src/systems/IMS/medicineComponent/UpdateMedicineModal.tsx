@@ -70,7 +70,7 @@ function UpdateMedicineModal(props: any) {
                                 label="Unit"
                                 required
                                 defaultValue=""
-                                helperText="Please select mesurement unit of medicine"
+                                helperText="Please select mesurement unit of medine"
                                 onChange={(e) => {
                                     setUpdateUnit(e.target.value);
                                 }}

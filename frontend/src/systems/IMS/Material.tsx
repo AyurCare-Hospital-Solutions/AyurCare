@@ -83,7 +83,7 @@ function Material() {
         enqueueSnackbar("Failed to Add Material...", { variant: "error" });
         console.log(err)
       })
-    handleAddModalClose();
+      handleAddModalClose();
   }
 
   // confirm handle

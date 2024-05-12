@@ -43,11 +43,6 @@ export default function AddMedicineModal({ open, onClose, addMedicine }: { open:
                         onSubmit={(e) => {
                             e.preventDefault();
                             addMedicine({ name, buffer, unit, origin });
-                            // reset values
-                            // setName("");
-                            // setBuffer(0);
-                            // setUnit("");
-                            // setOrigin("");
                             //onClose();
                         }}
                     >
@@ -66,9 +61,9 @@ export default function AddMedicineModal({ open, onClose, addMedicine }: { open:
                                 id="outlined-select3"
                                 select
                                 label="Unit"
-
+                                required
                                 defaultValue=""
-                                helperText="Please select mesurement unit of medicine"
+                                helperText="Please select mesurement unit of medine"
                                 onChange={(e) => {
                                     setUnit(e.target.value);
                                 }}
@@ -90,7 +85,7 @@ export default function AddMedicineModal({ open, onClose, addMedicine }: { open:
                                 select
                                 label="Origin"
                                 defaultValue=""
-
+                                required
                                 helperText="Please select origin of medicine"
                                 onChange={(e) => {
                                     setOrigin(e.target.value);
