@@ -8,19 +8,33 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { AccountCircle, ArrowDropDown, ConfirmationNumber, Event, Logout, Mail } from '@mui/icons-material';
 import { ListItemIcon } from '@mui/material';
+import { getUser } from '../util/user';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 
 function TopNavBar(props: { title?: string }) {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const navigate = useNavigate();
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
 
 
+
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const logoutClick = () => {
+        localStorage.clear();
+        navigate("/");
+    }
+
+    useEffect(() => {
+        if (getUser() === null) navigate("/");
+    })
 
     return <>
         <AppBar position="fixed">
@@ -42,7 +56,7 @@ function TopNavBar(props: { title?: string }) {
                         <IconButton sx={{ p: 0 }}>
                             <AccountCircle sx={{ color: "#ffffff", fontSize: "40px" }}></AccountCircle>
                         </IconButton>
-                        <Typography sx={{ color: "#ffffff", my: "auto", ml: 2 }}>User Name</Typography>
+                        <Typography sx={{ color: "#ffffff", my: "auto", ml: 2 }}>{getUser()?.name}</Typography>
                         <ArrowDropDown sx={{ color: "#ffffff", my: "auto", fontSize: "28px" }}></ArrowDropDown>
                     </Box>
                     <Menu
@@ -80,7 +94,7 @@ function TopNavBar(props: { title?: string }) {
                             </ListItemIcon>
                             <Typography>Support Tickets</Typography>
                         </MenuItem>
-                        <MenuItem>
+                        <MenuItem onClick={logoutClick}>
                             <ListItemIcon>
                                 <Logout></Logout>
                             </ListItemIcon>

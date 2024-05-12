@@ -27,6 +27,7 @@
     "date-fns": "^3.6.0",
     "dayjs": "^1.11.10",
     "dom-to-image": "^2.6.0",
+    "html-react-parser": "^5.1.10",
     "html2canvas": "^1.4.1",
     "jwt-decode": "^4.0.0",
     "material-ui-confirm": "^3.0.11",

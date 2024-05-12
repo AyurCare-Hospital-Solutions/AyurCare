@@ -11,7 +11,7 @@ const wardValidator = yup.object({
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-async function getWards(req, res) {
+const getWards = async (req, res) => {
     res.status(200).json(await Ward.findAll());
 }
 
@@ -20,7 +20,30 @@ async function getWards(req, res) {
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-async function createWard(req, res) {
+const getWard = async (req, res) => {
+    let id = Number.parseInt(req.params.id);
+
+    // check if ward number is valid
+    if (!Number.isInteger(id)) {
+        res.status(400).json({ msg: "Invalid ward number" });
+        return;
+    }
+    // get the ward with the given id
+    let ward = await Ward.findByPk(id);
+    if (ward === null) {
+        res.status(404).json({ msg: "The ward does not exist" })
+        return;
+    }
+
+    res.status(200).json(ward);
+}
+
+/**
+ * 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
+const createWard = async (req, res) => {
     try {
         var data = await wardValidator.validate(req.body);
     } catch (validationError) {
@@ -29,7 +52,7 @@ async function createWard(req, res) {
     }
 
     let ward = await Ward.create({ name: data.name });
-    res.status(200).json({ data: ward });
+    res.status(200).json(ward.toJSON());
 }
 
 /**
@@ -37,7 +60,7 @@ async function createWard(req, res) {
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-async function renameWard(req, res) {
+const renameWard = async (req, res) => {
     let id = Number.parseInt(req.params.id);
 
     // check if ward number is valid
@@ -61,8 +84,7 @@ async function renameWard(req, res) {
         return;
     }
 
-    ward.name = data.name;
-    await ward.save();
+    await ward.update({ name: data.name });
     res.sendStatus(204);
 }
 
@@ -71,7 +93,7 @@ async function renameWard(req, res) {
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-async function deleteWard(req, res) {
+const deleteWard = async (req, res) => {
     let id = Number.parseInt(req.params.id);
 
     // check if ward number is valid
@@ -91,4 +113,4 @@ async function deleteWard(req, res) {
     res.sendStatus(204);
 }
 
-module.exports = { createWard, getWards, renameWard, deleteWard }
+module.exports = { createWard, getWards, getWard, renameWard, deleteWard }

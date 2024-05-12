@@ -13,6 +13,13 @@ import { themeConfig, baseURL } from './config.ts'
 
 
 axios.defaults.baseURL = baseURL;
+axios.interceptors.request.use(async (cfg) => {
+  const jwt = localStorage.getItem("jwt");
+  if (jwt) {
+    cfg.headers.Authorization = jwt;
+  }
+  return cfg;
+})
 
 const theme = themeConfig;
 
